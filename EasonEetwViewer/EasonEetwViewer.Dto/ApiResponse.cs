@@ -1,8 +1,13 @@
-﻿namespace EasonEetwViewer.Dto;
+﻿using System.Text.Json.Serialization;
+
+namespace EasonEetwViewer.Dto;
 
 public record ApiResponse
 {
-    public string ResponseId = string.Empty;
-    public DateTime ResponseTime = new();
-    public string Status = string.Empty;
+    [JsonPropertyName("responseId")]
+    public string Id { get; init; } = string.Empty;
+    [JsonPropertyName("responseTime")]
+    public DateTime Time { get; init; } = new();
+    [JsonPropertyName("status")]
+    public string Status { get; init; } = string.Empty;
 }
