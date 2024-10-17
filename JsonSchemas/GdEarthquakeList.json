@@ -1,0 +1,43 @@
+{
+    "items": [
+        {
+            "id": 1584,
+            "type": "normal",
+            "eventId": "20210808085414",
+            "originTime": "2021-08-08T08:54:00+09:00",
+            "arrivalTime": "2021-08-08T08:54:00+09:00",
+            "hypocenter": {
+                "code": "787",
+                "name": "鹿児島湾",
+                "coordinate": {
+                    "latitude": {
+                        "text": "31.3˚N",
+                        "value": "31.3000"
+                    },
+                    "longitude": {
+                        "text": "130.6˚E",
+                        "value": "130.6000"
+                    },
+                    "height": {
+                        "type": "高さ",
+                        "unit": "m",
+                        "value": "0"
+                    },
+                    "geodeticSystem": "日本測地系"
+                },
+                "depth": {
+                    "type": "深さ",
+                    "unit": "km",
+                    "value": "0",
+                    "condition": "ごく浅い"
+                }
+            },
+            "magnitude": {
+                "type": "マグニチュード",
+                "unit": "Mj",
+                "value": "2.6"
+            },
+            "maxInt": "2"
+        }
+    ]
+}

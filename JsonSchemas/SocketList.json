@@ -1,0 +1,26 @@
+{
+    "items": [
+        {
+            "id": 0,
+            "ticket": "Tik....",
+            "types": [
+                "VXSE45",
+                "VXSE51",
+                "VXSE52",
+                "VXSE53"
+            ],
+            "test": "including",
+            "classifications": [
+                "eew.forecast",
+                "telegram.earthquake"
+            ],
+            "ipAddress": "192.168.0.0",
+            "status": "open",
+            "server": "websocket-03",
+            "start": "2021-04-01T00:00:00.000Z",
+            "end": null,
+            "ping": "2021-04-01T00:00:00.000Z",
+            "appName": "ApplicationTest"
+        }
+    ]
+}

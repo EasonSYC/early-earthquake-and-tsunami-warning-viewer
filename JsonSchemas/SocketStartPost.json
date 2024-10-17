@@ -1,0 +1,15 @@
+{
+    "classifications": [
+        "eew.forecast",
+        "telegram.earthquake"
+    ],
+    "types": [
+        "VXSE45",
+        "VXSE51",
+        "VXSE52",
+        "VXSE53"
+    ],
+    "test": "including",
+    "appName": "Application Test",
+    "formatMode": "json"
+}

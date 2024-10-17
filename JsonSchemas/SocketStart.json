@@ -1,0 +1,28 @@
+{
+    "ticket": "Tik....",
+    "websocket": {
+        "id": 0,
+        "url": "wss://ws003.api.dmdata.jp/v2/websocket?ticket=Tik....",
+        "protocol": [
+            "dmdata.v2"
+        ],
+        "expiration": 300
+    },
+    "classifications": [
+        "eew.forecast",
+        "telegram.earthquake"
+    ],
+    "test": "including",
+    "types": [
+        "VXSE45",
+        "VXSE51",
+        "VXSE52",
+        "VXSE53"
+    ],
+    "formats": [
+        "xml",
+        "a/n",
+        "binary"
+    ],
+    "appName": "Application Test"
+}

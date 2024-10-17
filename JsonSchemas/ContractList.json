@@ -1,0 +1,17 @@
+{
+    "items": [
+        {
+            "id": 92,
+            "planId": 1,
+            "planName": "地震・津波関連",
+            "classification": "telegram.earthquake",
+            "price": {
+                "day": 15,
+                "month": 350
+            },
+            "start": "2021-01-01T01:01:00.000Z",
+            "isValid": true,
+            "connectionCounts": 1
+        }
+    ]
+}

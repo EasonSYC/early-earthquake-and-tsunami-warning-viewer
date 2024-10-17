@@ -1,0 +1,38 @@
+{
+    "items": [
+        {
+            "serial": 0,
+            "classification": "telegram.weather",
+            "id": "123456789abcdef...",
+            "head": {
+                "type": "VPWW54",
+                "author": "JPTD",
+                "time": "2020-01-01T00:00:00.000Z",
+                "test": false
+            },
+            "receivedTime": "2020-01-01T00:00:02.000Z",
+            "xmlReport": {
+                "control": {
+                    "title": "気象警報・注意報（Ｈ２７）",
+                    "dateTime": "2020-02-27T00:00:00Z",
+                    "status": "通常",
+                    "editorialOffice": "気象庁本庁",
+                    "publishingOffice": "気象庁予報部"
+                },
+                "head": {
+                    "title": "東京都気象警報・注意報",
+                    "reportDateTime": "2020-02-27T09:00:00+09:00",
+                    "targetDateTime": "2020-02-27T09:00:00+09:00",
+                    "eventId": null,
+                    "serial": null,
+                    "infoType": "発表",
+                    "infoKind": "気象警報・注意報",
+                    "infoKindVersion": "1.2_1",
+                    "headline": "注意報を解除します。"
+                }
+            },
+            "format": "xml",
+            "url": "https://data.api.dmdata.jp/v1/123456789abcdef..."
+        }
+    ]
+}

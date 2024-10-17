@@ -1,0 +1,6 @@
+{
+    "type": "error",
+    "error": "Server error.",
+    "code": 4503,
+    "close": true
+}
