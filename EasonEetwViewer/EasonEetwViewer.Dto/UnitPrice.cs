@@ -2,7 +2,7 @@
 
 namespace EasonEetwViewer.Dto;
 
-public record ContractPrice
+public record UnitPrice
 {
     [JsonPropertyName("day")]
     public int Day { get; init; } = 0;

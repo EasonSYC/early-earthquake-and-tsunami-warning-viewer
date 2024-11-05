@@ -1,13 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto;
+namespace EasonEetwViewer.Dto.ResponseModels;
 
-public record ApiResponse
+public abstract record ApiResponse
 {
     [JsonPropertyName("responseId")]
     public string Id { get; init; } = string.Empty;
     [JsonPropertyName("responseTime")]
-    public DateTime Time { get; init; } = new();
+    public DateTime Time { get; init; }
     [JsonPropertyName("status")]
-    public string Status { get; init; } = string.Empty;
+    public ResponseEnums.Status Status { get; init; }
 }

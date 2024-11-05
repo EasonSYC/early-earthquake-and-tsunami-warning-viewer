@@ -13,7 +13,7 @@ public record Contract
     [JsonPropertyName("classification")]
     public string Classification { get; init; } = string.Empty;
     [JsonPropertyName("price")]
-    public ContractPrice Price { get; init; } = new();
+    public UnitPrice Price { get; init; } = new();
     [JsonPropertyName("start")]
     public DateTime? Start { get; init; } = new();
     [JsonPropertyName("isValid")]

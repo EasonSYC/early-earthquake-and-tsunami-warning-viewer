@@ -2,8 +2,4 @@
 
 namespace EasonEetwViewer.Dto;
 
-public record ContractList : ApiResponse
-{
-    [JsonPropertyName("items")]
-    public List<Contract> Contracts { get; init; } = [];
-}
+public record ContractList : ResponseModels.ListResponse<Contract>;
