@@ -13,7 +13,7 @@ internal class Program
         Console.WriteLine(contractList.Id);
         Console.WriteLine(contractList.Time);
         Console.WriteLine(contractList.Status);
-        foreach (Dto.Contract contract in contractList.Contracts)
+        foreach (Dto.Contract contract in contractList.Items)
         {
             Console.WriteLine(contract.Id);
             Console.WriteLine(contract.PlanId);
