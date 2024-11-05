@@ -30,7 +30,6 @@ public class ApiCaller
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/contract");
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseBody);
         Dto.ContractList contractList = JsonSerializer.Deserialize<Dto.ContractList>(responseBody) ?? new();
         return contractList;
     }
