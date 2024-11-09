@@ -12,7 +12,7 @@ public enum Status
     /// The <c>ok</c> value, representing a success.
     /// </summary>
     [JsonStringEnumMemberName("ok")]
-    Ok,
+    Success,
     /// <summary>
     /// The <c>error</c> value, representing an error.
     /// </summary>
