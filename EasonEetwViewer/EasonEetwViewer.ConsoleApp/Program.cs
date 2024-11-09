@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EasonEetwViewer.Dto.Http.Response;
+using Microsoft.Extensions.Configuration;
 namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
@@ -10,10 +11,10 @@ internal class Program
         string apiKey = config["ApiKey"] ?? string.Empty;
         Data.ApiCaller apiCaller = new(baseApi, apiKey);
 
-        Dto.Responses.ContractList contractList = await apiCaller.GetContractListAsync();
+        ContractList contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList);
 
-        Dto.Responses.WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
+        WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
         Console.WriteLine(webSocketList);
     }
 }

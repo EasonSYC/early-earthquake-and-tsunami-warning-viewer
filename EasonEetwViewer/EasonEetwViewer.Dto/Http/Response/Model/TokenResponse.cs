@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.ResponseModels;
+namespace EasonEetwViewer.Dto.Http.Response.Models;
 
 /// <summary>
 /// Outlines the model of a list response with next token options.

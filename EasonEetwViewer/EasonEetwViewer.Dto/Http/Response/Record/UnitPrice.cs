@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto;
+namespace EasonEetwViewer.Dto.Http.Response.Records;
 
 /// <summary>
 /// Represents the price of a contract.

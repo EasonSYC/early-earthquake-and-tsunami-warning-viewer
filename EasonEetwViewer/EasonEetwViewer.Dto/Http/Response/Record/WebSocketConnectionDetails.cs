@@ -1,6 +1,7 @@
+using EasonEetwViewer.Dto.Http.Response.Enums;
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto;
+namespace EasonEetwViewer.Dto.Http.Response.Records;
 
 /// <summary>
 /// Details of a WebSocket connection.
@@ -45,5 +46,5 @@ public record WebSocketConnectionDetails : WebSocketBasics
     /// The property <c>status</c>. The status of the WebSocket connection.
     /// </summary>
     [JsonPropertyName("status")]
-    public ResponseEnums.ConnectionStatus WebSocketStatus { get; init; }
+    public ConnectionStatus WebSocketStatus { get; init; }
 }

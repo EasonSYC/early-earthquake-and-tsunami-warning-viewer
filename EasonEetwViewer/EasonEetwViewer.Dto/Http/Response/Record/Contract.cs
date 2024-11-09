@@ -1,6 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using EasonEetwViewer.Dto.Http.Response.Enums;
+using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto;
+namespace EasonEetwViewer.Dto.Http.Response.Records;
 
 /// <summary>
 /// Represents a contract.
@@ -27,7 +28,7 @@ public record Contract
     /// The property <c>classifications</c>. The classification of the contract.
     /// </summary>
     [JsonPropertyName("classification")]
-    public ResponseEnums.Classification Classification { get; init; }
+    public Classification Classification { get; init; }
     /// <summary>
     /// The property <c>price</c>. The price of the contract.
     /// </summary>
