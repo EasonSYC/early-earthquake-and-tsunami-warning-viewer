@@ -18,5 +18,5 @@ public record ErrorResponse : ApiResponse
     /// The <c>error</c> property. An object representing the error returned by the API Call.
     /// </summary>
     [JsonPropertyName("error")]
-    public HttpError Error { get; init; } = new();
+    public required HttpError Error { get; init; }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Dto.Http.Response.Record;
 
@@ -16,15 +11,15 @@ public record Position
     /// The <c>code</c> property. The unique code of the position.
     /// </summary>
     [JsonPropertyName("code")]
-    public string Code { get; init; } = string.Empty;
+    public required string Code { get; init; }
     /// <summary>
     /// The <c>name</c> property. The Kanji name of the position.
     /// </summary>
     [JsonPropertyName("name")]
-    public string KanjiName { get; init; } = string.Empty;
+    public required string KanjiName { get; init; }
     /// <summary>
     /// The <c>kana</c> property. The Kana name of the position.
     /// </summary>
     [JsonPropertyName("kana")]
-    public string KanaName { get; init; } = string.Empty;
+    public required string KanaName { get; init; }
 }

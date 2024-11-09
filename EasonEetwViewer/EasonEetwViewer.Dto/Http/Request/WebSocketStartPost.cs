@@ -9,7 +9,7 @@ public record WebSocketStartPost
     /// 
     /// </summary>
     [JsonPropertyName("classifications")]
-    public List<Classification> Classifications { get; init; } = [];
+    public required List<Classification> Classifications { get; init; }
     /// <summary>
     /// 
     /// </summary>

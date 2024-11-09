@@ -11,10 +11,10 @@ public record HttpError
     /// The property <c>message</c>. The message of the error.
     /// </summary>
     [JsonPropertyName("message")]
-    public string Message { get; init; } = string.Empty;
+    public required string Message { get; init; }
     /// <summary>
     /// The property <c>code</c>. The HTTP error status code.
     /// </summary>
     [JsonPropertyName("code")]
-    public int Code { get; init; }
+    public required int Code { get; init; }
 }

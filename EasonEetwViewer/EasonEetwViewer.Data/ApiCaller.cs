@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
+using EasonEetwViewer.Dto.Http.Request;
 using EasonEetwViewer.Dto.Http.Response;
 
 namespace EasonEetwViewer.Data;
@@ -9,15 +11,8 @@ public class ApiCaller
     private readonly HttpClient _httpClient;
     public ApiCaller(string baseApi, string apiKey)
     {
-        if (string.IsNullOrEmpty(baseApi))
-        {
-            throw new ArgumentNullException(nameof(baseApi));
-        }
-
-        if (string.IsNullOrEmpty(apiKey))
-        {
-            throw new ArgumentNullException(nameof(apiKey));
-        }
+        ArgumentOutOfRangeException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
+        ArgumentOutOfRangeException.ThrowIfNullOrWhiteSpace(apiKey, nameof(apiKey));
 
         _baseApi = baseApi;
         _httpClient = new HttpClient();
@@ -31,7 +26,7 @@ public class ApiCaller
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/contract");
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        ContractList contractList = JsonSerializer.Deserialize<ContractList>(responseBody) ?? new();
+        ContractList contractList = JsonSerializer.Deserialize<ContractList>(responseBody) ?? throw new Exception();
         return contractList;
     }
 
@@ -40,8 +35,27 @@ public class ApiCaller
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/socket");
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody) ?? new();
+        WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody) ?? throw new Exception();
         return webSocketList;
+    }
+
+    public async Task<WebSocketStartResponse> PostWebSocketStartAsync(WebSocketStartPost postData)
+    {
+        string postDataJson = JsonSerializer.Serialize(postData);
+        StringContent content = new(postDataJson, Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await _httpClient.PostAsync(_baseApi + "/socket", content);
+        _ = response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+        WebSocketStartResponse startResponse = JsonSerializer.Deserialize<WebSocketStartResponse>(responseBody) ?? throw new Exception();
+        return startResponse;
+    }
+
+    public async Task DeleteWebSocketAsync(int id)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(id, nameof(id));
+        HttpResponseMessage response = await _httpClient.DeleteAsync(_baseApi + "/socket/" + id);
+        _ = response.EnsureSuccessStatusCode();
+        return;
     }
 
     public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
@@ -49,7 +63,7 @@ public class ApiCaller
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/parameter/earthquake/station");
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        EarthquakeParameter earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameter>(responseBody) ?? new();
+        EarthquakeParameter earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameter>(responseBody) ?? throw new Exception();
         return earthquakeParameter;
     }
 }

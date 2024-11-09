@@ -7,7 +7,7 @@ namespace EasonEetwViewer.Dto.Http.Enum;
 /// </summary>
 [JsonConverter(typeof(JsonStringEnumConverter<Classification>))]
 public enum Classification
-{   
+{
     /// <summary>
     /// Unknown. Default value.
     /// </summary>

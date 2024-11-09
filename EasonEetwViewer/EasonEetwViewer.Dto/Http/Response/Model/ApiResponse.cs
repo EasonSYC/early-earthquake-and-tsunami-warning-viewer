@@ -13,12 +13,12 @@ public abstract record ApiResponse
     /// The <c>responseId</c> property. An unique ID for the API Call.
     /// </summary>
     [JsonPropertyName("responseId")]
-    public string ResponseId { get; init; } = string.Empty;
+    public required string ResponseId { get; init; }
     /// <summary>
     /// The <c>responseTime</c> property. The time when the call was received.
     /// </summary>
     [JsonPropertyName("responseTime")]
-    public DateTime ResponseTime { get; init; }
+    public required DateTime ResponseTime { get; init; }
     /// <summary>
     /// The <c>status</c> property. An enum representing the status of the call.
     /// Abstract and has to be overridden.

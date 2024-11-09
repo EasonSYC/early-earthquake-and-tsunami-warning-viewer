@@ -1,4 +1,7 @@
-﻿using EasonEetwViewer.Dto.Http.Response;
+﻿using EasonEetwViewer.Dto.Http.Enum;
+using EasonEetwViewer.Dto.Http.Request;
+using EasonEetwViewer.Dto.Http.Request.Enum;
+using EasonEetwViewer.Dto.Http.Response;
 using Microsoft.Extensions.Configuration;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -16,6 +19,17 @@ internal class Program
 
         WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
         Console.WriteLine(webSocketList);
+
+        WebSocketStartPost start = new()
+        {
+            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
+            Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
+            TestStatus = TestStatus.Include,
+            AppName = "Test",
+            FormatMode = FormatMode.Raw
+        };
+        WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
+        Console.WriteLine(response);
 
         EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
         Console.WriteLine(earthquakeParameter.ResponseId);

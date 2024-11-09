@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Dto.Http.Request.Enum;
 /// <summary>
 /// Represents the specified format mode of a WebSocket connection.
 /// </summary>
-[JsonConverter(typeof(FormatMode))]
+[JsonConverter(typeof(JsonStringEnumConverter<FormatMode>))]
 public enum FormatMode
 {
     /// <summary>

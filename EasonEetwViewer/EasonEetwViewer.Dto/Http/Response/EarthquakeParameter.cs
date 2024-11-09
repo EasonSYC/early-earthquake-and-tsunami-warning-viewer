@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Dto.Http.Response.Model;
 using EasonEetwViewer.Dto.Http.Response.Record;
 
@@ -18,10 +13,10 @@ public record EarthquakeParameter : ListResponse<EarthquakeStation>
     /// The property <c>changeTime</c>, representing the last time the list was changed.
     /// </summary>
     [JsonPropertyName("changeTime")]
-    public DateTime ChangeTime { get; init; }
+    public required DateTime ChangeTime { get; init; }
     /// <summary>
     /// The property <c>version</c>, a string indicating the version of the list.
     /// </summary>
     [JsonPropertyName("version")]
-    public string Version { get; init; } = string.Empty;
+    public required string Version { get; init; }
 }

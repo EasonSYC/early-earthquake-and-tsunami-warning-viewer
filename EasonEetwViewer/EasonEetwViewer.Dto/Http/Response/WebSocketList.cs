@@ -6,4 +6,4 @@ namespace EasonEetwViewer.Dto.Http.Response;
 /// <summary>
 /// Represents the result of an API call on <c>socket.list</c> API.
 /// </summary>
-public record WebSocketList : TokenResponse<WebSocketConnectionDetails>;
+public record WebSocketList : TokenResponse<WebSocketDetails>;
