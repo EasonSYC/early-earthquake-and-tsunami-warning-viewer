@@ -1,5 +1,5 @@
-﻿using EasonEetwViewer.Dto.Http.Response;
-using System.Text.Json;
+﻿using System.Text.Json;
+using EasonEetwViewer.Dto.Http.Response;
 
 namespace EasonEetwViewer.Data;
 
@@ -21,7 +21,7 @@ public class ApiCaller
 
         _baseApi = baseApi;
         _httpClient = new HttpClient();
-        var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(apiKey + ":");
+        byte[]? plainTextBytes = System.Text.Encoding.UTF8.GetBytes(apiKey + ":");
         string val = Convert.ToBase64String(plainTextBytes);
         _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
     }
@@ -29,7 +29,7 @@ public class ApiCaller
     public async Task<ContractList> GetContractListAsync()
     {
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/contract");
-        response.EnsureSuccessStatusCode();
+        _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
         ContractList contractList = JsonSerializer.Deserialize<ContractList>(responseBody) ?? new();
         return contractList;
@@ -38,7 +38,7 @@ public class ApiCaller
     public async Task<WebSocketList> GetWebSocketListAsync()
     {
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/socket");
-        response.EnsureSuccessStatusCode();
+        _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
         Console.WriteLine(responseBody);
         WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody) ?? new();

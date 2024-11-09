@@ -1,7 +1,7 @@
-﻿using EasonEetwViewer.Dto.Http.Response.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Enum;
 
-namespace EasonEetwViewer.Dto.Http.Response.Records;
+namespace EasonEetwViewer.Dto.Http.Response.Record;
 
 /// <summary>
 /// Represents a contract.

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.Http.Response.Enums;
+namespace EasonEetwViewer.Dto.Http.Response.Enum;
 
 /// <summary>
 /// Represents the format of a telegram.

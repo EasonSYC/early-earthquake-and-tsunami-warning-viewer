@@ -1,11 +1,10 @@
-using EasonEetwViewer.Dto.Http.Response.Enums;
 using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Response.Enum;
 
-namespace EasonEetwViewer.Dto.Http.Response.Models;
+namespace EasonEetwViewer.Dto.Http.Response.Model;
 
 /// <summary>
 /// Outlines the model of an Error HTTP response.
-/// Inherits from <c>ResponseModels.ApiResponse</c>.
 /// Abstract and cannot be instantiated.
 /// </summary>
 public abstract record SuccessResponse : ApiResponse
@@ -14,5 +13,5 @@ public abstract record SuccessResponse : ApiResponse
     /// The <c>status</c> property. Always set to <c>Status.Success</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override HttpStatus ResponseStatus { get; init; } = HttpStatus.Success;
+    public override HttpStatus ResponseStatus { get; } = HttpStatus.Success;
 }

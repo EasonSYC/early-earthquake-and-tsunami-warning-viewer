@@ -1,7 +1,7 @@
-﻿using EasonEetwViewer.Dto.Http.Response.Enums;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Response.Enum;
 
-namespace EasonEetwViewer.Dto.Http.Response.Models;
+namespace EasonEetwViewer.Dto.Http.Response.Model;
 
 /// <summary>
 /// Outlines the model of a HTTP response in JSON format from an API Call.
@@ -21,8 +21,8 @@ public abstract record ApiResponse
     public DateTime ResponseTime { get; init; }
     /// <summary>
     /// The <c>status</c> property. An enum representing the status of the call.
-    /// Abstract and has to be overriden.
+    /// Abstract and has to be overridden.
     /// </summary>
     [JsonPropertyName("status")]
-    public abstract HttpStatus ResponseStatus { get; init; }
+    public abstract HttpStatus ResponseStatus { get; }
 }

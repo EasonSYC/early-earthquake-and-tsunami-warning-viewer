@@ -1,12 +1,11 @@
-﻿using EasonEetwViewer.Dto.Http.Response.Enums;
-using EasonEetwViewer.Dto.Http.Response.Models;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Response.Enum;
+using EasonEetwViewer.Dto.Http.Response.Model;
 
-namespace EasonEetwViewer.Dto.Http.Response.Records;
+namespace EasonEetwViewer.Dto.Http.Response.Record;
 
 /// <summary>
 /// Represents an Error HTTP response.
-/// Inherits from <c>ResponseModels.ApiResponse</c>.
 /// </summary>
 public record ErrorResponse : ApiResponse
 {
@@ -14,7 +13,7 @@ public record ErrorResponse : ApiResponse
     /// The <c>status</c> property. Always set to <c>Status.Error</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override HttpStatus ResponseStatus { get; init; } = HttpStatus.Error;
+    public override HttpStatus ResponseStatus { get; } = HttpStatus.Error;
     /// <summary>
     /// The <c>error</c> property. An object representing the error returned by the API Call.
     /// </summary>

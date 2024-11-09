@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.Http.Response.Enums;
+namespace EasonEetwViewer.Dto.Http.Enum;
 
 /// <summary>
 /// Represents whether test telegrams are received by a WebSocket connection.

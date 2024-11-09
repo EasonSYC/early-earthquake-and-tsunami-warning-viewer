@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.Http.Response.Enums;
+namespace EasonEetwViewer.Dto.Http.Enum;
 
 /// <summary>
 /// Represents classifications of telegrams and subscriptions.

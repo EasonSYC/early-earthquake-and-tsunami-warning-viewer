@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.Http.Response.Models;
+namespace EasonEetwViewer.Dto.Http.Response.Model;
 
 /// <summary>
 /// Outlines the model of a list response with next pooling options.
-/// Inherits from <c>ResponseModels.ListResponse</c>.
 /// Abstract and cannot be instantiated.
 /// </summary>
 /// <typeparam name="T">The type of item in the list.</typeparam>

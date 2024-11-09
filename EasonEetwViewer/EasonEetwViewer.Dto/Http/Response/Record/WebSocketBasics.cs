@@ -1,7 +1,8 @@
-using EasonEetwViewer.Dto.Http.Response.Enums;
 using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Enum;
+using EasonEetwViewer.Dto.Http.Response.Enum;
 
-namespace EasonEetwViewer.Dto.Http.Response.Records;
+namespace EasonEetwViewer.Dto.Http.Response.Record;
 
 /// <summary>
 /// Represents the basic properties of a WebSocket connection.

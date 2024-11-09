@@ -1,11 +1,10 @@
-using EasonEetwViewer.Dto.Http.Response.Enums;
 using System.Text.Json.Serialization;
+using EasonEetwViewer.Dto.Http.Response.Enum;
 
-namespace EasonEetwViewer.Dto.Http.Response.Records;
+namespace EasonEetwViewer.Dto.Http.Response.Record;
 
 /// <summary>
 /// Details of a WebSocket connection.
-/// Inherits from <c>WebSocketBasics</c>.
 /// </summary>
 public record WebSocketConnectionDetails : WebSocketBasics
 {
