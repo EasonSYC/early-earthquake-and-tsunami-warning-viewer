@@ -31,6 +31,9 @@ internal class Program
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
+        await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
+        Console.WriteLine("Successfully closed WebSocket connection.");
+
         EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
         Console.WriteLine(earthquakeParameter.ResponseId);
         Console.WriteLine(earthquakeParameter.ResponseStatus);
