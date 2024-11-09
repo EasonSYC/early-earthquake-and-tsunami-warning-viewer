@@ -33,4 +33,14 @@ public class ApiCaller
         Dto.Responses.ContractList contractList = JsonSerializer.Deserialize<Dto.Responses.ContractList>(responseBody) ?? new();
         return contractList;
     }
+
+    public async Task<Dto.Responses.WebSocketList> GetWebSocketListAsync()
+    {
+        HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/socket");
+        response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(responseBody);
+        Dto.Responses.WebSocketList webSocketList = JsonSerializer.Deserialize<Dto.Responses.WebSocketList>(responseBody) ?? new();
+        return webSocketList;
+    }
 }

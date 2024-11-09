@@ -17,7 +17,7 @@ public abstract record WebSocketBasics
     /// The property <c>classifications</c>. The classifications of telegrams that the WebSocket receives.
     /// </summary>
     [JsonPropertyName("classifications")]
-    public List<ResponseEnums.Classification> Classifications { get; init; } = [];
+    public PrintList<ResponseEnums.Classification> Classifications { get; init; } = [];
     /// <summary>
     /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
     /// </summary>
@@ -28,12 +28,12 @@ public abstract record WebSocketBasics
     /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
-    public List<ResponseEnums.TelegramType>? Types { get; init; }
+    public PrintList<string>? Types { get; init; }
     /// <summary>
-    /// The propecty <c>formats</c>. A list of formats of telegrams the WebSocket receives.
+    /// The property <c>formats</c>. A list of formats of telegrams the WebSocket receives.
     /// </summary>
     [JsonPropertyName("formats")]
-    public List<ResponseEnums.FormatType> Formats { get; init; } = [];
+    public PrintList<ResponseEnums.FormatType> Formats { get; init; } = [];
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
     /// <c>null</c> when not indicated.

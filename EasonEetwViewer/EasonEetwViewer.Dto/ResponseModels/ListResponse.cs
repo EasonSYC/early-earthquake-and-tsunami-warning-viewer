@@ -14,5 +14,5 @@ public abstract record ListResponse<T> : SuccessResponse
     /// The <c>items</c> property. The list of items returned by the API call.
     /// </summary>
     [JsonPropertyName("items")]
-    public List<T> ItemList { get; init; } = [];
+    public PrintList<T> ItemList { get; init; } = [];
 }

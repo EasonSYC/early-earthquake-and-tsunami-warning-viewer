@@ -12,18 +12,20 @@ public abstract record PoolingResponse<T> : ListResponse<T>
 {
     /// <summary>
     /// The <c>nextToken</c> property. The token that should be specified in the next API call.
-    /// <c>null</c> if it is a subsequent call using pooling.
+    /// <c>null</c> if it is a subsequent call using pooling, or if the current call is the final call.
     /// </summary>
     [JsonPropertyName("nextToken")]
     public string? NextToken { get; init; }
     /// <summary>
     /// The <c>nextPooling</c> property. The pooling token that should be specified in the next API call.
+    /// <c>null</c> when the current call is the final call.
     /// </summary>
     [JsonPropertyName("nextPooling")]
-    public string NextPooling { get; init; } = string.Empty;
+    public string? NextPooling { get; init; }
     /// <summary>
     /// The <c>nextPoolingInterval</c> property. The time in milliseconds that the program should wait until the next API call.
+    /// <c>null</c> when the current call is the final call.
     /// </summary>
     [JsonPropertyName("nextPoolingInterval")]
-    public int NextPoolingInterval { get; init; }
+    public int? NextPoolingInterval { get; init; }
 }

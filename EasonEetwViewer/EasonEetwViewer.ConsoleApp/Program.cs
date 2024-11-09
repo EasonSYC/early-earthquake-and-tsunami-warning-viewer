@@ -9,10 +9,11 @@ internal class Program
         string baseApi = config["BaseApi"] ?? string.Empty;
         string apiKey = config["ApiKey"] ?? string.Empty;
         Data.ApiCaller apiCaller = new(baseApi, apiKey);
+
         Dto.Responses.ContractList contractList = await apiCaller.GetContractListAsync();
-        Console.WriteLine(contractList.ResponseId);
-        Console.WriteLine(contractList.ResponseTime);
-        Console.WriteLine(contractList.ResponseStatus);
-        contractList.ItemList.ForEach(Console.WriteLine);
+        Console.WriteLine(contractList);
+
+        Dto.Responses.WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
+        Console.WriteLine(webSocketList);
     }
 }

@@ -12,7 +12,8 @@ public abstract record TokenResponse<T> : ListResponse<T>
 {
     /// <summary>
     /// The <c>nextToken</c> property. The token that should be specified in the next API call.
+    /// <c>null</c> when the current call is the final call.
     /// </summary>
     [JsonPropertyName("nextToken")]
-    public string NextToken { get; init; } = string.Empty;
+    public string? NextToken { get; init; }
 }
