@@ -31,7 +31,7 @@ public record WebSocketStartResponse : SuccessResponse
     /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
-    public PrintList<string>? Types { get; init; }
+    public required PrintList<string>? Types { get; init; }
     /// <summary>
     /// The property <c>formats</c>. A list of formats of telegrams the WebSocket receives.
     /// </summary>
@@ -42,7 +42,7 @@ public record WebSocketStartResponse : SuccessResponse
     /// <c>null</c> when not indicated.
     /// </summary>
     [JsonPropertyName("appName")]
-    public string? ApplicationName { get; init; }
+    public required string? ApplicationName { get; init; }
     /// <summary>
     /// The property <c>websocket</c>. Represents the connection details to the WebSocket.
     /// </summary>

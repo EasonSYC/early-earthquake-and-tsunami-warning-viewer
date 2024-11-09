@@ -13,7 +13,7 @@ public record Contract
     /// <c>null</c> if not subscribed to the contract.
     /// </summary>
     [JsonPropertyName("id")]
-    public int? SubscriptionId { get; init; }
+    public required int? SubscriptionId { get; init; }
     /// <summary>
     /// The property <c>planId</c>. The contract plan ID.
     /// </summary>
@@ -39,7 +39,7 @@ public record Contract
     /// <c>null</c> if not subscribed to the contract.
     /// </summary>
     [JsonPropertyName("start")]
-    public DateTime? StartTime { get; init; }
+    public required DateTime? StartTime { get; init; }
     /// <summary>
     /// The property <c>isValid</c>. Whether the user is subscribed to the contract.
     /// </summary>

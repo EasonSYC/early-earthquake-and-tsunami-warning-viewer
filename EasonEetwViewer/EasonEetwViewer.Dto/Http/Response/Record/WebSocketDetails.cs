@@ -30,13 +30,13 @@ public record WebSocketDetails
     /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
-    public PrintList<string>? Types { get; init; }
+    public required PrintList<string>? Types { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
     /// <c>null</c> when not indicated.
     /// </summary>
     [JsonPropertyName("appName")]
-    public string? ApplicationName { get; init; }
+    public required string? ApplicationName { get; init; }
     /// <summary>
     /// The property <c>id</c>. The ID of the connection.
     /// </summary>
@@ -52,19 +52,19 @@ public record WebSocketDetails
     /// <c>null</c> when the connection is still open.
     /// </summary>
     [JsonPropertyName("end")]
-    public DateTime? EndTime { get; init; }
+    public required DateTime? EndTime { get; init; }
     /// <summary>
     /// The property <c>ping</c>. The previous ping-pong time of the connection.
     /// <c>null</c> when no ping-pong has been initiated/
     /// </summary>
     [JsonPropertyName("ping")]
-    public DateTime? PingTime { get; init; }
+    public required DateTime? PingTime { get; init; }
     /// <summary>
     /// The property <c>ipAddress</c>. The IP Address of the connection.
     /// <c>null</c> when the connection has never started.
     /// </summary>
     [JsonPropertyName("ipAddress")]
-    public string? IpAddress { get; init; }
+    public required string? IpAddress { get; init; }
     /// <summary>
     /// The property <c>server</c>. The server that the connection connected to.
     /// </summary>
