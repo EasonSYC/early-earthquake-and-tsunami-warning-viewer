@@ -16,5 +16,13 @@ internal class Program
 
         WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
         Console.WriteLine(webSocketList);
+
+        EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
+        Console.WriteLine(earthquakeParameter.ResponseId);
+        Console.WriteLine(earthquakeParameter.ResponseStatus);
+        Console.WriteLine(earthquakeParameter.ResponseTime);
+        Console.WriteLine(earthquakeParameter.Version);
+        Console.WriteLine(earthquakeParameter.ChangeTime);
+        Console.WriteLine(earthquakeParameter.ItemList[0]);
     }
 }

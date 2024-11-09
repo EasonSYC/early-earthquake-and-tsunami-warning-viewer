@@ -9,13 +9,17 @@ namespace EasonEetwViewer.Dto.Http.Response.Enum;
 public enum HttpStatus
 {
     /// <summary>
+    /// Unknown. Default value.
+    /// </summary>
+    Unknown = 0,
+    /// <summary>
     /// The value <c>ok</c>, representing a success.
     /// </summary>
     [JsonStringEnumMemberName("ok")]
-    Success,
+    Success = 1,
     /// <summary>
     /// The value <c>error</c>, representing an error.
     /// </summary>
     [JsonStringEnumMemberName("error")]
-    Error
+    Error = 2
 }

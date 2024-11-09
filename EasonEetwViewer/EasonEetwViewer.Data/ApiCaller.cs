@@ -40,8 +40,16 @@ public class ApiCaller
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/socket");
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        Console.WriteLine(responseBody);
         WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody) ?? new();
         return webSocketList;
+    }
+
+    public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
+    {
+        HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/parameter/earthquake/station");
+        _ = response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+        EarthquakeParameter earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameter>(responseBody) ?? new();
+        return earthquakeParameter;
     }
 }

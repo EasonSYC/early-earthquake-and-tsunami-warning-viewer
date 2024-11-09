@@ -9,18 +9,22 @@ namespace EasonEetwViewer.Dto.Http.Response.Enum;
 public enum ConnectionStatus
 {
     /// <summary>
+    /// Unknown. Default value.
+    /// </summary>
+    Unknown = 0,
+    /// <summary>
     /// The value <c>waiting</c>, representing awaiting connection.
     /// </summary>
     [JsonStringEnumMemberName("waiting")]
-    Waiting,
+    Waiting = 1,
     /// <summary>
     /// The value <c>open</c>, representing an active connection.
     /// </summary>
     [JsonStringEnumMemberName("open")]
-    Open,
+    Open = 2,
     /// <summary>
     /// The value <c>closed</c>, representing a closed connection.
     /// </summary>
     [JsonStringEnumMemberName("closed")]
-    Closed
+    Closed = 3
 }
