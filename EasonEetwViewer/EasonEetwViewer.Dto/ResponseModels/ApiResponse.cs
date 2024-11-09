@@ -23,5 +23,5 @@ public abstract record ApiResponse
     /// Abstract and has to be overriden.
     /// </summary>
     [JsonPropertyName("status")]
-    public abstract ResponseEnums.Status ResponseStatus { get; init; }
+    public abstract ResponseEnums.HttpStatus ResponseStatus { get; init; }
 }

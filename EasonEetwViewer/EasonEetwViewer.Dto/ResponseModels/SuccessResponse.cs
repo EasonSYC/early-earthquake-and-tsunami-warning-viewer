@@ -13,5 +13,5 @@ public abstract record SuccessResponse : ApiResponse
     /// The <c>status</c> property. Always set to <c>Status.Success</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override ResponseEnums.Status ResponseStatus { get; init; } = ResponseEnums.Status.Success;
+    public override ResponseEnums.HttpStatus ResponseStatus { get; init; } = ResponseEnums.HttpStatus.Success;
 }

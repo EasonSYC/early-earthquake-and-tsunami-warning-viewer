@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto;
+namespace EasonEetwViewer.Dto.Responses;
 
 /// <summary>
 /// Represents the result of an API call on <c>contract.list</c> API.

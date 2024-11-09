@@ -12,7 +12,7 @@ public record ErrorResponse : ResponseModels.ApiResponse
     /// The <c>status</c> property. Always set to <c>Status.Error</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override ResponseEnums.Status ResponseStatus { get; init; } = ResponseEnums.Status.Error;
+    public override ResponseEnums.HttpStatus ResponseStatus { get; init; } = ResponseEnums.HttpStatus.Error;
     /// <summary>
     /// The <c>error</c> property. An object representing the error returned by the API Call.
     /// </summary>

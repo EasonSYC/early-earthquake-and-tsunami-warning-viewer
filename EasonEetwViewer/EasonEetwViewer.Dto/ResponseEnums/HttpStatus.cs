@@ -5,16 +5,16 @@ namespace EasonEetwViewer.Dto.ResponseEnums;
 /// <summary>
 /// Represents the status of the API response.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<Status>))]
-public enum Status
+[JsonConverter(typeof(JsonStringEnumConverter<HttpStatus>))]
+public enum HttpStatus
 {
     /// <summary>
-    /// The <c>ok</c> value, representing a success.
+    /// The value <c>ok</c>, representing a success.
     /// </summary>
     [JsonStringEnumMemberName("ok")]
     Success,
     /// <summary>
-    /// The <c>error</c> value, representing an error.
+    /// The value <c>error</c>, representing an error.
     /// </summary>
     [JsonStringEnumMemberName("error")]
     Error

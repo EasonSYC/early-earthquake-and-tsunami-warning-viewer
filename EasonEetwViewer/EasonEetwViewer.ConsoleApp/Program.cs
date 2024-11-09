@@ -9,7 +9,7 @@ internal class Program
         string baseApi = config["BaseApi"] ?? string.Empty;
         string apiKey = config["ApiKey"] ?? string.Empty;
         Data.ApiCaller apiCaller = new(baseApi, apiKey);
-        Dto.ContractList contractList = await apiCaller.GetContractListAsync();
+        Dto.Responses.ContractList contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList.ResponseId);
         Console.WriteLine(contractList.ResponseTime);
         Console.WriteLine(contractList.ResponseStatus);

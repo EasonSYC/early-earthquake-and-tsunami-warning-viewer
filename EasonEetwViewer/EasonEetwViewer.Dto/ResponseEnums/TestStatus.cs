@@ -9,12 +9,12 @@ namespace EasonEetwViewer.Dto.ResponseEnums;
 public enum TestStatus
 {
     /// <summary>
-    /// The <c>including</c> value, representing receiving test telegrams.
+    /// The value <c>including</c>, representing receiving test telegrams.
     /// </summary>
     [JsonStringEnumMemberName("including")]
     Include,
     /// <summary>
-    /// The <c>no</c> value, representing not receiving test telegrams.
+    /// The value <c>no</c>, representing not receiving test telegrams.
     /// </summary>
     [JsonStringEnumMemberName("no")]
     Exclude
