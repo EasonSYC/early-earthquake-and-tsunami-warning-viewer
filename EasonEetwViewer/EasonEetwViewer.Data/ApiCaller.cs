@@ -25,12 +25,12 @@ public class ApiCaller
         _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
     }
 
-    public async Task<Dto.ContractList> GetContractListAsync()
+    public async Task<Dto.Responses.ContractList> GetContractListAsync()
     {
         HttpResponseMessage response = await _httpClient.GetAsync(_baseApi + "/contract");
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        Dto.ContractList contractList = JsonSerializer.Deserialize<Dto.ContractList>(responseBody) ?? new();
+        Dto.Responses.ContractList contractList = JsonSerializer.Deserialize<Dto.Responses.ContractList>(responseBody) ?? new();
         return contractList;
     }
 }
