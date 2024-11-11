@@ -6,6 +6,10 @@
 /// <typeparam name="T">The type of elements in the list.</typeparam>
 public class PrintList<T> : List<T>
 {
+    /// <summary>
+    /// Returns a string representing the list.
+    /// </summary>
+    /// <returns>A string representing the list.</returns>
     public override string ToString()
     {
         return $"List [ {string.Join(", ", this)} ]";
