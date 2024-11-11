@@ -31,8 +31,8 @@ internal class Program
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
-        Console.WriteLine("Successfully closed WebSocket connection.");
+        //await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
+        //Console.WriteLine("Successfully closed WebSocket connection.");
 
         EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
         Console.WriteLine(earthquakeParameter.ResponseId);
@@ -41,5 +41,14 @@ internal class Program
         Console.WriteLine(earthquakeParameter.Version);
         Console.WriteLine(earthquakeParameter.ChangeTime);
         Console.WriteLine(earthquakeParameter.ItemList[0]);
+
+        PastEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
+        Console.WriteLine(pastEarthquakeList.ResponseId);
+        Console.WriteLine(pastEarthquakeList.ResponseStatus);
+        Console.WriteLine(pastEarthquakeList.ResponseTime);
+        Console.WriteLine(pastEarthquakeList.NextToken);
+        Console.WriteLine(pastEarthquakeList.NextPooling);
+        Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
+        Console.WriteLine(pastEarthquakeList.ItemList[0]);
     }
 }

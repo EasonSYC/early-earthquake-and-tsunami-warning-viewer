@@ -52,10 +52,10 @@ public record EarthquakeStation
     /// The property <c>latitude</c>, the latitude of the observation point.
     /// </summary>
     [JsonPropertyName("latitude")]
-    public required string Latitude { get; init; }
+    public required double Latitude { get; init; }
     /// <summary>
     /// The property <c>longitude</c>, the longitude of the observation point.
     /// </summary>
     [JsonPropertyName("longitude")]
-    public required string Longitude { get; init; }
+    public required double Longitude { get; init; }
 }

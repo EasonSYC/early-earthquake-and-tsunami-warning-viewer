@@ -26,7 +26,7 @@ public record WebSocketDetails
     [JsonPropertyName("test")]
     public required TestStatus Test { get; init; }
     /// <summary>
-    /// The property <c>types</c>. The types of telegrams the program receives.
+    /// The property <c>types</c>. The types of telegrams the WebSocket receives.
     /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
