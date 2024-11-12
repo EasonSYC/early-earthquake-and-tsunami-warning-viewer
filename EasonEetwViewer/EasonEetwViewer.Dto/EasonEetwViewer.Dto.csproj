@@ -19,4 +19,8 @@
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="WebSocket\" />
+  </ItemGroup>
+
 </Project>
