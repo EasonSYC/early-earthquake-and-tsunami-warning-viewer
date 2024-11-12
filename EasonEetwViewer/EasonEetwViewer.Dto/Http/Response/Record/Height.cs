@@ -21,5 +21,5 @@ public record Height
     /// The property <c>value</c>. The value of the height.
     /// </summary>
     [JsonPropertyName("value")]
-    public required float? Value { get; init; }
+    public required float Value { get; init; }
 }
