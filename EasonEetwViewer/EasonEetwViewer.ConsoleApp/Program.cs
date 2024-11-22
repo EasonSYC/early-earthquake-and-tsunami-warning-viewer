@@ -13,12 +13,13 @@ internal class Program
         string baseApi = config["BaseApi"] ?? string.Empty;
         string apiKey = config["ApiKey"] ?? string.Empty;
         Data.ApiCaller apiCaller = new(baseApi, apiKey);
+        Data.WebSocketClient webSocketClient = new();
 
-        ContractList contractList = await apiCaller.GetContractListAsync();
-        Console.WriteLine(contractList);
+        // ContractList contractList = await apiCaller.GetContractListAsync();
+        // Console.WriteLine(contractList);
 
-        WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
-        Console.WriteLine(webSocketList);
+        // WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
+        // Console.WriteLine(webSocketList);
 
         WebSocketStartPost start = new()
         {
@@ -31,24 +32,26 @@ internal class Program
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        //await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
-        //Console.WriteLine("Successfully closed WebSocket connection.");
+        // await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
+        // Console.WriteLine("Successfully closed WebSocket connection.");
 
-        EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
-        Console.WriteLine(earthquakeParameter.ResponseId);
-        Console.WriteLine(earthquakeParameter.ResponseStatus);
-        Console.WriteLine(earthquakeParameter.ResponseTime);
-        Console.WriteLine(earthquakeParameter.Version);
-        Console.WriteLine(earthquakeParameter.ChangeTime);
-        Console.WriteLine(earthquakeParameter.ItemList[0]);
+        // EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
+        // Console.WriteLine(earthquakeParameter.ResponseId);
+        // Console.WriteLine(earthquakeParameter.ResponseStatus);
+        // Console.WriteLine(earthquakeParameter.ResponseTime);
+        // Console.WriteLine(earthquakeParameter.Version);
+        // Console.WriteLine(earthquakeParameter.ChangeTime);
+        // Console.WriteLine(earthquakeParameter.ItemList[0]);
 
-        PastEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
-        Console.WriteLine(pastEarthquakeList.ResponseId);
-        Console.WriteLine(pastEarthquakeList.ResponseStatus);
-        Console.WriteLine(pastEarthquakeList.ResponseTime);
-        Console.WriteLine(pastEarthquakeList.NextToken);
-        Console.WriteLine(pastEarthquakeList.NextPooling);
-        Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
-        Console.WriteLine(pastEarthquakeList.ItemList[0]);
+        // PastEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
+        // Console.WriteLine(pastEarthquakeList.ResponseId);
+        // Console.WriteLine(pastEarthquakeList.ResponseStatus);
+        // Console.WriteLine(pastEarthquakeList.ResponseTime);
+        // Console.WriteLine(pastEarthquakeList.NextToken);
+        // Console.WriteLine(pastEarthquakeList.NextPooling);
+        // Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
+        // Console.WriteLine(pastEarthquakeList.ItemList[0]);
+
+        await webSocketClient.ConnectWebSocketAsync(response.WebSockerUrl.Url);
     }
 }

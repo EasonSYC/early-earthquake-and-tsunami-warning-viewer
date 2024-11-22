@@ -22,7 +22,7 @@ public class ApiCaller
 
         _baseApi = baseApi;
         _httpClient = new HttpClient();
-        byte[]? plainTextBytes = System.Text.Encoding.UTF8.GetBytes(apiKey + ":");
+        byte[]? plainTextBytes = Encoding.UTF8.GetBytes(apiKey + ":");
         string val = Convert.ToBase64String(plainTextBytes);
         _httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + val);
     }
