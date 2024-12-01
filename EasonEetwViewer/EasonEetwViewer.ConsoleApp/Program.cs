@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Dto.Http.Enum;
+﻿using EasonEetwViewer.Data;
+using EasonEetwViewer.Dto.Http.Enum;
 using EasonEetwViewer.Dto.Http.Request;
 using EasonEetwViewer.Dto.Http.Request.Enum;
 using EasonEetwViewer.Dto.Http.Response;
@@ -11,9 +12,21 @@ internal class Program
     {
         IConfigurationRoot? config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
         string baseApi = config["BaseApi"] ?? string.Empty;
+        string oAuthBase = config["OAuthBase"] ?? string.Empty;
+        string oAuthHost = config["OAuthHost"] ?? string.Empty;
+        string oAuthScopes = config["OAuthScopes"] ?? string.Empty;
         string apiKey = config["ApiKey"] ?? string.Empty;
+        string clientId = config["ClientId"] ?? string.Empty;
         Data.ApiCaller apiCaller = new(baseApi, apiKey);
         Data.WebSocketClient webSocketClient = new();
+        Data.Authentication authentication = new(clientId, oAuthBase, oAuthHost, oAuthScopes);
+
+        Console.WriteLine(await authentication.GetAccessTokenAsync());
+        Console.WriteLine(await authentication.GetAccessTokenAsync());
+        Console.WriteLine(await authentication.ForceNewAccessTokenAsync());
+        Console.WriteLine(await authentication.GetAccessTokenAsync());
+        Console.WriteLine(await authentication.GetAccessTokenAsync());
+        Console.WriteLine(await authentication.ForceNewAccessTokenAsync());
 
         // ContractList contractList = await apiCaller.GetContractListAsync();
         // Console.WriteLine(contractList);
@@ -21,16 +34,16 @@ internal class Program
         // WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
         // Console.WriteLine(webSocketList);
 
-        WebSocketStartPost start = new()
-        {
-            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
-            Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
-            TestStatus = TestStatus.Include,
-            AppName = "Test",
-            FormatMode = FormatMode.Raw
-        };
-        WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
-        Console.WriteLine(response);
+        // WebSocketStartPost start = new()
+        // {
+        //     Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
+        //     Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
+        //     TestStatus = TestStatus.Include,
+        //     AppName = "Test",
+        //     FormatMode = FormatMode.Raw
+        // };
+        // WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
+        // Console.WriteLine(response);
 
         // await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
         // Console.WriteLine("Successfully closed WebSocket connection.");
@@ -52,6 +65,9 @@ internal class Program
         // Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         // Console.WriteLine(pastEarthquakeList.ItemList[0]);
 
-        await webSocketClient.ConnectWebSocketAsync(response.WebSockerUrl.Url);
+        // await webSocketClient.ConnectWebSocketAsync(response.WebSockerUrl.Url);
+
+
+        await authentication.Revoke();
     }
 }
