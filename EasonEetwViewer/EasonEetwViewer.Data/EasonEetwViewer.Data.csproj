@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../EasonEetwViewer.Authentication/EasonEetwViewer.Authentication.csproj" />
     <ProjectReference Include="..\EasonEetwViewer.Dto\EasonEetwViewer.Dto.csproj" />
   </ItemGroup>
 

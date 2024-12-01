@@ -7,27 +7,27 @@ using System.Text.Json;
 using System.Web;
 using System.Net;
 using System.Net.Sockets;
-using EasonEetwViewer.Dto.OAuth;
 using System.Diagnostics;
+using EasonEetwViewer.Authentication.OAuth2;
 
-namespace EasonEetwViewer.Data;
+namespace EasonEetwViewer.Authentication;
 
-public class Authentication
+public class OAuth : IAuthenticator
 {
     private readonly string _clientId;
     private readonly string _host;
     private readonly Uri _base;
     private readonly HttpClient _httpClient;
-    private readonly OAuthToken _tokens;
+    private TokenSet _tokens;
     private readonly string _scopes;
     private const string _allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private const string _redirectPath = "eeetwv-code-auth/";
+    private const string _tokenPath = "oauth.json";
     private const int _codeLength = 64;
     private const int _stateLength = 8;
     private const int _accessTokenValiditySeconds = 21600;
     private const int _refreshTokenValidityDays = 183;
-
-    public Authentication(string clientId, string basePath, string host, string scopes)
+    public OAuth(string clientId, string basePath, string host, string scopes)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(clientId, nameof(clientId));
         ArgumentException.ThrowIfNullOrWhiteSpace(basePath, nameof(basePath));
@@ -41,19 +41,24 @@ public class Authentication
         {
             BaseAddress = _base
         };
-        Console.WriteLine(_httpClient.BaseAddress.ToString());
         _scopes = scopes;
-        _tokens = ReadToken("credentials.json");
+        _tokens = ReadToken(_tokenPath);
     }
-    private static OAuthToken ReadToken(string filePath)
+    private static TokenSet ReadToken(string filePath)
     {
         if (File.Exists(filePath))
         {
             string fileBody = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<OAuthToken>(fileBody) ?? OAuthToken.Default;
+            return JsonSerializer.Deserialize<TokenSet>(fileBody) ?? TokenSet.Default;   
         }
 
-        return OAuthToken.Default;
+        return TokenSet.Default;
+    }
+    private void WriteToken(string filePath)
+    {
+        string fileBody = JsonSerializer.Serialize<TokenSet>(_tokens);
+        File.WriteAllText(filePath, fileBody);
+        Console.WriteLine(fileBody);
     }
     private static string VerifierToChallenge(string verifier)
     {
@@ -61,34 +66,6 @@ public class Authentication
         string challenge = Convert.ToBase64String(hash).Replace("+", "-").Replace("/", "_").TrimEnd('=');
         return challenge;
     }
-    public async Task WriteTokenAsync(string filePath)
-    {
-        string fileBody = JsonSerializer.Serialize(_tokens);
-        await File.WriteAllTextAsync(filePath, fileBody);
-    }
-    public async Task<string> GetAccessTokenAsync()
-    {
-        if (_tokens.AccessToken.IsValid)
-        {
-            return _tokens.AccessToken.Code;
-        }
-        if (_tokens.RefreshToken.IsValid)
-        {
-            await RenewAccessTokenAsync();
-            return _tokens.AccessToken.Code;
-        }
-        await RenewRefreshTokenAsync();
-        return _tokens.AccessToken.Code;
-    }
-    public async Task<string> ForceNewAccessTokenAsync()
-    {
-        Task revokeAccessToken = RevokeTokenAsync(_tokens.AccessToken.Code);
-        _tokens.AccessToken = Token.Default;
-        Task<string> getNewAccessToken = GetAccessTokenAsync();
-        await Task.WhenAll(revokeAccessToken, getNewAccessToken);
-        return getNewAccessToken.Result;
-    }
-
     private void FindUnusedPort()
     {
         TcpListener listener = new(IPAddress.Loopback, 0);
@@ -96,12 +73,43 @@ public class Authentication
         int port = ((IPEndPoint)listener.LocalEndpoint).Port;
         listener.Stop();
 
-        Console.WriteLine(port);
-
         _tokens.Port = port;
     }
+    public async Task<string> GetAuthenticationHeader()
+    {
+        await CheckAccessTokenAsync();
+        return $"Bearer {_tokens.AccessToken.Code}";
+    }
+    public async Task<string> GetNewAuthenticationHeader()
+    {
+        await NewAccessTokenAsync();
+        return $"Bearer {_tokens.AccessToken.Code}";
+    }
+    public async Task CheckAccessTokenAsync()
+    {
+        if (_tokens.AccessToken.IsValid)
+        {
+            return;
+        }
+        if (_tokens.RefreshToken.IsValid)
+        {
+            await RenewAccessTokenAsync();
+            return;
+        }
+        await RenewRefreshTokenAsync();
+        return;
+    }
+    public async Task NewAccessTokenAsync()
+    {
+        Task revokeAccessToken = RevokeTokenRequestAsync(_tokens.AccessToken.Code);
+        _tokens.AccessToken = Token.Default;
+        WriteToken(_tokenPath);
 
-    private async Task<string> GetGrantCode()
+        Task checkNewAccessToken = CheckAccessTokenAsync();
+        await Task.WhenAll(revokeAccessToken, checkNewAccessToken);
+        return;
+    }
+    private async Task<string> GenerateGrantCode()
     {
         string state = RandomNumberGenerator.GetString(_allowedChars, _stateLength);
         _tokens.CodeVerifier = RandomNumberGenerator.GetString(_allowedChars, _codeLength);
@@ -151,19 +159,16 @@ public class Authentication
         context.Response.OutputStream.Close();
         listener.Stop();
 
-        Console.WriteLine(grantCode);
-
         return requestState != state ? throw new Exception() : grantCode;
     }
-
     private async Task RenewRefreshTokenAsync()
     {
-        Task revokeAccessToken = RevokeTokenAsync(_tokens.AccessToken.Code);
-        Task revokeRefreshToken = RevokeTokenAsync(_tokens.RefreshToken.Code);
-        _tokens.AccessToken = Token.Default;
-        _tokens.RefreshToken = Token.Default;
+        Task revokeAccessToken = RevokeTokenRequestAsync(_tokens.AccessToken.Code);
+        Task revokeRefreshToken = RevokeTokenRequestAsync(_tokens.RefreshToken.Code);
+        _tokens = TokenSet.Default;
+        WriteToken(_tokenPath);
 
-        string grantCode = await GetGrantCode();
+        string grantCode = await GenerateGrantCode();
 
         Dictionary<string, string> requestParams = new(){
             { "client_id", _clientId },
@@ -176,7 +181,7 @@ public class Authentication
                 }.ToString()},
             { "code_verifier", _tokens.CodeVerifier}
         };
-        HttpRequestMessage request = GenerateRequest("token", requestParams);
+        HttpRequestMessage request = GeneratePostRequest("token", requestParams);
 
         DateTime accessTokenExpiry = DateTime.Now.Add(TimeSpan.FromSeconds(_accessTokenValiditySeconds));
         DateTime refreshTokenExpiry = DateTime.Now.Add(TimeSpan.FromDays(_refreshTokenValidityDays));
@@ -185,25 +190,27 @@ public class Authentication
         _ = response.EnsureSuccessStatusCode();
 
         string responseBody = await response.Content.ReadAsStringAsync();
-        AuthToken token = JsonSerializer.Deserialize<AuthToken>(responseBody) ?? throw new Exception();
+        TokenResponse token = JsonSerializer.Deserialize<TokenResponse>(responseBody) ?? throw new Exception();
 
         _tokens.RefreshToken = new() { Code = token.RefreshToken, Expiry = refreshTokenExpiry };
         _tokens.AccessToken = new() { Code = token.AccessToken, Expiry = accessTokenExpiry };
-
-
-        Console.WriteLine(token.RefreshToken);
-        Console.WriteLine(token.AccessToken);
+        WriteToken(_tokenPath);
 
         await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
     }
     private async Task RenewAccessTokenAsync()
     {
+
+        Task revokeAccessToken = RevokeTokenRequestAsync(_tokens.AccessToken.Code);
+        _tokens.AccessToken = Token.Default;
+        WriteToken(_tokenPath);
+
         Dictionary<string, string> requestParams = new(){
             { "client_id", _clientId },
             { "grant_type", "refresh_token" },
             { "refresh_token", _tokens.RefreshToken.Code }
         };
-        HttpRequestMessage request = GenerateRequest("token", requestParams);
+        HttpRequestMessage request = GeneratePostRequest("token", requestParams);
 
         DateTime accessTokenExpiry = DateTime.Now.Add(TimeSpan.FromSeconds(_accessTokenValiditySeconds));
         DateTime refreshTokenExpiry = DateTime.Now.Add(TimeSpan.FromDays(_refreshTokenValidityDays));
@@ -212,24 +219,15 @@ public class Authentication
         _ = response.EnsureSuccessStatusCode();
 
         string responseBody = await response.Content.ReadAsStringAsync();
-        AuthRefresh token = JsonSerializer.Deserialize<AuthRefresh>(responseBody) ?? throw new Exception();
-
-        Console.WriteLine(token.AccessToken);
+        RefreshResponse token = JsonSerializer.Deserialize<RefreshResponse>(responseBody) ?? throw new Exception();
 
         _tokens.RefreshToken.Expiry = refreshTokenExpiry;
         _tokens.AccessToken = new() { Code = token.AccessToken, Expiry = accessTokenExpiry };
-    }
-    public async Task Revoke()
-    {
-        Task revokeAccessToken = RevokeTokenAsync(_tokens.AccessToken.Code);
-        Task revokeRefreshToken = RevokeTokenAsync(_tokens.RefreshToken.Code);
+        WriteToken(_tokenPath);
 
-        _tokens.AccessToken = Token.Default;
-        _tokens.RefreshToken = Token.Default;
-
-        await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
+        await revokeAccessToken;
     }
-    private async Task RevokeTokenAsync(string token)
+    private async Task RevokeTokenRequestAsync(string token)
     {
         if (string.IsNullOrEmpty(token))
         {
@@ -239,13 +237,13 @@ public class Authentication
             { "client_id", _clientId },
             { "token", token }
         };
-        HttpRequestMessage request = GenerateRequest("revoke", requestParams);
+        HttpRequestMessage request = GeneratePostRequest("revoke", requestParams);
         HttpResponseMessage response = await _httpClient.SendAsync(request);
         _ = response.EnsureSuccessStatusCode();
 
         string responseBody = await response.Content.ReadAsStringAsync();
     }
-    private HttpRequestMessage GenerateRequest(string requestUri, Dictionary<string, string> requestParams)
+    private HttpRequestMessage GeneratePostRequest(string requestUri, Dictionary<string, string> requestParams)
     {
         FormUrlEncodedContent content = new(requestParams);
         HttpRequestMessage request = new(HttpMethod.Post, requestUri)

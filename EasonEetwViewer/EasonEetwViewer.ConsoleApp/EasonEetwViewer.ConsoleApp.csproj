@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../EasonEetwViewer.Authentication/EasonEetwViewer.Authentication.csproj" />
     <ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.Data.csproj" />
     <ProjectReference Include="..\EasonEetwViewer.Dto\EasonEetwViewer.Dto.csproj" />
   </ItemGroup>

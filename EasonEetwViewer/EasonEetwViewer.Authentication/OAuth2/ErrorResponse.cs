@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.OAuth;
+namespace EasonEetwViewer.Authentication.OAuth2;
 
-public record AuthError
+public record ErrorResponse
 {
     [JsonPropertyName("error")]
     public required string Error { get; init; }
