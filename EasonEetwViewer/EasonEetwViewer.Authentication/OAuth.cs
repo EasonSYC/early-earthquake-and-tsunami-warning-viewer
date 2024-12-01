@@ -22,7 +22,7 @@ public class OAuth : IAuthenticator
     private readonly string _scopes;
     private const string _allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private const string _redirectPath = "eeetwv-code-auth/";
-    private const string _tokenPath = "oauth.json";
+    private const string _tokenPath = "oAuth.json";
     private const int _codeLength = 64;
     private const int _stateLength = 8;
     private const int _accessTokenValiditySeconds = 21600;

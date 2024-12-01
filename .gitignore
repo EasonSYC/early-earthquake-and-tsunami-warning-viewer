@@ -1,3 +1,7 @@
+# Config Files
+appSettings.json
+oAuth.json
+
 # Gradle files
 .gradle/
 build/

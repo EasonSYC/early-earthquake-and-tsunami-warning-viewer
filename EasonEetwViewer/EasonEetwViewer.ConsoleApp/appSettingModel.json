@@ -1,0 +1,11 @@
+{
+    "baseApi": "",
+    "oAuth": {
+        "clientId": "",
+        "baseUri": "",
+        "host": "",
+        "scopes": [
+        ]
+    },
+    "apiKey": ""
+}
