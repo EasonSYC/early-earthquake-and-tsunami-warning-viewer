@@ -27,12 +27,11 @@ public class OAuth : IAuthenticator
     private const int _stateLength = 8;
     private const int _accessTokenValiditySeconds = 21600;
     private const int _refreshTokenValidityDays = 183;
-    public OAuth(string clientId, string basePath, string host, string scopes)
+    public OAuth(string clientId, string basePath, string host, List<string> scopes)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(clientId, nameof(clientId));
         ArgumentException.ThrowIfNullOrWhiteSpace(basePath, nameof(basePath));
         ArgumentException.ThrowIfNullOrWhiteSpace(host, nameof(host));
-        ArgumentException.ThrowIfNullOrWhiteSpace(scopes, nameof(scopes));
 
         _clientId = clientId;
         _host = host;
@@ -41,7 +40,7 @@ public class OAuth : IAuthenticator
         {
             BaseAddress = _base
         };
-        _scopes = scopes;
+        _scopes = string.Join(' ', scopes);
         _tokens = ReadToken(_tokenPath);
     }
     private static TokenSet ReadToken(string filePath)
@@ -56,9 +55,8 @@ public class OAuth : IAuthenticator
     }
     private void WriteToken(string filePath)
     {
-        string fileBody = JsonSerializer.Serialize<TokenSet>(_tokens);
+        string fileBody = JsonSerializer.Serialize(_tokens);
         File.WriteAllText(filePath, fileBody);
-        Console.WriteLine(fileBody);
     }
     private static string VerifierToChallenge(string verifier)
     {
@@ -75,15 +73,15 @@ public class OAuth : IAuthenticator
 
         _tokens.Port = port;
     }
-    public async Task<string> GetAuthenticationHeader()
+    public async Task<AuthenticationHeaderValue> GetAuthenticationHeader()
     {
         await CheckAccessTokenAsync();
-        return $"Bearer {_tokens.AccessToken.Code}";
+        return new("Bearer", _tokens.AccessToken.Code);
     }
-    public async Task<string> GetNewAuthenticationHeader()
+    public async Task<AuthenticationHeaderValue> GetNewAuthenticationHeader()
     {
         await NewAccessTokenAsync();
-        return $"Bearer {_tokens.AccessToken.Code}";
+        return new("Bearer", _tokens.AccessToken.Code);
     }
     public async Task CheckAccessTokenAsync()
     {

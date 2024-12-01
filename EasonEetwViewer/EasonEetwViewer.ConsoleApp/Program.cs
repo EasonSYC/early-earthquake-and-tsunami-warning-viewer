@@ -13,16 +13,17 @@ internal class Program
 {
     static async Task Main()
     {
-        IConfigurationRoot? config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
+        IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         string apiKey = config["ApiKey"] ?? string.Empty;
         IAuthenticator apiKeyAuth = new ApiKey(apiKey);
 
-        string oAuthClientId = config["OAuthClientId"] ?? string.Empty;
-        string oAuthBase = config["OAuthBase"] ?? string.Empty;
-        string oAuthHost = config["OAuthHost"] ?? string.Empty;
-        string oAuthScopes = config["OAuthScopes"] ?? string.Empty;
-        IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBase, oAuthHost, oAuthScopes);
+        IConfigurationSection oAuthConfig = config.GetSection("oAuth");
+        string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
+        string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
+        string oAuthHost = oAuthConfig["host"] ?? string.Empty;
+        List<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<List<string>>() ?? [];
+        IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
         string baseApi = config["BaseApi"] ?? string.Empty;
 
@@ -31,6 +32,8 @@ internal class Program
 
         // WebSocketClient webSocketClient = new();
 
+        // await TestAuthenticator(apiKey);
+        await TestAuthenticator(oAuth);
         await TestApiCaller(apiCaller);
     }
 

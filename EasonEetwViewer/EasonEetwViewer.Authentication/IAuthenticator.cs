@@ -1,9 +1,9 @@
-using System;
+using System.Net.Http.Headers;
 
 namespace EasonEetwViewer.Authentication;
 
 public interface IAuthenticator
 {
-    public Task<string> GetAuthenticationHeader();
-    public Task<string> GetNewAuthenticationHeader();
+    public Task<AuthenticationHeaderValue> GetAuthenticationHeader();
+    public Task<AuthenticationHeaderValue> GetNewAuthenticationHeader();
 }
