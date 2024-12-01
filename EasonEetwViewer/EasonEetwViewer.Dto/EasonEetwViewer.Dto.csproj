@@ -18,9 +18,5 @@
     <WarningLevel>9999</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="WebSocket\" />
-  </ItemGroup>
-
+  
 </Project>
