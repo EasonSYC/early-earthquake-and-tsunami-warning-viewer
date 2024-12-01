@@ -1,9 +1,9 @@
 {
-    "baseApi": "",
+    "baseApi": "https://api.dmdata.jp/v2/",
     "oAuth": {
         "clientId": "",
-        "baseUri": "",
-        "host": "",
+        "baseUri": "https://manager.dmdata.jp/account/oauth2/v1/",
+        "host": "manager.dmdata.jp",
         "scopes": [
         ]
     },
