@@ -1,28 +1,26 @@
-﻿using EasonEetwViewer.Data;
+﻿using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Data;
 using EasonEetwViewer.Dto.Http.Enum;
 using EasonEetwViewer.Dto.Http.Request;
 using EasonEetwViewer.Dto.Http.Request.Enum;
 using EasonEetwViewer.Dto.Http.Response;
 using Microsoft.Extensions.Configuration;
-using EasonEetwViewer.Authentication;
-using System.Runtime.CompilerServices;
-using System.Net.WebSockets;
 namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
-    static async Task Main()
+    private static async Task Main()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         string apiKey = config["ApiKey"] ?? string.Empty;
-        IAuthenticator apiKeyAuth = new ApiKey(apiKey);
+        _ = new ApiKey(apiKey);
 
         IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
         string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
         string oAuthHost = oAuthConfig["host"] ?? string.Empty;
-        List<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<List<string>>() ?? [];
+        HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
         IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
         string baseApi = config["BaseApi"] ?? string.Empty;

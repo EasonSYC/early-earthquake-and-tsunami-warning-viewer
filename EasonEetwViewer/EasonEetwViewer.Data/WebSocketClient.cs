@@ -69,10 +69,11 @@ public class WebSocketClient
                         WebSocketErrorResponse errorResponse = JsonSerializer.Deserialize<WebSocketErrorResponse>(responseBody, _options) ?? throw new Exception();
                         Console.WriteLine(value: $"Error Response: {errorResponse}");
 
-                        if(errorResponse.Close){
+                        if (errorResponse.Close)
+                        {
                             keepAlive = false;
                         }
-                        
+
                         break;
 
                     case WebSocketResponseType.Data:

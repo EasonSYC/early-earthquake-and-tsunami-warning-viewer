@@ -1,5 +1,5 @@
-using System.Text;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace EasonEetwViewer.Authentication;
 
@@ -18,20 +18,21 @@ public class ApiKey : IAuthenticator
     /// </summary>
     /// <returns>An <c>AuthenticationHeaderValue</c> using <c>Basic</c>.</returns>
     public Task<AuthenticationHeaderValue> GetAuthenticationHeader() => Task.FromResult(_header);
+
     /// <summary>
     /// Returns an <c>AuthenticationHeaderValue</c> to be used in a HTTP request.
     /// This behaviour is identical to <c>GetAuthenticationHeader</c> since it is impossible to refresh an API Key.
     /// </summary>
     /// <returns>An <c>AuthenticationHeaderValue</c> using <c>Basic</c>.</returns>
     public Task<AuthenticationHeaderValue> GetNewAuthenticationHeader() => Task.FromResult(_header);
+
     /// <summary>
     /// Creates a new instance of the class with a given API Key.
     /// </summary>
-    /// <param name="apiKey">The <c>apiKey</c> to be used.</param>
-    /// <exception cref="ArgumentException">When <c>apiKey</c> is not valid.</exception>
+    /// <param name="apiKey">The API Key to be used.</param>
     public ApiKey(string apiKey)
     {
-        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Length <= 4 || apiKey.Substring(0, 4) != "AKe.")
+        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Length <= 4 || apiKey[..4] != "AKe.")
         {
             throw new ArgumentException($"{apiKey} is not a valid API Key.", nameof(apiKey));
         }
