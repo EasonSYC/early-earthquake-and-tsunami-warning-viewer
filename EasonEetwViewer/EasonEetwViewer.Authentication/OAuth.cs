@@ -50,7 +50,7 @@ public class OAuth : IAuthenticator
     /// </summary>
     private const string _redirectPath = "eeetwv-code-auth/";
     /// <summary>
-    /// The directory to store tokens to be retrieved in the next run.
+    /// The directory to store tokens to be stored and retrieved in the next run.
     /// </summary>
     private const string _tokenPath = "oAuth.json";
     /// <summary>
@@ -62,11 +62,11 @@ public class OAuth : IAuthenticator
     /// </summary>
     private const int _stateLength = 32;
     /// <summary>
-    /// The time for the validity of an access token.
+    /// The time span for the validity of an access token.
     /// </summary>
     private readonly TimeSpan _accessTokenValidity = TimeSpan.FromHours(6);
     /// <summary>
-    /// The time for the validity of a refresh token.
+    /// The time span for the validity of a refresh token.
     /// </summary>
     private readonly TimeSpan _refreshTokenValidity = TimeSpan.FromDays(183);
     /// <summary>
