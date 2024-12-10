@@ -1,8 +1,8 @@
 ﻿using EasonEetwViewer.Authentication;
-using EasonEetwViewer.WebSocket;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
 namespace EasonEetwViewer.ConsoleApp;
 

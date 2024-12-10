@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Model;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.Model;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 
 namespace EasonEetwViewer.HttpRequest.Dto;
