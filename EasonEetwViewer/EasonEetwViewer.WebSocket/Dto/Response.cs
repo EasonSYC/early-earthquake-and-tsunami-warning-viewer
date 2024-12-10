@@ -1,15 +1,16 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dto;
 
 /// <summary>
 /// Represents a response received from the WebSocket.
 /// </summary>
-public record WebSocketResponse
+internal record Response
 {
     /// <summary>
     /// The property <c>type</c>, representing the type of the response the WebSocket receives.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("type")]
-    public virtual WebSocketResponseType Type { get; init; }
+    internal virtual ResponseType Type { get; init; }
 }

@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dto;
 
 /// <summary>
 /// Represents a pong response from the WebSocket.
 /// </summary>
-public record WebSocketPongResponse : WebSocketResponse
+internal record PongResponse : Response
 {
     /// <summary>
     /// The property <c>type</c>, a constant <c>WebSocketResponseType.Pong</c>.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("type")]
-    public override WebSocketResponseType Type { get; init; } = WebSocketResponseType.Pong;
+    internal override ResponseType Type { get; init; } = ResponseType.Pong;
     /// <summary>
     /// The property <c>pingId</c>, the Ping ID that was included when the user initiated the Ping.
     /// <c>null</c> when not specified by the user-initiated ping.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("pingId")]
-    public string? PingId { get; init; }
+    internal string? PingId { get; init; }
 }

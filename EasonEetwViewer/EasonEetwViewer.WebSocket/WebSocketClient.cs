@@ -2,9 +2,9 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using EasonEetwViewer.Dto.WebSocket;
+using EasonEetwViewer.WebSocket.Dto;
 
-namespace EasonEetwViewer.Data;
+namespace EasonEetwViewer.WebSocket;
 
 public class WebSocketClient
 {
@@ -31,19 +31,19 @@ public class WebSocketClient
                     CancellationToken.None);
                 string responseBody = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
 
-                WebSocketResponse webSocketResponse = JsonSerializer.Deserialize<WebSocketResponse>(responseBody, _options) ?? throw new Exception();
+                Response webSocketResponse = JsonSerializer.Deserialize<Response>(responseBody, _options) ?? throw new Exception();
 
                 switch (webSocketResponse.Type)
                 {
-                    case WebSocketResponseType.Start:
+                    case ResponseType.Start:
                         Console.WriteLine("This is a start response.");
                         break;
 
-                    case WebSocketResponseType.Ping:
-                        WebSocketPingResponse pingResponse = JsonSerializer.Deserialize<WebSocketPingResponse>(responseBody, _options) ?? throw new Exception();
+                    case ResponseType.Ping:
+                        PingResponse pingResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
                         Console.WriteLine($"Ping Response: {pingResponse}");
 
-                        WebSocketPongRequest pongRequest = new()
+                        PongRequest pongRequest = new()
                         {
                             PingId = pingResponse.PingId
                         };
@@ -60,13 +60,13 @@ public class WebSocketClient
 
                         break;
 
-                    case WebSocketResponseType.Pong:
-                        WebSocketPingResponse pongResponse = JsonSerializer.Deserialize<WebSocketPingResponse>(responseBody, _options) ?? throw new Exception();
+                    case ResponseType.Pong:
+                        PingResponse pongResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
                         Console.WriteLine(value: $"Pong Response: {pongResponse}");
                         break;
 
-                    case WebSocketResponseType.Error:
-                        WebSocketErrorResponse errorResponse = JsonSerializer.Deserialize<WebSocketErrorResponse>(responseBody, _options) ?? throw new Exception();
+                    case ResponseType.Error:
+                        ErrorResponse errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseBody, _options) ?? throw new Exception();
                         Console.WriteLine(value: $"Error Response: {errorResponse}");
 
                         if (errorResponse.Close)
@@ -76,7 +76,7 @@ public class WebSocketClient
 
                         break;
 
-                    case WebSocketResponseType.Data:
+                    case ResponseType.Data:
                         Console.WriteLine("This is a data response.");
                         break;
 

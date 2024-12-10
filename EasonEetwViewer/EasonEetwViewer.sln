@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.Data", "Eas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Authentication", "EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj", "{FE8DF445-A973-4871-97D8-828D95518FA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.WebSocket", "EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj", "{8C4806BB-15E2-40E9-AAF5-75C661296C6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FE8DF445-A973-4871-97D8-828D95518FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE8DF445-A973-4871-97D8-828D95518FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE8DF445-A973-4871-97D8-828D95518FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4806BB-15E2-40E9-AAF5-75C661296C6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4806BB-15E2-40E9-AAF5-75C661296C6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4806BB-15E2-40E9-AAF5-75C661296C6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4806BB-15E2-40E9-AAF5-75C661296C6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

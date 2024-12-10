@@ -1,12 +1,12 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dto;
 
 /// <summary>
 /// Represents the type of response received by the WebSocket.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<WebSocketResponseType>))]
-public enum WebSocketResponseType
+[JsonConverter(typeof(JsonStringEnumConverter<ResponseType>))]
+internal enum ResponseType
 {
     /// <summary>
     /// Unknown. Default value.

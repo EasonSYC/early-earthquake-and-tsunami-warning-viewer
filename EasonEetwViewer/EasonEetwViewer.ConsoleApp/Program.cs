@@ -4,6 +4,7 @@ using EasonEetwViewer.Dto.Http.Enum;
 using EasonEetwViewer.Dto.Http.Request;
 using EasonEetwViewer.Dto.Http.Request.Enum;
 using EasonEetwViewer.Dto.Http.Response;
+using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -14,7 +15,7 @@ internal class Program
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         string apiKey = config["ApiKey"] ?? string.Empty;
-        _ = new ApiKey(apiKey);
+        IAuthenticator apiKeyAuth = new ApiKey(apiKey);
 
         IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
@@ -25,14 +26,15 @@ internal class Program
 
         string baseApi = config["BaseApi"] ?? string.Empty;
 
-        // ApiCaller apiCaller = new(baseApi, apiKeyAuth);
-        ApiCaller apiCaller = new(baseApi, oAuth);
+        ApiCaller apiCaller = new(baseApi, apiKeyAuth);
+        // ApiCaller apiCaller = new(baseApi, oAuth);
 
-        // WebSocketClient webSocketClient = new();
+        WebSocketClient webSocketClient = new();
 
         // await TestAuthenticator(apiKey);
-        await TestAuthenticator(oAuth);
-        await TestApiCaller(apiCaller);
+        // await TestAuthenticator(oAuth);
+        // await TestApiCaller(apiCaller);
+        await TestWebSocket(apiCaller, webSocketClient);
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)

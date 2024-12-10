@@ -1,30 +1,34 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dto;
 
 /// <summary>
 /// Represents an error response from the WebSocket.
 /// </summary>
-public record WebSocketErrorResponse : WebSocketResponse
+internal record ErrorResponse : Response
 {
     /// <summary>
     /// The property <c>type</c>, a constant <c>WebSocketResponseType.Error</c>.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("type")]
-    public override WebSocketResponseType Type { get; init; } = WebSocketResponseType.Error;
+    internal override ResponseType Type { get; init; } = ResponseType.Error;
     /// <summary>
     /// The property <c>error</c>, the error message.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("error")]
-    public required string Error { get; init; }
+    internal required string Error { get; init; }
     /// <summary>
     /// The property <c>code</c>, the error code.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("code")]
-    public required int Code { get; init; }
+    internal required int Code { get; init; }
     /// <summary>
     /// The property <c>close</c>, whether the error was fatal and the WebSocket connectikon is closed.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("close")]
-    public required bool Close { get; init; }
+    internal required bool Close { get; init; }
 }
