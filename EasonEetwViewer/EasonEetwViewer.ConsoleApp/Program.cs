@@ -20,7 +20,7 @@ internal class Program
         string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
         string oAuthHost = oAuthConfig["host"] ?? string.Empty;
         HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
-        _ = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
+        IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
         string baseApi = config["BaseApi"] ?? string.Empty;
 
