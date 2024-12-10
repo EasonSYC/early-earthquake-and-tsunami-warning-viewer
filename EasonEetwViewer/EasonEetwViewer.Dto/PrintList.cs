@@ -10,8 +10,5 @@ public class PrintList<T> : List<T>
     /// Returns a string representing the list.
     /// </summary>
     /// <returns>A string representing the list.</returns>
-    public override string ToString()
-    {
-        return $"List [ {string.Join(", ", this)} ]";
-    }
+    public override string ToString() => $"List [ {string.Join(", ", this)} ]";
 }

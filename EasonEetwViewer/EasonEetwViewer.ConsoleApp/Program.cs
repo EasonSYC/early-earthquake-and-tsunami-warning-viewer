@@ -35,7 +35,7 @@ internal class Program
         await TestApiCaller(apiCaller);
     }
 
-    static async Task TestAuthenticator(IAuthenticator auth)
+    private static async Task TestAuthenticator(IAuthenticator auth)
     {
         Console.WriteLine(await auth.GetAuthenticationHeader());
         Console.WriteLine(await auth.GetAuthenticationHeader());
@@ -47,7 +47,7 @@ internal class Program
         Console.WriteLine(await auth.GetAuthenticationHeader());
     }
 
-    static async Task TestApiCaller(ApiCaller apiCaller)
+    private static async Task TestApiCaller(ApiCaller apiCaller)
     {
         ContractList contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList);
@@ -86,7 +86,7 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         Console.WriteLine(pastEarthquakeList.ItemList[0]);
     }
-    static async Task TestWebSocket(ApiCaller apiCaller, WebSocketClient webSocketClient)
+    private static async Task TestWebSocket(ApiCaller apiCaller, WebSocketClient webSocketClient)
     {
         WebSocketStartPost start = new()
         {
