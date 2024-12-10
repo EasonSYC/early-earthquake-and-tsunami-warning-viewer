@@ -2,10 +2,9 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Dto.Http.Request;
-using EasonEetwViewer.Dto.Http.Response;
+using EasonEetwViewer.HttpRequest.Dto;
 
-namespace EasonEetwViewer.Data;
+namespace EasonEetwViewer.HttpRequest;
 
 public class ApiCaller
 {

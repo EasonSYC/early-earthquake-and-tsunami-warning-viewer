@@ -1,10 +1,8 @@
 ﻿using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Data;
-using EasonEetwViewer.Dto.Http.Enum;
-using EasonEetwViewer.Dto.Http.Request;
-using EasonEetwViewer.Dto.Http.Request.Enum;
-using EasonEetwViewer.Dto.Http.Response;
 using EasonEetwViewer.WebSocket;
+using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Dto;
+using EasonEetwViewer.HttpRequest.Dto.Enum;
 using Microsoft.Extensions.Configuration;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -22,7 +20,7 @@ internal class Program
         string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
         string oAuthHost = oAuthConfig["host"] ?? string.Empty;
         HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
-        IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
+        _ = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
         string baseApi = config["BaseApi"] ?? string.Empty;
 
@@ -33,7 +31,7 @@ internal class Program
 
         // await TestAuthenticator(apiKey);
         // await TestAuthenticator(oAuth);
-        // await TestApiCaller(apiCaller);
+        await TestApiCaller(apiCaller);
         await TestWebSocket(apiCaller, webSocketClient);
     }
 
