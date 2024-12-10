@@ -23,9 +23,9 @@ public class WebSocketClient
             Console.WriteLine("Connected to the WebSocket server.");
 
             bool keepAlive = true;
-            while (keepAlive)
+            while (keepAlive) // Modified from https://stackoverflow.com/a/65761228, https://stackoverflow.com/a/63574016
             {
-                byte[] receiveBuffer = new byte[32768];
+                byte[] receiveBuffer = new byte[32768]; // https://stackoverflow.com/a/41926694
                 WebSocketReceiveResult result = await client.ReceiveAsync(
                     new ArraySegment<byte>(receiveBuffer),
                     CancellationToken.None);

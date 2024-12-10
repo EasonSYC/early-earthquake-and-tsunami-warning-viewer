@@ -91,24 +91,19 @@ public class OAuth : IAuthenticator
         };
 
         TokenData? readData = ReadToken(_tokenPath);
-        if (readData is null)
-        {
-            _tokenData = new(scopes, _accessTokenValidity, _refreshTokenValidity);
-            WriteToken(_tokenPath);
-        }
-        else if (readData.Scopes.SetEquals(scopes)
+        _tokenData = readData is not null
+            && readData.Scopes.SetEquals(scopes)
             && readData.AccessToken.Validity == _accessTokenValidity
-            && readData.RefreshToken.Validity == _refreshTokenValidity)
-        {
-            _tokenData = readData;
-            WriteToken(_tokenPath);
-        }
-        else
-        {
-            _tokenData = new(scopes, _accessTokenValidity, _refreshTokenValidity);
-            WriteToken(_tokenPath);
-        }
+            && readData.RefreshToken.Validity == _refreshTokenValidity
+            ? readData
+            : new(scopes, _accessTokenValidity, _refreshTokenValidity);
+        WriteToken(_tokenPath);
     }
+    /// <summary>
+    /// Reads the OAuth 2.0 tokens from a local file as specified in the File Path.
+    /// </summary>
+    /// <param name="filePath">The file path to read the token from.</param>
+    /// <returns>The token of OAuth 2.0 stored in the file, and <c>null</c> if does not exist or invalid.</returns>
     private static TokenData? ReadToken(string filePath)
     {
         if (!File.Exists(filePath))
@@ -125,16 +120,26 @@ public class OAuth : IAuthenticator
             return null;
         }
     }
-
+    /// <summary>
+    /// Writes the OAuth 2.0 tokens to a local file as specified in the File Path.
+    /// </summary>
+    /// <param name="filePath">The file path to write the token to.</param>
     private void WriteToken(string filePath) => File.WriteAllText(filePath, JsonSerializer.Serialize(_tokenData));
-
-    private static string VerifierToChallenge(string verifier) =>
+    /// <summary>
+    /// Encodes a code verifier to a code challenge use SHA256 and Base 64 encoding.
+    /// </summary>
+    /// <param name="verifier">The code verifier.</param>
+    /// <returns>The code challenge corresponding to the code verifier.</returns>
+    private static string VerifierToChallenge(string verifier) => // Modified from https://nicolaiarocci.com/how-to-implement-pkce-code-challenge-in-csharp/
         Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(verifier)))
         .Replace("+", "-")
         .Replace("/", "_")
         .TrimEnd('=');
 
-    private void FindUnusedPort()
+    /// <summary>
+    /// Finds an unused port on the local IP address <c>localhost</c>.
+    /// </summary>
+    private void FindUnusedPort() // https://stackoverflow.com/a/150974/
     {
         TcpListener listener = new(IPAddress.Loopback, 0);
         listener.Start();
@@ -143,7 +148,6 @@ public class OAuth : IAuthenticator
 
         _tokenData.Port = port;
     }
-
     /// <summary>
     /// Returns an <c>AuthenticationHeaderValue</c> to be used in a HTTP request.
     /// This method used the stored access key, if possible.
@@ -154,7 +158,6 @@ public class OAuth : IAuthenticator
         await CheckAccessTokenAsync();
         return new("Bearer", _tokenData.AccessToken.Code);
     }
-
     /// <summary>
     /// Returns an <c>AuthenticationHeaderValue</c> to be used in a HTTP request.
     /// This method always gets a new of access token.
@@ -165,7 +168,10 @@ public class OAuth : IAuthenticator
         await NewAccessTokenAsync();
         return new("Bearer", _tokenData.AccessToken.Code);
     }
-
+    /// <summary>
+    /// Checks if the access token and refresh token if valid, and refresh their validity where necessary.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task CheckAccessTokenAsync()
     {
         if (_tokenData.AccessToken.IsValid)
@@ -182,7 +188,10 @@ public class OAuth : IAuthenticator
         await RenewRefreshTokenAsync();
         return;
     }
-
+    /// <summary>
+    /// Renews the access token using the refresh token.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task NewAccessTokenAsync()
     {
         Task revokeAccessToken = RevokeTokenRequestAsync(_tokenData.AccessToken.Code);
@@ -193,6 +202,11 @@ public class OAuth : IAuthenticator
         await Task.WhenAll(revokeAccessToken, checkNewAccessToken);
         return;
     }
+    /// <summary>
+    /// Gets a grant code by prompting the user to login on a browser.
+    /// </summary>
+    /// <returns>The grant code in a string that is then used to get a refresh token.</returns>
+    /// <exception cref="Exception">Throws exception when the state that returns does not match.</exception>
     private async Task<string> GenerateGrantCode()
     {
         string state = RandomNumberGenerator.GetString(_allowedChars, _stateLength);
@@ -224,7 +238,7 @@ public class OAuth : IAuthenticator
         listener.Prefixes.Add(redirectUri.ToString());
         listener.Start();
 
-        _ = Process.Start(new ProcessStartInfo
+        _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
         {
             FileName = browserUri.ToString(),
             UseShellExecute = true
@@ -244,6 +258,11 @@ public class OAuth : IAuthenticator
 
         return requestState != state ? throw new Exception() : grantCode;
     }
+    /// <summary>
+    /// Gets a new refresh token.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="Exception">Throws exception when the JSON returned by the program cannot be parsed into an object.</exception>
     private async Task RenewRefreshTokenAsync()
     {
         Task revokeAccessToken = RevokeTokenRequestAsync(_tokenData.AccessToken.Code);
@@ -280,6 +299,11 @@ public class OAuth : IAuthenticator
 
         await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
     }
+    /// <summary>
+    /// Gets a new access token.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="Exception">hrows exception when the JSON returned by the program cannot be parsed into an object.</exception>
     private async Task RenewAccessTokenAsync()
     {
 
@@ -306,6 +330,11 @@ public class OAuth : IAuthenticator
 
         await revokeAccessToken;
     }
+    /// <summary>
+    /// Revokes the specified token.
+    /// </summary>
+    /// <param name="token">The token to be revoked.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task RevokeTokenRequestAsync(string token)
     {
         if (string.IsNullOrEmpty(token))
@@ -322,6 +351,12 @@ public class OAuth : IAuthenticator
         _ = response.EnsureSuccessStatusCode();
         _ = await response.Content.ReadAsStringAsync();
     }
+    /// <summary>
+    /// Generates an HTTP POST Request using the specified URI and parameters, and with media type <c>application/x-www-form-urlencoded</c>.
+    /// </summary>
+    /// <param name="requestUri">The URI of the POST Request.</param>
+    /// <param name="requestParams">The Parameters of the POST Request.-1</param>
+    /// <returns></returns>
     private HttpRequestMessage GeneratePostRequest(string requestUri, Dictionary<string, string> requestParams)
     {
         FormUrlEncodedContent content = new(requestParams);
