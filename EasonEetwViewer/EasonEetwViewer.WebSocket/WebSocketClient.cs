@@ -6,6 +6,9 @@ using EasonEetwViewer.WebSocket.Dto;
 
 namespace EasonEetwViewer.WebSocket;
 
+/// <summary>
+/// Represents a WebSocket connection.
+/// </summary>
 public class WebSocketClient
 {
     private readonly JsonSerializerOptions _options = new()
@@ -15,90 +18,79 @@ public class WebSocketClient
     public async Task ConnectWebSocketAsync(string webSocketUrl)
     {
         using ClientWebSocket client = new();
-        try
+        Uri serverUri = new(webSocketUrl);
+
+        await client.ConnectAsync(serverUri, CancellationToken.None);
+        Console.WriteLine("Connected to the WebSocket server.");
+
+        bool keepAlive = true;
+        while (keepAlive) // Modified from https://stackoverflow.com/a/65761228, https://stackoverflow.com/a/63574016
         {
-            Uri serverUri = new(webSocketUrl);
+            byte[] receiveBuffer = new byte[32768]; // https://stackoverflow.com/a/41926694
+            WebSocketReceiveResult result = await client.ReceiveAsync(
+                new ArraySegment<byte>(receiveBuffer),
+                CancellationToken.None);
+            string responseBody = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
 
-            await client.ConnectAsync(serverUri, CancellationToken.None);
-            Console.WriteLine("Connected to the WebSocket server.");
+            Response webSocketResponse = JsonSerializer.Deserialize<Response>(responseBody, _options) ?? throw new Exception();
 
-            bool keepAlive = true;
-            while (keepAlive) // Modified from https://stackoverflow.com/a/65761228, https://stackoverflow.com/a/63574016
+            switch (webSocketResponse.Type)
             {
-                byte[] receiveBuffer = new byte[32768]; // https://stackoverflow.com/a/41926694
-                WebSocketReceiveResult result = await client.ReceiveAsync(
-                    new ArraySegment<byte>(receiveBuffer),
-                    CancellationToken.None);
-                string responseBody = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
+                case ResponseType.Start:
+                    Console.WriteLine("This is a start response.");
+                    break;
 
-                Response webSocketResponse = JsonSerializer.Deserialize<Response>(responseBody, _options) ?? throw new Exception();
+                case ResponseType.Ping:
+                    PingResponse pingResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
+                    Console.WriteLine($"Ping Response: {pingResponse}");
 
-                switch (webSocketResponse.Type)
-                {
-                    case ResponseType.Start:
-                        Console.WriteLine("This is a start response.");
-                        break;
+                    PongRequest pongRequest = new()
+                    {
+                        PingId = pingResponse.PingId
+                    };
 
-                    case ResponseType.Ping:
-                        PingResponse pingResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
-                        Console.WriteLine($"Ping Response: {pingResponse}");
+                    string postDataJson = JsonSerializer.Serialize(pongRequest);
+                    byte[] messageBuffer = Encoding.UTF8.GetBytes(postDataJson);
 
-                        PongRequest pongRequest = new()
-                        {
-                            PingId = pingResponse.PingId
-                        };
+                    await client.SendAsync(
+                        new ArraySegment<byte>(messageBuffer),
+                        WebSocketMessageType.Text,
+                        true,
+                        CancellationToken.None);
+                    Console.WriteLine($"Sent: {pongRequest}");
 
-                        string postDataJson = JsonSerializer.Serialize(pongRequest);
-                        byte[] messageBuffer = Encoding.UTF8.GetBytes(postDataJson);
+                    break;
 
-                        await client.SendAsync(
-                            new ArraySegment<byte>(messageBuffer),
-                            WebSocketMessageType.Text,
-                            true,
-                            CancellationToken.None);
-                        Console.WriteLine($"Sent: {pongRequest}");
+                case ResponseType.Pong:
+                    PingResponse pongResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
+                    Console.WriteLine(value: $"Pong Response: {pongResponse}");
+                    break;
 
-                        break;
+                case ResponseType.Error:
+                    ErrorResponse errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseBody, _options) ?? throw new Exception();
+                    Console.WriteLine(value: $"Error Response: {errorResponse}");
 
-                    case ResponseType.Pong:
-                        PingResponse pongResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
-                        Console.WriteLine(value: $"Pong Response: {pongResponse}");
-                        break;
+                    if (errorResponse.Close)
+                    {
+                        keepAlive = false;
+                    }
 
-                    case ResponseType.Error:
-                        ErrorResponse errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseBody, _options) ?? throw new Exception();
-                        Console.WriteLine(value: $"Error Response: {errorResponse}");
+                    break;
 
-                        if (errorResponse.Close)
-                        {
-                            keepAlive = false;
-                        }
+                case ResponseType.Data:
+                    Console.WriteLine("This is a data response.");
+                    break;
 
-                        break;
-
-                    case ResponseType.Data:
-                        Console.WriteLine("This is a data response.");
-                        break;
-
-                    default:
-                        throw new Exception();
-                }
+                case ResponseType.Unknown:
+                default:
+                    throw new Exception();
             }
+        }
 
-            await client.CloseAsync(
-                    WebSocketCloseStatus.NormalClosure,
-                    "Closing",
-                    CancellationToken.None);
-            Console.WriteLine("WebSocket connection closed.");
-        }
-        catch (WebSocketException wse)
-        {
-            Console.WriteLine($"WebSocketException: {wse.Message}");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Exception: {ex.Message}");
-
-        }
+        await client.CloseAsync(
+                WebSocketCloseStatus.NormalClosure,
+                "Closing",
+                CancellationToken.None);
+        Console.WriteLine("WebSocket connection closed.");
     }
 }
