@@ -27,12 +27,11 @@ internal class Program
         ApiCaller apiCaller = new(baseApi, apiKeyAuth);
         // ApiCaller apiCaller = new(baseApi, oAuth);
 
-        // WebSocketClient webSocketClient = new();
 
         // await TestAuthenticator(apiKey);
-        await TestAuthenticator(oAuth);
+        //await TestAuthenticator(oAuth);
         // await TestApiCaller(apiCaller);
-        // await TestWebSocket(apiCaller, webSocketClient);
+         await TestWebSocket(apiCaller);
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)
@@ -86,7 +85,7 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         Console.WriteLine(pastEarthquakeList.ItemList[0]);
     }
-    private static async Task TestWebSocket(ApiCaller apiCaller, WebSocketClient webSocketClient)
+    private static async Task TestWebSocket(ApiCaller apiCaller)
     {
         WebSocketStartPost start = new()
         {
@@ -99,6 +98,10 @@ internal class Program
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        await webSocketClient.ConnectWebSocketAsync(response.WebSockerUrl.Url);
+        WebSocketClient ws = new(response.WebSockerUrl.Url);
+        Console.WriteLine("Created!");
+        await ws.ConnectAsync();
+        Console.WriteLine(value: "Connected!");
+        await Task.Delay(5000);
     }
 }
