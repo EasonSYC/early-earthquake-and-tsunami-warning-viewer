@@ -27,12 +27,12 @@ internal class Program
         ApiCaller apiCaller = new(baseApi, apiKeyAuth);
         // ApiCaller apiCaller = new(baseApi, oAuth);
 
-        WebSocketClient webSocketClient = new();
+        // WebSocketClient webSocketClient = new();
 
         // await TestAuthenticator(apiKey);
-        // await TestAuthenticator(oAuth);
-        await TestApiCaller(apiCaller);
-        await TestWebSocket(apiCaller, webSocketClient);
+        await TestAuthenticator(oAuth);
+        // await TestApiCaller(apiCaller);
+        // await TestWebSocket(apiCaller, webSocketClient);
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)
