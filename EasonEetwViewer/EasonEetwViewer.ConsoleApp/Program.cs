@@ -98,10 +98,11 @@ internal class Program
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        WebSocketClient ws = new(response.WebSockerUrl.Url);
+        using WebSocketClient ws = new(response.WebSockerUrl.Url);
         Console.WriteLine("Created!");
         await ws.ConnectAsync();
         Console.WriteLine(value: "Connected!");
-        await Task.Delay(5000);
+        await Task.Delay(60000);
+        await ws.DisconnectAsync();
     }
 }
