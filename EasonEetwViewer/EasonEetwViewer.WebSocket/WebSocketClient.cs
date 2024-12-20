@@ -1,3 +1,4 @@
+using System.Data;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -9,12 +10,19 @@ namespace EasonEetwViewer.WebSocket;
 /// <summary>
 /// Represents a WebSocket connection.
 /// </summary>
-public class WebSocketClient
+public class WebSocketClient : IDisposable
 {
     private readonly JsonSerializerOptions _options = new()
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString
     };
+    private ClientWebSocket _client;
+    private Uri _serverUri;
+    private CancellationTokenSource _tokenSource;
+    private CancellationToken _token;
+
+
+
     public async Task ConnectWebSocketAsync(string webSocketUrl)
     {
         using ClientWebSocket client = new();
@@ -93,4 +101,24 @@ public class WebSocketClient
                 CancellationToken.None);
         Console.WriteLine("WebSocket connection closed.");
     }
+
+    public WebSocketClient(string webSocketUrl)
+    {
+        _client = new();
+        _serverUri = new(webSocketUrl);
+        _tokenSource = new();
+        _token = _tokenSource.Token;
+    }
+
+    public async Task ConnectAsync()
+    {
+        await _client.ConnectAsync(_serverUri, _token);
+        Console.WriteLine("Connected to the WebSocket server.");
+    }
+
+    public void Dispose()
+    {
+
+    }
+
 }
