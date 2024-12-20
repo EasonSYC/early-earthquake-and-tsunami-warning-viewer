@@ -89,15 +89,33 @@ public class OAuth : IAuthenticator
         {
             BaseAddress = _base
         };
-
+        _tokenData = LoadTokenFromFile(scopes).Result;
+        WriteToken(_tokenPath);
+    }
+    /// <summary>
+    /// Reads the token from the file in an asynchronous manner, cancelling tokens from the file when necessary.
+    /// </summary>
+    /// <param name="scopes">A list of strings indicating the scopes of the API Keys</param>
+    /// <returns>A <c>TokenData</c> object, containing the <c>TokenData</c> from the file, or a new instance if the file contains invalid tokens.</returns>
+    private async Task<TokenData> LoadTokenFromFile(HashSet<string> scopes)
+    {
         TokenData? readData = ReadToken(_tokenPath);
-        _tokenData = readData is not null
+        if (readData is not null
             && readData.Scopes.SetEquals(scopes)
             && readData.AccessToken.Validity == _accessTokenValidity
-            && readData.RefreshToken.Validity == _refreshTokenValidity
-            ? readData
-            : new(scopes, _accessTokenValidity, _refreshTokenValidity);
-        WriteToken(_tokenPath);
+            && readData.RefreshToken.Validity == _refreshTokenValidity)
+        {
+            return readData;
+        }
+
+        if (readData is not null)
+        {
+            Task revokeAccessToken = RevokeTokenRequestAsync(readData.AccessToken.Code);
+            Task revokeRefreshToken = RevokeTokenRequestAsync(readData.RefreshToken.Code);
+            await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
+        }
+
+        return new(scopes, _accessTokenValidity, _refreshTokenValidity);
     }
     /// <summary>
     /// Reads the OAuth 2.0 tokens from a local file as specified in the File Path.
