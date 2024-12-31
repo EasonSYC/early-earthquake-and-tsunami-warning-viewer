@@ -2,36 +2,45 @@
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.KyoshinMonitor;
+using EasonEetwViewer.KyoshinMonitor.Enum;
 using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
+using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
     private static async Task Main()
     {
-        IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
+        // IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
-        string apiKey = config["ApiKey"] ?? string.Empty;
-        IAuthenticator apiKeyAuth = new ApiKey(apiKey);
+        // string apiKey = config["ApiKey"] ?? string.Empty;
+        // IAuthenticator apiKeyAuth = new ApiKey(apiKey);
 
-        IConfigurationSection oAuthConfig = config.GetSection("oAuth");
-        string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
-        string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
-        string oAuthHost = oAuthConfig["host"] ?? string.Empty;
-        HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
-        IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
+        // IConfigurationSection oAuthConfig = config.GetSection("oAuth");
+        // string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
+        // string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
+        // string oAuthHost = oAuthConfig["host"] ?? string.Empty;
+        // HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
+        // IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
-        string baseApi = config["BaseApi"] ?? string.Empty;
+        // string baseApi = config["BaseApi"] ?? string.Empty;
 
-        ApiCaller apiCaller = new(baseApi, apiKeyAuth);
+        // ApiCaller apiCaller = new(baseApi, apiKeyAuth);
         // ApiCaller apiCaller = new(baseApi, oAuth);
 
-
         // await TestAuthenticator(apiKey);
-        //await TestAuthenticator(oAuth);
+        // await TestAuthenticator(oAuth);
         // await TestApiCaller(apiCaller);
-         await TestWebSocket(apiCaller);
+        // await TestWebSocket(apiCaller);
+
+        KmoniImageFetch imageFetch = new();
+        byte[] imageBytes = await imageFetch.GetImageByteArrayAsync(KmoniDataType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow);
+        SKImage image = SKImage.FromEncodedData(imageBytes);
+        SKBitmap bm = SKBitmap.FromImage(image);
+        SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
+        File.WriteAllBytes("output", data.ToArray());
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)

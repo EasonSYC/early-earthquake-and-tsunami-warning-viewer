@@ -28,9 +28,9 @@ public class ApiCaller
 
     public async Task<ContractList> GetContractListAsync()
     {
-        HttpRequestMessage request = new(HttpMethod.Get, "contract");
+        using HttpRequestMessage request = new(HttpMethod.Get, "contract");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
@@ -40,9 +40,9 @@ public class ApiCaller
 
     public async Task<WebSocketList> GetWebSocketListAsync()
     {
-        HttpRequestMessage request = new(HttpMethod.Get, "socket");
+        using HttpRequestMessage request = new(HttpMethod.Get, "socket");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
@@ -54,10 +54,10 @@ public class ApiCaller
     {
         string postDataJson = JsonSerializer.Serialize(postData);
         StringContent content = new(postDataJson, Encoding.UTF8, "application/json");
-        HttpRequestMessage request = new(HttpMethod.Post, "socket");
+        using HttpRequestMessage request = new(HttpMethod.Post, "socket");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
         request.Content = content;
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
@@ -69,9 +69,9 @@ public class ApiCaller
     {
         ArgumentOutOfRangeException.ThrowIfNegative(id, nameof(id));
 
-        HttpRequestMessage request = new(HttpMethod.Delete, $"socket/{id}");
+        using HttpRequestMessage request = new(HttpMethod.Delete, $"socket/{id}");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         return;
@@ -79,9 +79,9 @@ public class ApiCaller
 
     public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
     {
-        HttpRequestMessage request = new(HttpMethod.Get, "parameter/earthquake/station");
+        using HttpRequestMessage request = new(HttpMethod.Get, "parameter/earthquake/station");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
@@ -91,9 +91,9 @@ public class ApiCaller
 
     public async Task<PastEarthquakeList> GetPastEarthquakeListAsync()
     {
-        HttpRequestMessage request = new(HttpMethod.Get, "gd/earthquake");
+        using HttpRequestMessage request = new(HttpMethod.Get, "gd/earthquake");
         request.Headers.Authorization = await _authenticator.GetAuthenticationHeader();
-        HttpResponseMessage response = await _client.SendAsync(request);
+        using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
