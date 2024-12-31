@@ -12,20 +12,56 @@ namespace EasonEetwViewer.WebSocket;
 /// </summary>
 public class WebSocketClient : IDisposable
 {
+    /// <summary>
+    /// The JSON Serializer Options to be used.
+    /// </summary>
     private readonly JsonSerializerOptions _options = new()
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString
     };
+    /// <summary>
+    /// The WebSocket client used for the connections.
+    /// </summary>
     private readonly ClientWebSocket _client;
+    /// <summary>
+    /// The URI of the WebSocket connection.
+    /// </summary>
     private readonly Uri _serverUri;
+    /// <summary>
+    /// The cancellation token source.
+    /// </summary>
     private readonly CancellationTokenSource _tokenSource;
+    /// <summary>
+    /// The cancellation token associated with the cancellation token source.
+    /// </summary>
     private readonly CancellationToken _token;
+    /// <summary>
+    /// The queue of ping codes that have not yet received a response.
+    /// </summary>
     private readonly Queue<string> _pingStrings;
+    /// <summary>
+    /// The time span between two user-initiated ping requests.
+    /// </summary>
     private readonly TimeSpan _pingInterval = TimeSpan.FromSeconds(30);
+    /// <summary>
+    /// The time span between the disposal and the cancellation of the cancellation token source.
+    /// </summary>
     private readonly TimeSpan _cancelWaitInterval = TimeSpan.FromSeconds(5);
+    /// <summary>
+    /// The time span between two checks of the number of unresponded ping requests.
+    /// </summary>
     private readonly TimeSpan _checkPingInterval = TimeSpan.FromSeconds(15);
+    /// <summary>
+    /// Whether this instance is already disposed.
+    /// </summary>
     private bool _isDisposed;
+    /// <summary>
+    /// The receive buffer size.
+    /// </summary>
     private const int _recieveBufferSize = 32768; // https://stackoverflow.com/a/41926694
+    /// <summary>
+    /// The maximum allowed client-initiated pings to be unresponded.
+    /// </summary>
     private const int _maxPingUnresponded = 4;
     /// <summary>
     /// The allowed characters when generating a Ping Id.
@@ -35,7 +71,10 @@ public class WebSocketClient : IDisposable
     /// The length of a Ping Id.
     /// </summary>
     private const int _pingIdLength = 4;
-
+    /// <summary>
+    /// A task that sends ping requests to the WebSocket server with interval <c>_pingInterval</c>, until the token has been cancelled.
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     private async Task SendPingLoop()
     {
         while (!_token.IsCancellationRequested)
@@ -51,6 +90,10 @@ public class WebSocketClient : IDisposable
             await Task.Delay(_pingInterval);
         }
     }
+    /// <summary>
+    /// A task that checks number of unresponded ping requests with interval <c>_checkPingInterval</c>, until the token has been cancelled.
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     private async Task CheckPingLoop()
     {
         while (!_token.IsCancellationRequested)
@@ -63,6 +106,11 @@ public class WebSocketClient : IDisposable
             await Task.Delay(_checkPingInterval);
         }
     }
+    /// <summary>
+    /// A task that receives message from the WebSocket connection and deals with them as appropriate.
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
+    /// <exception cref="Exception">I don't know when this will be thrown honestly.</exception>
     private async Task ReceiveLoop()
     {
         try
@@ -139,7 +187,10 @@ public class WebSocketClient : IDisposable
             Console.WriteLine("Task is cancelled!");
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="webSocketUrl"></param>
     public WebSocketClient(string webSocketUrl)
     {
         _client = new();
@@ -149,7 +200,10 @@ public class WebSocketClient : IDisposable
         _isDisposed = false;
         _pingStrings = new();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     public async Task ConnectAsync()
     {
         ObjectDisposedException.ThrowIf(_isDisposed, this);
@@ -164,14 +218,22 @@ public class WebSocketClient : IDisposable
         _ = await Task.Factory.StartNew(SendPingLoop, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         _ = await Task.Factory.StartNew(CheckPingLoop, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     public async Task DisconnectAsync()
     {
         ObjectDisposedException.ThrowIf(_isDisposed, this);
 
         Dispose();
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="message"></param>
+    /// <returns>A Task that represents the asynchronous operation.</returns>
     public async Task SendAsync<T>(T message)
     {
         string dataJson = JsonSerializer.Serialize(message);
@@ -185,11 +247,11 @@ public class WebSocketClient : IDisposable
 
         Console.WriteLine($"Sent: {dataJson}");
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public void Dispose()
     {
-        Console.WriteLine("Called Dispose!");
-
         if (_client.State != WebSocketState.Closed)
         {
             _tokenSource.CancelAfter(_cancelWaitInterval);
