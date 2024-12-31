@@ -6,14 +6,12 @@ using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.WebSocket;
-using Microsoft.Extensions.Configuration;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
-    private static async Task Main()
-    {
+    private static async Task Main() =>
         // IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         // string apiKey = config["ApiKey"] ?? string.Empty;
@@ -37,7 +35,6 @@ internal class Program
         // await TestWebSocket(apiCaller);
 
         await TestKmoni();
-    }
 
     private static async Task TestAuthenticator(IAuthenticator auth)
     {

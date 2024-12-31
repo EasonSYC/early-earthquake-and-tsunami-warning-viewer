@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml.XPath;
+﻿using System.Text.Json;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using SkiaSharp;
 
 namespace EasonEetwViewer.KyoshinMonitor;
 public class KmoniPointExtract(string filePath)
 {
-    List<ObservationPoint> points = JsonSerializer.Deserialize<List<ObservationPoint>>(File.ReadAllText(filePath)) ?? [];
+    List<ObservationPoint> Points = JsonSerializer.Deserialize<List<ObservationPoint>>(File.ReadAllText(filePath)) ?? [];
 
-    public void WritePoints(string filePath) => File.WriteAllText(filePath, JsonSerializer.Serialize(points));
+    public void WritePoints(string filePath) => File.WriteAllText(filePath, JsonSerializer.Serialize(Points));
 
     public List<(ObservationPoint point, SKColor colour)> ExtractColours(SKBitmap bitmap)
     {
         List<(ObservationPoint point, SKColor colour)> result = [];
-        foreach (ObservationPoint point in points)
+        foreach (ObservationPoint point in Points)
         {
             if (!point.IsSuspended && point.Point is not null)
             {
@@ -29,6 +23,7 @@ public class KmoniPointExtract(string filePath)
                 }
             }
         }
+
         return result;
     }
 }

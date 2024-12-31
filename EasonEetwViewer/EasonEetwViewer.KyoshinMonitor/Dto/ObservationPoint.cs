@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
 namespace EasonEetwViewer.KyoshinMonitor.Dto;

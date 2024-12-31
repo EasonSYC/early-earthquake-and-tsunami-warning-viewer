@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 public enum KmoniDataType
 {
     Unknown = 0,
@@ -21,21 +15,18 @@ public enum KmoniDataType
 }
 public static class KmoniDataTypeExtensions
 {
-    public static string ToUriString(this KmoniDataType kmoniDataType)
+    public static string ToUriString(this KmoniDataType kmoniDataType) => kmoniDataType switch
     {
-        return kmoniDataType switch
-        {
-            KmoniDataType.MeasuredIntensity => "jma",
-            KmoniDataType.PeakGroundAcceleration => "acmap",
-            KmoniDataType.PeakGroundVelocity => "vcmap",
-            KmoniDataType.PeakGroundDisplacement => "dcmap",
-            KmoniDataType.Response0125 => "rsp0125",
-            KmoniDataType.Response0250 => "rsp0250",
-            KmoniDataType.Response0500 => "rsp0500",
-            KmoniDataType.Response1000 => "rsp1000",
-            KmoniDataType.Response2000 => "rsp2000",
-            KmoniDataType.Response4000 => "rsp4000",
-            _ => "unknown",
-        };
-    }
+        KmoniDataType.MeasuredIntensity => "jma",
+        KmoniDataType.PeakGroundAcceleration => "acmap",
+        KmoniDataType.PeakGroundVelocity => "vcmap",
+        KmoniDataType.PeakGroundDisplacement => "dcmap",
+        KmoniDataType.Response0125 => "rsp0125",
+        KmoniDataType.Response0250 => "rsp0250",
+        KmoniDataType.Response0500 => "rsp0500",
+        KmoniDataType.Response1000 => "rsp1000",
+        KmoniDataType.Response2000 => "rsp2000",
+        KmoniDataType.Response4000 => "rsp4000",
+        _ => "unknown",
+    };
 }

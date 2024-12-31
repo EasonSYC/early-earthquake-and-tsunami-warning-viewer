@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 public enum SensorType
 {
     Unknown = 0,
@@ -14,13 +8,10 @@ public enum SensorType
 
 public static class SensorTypeExtensions
 {
-    public static string ToUriString(this SensorType sensorType)
+    public static string ToUriString(this SensorType sensorType) => sensorType switch
     {
-        return sensorType switch
-        {
-            SensorType.Surface => "s",
-            SensorType.Borehole => "b",
-            _ => "unknown",
-        };
-    }
+        SensorType.Surface => "s",
+        SensorType.Borehole => "b",
+        _ => "unknown",
+    };
 }

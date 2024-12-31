@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using SkiaSharp;
-using static System.Net.Mime.MediaTypeNames;
+﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
 namespace EasonEetwViewer.KyoshinMonitor;
 
@@ -14,13 +10,10 @@ public class KmoniImageFetch
 
     private readonly HttpClient _client;
 
-    public KmoniImageFetch()
+    public KmoniImageFetch() => _client = new()
     {
-        _client = new()
-        {
-            BaseAddress = new(_baseUri)
-        };
-    }
+        BaseAddress = new(_baseUri)
+    };
 
     public async Task<byte[]> GetByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTime utcDateTime)
     {
@@ -35,7 +28,7 @@ public class KmoniImageFetch
             .Replace("[#2]", sensorTypeStr)
             .Replace("[yyyyMMdd]", yearMonthDateStr)
             .Replace("[HHmmss]", hourMinuteSecondStr);
-        
+
         using HttpRequestMessage request = new(HttpMethod.Get, relativeUri);
         using HttpResponseMessage response = await _client.SendAsync(request);
 
