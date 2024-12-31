@@ -3,7 +3,8 @@ using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.KyoshinMonitor;
-using EasonEetwViewer.KyoshinMonitor.Enum;
+using EasonEetwViewer.KyoshinMonitor.Dto;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
 using SkiaSharp;
@@ -35,12 +36,7 @@ internal class Program
         // await TestApiCaller(apiCaller);
         // await TestWebSocket(apiCaller);
 
-        KmoniImageFetch imageFetch = new();
-        byte[] imageBytes = await imageFetch.GetImageByteArrayAsync(KmoniDataType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow);
-        SKImage image = SKImage.FromEncodedData(imageBytes);
-        SKBitmap bm = SKBitmap.FromImage(image);
-        SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
-        File.WriteAllBytes("output", data.ToArray());
+        await TestKmoni();
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)
@@ -113,5 +109,62 @@ internal class Program
         Console.WriteLine(value: "Connected!");
         await Task.Delay(60000);
         await ws.DisconnectAsync();
+    }
+
+    private static async Task TestKmoni()
+    {
+        KmoniImageFetch imageFetch = new();
+        byte[] imageBytes = await imageFetch.GetByteArrayAsync(KmoniDataType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow);
+        using SKImage image = SKImage.FromEncodedData(imageBytes);
+        using SKBitmap bm = SKBitmap.FromImage(image);
+
+        using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
+        File.WriteAllBytes("ObtainedImage.png", data.ToArray());
+
+        SKColor color1 = bm.GetPixel(289, 42);
+        color1.ToHsv(out float h, out float s, out float v);
+        Console.WriteLine($"{h}, {s}, {v}");
+
+        KmoniPointExtract pointExtract = new("ObservationPoints.json");
+        pointExtract.WritePoints("OutputObservationPoints.json");
+        List<(ObservationPoint point, SKColor colour)> colours = pointExtract.ExtractColours(bm);
+        List<(ObservationPoint point, double intensity)> intensities = [];
+
+        foreach ((ObservationPoint p, SKColor c) in colours)
+        {
+            intensities.Add((p, KmoniColourConversion.HeightToIntensity(KmoniColourConversion.ColourToHeight(c))));
+        }
+
+        for (int i = 0; i < 100; ++i)
+        {
+            Console.WriteLine($"{intensities[i].point.Name}, {intensities[i].intensity}, {intensities[i].point.Point.X}, {intensities[i].point.Point.Y}");
+        }
+
+        using SKBitmap newBm = new(image.Width, image.Height);
+
+        foreach ((ObservationPoint p, double i) in intensities)
+        {
+            double height = KmoniColourConversion.IntensityToHeight(i);
+            double hue = KmoniColourConversion.HeightToHue(height);
+            double saturation = KmoniColourConversion.HeightToSaturation(height) * 100;
+            double value = KmoniColourConversion.HeightToValue(height) * 100;
+            Console.WriteLine($"{hue}, {saturation}, {value}");
+            SKColor colour = SKColor.FromHsv((float)hue, (float)saturation, (float)value);
+
+            for (int x = p.Point.X - 1; x <= p.Point.X + 1; ++x)
+            {
+                for (int y = p.Point.Y - 1; y <= p.Point.Y + 1; ++y)
+                {
+                    if (x >= 0 && x < image.Width && y >= 0 && y < image.Height)
+                    {
+                        newBm.SetPixel(x, y, colour);
+                        Console.WriteLine($"{x}, {y}");
+                    }
+                }
+            }
+        }
+
+        using SKData newData = newBm.Encode(SKEncodedImageFormat.Png, 100);
+        File.WriteAllBytes("CalculatedImage.png", newData.ToArray());
     }
 }

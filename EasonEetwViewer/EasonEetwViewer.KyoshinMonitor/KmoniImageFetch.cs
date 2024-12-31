@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
-using EasonEetwViewer.KyoshinMonitor.Enum;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using SkiaSharp;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EasonEetwViewer.KyoshinMonitor;
 
@@ -20,7 +22,7 @@ public class KmoniImageFetch
         };
     }
 
-    public async Task<byte[]> GetImageByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTime utcDateTime)
+    public async Task<byte[]> GetByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTime utcDateTime)
     {
         string kmoniDataTypeStr = kmoniDataType.ToUriString();
         string sensorTypeStr = sensorType.ToUriString();
@@ -39,6 +41,8 @@ public class KmoniImageFetch
 
         _ = response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadAsByteArrayAsync();
+        byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
+
+        return imageBytes;
     }
 }
