@@ -2,9 +2,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:EasonEetwViewer.ViewModels"
+             xmlns:vm="using:EasonEetwViewer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.SettingPageView"
-             x:DataType="viewModels:SettingPageViewModel">
-  Setting Page.
+             x:DataType="vm:SettingPageViewModel">
+
+	<ScrollViewer>
+		<StackPanel Margin="20">
+			<TextBlock Margin="0 20"
+					   FontSize="20"
+					   FontWeight="Bold">Settings</TextBlock>
+			<TextBlock Margin="0 20"
+					   FontSize="18"
+					   FontWeight="Bold">DM-D.S.S. Data Service</TextBlock>
+			<StackPanel Margin="10 10"
+						Orientation="Horizontal">
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center">API Key</TextBlock>
+				<TextBox Margin="10 0"
+						 FontSize="15"
+						 Width="410"
+						 PasswordChar="*"
+						 Watermark="AKe.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+						 Text="{Binding ApiKeyText}"/>
+				<Button IsEnabled="{Binding ApiKeyButtonEnabled}"
+					    Margin="10 0"
+						FontSize="15"
+						Command="{Binding ApiKeyButtonCommand}">Confirm</Button>
+			</StackPanel>
+
+			<StackPanel Margin="10 10"
+						Orientation="Horizontal">
+				<Button Margin="0 0"
+						FontSize="15"
+						Content="{Binding OAuthButtonText}"
+						Command="{Binding OAuthButtonCommand}"/>
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center"
+						   Text="{Binding OAuthText}"/>
+			</StackPanel>
+
+			<TextBlock Margin="0 20"
+					   FontSize="18"
+					   FontWeight="Bold">WebSocket Connections</TextBlock>
+			<Button Margin="10 0"
+					FontSize="15"
+					Content="{Binding WebSocketButtonText}"
+					Command="{Binding WebSocketButtonCommand}"/>
+
+
+			<TextBlock Margin="0 20"
+					   FontSize="18"
+					   FontWeight="Bold">Real-Time Monitor</TextBlock>
+
+		</StackPanel>
+	</ScrollViewer>
 </UserControl>
