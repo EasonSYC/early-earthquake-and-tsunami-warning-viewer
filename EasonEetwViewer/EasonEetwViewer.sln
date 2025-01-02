@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.WebSocket",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.KyoshinMonitor", "EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj", "{1A7FC754-4C56-47A1-9E78-DDD9396404C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer", "EasonEetwViewer\EasonEetwViewer.csproj", "{058FBE52-A267-4D75-8446-71F0F4B55CB5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{1A7FC754-4C56-47A1-9E78-DDD9396404C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A7FC754-4C56-47A1-9E78-DDD9396404C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A7FC754-4C56-47A1-9E78-DDD9396404C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
