@@ -83,29 +83,17 @@ public class KmoniColourConversion
     /// </summary>
     /// <param name="height">The normalised height.</param>
     /// <returns>The value component of the colour.</returns>
-    public static double HeightToValue(double height)
-    {
-        if (height is <= 0.1)
-        {
-            return (1.8 * height) + 0.8;
-        }
-        else if (height is >= 0.1 and <= 0.172)
-        {
-            return (-4.444 * height) + 1.424;
-        }
-        else if (height is >= 0.172 and <= 0.2)
-        {
-            return (5.714 * height) - 0.323;
-        }
-        else
-        {
-            return height is >= 0.2 and <= 0.3
-                ? (1.6 * height) + 0.5
-                : height is >= 0.3 and <= 0.4
-                            ? (0.2 * height) + 0.92
-                            : height is >= 0.4 and <= 0.8 ? 1 : height is >= 0.8 and <= 0.9 ? (-0.3 * height) + 1.24 : (-2.9 * height) + 3.58;
-        }
-    }
+    public static double HeightToValue(double height) => height is <= 0.1
+            ? (1.8 * height) + 0.8
+            : height is >= 0.1 and <= 0.172
+                ? (-4.444 * height) + 1.424
+                : height is >= 0.172 and <= 0.2
+                            ? (5.714 * height) - 0.323
+                            : height is >= 0.2 and <= 0.3
+                                        ? (1.6 * height) + 0.5
+                                        : height is >= 0.3 and <= 0.4
+                                                    ? (0.2 * height) + 0.92
+                                                    : height is >= 0.4 and <= 0.8 ? 1 : height is >= 0.8 and <= 0.9 ? (-0.3 * height) + 1.24 : (-2.9 * height) + 3.58;
     /// <summary>
     /// Converts the colour to the normalised height.
     /// </summary>
