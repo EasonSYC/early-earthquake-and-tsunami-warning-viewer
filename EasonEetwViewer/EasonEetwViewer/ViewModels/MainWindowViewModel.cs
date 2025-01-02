@@ -1,10 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Media;
+﻿using System;
+using System.Collections.ObjectModel;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -24,7 +24,7 @@ public partial class MainWindowViewModel : ViewModelBase
     partial void OnSelectedListItemChanged(ListItemTemplate value)
     {
         object instance = Activator.CreateInstance(value.ModelType)!;
-        CurrentPage = (ViewModelBase) instance;
+        CurrentPage = (ViewModelBase)instance;
     }
 
     public ObservableCollection<ListItemTemplate> Items { get; } =

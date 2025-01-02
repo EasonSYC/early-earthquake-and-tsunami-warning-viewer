@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace EasonEetwViewer.ViewModels;
@@ -40,7 +34,7 @@ internal partial class SettingPageViewModel : ViewModelBase
         OAuthStatus ^= true;
         ApiKeyButtonEnabled = !OAuthStatus;
     }
-    
+
     [ObservableProperty]
     private bool _apiKeyButtonEnabled = true;
 
