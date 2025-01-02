@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Rendering.Composition;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace EasonEetwViewer.ViewModels;
@@ -15,8 +16,8 @@ internal partial class SettingPageViewModel : ViewModelBase
     [RelayCommand]
     private void WebSocketButton() => WebSocketConnectionStatus ^= true;
 
-    private const string _oAuthTextDisconnected = "Disconnected";
-    private const string _oAuthTextConnected = "Connected";
+    private readonly string _oAuthTextDisconnected = string.Empty;
+    private const string _oAuthTextConnected = "Connected!";
     internal string OAuthText => OAuthStatus ? _oAuthTextConnected : _oAuthTextDisconnected;
 
     private const string _oAuthButtonTextDisconnected = "Connect to OAuth 2.0";
@@ -32,8 +33,17 @@ internal partial class SettingPageViewModel : ViewModelBase
     private void OAuthButton()
     {
         OAuthStatus ^= true;
+        ApiKeyConfirmed = false;
         ApiKeyButtonEnabled = !OAuthStatus;
     }
+
+    private const string _apiKeyConfirmedText = "Confirmed!";
+    private readonly string _apiKeyUnconfirmedText = string.Empty;
+    internal string ApiKeyConfirmationText => ApiKeyConfirmed ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ApiKeyConfirmationText))]
+    private bool _apiKeyConfirmed = false;
 
     [ObservableProperty]
     private bool _apiKeyButtonEnabled = true;
@@ -42,12 +52,17 @@ internal partial class SettingPageViewModel : ViewModelBase
     private string _apiKeyText = string.Empty;
 
     [RelayCommand]
-    private void ApiKeyButton() => ApiKeyButtonEnabled = false;
+    private void ApiKeyButton()
+    {
+        ApiKeyButtonEnabled = false;
+        ApiKeyConfirmed = true;
+    }
     partial void OnApiKeyTextChanged(string value)
     {
         if (!OAuthStatus)
         {
             ApiKeyButtonEnabled = true;
+            ApiKeyConfirmed = false;
         }
     }
 }

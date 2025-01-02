@@ -30,6 +30,10 @@
 					    Margin="10 0"
 						FontSize="15"
 						Command="{Binding ApiKeyButtonCommand}">Confirm</Button>
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center"
+						   Text="{Binding ApiKeyConfirmationText}"/>
 			</StackPanel>
 
 			<StackPanel Margin="10 10"
