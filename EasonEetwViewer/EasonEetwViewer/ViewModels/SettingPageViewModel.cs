@@ -27,6 +27,7 @@ internal partial class SettingPageViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OAuthText))]
     [NotifyPropertyChangedFor(nameof(OAuthButtonText))]
+    [NotifyPropertyChangedFor(nameof(AuthenticationStatusText))]
     private bool _oAuthStatus = false;
 
     [RelayCommand]
@@ -43,6 +44,7 @@ internal partial class SettingPageViewModel : ViewModelBase
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ApiKeyConfirmationText))]
+    [NotifyPropertyChangedFor(nameof(AuthenticationStatusText))]
     private bool _apiKeyConfirmed = false;
 
     [ObservableProperty]
@@ -65,4 +67,9 @@ internal partial class SettingPageViewModel : ViewModelBase
             ApiKeyConfirmed = false;
         }
     }
+
+    private const string _oAuthInUseText = "OAuth 2.0 In Use";
+    private const string _apiKeyInUseText = "API Key In Use";
+    private const string _nothingInUseText = "Please Configure Authentication Method";
+    public string AuthenticationStatusText => OAuthStatus ? _oAuthInUseText : ApiKeyConfirmed ? _apiKeyInUseText : _nothingInUseText;
 }

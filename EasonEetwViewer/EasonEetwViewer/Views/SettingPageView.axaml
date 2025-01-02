@@ -12,10 +12,21 @@
 			<TextBlock Margin="0 20"
 					   FontSize="20"
 					   FontWeight="Bold">Settings</TextBlock>
-			<TextBlock Margin="0 20"
-					   FontSize="18"
-					   FontWeight="Bold">DM-D.S.S. Data Service</TextBlock>
-			<StackPanel Margin="10 10"
+
+			<StackPanel Margin="0 0"
+						Orientation="Horizontal">
+				<TextBlock Margin="0 20"
+						   FontSize="18"
+						   FontWeight="Bold">DM-D.S.S. Data Service</TextBlock>
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center">Status: </TextBlock>
+				<TextBlock Margin="0 0"
+						   FontSize="15"
+						   VerticalAlignment="Center"
+						   Text="{Binding AuthenticationStatusText}"/>
+			</StackPanel>
+			<StackPanel Margin="10"
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
@@ -36,7 +47,7 @@
 						   Text="{Binding ApiKeyConfirmationText}"/>
 			</StackPanel>
 
-			<StackPanel Margin="10 10"
+			<StackPanel Margin="10"
 						Orientation="Horizontal">
 				<Button Margin="0 0"
 						FontSize="15"
