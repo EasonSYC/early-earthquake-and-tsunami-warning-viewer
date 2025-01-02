@@ -26,7 +26,8 @@
 						   VerticalAlignment="Center"
 						   Text="{Binding AuthenticationStatusText}"/>
 			</StackPanel>
-			<StackPanel Margin="10"
+			
+			<StackPanel Margin="10 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
@@ -71,6 +72,36 @@
 			<TextBlock Margin="0 20"
 					   FontSize="18"
 					   FontWeight="Bold">Real-Time Monitor</TextBlock>
+
+			<StackPanel Margin="10 0"
+						Orientation="Horizontal">
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center">Observation Points:</TextBlock>
+				<ComboBox SelectedIndex="0">
+					<ComboBoxItem>KiK-net and K-NET (Surface)</ComboBoxItem>
+					<ComboBoxItem>KiK-net (Borehole) </ComboBoxItem>
+				</ComboBox>
+			</StackPanel>
+
+			<StackPanel Margin="10"
+						Orientation="Horizontal">
+				<TextBlock Margin="10 0"
+						   FontSize="15"
+						   VerticalAlignment="Center">Data:</TextBlock>
+				<ComboBox SelectedIndex="0">
+					<ComboBoxItem>Measured Intensity</ComboBoxItem>
+					<ComboBoxItem>Peak Ground Acceleration (PGA)</ComboBoxItem>
+					<ComboBoxItem>Peak Ground Velocity (PGV)</ComboBoxItem>
+					<ComboBoxItem>Peak Ground Displacement (PGD)</ComboBoxItem>
+					<ComboBoxItem>0.125 Hz PGV Response Spectrum</ComboBoxItem>
+					<ComboBoxItem>0.250 Hz PGV Response Spectrum</ComboBoxItem>
+					<ComboBoxItem>0.500 Hz PGV Response Spectrum</ComboBoxItem>
+					<ComboBoxItem>1.000 Hz PGV Response Spectrum</ComboBoxItem>
+					<ComboBoxItem>2.000 Hz PGV Response Spectrum</ComboBoxItem>
+					<ComboBoxItem>4.000 Hz PGV Response Spectrum</ComboBoxItem>
+				</ComboBox>
+			</StackPanel>
 
 		</StackPanel>
 	</ScrollViewer>
