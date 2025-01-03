@@ -12,15 +12,18 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        try
-        {
-            _ = BuildAvaloniaApp()
+        _ = BuildAvaloniaApp()
                .StartWithClassicDesktopLifetime(args);
-        }
-        catch (Exception ex)
-        {
-            Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(ex, $"Unhandled Exception {ex.GetType().FullName}, {ex.Message}");
-        }
+
+        // try
+        // {
+        //     _ = BuildAvaloniaApp()
+        //        .StartWithClassicDesktopLifetime(args);
+        // }
+        // catch (Exception ex)
+        // {
+        //     Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(ex, $"Unhandled Exception {ex.GetType().FullName}, {ex.Message}");
+        // }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
