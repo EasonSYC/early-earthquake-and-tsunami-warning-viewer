@@ -32,11 +32,6 @@ public class ApiKey : IAuthenticator
     /// <param name="apiKey">The API Key to be used.</param>
     public ApiKey(string apiKey)
     {
-        if (string.IsNullOrWhiteSpace(apiKey) || apiKey.Length <= 4 || apiKey[..4] != "AKe.")
-        {
-            throw new ArgumentException($"{apiKey} is not a valid API Key.", nameof(apiKey));
-        }
-
         byte[] plainTextBytes = Encoding.UTF8.GetBytes($"{apiKey}:");
         string val = Convert.ToBase64String(plainTextBytes);
         _header = new("Basic", val);
