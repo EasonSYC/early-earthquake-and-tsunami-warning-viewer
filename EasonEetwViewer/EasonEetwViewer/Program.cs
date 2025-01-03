@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Logging;
 
 namespace EasonEetwViewer;
@@ -10,26 +9,26 @@ internal sealed class Program
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
     // yet and stuff might break.
     [STAThread]
-    public static void Main(string[] args)
-    {
-        _ = BuildAvaloniaApp()
+    public static void Main(string[] args) => _ = BuildAvaloniaApp()
                .StartWithClassicDesktopLifetime(args);
 
-        // try
-        // {
-        //     _ = BuildAvaloniaApp()
-        //        .StartWithClassicDesktopLifetime(args);
-        // }
-        // catch (Exception ex)
-        // {
-        //     Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(ex, $"Unhandled Exception {ex.GetType().FullName}, {ex.Message}");
-        // }
-    }
+    //public static void Main(string[] args)
+    //{
+    //    try
+    //    {
+    //        _ = BuildAvaloniaApp()
+    //           .StartWithClassicDesktopLifetime(args);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Logger.TryGet(LogEventLevel.Fatal, LogArea.Control)?.Log(ex, $"Unhandled Exception {ex.GetType().FullName}, {ex.Message}");
+    //    }
+    //}
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace(LogEventLevel.Verbose);
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .WithInterFont()
+                .LogToTrace(LogEventLevel.Verbose);
 }
