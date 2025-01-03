@@ -1,30 +1,21 @@
-﻿using Mapsui;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Timers;
-using System.Threading;
-using Mapsui.Layers;
-using Mapsui.Styles;
-using Mapsui.Tiling;
+using Avalonia.Logging;
+using EasonEetwViewer.KyoshinMonitor;
+using EasonEetwViewer.KyoshinMonitor.Dto;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Providers;
-using Mapsui.Styles;
-using Mapsui.Tiling;
-using Mapsui.Widgets;
-using SkiaSharp;
-using EasonEetwViewer.KyoshinMonitor;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using EasonEetwViewer.KyoshinMonitor.Dto;
-using ShimSkiaSharp;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Mapsui.Providers;
-using System.Linq;
-using System.Diagnostics;
 using Mapsui.Rendering.Skia.Extensions;
-using System.Net.Http;
-using Avalonia.Logging;
+using Mapsui.Styles;
+using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -41,7 +32,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _kmoniLayer = GetKmoniLayer();
         Map.Layers.Add(_kmoniLayer);
-
 
         _timer = new(1000);
         _timer.Elapsed += OnTimedEvent;
@@ -74,12 +64,12 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         return kmoniObservationPoints is null
             ? null
             : new Layer()
-        {
-            Name = _layerName,
-            DataSource = new MemoryProvider(kmoniObservationPoints),
-            IsMapInfoLayer = true,
-            Style = null
-        };
+            {
+                Name = _layerName,
+                DataSource = new MemoryProvider(kmoniObservationPoints),
+                IsMapInfoLayer = true,
+                Style = null
+            };
     }
 
     private IEnumerable<IFeature>? GetKmoniObservationPoints()

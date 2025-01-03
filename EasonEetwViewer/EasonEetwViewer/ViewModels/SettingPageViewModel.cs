@@ -1,5 +1,4 @@
-﻿using Avalonia.Rendering.Composition;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace EasonEetwViewer.ViewModels;
