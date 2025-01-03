@@ -7,6 +7,10 @@
              x:Class="EasonEetwViewer.Views.SettingPageView"
              x:DataType="vm:SettingPageViewModel">
 
+	<Design.DataContext>
+		<vm:SettingPageViewModel/>
+	</Design.DataContext>
+
 	<ScrollViewer>
 		<StackPanel Margin="20">
 			<TextBlock Margin="0 20"

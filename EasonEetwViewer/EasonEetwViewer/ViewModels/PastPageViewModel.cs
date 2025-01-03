@@ -1,4 +1,4 @@
 ﻿namespace EasonEetwViewer.ViewModels;
-internal class PastPageViewModel : ViewModelBase
+internal class PastPageViewModel : MapViewModelBase
 {
 }

@@ -10,7 +10,7 @@ namespace EasonEetwViewer.ViewModels;
 
 // Adapted from https://github.com/MammaMiaDev/avaloniaui-the-series Episode 3 with edits
 
-public partial class MainWindowViewModel : ViewModelBase
+internal partial class MainWindowViewModel : ViewModelBase
 {
     [ObservableProperty]
     private bool _isPaneOpen = true;
@@ -27,7 +27,7 @@ public partial class MainWindowViewModel : ViewModelBase
         CurrentPage = (ViewModelBase)instance;
     }
 
-    public ObservableCollection<ListItemTemplate> Items { get; } =
+    internal ObservableCollection<ListItemTemplate> Items { get; } =
     [
         new ListItemTemplate(typeof(RealtimePageViewModel), "LiveRegular"),
         new ListItemTemplate(typeof(PastPageViewModel), "HistoryRegular"),
@@ -38,9 +38,9 @@ public partial class MainWindowViewModel : ViewModelBase
     private void TriggerPane() => IsPaneOpen ^= true;
 }
 
-public record ListItemTemplate
+internal record ListItemTemplate
 {
-    public ListItemTemplate(Type type, string iconKey)
+    internal ListItemTemplate(Type type, string iconKey)
     {
         ModelType = type;
         Label = type.Name.Replace("PageViewModel", "");
@@ -49,7 +49,7 @@ public record ListItemTemplate
         ListItemIcon = (StreamGeometry)res!;
     }
 
-    public string Label { get; init; }
-    public Type ModelType { get; init; }
-    public StreamGeometry ListItemIcon { get; init; }
+    internal string Label { get; init; }
+    internal Type ModelType { get; init; }
+    internal StreamGeometry ListItemIcon { get; init; }
 }

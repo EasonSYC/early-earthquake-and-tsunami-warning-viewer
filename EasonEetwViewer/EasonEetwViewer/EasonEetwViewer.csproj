@@ -28,6 +28,12 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="Mapsui.Avalonia" Version="4.1.8" />
+    <PackageReference Include="SkiaSharp" Version="2.88.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,5 +46,11 @@
     <Compile Update="Views\RealTimePageView.axaml.cs">
       <DependentUpon>RealtimePageView.axaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ObservationPoints.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
