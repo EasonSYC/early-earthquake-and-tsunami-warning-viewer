@@ -26,7 +26,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
 
         _kmoniLayer = GetKmoniLayer();
-        Map.Layers.Add(_kmoniLayer);
+        if (_kmoniLayer is not null)
+        {
+            Map.Layers.Add(_kmoniLayer);
+        }
 
         _timer = new(1000);
         _timer.Elapsed += OnTimedEvent;
@@ -35,17 +38,22 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     }
 
     private const string _layerName = "KmoniLayer";
-    private KmoniImageFetch _imageFetch;
-    private KmoniPointExtract _pointExtract;
+    private const int _kmoniDelaySeconds = 1;
+    private readonly KmoniImageFetch _imageFetch;
+    private readonly KmoniPointExtract _pointExtract;
 
-    private ILayer _kmoniLayer;
+    private ILayer? _kmoniLayer;
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         OnPropertyChanged(nameof(TimeDisplayText));
         ILayer? newLayer = GetKmoniLayer();
         if (newLayer is not null)
         {
-            _ = Map.Layers.Remove(_kmoniLayer);
+            if (_kmoniLayer is not null)
+            {
+                _ = Map.Layers.Remove(_kmoniLayer);
+            }
+
             _kmoniLayer = newLayer;
             Map.Layers.Add(_kmoniLayer);
         }
@@ -71,7 +79,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         try
         {
-            byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(KmoniDataType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow)).Result;
+            byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
+                KmoniDataType.MeasuredIntensity,
+                SensorType.Surface,
+                DateTime.UtcNow.AddSeconds(-_kmoniDelaySeconds))).Result;
 
             using SkiaSharp.SKImage image = SkiaSharp.SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);

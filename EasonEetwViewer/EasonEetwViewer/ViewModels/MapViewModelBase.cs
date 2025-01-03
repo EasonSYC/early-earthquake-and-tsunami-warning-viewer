@@ -7,7 +7,7 @@ namespace EasonEetwViewer.ViewModels;
 internal partial class MapViewModelBase : ViewModelBase
 {
     [ObservableProperty]
-    Map _map = new();
+    private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
     internal MapViewModelBase()

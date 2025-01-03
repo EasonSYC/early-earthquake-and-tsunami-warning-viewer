@@ -31,6 +31,6 @@ public static class SensorTypeExtensions
     {
         SensorType.Surface => "s",
         SensorType.Borehole => "b",
-        _ => "unknown",
+        SensorType.Unknown or _ => "unknown",
     };
 }

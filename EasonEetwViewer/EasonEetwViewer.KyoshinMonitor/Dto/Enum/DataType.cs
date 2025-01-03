@@ -71,6 +71,6 @@ public static class KmoniDataTypeExtensions
         KmoniDataType.Response1000 => "rsp1000",
         KmoniDataType.Response2000 => "rsp2000",
         KmoniDataType.Response4000 => "rsp4000",
-        _ => "unknown",
+        KmoniDataType.Unknown or _ => "unknown",
     };
 }
