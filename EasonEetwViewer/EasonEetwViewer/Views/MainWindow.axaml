@@ -3,7 +3,9 @@
         xmlns:vm="using:EasonEetwViewer.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
+		d:DesignWidth="800"
+		d:DesignHeight="450"
         x:Class="EasonEetwViewer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -29,18 +31,25 @@
                         Height="32"
                         Margin="8 10"
                         Command="{Binding TriggerPaneCommand}">
-					<PathIcon Height="11" Data="{StaticResource SidebarRegular}" />
+					<PathIcon Height="11"
+							  Data="{StaticResource SidebarRegular}" />
 				</Button>
-				<ListBox Margin="5 0" Padding="0" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedListItem}">
+				<ListBox Margin="5 0"
+						 Padding="0"
+						 ItemsSource="{Binding Items}"
+						 SelectedItem="{Binding SelectedListItem}">
 					<ListBox.Styles>
 						<Style Selector="ListBoxItem">
-							<Setter Property="Padding" Value="12 8"></Setter>
+							<Setter Property="Padding"
+									Value="12 8"></Setter>
 						</Style>
 					</ListBox.Styles>
 					<ListBox.ItemTemplate>
 						<DataTemplate DataType="{x:Type vm:ListItemTemplate}">
-							<StackPanel Spacing="15" Orientation="Horizontal">
-								<PathIcon Data="{Binding ListItemIcon}" Width="14" />
+							<StackPanel Spacing="15"
+										Orientation="Horizontal">
+								<PathIcon Data="{Binding ListItemIcon}"
+										  Width="14" />
 								<TextBlock Text="{Binding Label}"/>
 							</StackPanel>
 						</DataTemplate>

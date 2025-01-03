@@ -120,6 +120,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 return ex is HttpRequestException;
             });
         }
+        catch (ArgumentException ex)
+        {
+            Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"ArgumentException: {ex.Message}");
+        }
 
         return null;
     }

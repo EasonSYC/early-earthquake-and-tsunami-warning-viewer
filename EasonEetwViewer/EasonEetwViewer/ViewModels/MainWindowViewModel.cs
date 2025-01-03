@@ -11,20 +11,13 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class MainWindowViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private bool _isPaneOpen = true;
+    public ViewModelBase CurrentPage => SelectedListItem.Model;
 
     [ObservableProperty]
-    private ViewModelBase _currentPage = new RealtimePageViewModel();
+    [NotifyPropertyChangedFor(nameof(CurrentPage))]
+    private ListItemTemplate _selectedListItem;
 
-    [ObservableProperty]
-    private ListItemTemplate _selectedListItem = new(typeof(RealtimePageViewModel), "LiveRegular");
-
-    partial void OnSelectedListItemChanged(ListItemTemplate value)
-    {
-        object instance = Activator.CreateInstance(value.ModelType)!;
-        CurrentPage = (ViewModelBase)instance;
-    }
+    public MainWindowViewModel() => SelectedListItem = Items[0];
 
     internal ObservableCollection<ListItemTemplate> Items { get; } =
     [
@@ -33,16 +26,22 @@ internal partial class MainWindowViewModel : ViewModelBase
         new ListItemTemplate(typeof(SettingPageViewModel), "SettingsRegular"),
     ];
 
+    [ObservableProperty]
+    private bool _isPaneOpen = true;
+
     [RelayCommand]
     private void TriggerPane() => IsPaneOpen ^= true;
 }
 
-internal record ListItemTemplate
+internal class ListItemTemplate
 {
     internal ListItemTemplate(Type type, string iconKey)
     {
         ModelType = type;
         Label = type.Name.Replace("PageViewModel", "");
+
+        object instance = Activator.CreateInstance(ModelType)!;
+        Model = (ViewModelBase)instance;
 
         _ = Application.Current!.TryFindResource(iconKey, out object? res);
         ListItemIcon = (StreamGeometry)res!;
@@ -50,5 +49,6 @@ internal record ListItemTemplate
 
     internal string Label { get; init; }
     internal Type ModelType { get; init; }
+    internal ViewModelBase Model { get; init; }
     internal StreamGeometry ListItemIcon { get; init; }
 }
