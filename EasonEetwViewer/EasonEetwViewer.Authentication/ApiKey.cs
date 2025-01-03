@@ -32,6 +32,7 @@ public class ApiKey : IAuthenticator
     /// <param name="apiKey">The API Key to be used.</param>
     public ApiKey(string apiKey)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(apiKey, nameof(apiKey));
         byte[] plainTextBytes = Encoding.UTF8.GetBytes($"{apiKey}:");
         string val = Convert.ToBase64String(plainTextBytes);
         _header = new("Basic", val);
