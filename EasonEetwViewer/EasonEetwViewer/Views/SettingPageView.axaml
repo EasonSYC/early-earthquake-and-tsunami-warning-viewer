@@ -3,7 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:enum="using:EasonEetwViewer.KyoshinMonitor.Dto.Enum"
+             mc:Ignorable="d"
+			 d:DesignWidth="800"
+			 d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.SettingPageView"
              x:DataType="vm:SettingPageViewModel">
 
@@ -82,9 +85,13 @@
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center">Observation Points:</TextBlock>
-				<ComboBox SelectedIndex="0">
-					<ComboBoxItem>KiK-net and K-NET (Surface)</ComboBoxItem>
-					<ComboBoxItem>KiK-net (Borehole) </ComboBoxItem>
+				<ComboBox ItemsSource="{Binding SensorTypeChoices}"
+						  SelectedItem="{Binding Options.SensorChoice}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Item2}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
 			</StackPanel>
 
@@ -93,17 +100,13 @@
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center">Data:</TextBlock>
-				<ComboBox SelectedIndex="0">
-					<ComboBoxItem>Measured Intensity</ComboBoxItem>
-					<ComboBoxItem>Peak Ground Acceleration (PGA)</ComboBoxItem>
-					<ComboBoxItem>Peak Ground Velocity (PGV)</ComboBoxItem>
-					<ComboBoxItem>Peak Ground Displacement (PGD)</ComboBoxItem>
-					<ComboBoxItem>0.125 Hz PGV Response Spectrum</ComboBoxItem>
-					<ComboBoxItem>0.250 Hz PGV Response Spectrum</ComboBoxItem>
-					<ComboBoxItem>0.500 Hz PGV Response Spectrum</ComboBoxItem>
-					<ComboBoxItem>1.000 Hz PGV Response Spectrum</ComboBoxItem>
-					<ComboBoxItem>2.000 Hz PGV Response Spectrum</ComboBoxItem>
-					<ComboBoxItem>4.000 Hz PGV Response Spectrum</ComboBoxItem>
+				<ComboBox ItemsSource="{Binding DataTypeChoices}"
+						  SelectedItem="{Binding Options.DataChoice}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Item2}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
 				</ComboBox>
 			</StackPanel>
 

@@ -1,8 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class SettingPageViewModel : ViewModelBase
+internal partial class SettingPageViewModel(ApplicationOptions options) : PageViewModelBase(options)
 {
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
     private const string _webSocketButtonTextConnected = "Disconnect from WebSocket";
@@ -71,4 +75,11 @@ internal partial class SettingPageViewModel : ViewModelBase
     private const string _apiKeyInUseText = "API Key In Use";
     private const string _nothingInUseText = "Please Configure Authentication Method";
     public string AuthenticationStatusText => OAuthStatus ? _oAuthInUseText : ApiKeyConfirmed ? _apiKeyInUseText : _nothingInUseText;
+
+    internal ObservableCollection<Tuple<SensorType, string>> SensorTypeChoices { get; init; } =
+        new(Enum.GetValues<SensorType>()
+            .Select(e => new Tuple<SensorType, string>(e, e.ToReadableString())));
+    internal ObservableCollection<Tuple<KmoniDataType, string>> DataTypeChoices { get; init; } =
+        new(Enum.GetValues<KmoniDataType>()
+            .Select(e => new Tuple<KmoniDataType, string>(e, e.ToReadableString())));
 }

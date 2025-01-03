@@ -1,16 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EasonEetwViewer.Models;
 using Mapsui;
 using Mapsui.Limiting;
 using Mapsui.Projections;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class MapViewModelBase : ViewModelBase
+internal partial class MapViewModelBase : PageViewModelBase
 {
     [ObservableProperty]
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase()
+    internal MapViewModelBase(ApplicationOptions options) : base(options)
     {
         MRect bounds = GetLimitsOfJapan();
         MRect view = GetMainLimitsOfJapan();

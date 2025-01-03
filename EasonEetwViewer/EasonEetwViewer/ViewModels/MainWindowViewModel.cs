@@ -14,14 +14,17 @@ internal partial class MainWindowViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(CurrentPage))]
     private ListItemTemplate _selectedListItem;
 
-    public MainWindowViewModel() => SelectedListItem = Items[0];
+    public MainWindowViewModel(RealtimePageViewModel rtvm, PastPageViewModel ppvm, SettingPageViewModel spvm)
+    {
+        Items = [
+            new ListItemTemplate(typeof(RealtimePageViewModel), rtvm, "LiveRegular"),
+            new ListItemTemplate(typeof(PastPageViewModel), ppvm, "HistoryRegular"),
+            new ListItemTemplate(typeof(SettingPageViewModel), spvm, "SettingsRegular"),
+        ];
+        SelectedListItem = Items[0];
+    }
 
-    internal ObservableCollection<ListItemTemplate> Items { get; } =
-    [
-        new ListItemTemplate(typeof(RealtimePageViewModel), "LiveRegular"),
-        new ListItemTemplate(typeof(PastPageViewModel), "HistoryRegular"),
-        new ListItemTemplate(typeof(SettingPageViewModel), "SettingsRegular"),
-    ];
+    internal ObservableCollection<ListItemTemplate> Items { get; init; }
 
     [ObservableProperty]
     private bool _isPaneOpen = true;

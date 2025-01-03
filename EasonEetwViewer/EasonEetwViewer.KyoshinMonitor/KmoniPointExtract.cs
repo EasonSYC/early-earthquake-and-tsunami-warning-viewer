@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using EasonEetwViewer.KyoshinMonitor.Dto;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using SkiaSharp;
 
 namespace EasonEetwViewer.KyoshinMonitor;
@@ -22,13 +23,14 @@ public class KmoniPointExtract(string filePath)
     /// Extract the colours from the bitmap using the list of observation points.
     /// </summary>
     /// <param name="bitmap">The <c>SKBitmap</c> to have its pixels extracted from.</param>
+    /// <param name="kikNetOnly">Whether <c>KiK-net</c> sensors only should be extracted.</param>
     /// <returns>A list of pairs of observation points and their colours.</returns>
-    public List<(ObservationPoint point, SKColor colour)> ExtractColours(SKBitmap bitmap)
+    public List<(ObservationPoint point, SKColor colour)> ExtractColours(SKBitmap bitmap, bool kikNetOnly = false)
     {
         List<(ObservationPoint point, SKColor colour)> result = [];
         foreach (ObservationPoint point in _points)
         {
-            if (!point.IsSuspended && point.Point is not null)
+            if (!point.IsSuspended && point.Point is not null && (!kikNetOnly || point.Type == PointType.KiK))
             {
                 SKColor color = bitmap.GetPixel(point.Point.X, point.Point.Y);
                 if (color.Alpha != 0)

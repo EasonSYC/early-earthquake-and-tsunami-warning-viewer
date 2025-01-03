@@ -4,14 +4,29 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
+using Microsoft.Extensions.DependencyInjection;
+using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer;
 public partial class App : Application
 {
+    /// <inheritdoc/> 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
+    public static ServiceProvider Service { get; private set; }
+
+    /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
+        ServiceCollection collection = new();
+        _ = collection.AddSingleton<MainWindowViewModel>();
+        _ = collection.AddSingleton<ApplicationOptions>();
+        _ = collection.AddSingleton<RealtimePageViewModel>();
+        _ = collection.AddSingleton<PastPageViewModel>();
+        _ = collection.AddSingleton<SettingPageViewModel>();
+
+        Service = collection.BuildServiceProvider();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
@@ -19,7 +34,7 @@ public partial class App : Application
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = Service.GetRequiredService<MainWindowViewModel>(),
             };
         }
 

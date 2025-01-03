@@ -5,13 +5,11 @@ using Avalonia.Media;
 namespace EasonEetwViewer.ViewModels;
 internal class ListItemTemplate
 {
-    internal ListItemTemplate(Type type, string iconKey)
+    internal ListItemTemplate(Type type, ViewModelBase instance, string iconKey)
     {
         ModelType = type;
         Label = type.Name.Replace("PageViewModel", "");
-
-        object instance = Activator.CreateInstance(ModelType)!;
-        Model = (ViewModelBase)instance;
+        Model = instance;
 
         _ = Application.Current!.TryFindResource(iconKey, out object? res);
         ListItemIcon = (StreamGeometry)res!;

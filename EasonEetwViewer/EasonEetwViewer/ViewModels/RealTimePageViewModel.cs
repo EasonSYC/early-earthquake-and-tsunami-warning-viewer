@@ -2,7 +2,7 @@
 using Avalonia.Logging;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.Models;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -20,7 +20,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel() : base()
+    public RealtimePageViewModel(ApplicationOptions options) : base(options)
     {
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
@@ -80,19 +80,19 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         try
         {
             byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
-                KmoniDataType.MeasuredIntensity,
-                SensorType.Surface,
+                Options.DataChoice.Item1,
+                Options.SensorChoice.Item1,
                 DateTime.UtcNow.AddSeconds(-_kmoniDelaySeconds))).Result;
 
-            using SkiaSharp.SKImage image = SkiaSharp.SKImage.FromEncodedData(imageBytes);
+            using SKImage image = SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);
 
             using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
 
-            List<(ObservationPoint point, SkiaSharp.SKColor colour)> colours = _pointExtract.ExtractColours(bm);
+            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, Options.SensorChoice.Item1 == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
             List<(ObservationPoint point, double intensity)> intensities = [];
 
-            foreach ((ObservationPoint p, SkiaSharp.SKColor c) in colours)
+            foreach ((ObservationPoint p, SKColor c) in colours)
             {
                 intensities.Add((p, KmoniColourConversion.HeightToIntensity(KmoniColourConversion.ColourToHeight(c))));
             }
