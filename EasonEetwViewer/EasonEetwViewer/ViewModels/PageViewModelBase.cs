@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.ViewModels;
@@ -12,10 +13,10 @@ internal partial class PageViewModelBase : ViewModelBase
     internal PageViewModelBase(ApplicationOptions options)
     {
         _options = options;
-        _options.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(OptionPropertyChanged);
+        _options.PropertyChanged += new PropertyChangedEventHandler(OptionPropertyChanged);
     }
 
-    private protected virtual void OptionPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private protected virtual void OptionPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         ;
     }
