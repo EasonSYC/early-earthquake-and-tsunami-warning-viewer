@@ -7,6 +7,8 @@ internal partial class PageViewModelBase : ViewModelBase
     [ObservableProperty]
     private ApplicationOptions _options;
 
+    // https://stackoverflow.com/a/5822249
+
     internal PageViewModelBase(ApplicationOptions options)
     {
         _options = options;
