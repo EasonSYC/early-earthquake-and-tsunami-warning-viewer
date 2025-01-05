@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -6,6 +8,7 @@ using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.ViewModels;
+
 internal partial class SettingPageViewModel(ApplicationOptions options) : PageViewModelBase(options)
 {
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
@@ -19,62 +22,76 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     [RelayCommand]
     private void WebSocketButton() => WebSocketConnectionStatus ^= true;
 
+    private protected override void OptionPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        base.OptionPropertyChanged(sender, e);
+
+        if (e.PropertyName == nameof(Options.CurrentAuthenticationStatus))
+        {
+            OnPropertyChanged(nameof(OAuthText));
+            OnPropertyChanged(nameof(OAuthButtonText));
+            OnPropertyChanged(nameof(ApiKeyConfirmationText));
+            OnPropertyChanged(nameof(ApiKeyButtonEnabled));
+            OnPropertyChanged(nameof(AuthenticationStatusText));
+        }
+    }
+
     private readonly string _oAuthTextDisconnected = string.Empty;
     private const string _oAuthTextConnected = "Connected!";
-    internal string OAuthText => OAuthStatus ? _oAuthTextConnected : _oAuthTextDisconnected;
+    internal string OAuthText =>
+        Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth
+        ? _oAuthTextConnected : _oAuthTextDisconnected;
+
 
     private const string _oAuthButtonTextDisconnected = "Connect to OAuth 2.0";
     private const string _oAuthButtonTextConnected = "Disconnect from OAuth 2.0";
-    internal string OAuthButtonText => OAuthStatus ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(OAuthText))]
-    [NotifyPropertyChangedFor(nameof(OAuthButtonText))]
-    [NotifyPropertyChangedFor(nameof(AuthenticationStatusText))]
-    private bool _oAuthStatus = false;
+    internal string OAuthButtonText =>
+        Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth
+        ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
 
     [RelayCommand]
     private void OAuthButton()
     {
-        OAuthStatus ^= true;
-        ApiKeyConfirmed = false;
-        ApiKeyButtonEnabled = !OAuthStatus;
+        if (Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth)
+        {
+            Options.UnsetAuthenticator();
+        }
+        else
+        {
+            Options.SetAuthenticatorToOAuth();
+        }
     }
 
     private const string _apiKeyConfirmedText = "Confirmed!";
     private readonly string _apiKeyUnconfirmedText = string.Empty;
-    internal string ApiKeyConfirmationText => ApiKeyConfirmed ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
+    internal string ApiKeyConfirmationText =>
+        Options.CurrentAuthenticationStatus == AuthenticationStatus.ApiKey
+        ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(ApiKeyConfirmationText))]
-    [NotifyPropertyChangedFor(nameof(AuthenticationStatusText))]
-    private bool _apiKeyConfirmed = false;
-
-    [ObservableProperty]
-    private bool _apiKeyButtonEnabled = true;
+    internal bool ApiKeyButtonEnabled => Options.CurrentAuthenticationStatus == AuthenticationStatus.None;
 
     [ObservableProperty]
     private string _apiKeyText = string.Empty;
 
     [RelayCommand]
-    private void ApiKeyButton()
-    {
-        ApiKeyButtonEnabled = false;
-        ApiKeyConfirmed = true;
-    }
+    private void ApiKeyButton() => Options.SetAuthenticatorToApiKey(ApiKeyText);
     partial void OnApiKeyTextChanged(string value)
     {
-        if (!OAuthStatus)
+        if (Options.CurrentAuthenticationStatus == AuthenticationStatus.ApiKey)
         {
-            ApiKeyButtonEnabled = true;
-            ApiKeyConfirmed = false;
+            Options.UnsetAuthenticator();
         }
     }
 
     private const string _oAuthInUseText = "OAuth 2.0 In Use";
     private const string _apiKeyInUseText = "API Key In Use";
     private const string _nothingInUseText = "Please Configure Authentication Method";
-    public string AuthenticationStatusText => OAuthStatus ? _oAuthInUseText : ApiKeyConfirmed ? _apiKeyInUseText : _nothingInUseText;
+    public string AuthenticationStatusText => Options.CurrentAuthenticationStatus switch
+    {
+        AuthenticationStatus.OAuth => _oAuthInUseText,
+        AuthenticationStatus.ApiKey => _apiKeyInUseText,
+        AuthenticationStatus.None or _ => _nothingInUseText
+    };
 
     internal ObservableCollection<Tuple<SensorType, string>> SensorTypeChoices { get; init; } =
         new(Enum.GetValues<SensorType>()
