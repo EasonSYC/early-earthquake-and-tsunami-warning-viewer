@@ -190,7 +190,7 @@ public class OAuth : IAuthenticator
     /// Checks if the access token and refresh token if valid, and refresh their validity where necessary.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    private async Task CheckAccessTokenAsync()
+    public async Task CheckAccessTokenAsync()
     {
         if (_tokenData.AccessToken.IsValid)
         {
@@ -386,5 +386,12 @@ public class OAuth : IAuthenticator
         request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
 
         return request;
+    }
+
+    public async Task RevokeTokens()
+    {
+        Task revokeAccessToken = RevokeTokenRequestAsync(_tokenData.AccessToken.Code);
+        Task revokeRefreshToken = RevokeTokenRequestAsync(_tokenData.RefreshToken.Code);
+        await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
     }
 }

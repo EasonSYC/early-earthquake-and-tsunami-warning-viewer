@@ -47,15 +47,15 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
         ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
 
     [RelayCommand]
-    private void OAuthButton()
+    private async Task OAuthButton()
     {
         if (Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth)
         {
-            Options.UnsetAuthenticator();
+            await Options.UnsetAuthenticatorAsync();
         }
         else
         {
-            Options.SetAuthenticatorToOAuth();
+            await Options.SetAuthenticatorToOAuthAsync();
         }
     }
 
@@ -72,11 +72,11 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
 
     [RelayCommand]
     private void ApiKeyButton() => Options.SetAuthenticatorToApiKey(ApiKeyText);
-    partial void OnApiKeyTextChanged(string value)
+    async partial void OnApiKeyTextChanged(string value)
     {
         if (Options.CurrentAuthenticationStatus == AuthenticationStatus.ApiKey)
         {
-            Options.UnsetAuthenticator();
+            await Options.UnsetAuthenticatorAsync();
         }
     }
 

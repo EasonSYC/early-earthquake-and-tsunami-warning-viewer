@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
 namespace EasonEetwViewer.Models;
@@ -13,15 +14,19 @@ internal partial class ApplicationOptions : ObservableObject
     private Tuple<KmoniDataType, string> _dataChoice
         = new(KmoniDataType.MeasuredIntensity, KmoniDataType.MeasuredIntensity.ToReadableString());
 
+    internal ApiCaller ApiClient { get; init; }
+
+    public ApplicationOptions() => ApiClient = new("https://api.dmdata.jp/v2/", Authenticator);
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CurrentAuthenticationStatus))]
-    private IAuthenticator? _authenticator = null;
+    private IAuthenticator _authenticator = new EmptyAuthenticator();
     internal AuthenticationStatus CurrentAuthenticationStatus =>
-        Authenticator is null ? AuthenticationStatus.None :
+        Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
 
     internal void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
-    internal void SetAuthenticatorToOAuth()
+    internal async Task SetAuthenticatorToOAuthAsync()
     {
         Authenticator = new OAuth("CId.RRV95iuUV9FrYzeIN_BYM9Z35MJwwQen5DIwJ8JQXaTm",
             "https://manager.dmdata.jp/account/oauth2/v1/",
@@ -38,17 +43,15 @@ internal partial class ApplicationOptions : ObservableObject
             "telegram.get.earthquake",
             "telegram.list"
         ]);
-        _ = Task.Run(async () => await Authenticator.GetNewAuthenticationHeader()).Result;
+        await ((OAuth)Authenticator).CheckAccessTokenAsync();
     }
-    internal void UnsetAuthenticator()
+    internal async Task UnsetAuthenticatorAsync()
     {
-        if (Authenticator is OAuth)
+        if (Authenticator is OAuth auth)
         {
-            ;
+            await auth.RevokeTokens();
         }
-        else
-        {
-            Authenticator = null;
-        }
+
+        Authenticator = new EmptyAuthenticator();
     }
 }
