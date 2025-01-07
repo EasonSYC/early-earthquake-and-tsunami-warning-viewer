@@ -1,8 +1,6 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Input;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
 namespace EasonEetwViewer.Models;
 internal partial class ApplicationOptions : ObservableObject
@@ -21,7 +19,7 @@ internal partial class ApplicationOptions : ObservableObject
     internal AuthenticationStatus CurrentAuthenticationStatus =>
         Authenticator is null ? AuthenticationStatus.None :
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
-    
+
     internal void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
     internal void SetAuthenticatorToOAuth()
     {

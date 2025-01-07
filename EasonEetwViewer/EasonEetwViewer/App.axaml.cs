@@ -2,10 +2,10 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using EasonEetwViewer.Models;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using Microsoft.Extensions.DependencyInjection;
-using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer;
 public partial class App : Application
