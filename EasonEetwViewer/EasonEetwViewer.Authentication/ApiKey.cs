@@ -1,6 +1,5 @@
 using System.Net.Http.Headers;
 using System.Text;
-using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Authentication;
 
@@ -42,6 +41,4 @@ public class ApiKey : IAuthenticator
         string val = Convert.ToBase64String(plainTextBytes);
         _header = new("Basic", val);
     }
-
-
 }

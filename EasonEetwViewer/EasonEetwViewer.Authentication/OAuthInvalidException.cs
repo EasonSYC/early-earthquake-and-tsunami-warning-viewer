@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.Authentication;
-internal class OAuthInvalidException : Exception
+﻿namespace EasonEetwViewer.Authentication;
+public class OAuthInvalidException : Exception
 {
     public OAuthInvalidException() { }
 

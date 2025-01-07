@@ -13,16 +13,7 @@ internal record AuthenticatorDto
             : Authenticator is ApiKey
                 ? $"apiKey://{Authenticator.ToJsonString()}"
                 : $"oAuth://{Authenticator.ToJsonString()}";
-    internal static AuthenticatorDto FromJsonString(string jsonString)
-    {
-        if (jsonString.StartsWith("apiKey://"))
-        {
-            return new() { Authenticator = ApiKey.FromJsonString(jsonString[9..]) };
-        }
-        if (jsonString.StartsWith("oAuth://"))
-        {
-            return new() { Authenticator = OAuth.FromJsonString(jsonString[8..]) };
-        }
-        return new();
-    }
+    internal static AuthenticatorDto FromJsonString(string jsonString) => jsonString.StartsWith("apiKey://")
+            ? new() { Authenticator = ApiKey.FromJsonString(jsonString[9..]) }
+            : jsonString.StartsWith("oAuth://") ? new() { Authenticator = OAuth.FromJsonString(jsonString[8..]) } : new();
 }

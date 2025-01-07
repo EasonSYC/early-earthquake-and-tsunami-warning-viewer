@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.Authentication;
+﻿namespace EasonEetwViewer.Authentication;
 public class NoAuthenticationException : Exception
 {
     public NoAuthenticationException() { }

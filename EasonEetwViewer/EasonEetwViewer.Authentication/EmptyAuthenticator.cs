@@ -1,6 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Authentication;
 public class EmptyAuthenticator : IAuthenticator
