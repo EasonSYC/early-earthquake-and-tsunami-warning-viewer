@@ -3,7 +3,7 @@
 namespace EasonEetwViewer.ViewModels;
 internal class PastPageViewModel : MapViewModelBase
 {
-    public PastPageViewModel(ApplicationOptions options) : base(options)
+    public PastPageViewModel(UserOptions options) : base(options)
     {
         ;
     }

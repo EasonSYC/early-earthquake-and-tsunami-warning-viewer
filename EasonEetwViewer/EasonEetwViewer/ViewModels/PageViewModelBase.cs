@@ -6,11 +6,11 @@ namespace EasonEetwViewer.ViewModels;
 internal partial class PageViewModelBase : ViewModelBase
 {
     [ObservableProperty]
-    private ApplicationOptions _options;
+    private UserOptions _options;
 
     // https://stackoverflow.com/a/5822249
 
-    internal PageViewModelBase(ApplicationOptions options)
+    internal PageViewModelBase(UserOptions options)
     {
         _options = options;
         _options.PropertyChanged += new PropertyChangedEventHandler(OptionPropertyChanged);

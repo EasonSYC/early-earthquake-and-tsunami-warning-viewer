@@ -11,7 +11,7 @@ internal partial class MapViewModelBase : PageViewModelBase
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(ApplicationOptions options) : base(options)
+    internal MapViewModelBase(UserOptions options) : base(options)
     {
         MRect bounds = GetLimitsOfJapan();
         MRect view = GetMainLimitsOfJapan();

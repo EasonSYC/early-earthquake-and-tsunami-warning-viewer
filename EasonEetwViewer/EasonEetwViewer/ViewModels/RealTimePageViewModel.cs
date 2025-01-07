@@ -20,7 +20,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel(ApplicationOptions options) : base(options)
+    public RealtimePageViewModel(UserOptions options) : base(options)
     {
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");

@@ -20,7 +20,7 @@ public partial class App : Application
     {
         ServiceCollection collection = new();
         _ = collection.AddSingleton<MainWindowViewModel>();
-        _ = collection.AddSingleton<ApplicationOptions>();
+        _ = collection.AddSingleton(UserOptions.FromJsonFile("userOptions.json"));
         _ = collection.AddSingleton<RealtimePageViewModel>();
         _ = collection.AddSingleton<PastPageViewModel>();
         _ = collection.AddSingleton<SettingPageViewModel>();

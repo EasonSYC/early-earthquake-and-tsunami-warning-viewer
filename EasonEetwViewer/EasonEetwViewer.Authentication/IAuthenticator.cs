@@ -1,4 +1,5 @@
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Authentication;
 
@@ -17,4 +18,6 @@ public interface IAuthenticator
     /// </summary>
     /// <returns>An refreshed <c>AuthenticationHeaderValue</c>.</returns>
     public Task<AuthenticationHeaderValue> GetNewAuthenticationHeader();
+    public string ToJsonString();
+    public static abstract IAuthenticator FromJsonString(string jsonString);
 }

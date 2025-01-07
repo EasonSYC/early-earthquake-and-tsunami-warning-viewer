@@ -7,7 +7,7 @@ using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(ApplicationOptions options) : PageViewModelBase(options)
+internal partial class SettingPageViewModel(UserOptions options) : PageViewModelBase(options)
 {
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
     private const string _webSocketButtonTextConnected = "Disconnect from WebSocket";
@@ -24,7 +24,7 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     {
         base.OptionPropertyChanged(sender, e);
 
-        if (e.PropertyName == nameof(Options.CurrentAuthenticationStatus))
+        if (e.PropertyName == nameof(Options.AuthenticationStatus))
         {
             OnPropertyChanged(nameof(OAuthText));
             OnPropertyChanged(nameof(OAuthButtonText));
@@ -37,19 +37,19 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     private readonly string _oAuthTextDisconnected = string.Empty;
     private const string _oAuthTextConnected = "Connected!";
     internal string OAuthText =>
-        Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth
+        Options.AuthenticationStatus == AuthenticationStatus.OAuth
         ? _oAuthTextConnected : _oAuthTextDisconnected;
 
     private const string _oAuthButtonTextDisconnected = "Connect to OAuth 2.0";
     private const string _oAuthButtonTextConnected = "Disconnect from OAuth 2.0";
     internal string OAuthButtonText =>
-        Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth
+        Options.AuthenticationStatus == AuthenticationStatus.OAuth
         ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
 
     [RelayCommand]
     private async Task OAuthButton()
     {
-        if (Options.CurrentAuthenticationStatus == AuthenticationStatus.OAuth)
+        if (Options.AuthenticationStatus == AuthenticationStatus.OAuth)
         {
             await Options.UnsetAuthenticatorAsync();
         }
@@ -62,10 +62,10 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     private const string _apiKeyConfirmedText = "Confirmed!";
     private readonly string _apiKeyUnconfirmedText = string.Empty;
     internal string ApiKeyConfirmationText =>
-        Options.CurrentAuthenticationStatus == AuthenticationStatus.ApiKey
+        Options.AuthenticationStatus == AuthenticationStatus.ApiKey
         ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
 
-    internal bool ApiKeyButtonEnabled => Options.CurrentAuthenticationStatus == AuthenticationStatus.None;
+    internal bool ApiKeyButtonEnabled => Options.AuthenticationStatus == AuthenticationStatus.None;
 
     [ObservableProperty]
     private string _apiKeyText = string.Empty;
@@ -74,7 +74,7 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     private void ApiKeyButton() => Options.SetAuthenticatorToApiKey(ApiKeyText);
     async partial void OnApiKeyTextChanged(string value)
     {
-        if (Options.CurrentAuthenticationStatus == AuthenticationStatus.ApiKey)
+        if (Options.AuthenticationStatus == AuthenticationStatus.ApiKey)
         {
             await Options.UnsetAuthenticatorAsync();
         }
@@ -83,7 +83,7 @@ internal partial class SettingPageViewModel(ApplicationOptions options) : PageVi
     private const string _oAuthInUseText = "OAuth 2.0 In Use";
     private const string _apiKeyInUseText = "API Key In Use";
     private const string _nothingInUseText = "Please Configure Authentication Method";
-    public string AuthenticationStatusText => Options.CurrentAuthenticationStatus switch
+    public string AuthenticationStatusText => Options.AuthenticationStatus switch
     {
         AuthenticationStatus.OAuth => _oAuthInUseText,
         AuthenticationStatus.ApiKey => _apiKeyInUseText,

@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 using EasonEetwViewer.Authentication.OAuth2;
 using EasonEetwViewer.Authentication.OAuth2.Dto;
@@ -394,4 +395,7 @@ public class OAuth : IAuthenticator
         Task revokeRefreshToken = RevokeTokenRequestAsync(_tokenData.RefreshToken.Code);
         await Task.WhenAll(revokeAccessToken, revokeRefreshToken);
     }
+
+    public string ToJsonString() => throw new NotImplementedException();
+    public static IAuthenticator FromJsonString(string jsonString) => throw new NotImplementedException();
 }
