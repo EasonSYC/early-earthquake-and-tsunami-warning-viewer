@@ -42,7 +42,7 @@ internal class Program
         await TestApiCaller(apiCaller);
         // await TestWebSocket(apiCaller);
 
-        await TestTelegramRetriever(telegramRetriever);
+        // await TestTelegramRetriever(telegramRetriever);
 
         // await TestKmoni();
     }
@@ -97,6 +97,9 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextPooling);
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         Console.WriteLine(pastEarthquakeList.ItemList[0]);
+
+        PastEarthquakeEventResponse pastEarthquakeEvent = await apiCaller.GetPathEarthquakeEventAsync("20250112232728");
+        Console.WriteLine(pastEarthquakeEvent);
     }
 
     private static async Task TestTelegramRetriever(TelegramRetriever telegramRetriever)

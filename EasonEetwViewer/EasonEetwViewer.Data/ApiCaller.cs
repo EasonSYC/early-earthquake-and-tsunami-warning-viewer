@@ -126,4 +126,16 @@ public class ApiCaller
         PastEarthquakeListResponse pastEarthquakeList = JsonSerializer.Deserialize<PastEarthquakeListResponse>(responseBody, _options) ?? throw new Exception();
         return pastEarthquakeList;
     }
+
+    public async Task<PastEarthquakeEventResponse> GetPathEarthquakeEventAsync(string eventId)
+    {
+        using HttpRequestMessage request = new(HttpMethod.Get, $"gd/earthquake/{eventId}");
+        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        using HttpResponseMessage response = await _client.SendAsync(request);
+
+        _ = response.EnsureSuccessStatusCode();
+        string responseBody = await response.Content.ReadAsStringAsync();
+        PastEarthquakeEventResponse pastEarthquakeEvent = JsonSerializer.Deserialize<PastEarthquakeEventResponse>(responseBody, _options) ?? throw new Exception();
+        return pastEarthquakeEvent;
+    }
 }
