@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using EasonEetwViewer.ViewModels;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer;
 public class ViewLocator : IDataTemplate

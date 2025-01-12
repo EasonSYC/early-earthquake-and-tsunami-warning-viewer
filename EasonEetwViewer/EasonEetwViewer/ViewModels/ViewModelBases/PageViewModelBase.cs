@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PageViewModelBase : ViewModelBase

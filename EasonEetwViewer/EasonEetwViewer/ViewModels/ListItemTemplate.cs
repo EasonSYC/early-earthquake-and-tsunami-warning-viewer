@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 internal class ListItemTemplate
