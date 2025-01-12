@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Net.WebSockets;
+﻿using System.Collections.Specialized;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -51,19 +49,23 @@ public class ApiCaller
         {
             queryString.Add("id", id.ToString());
         }
+
         if (connectionStatus != ConnectionStatus.Unknown)
         {
             queryString.Add("status", connectionStatus.ToUriString());
         }
+
         if (cursorToken != string.Empty)
         {
             queryString.Add("cursorToken", cursorToken);
         }
+
         if (limit != -1)
         {
             queryString.Add("limit", limit.ToString());
         }
-        using HttpRequestMessage request = new(HttpMethod.Get, $"socket?{queryString.ToString()}");
+
+        using HttpRequestMessage request = new(HttpMethod.Get, $"socket?{queryString}");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
         using HttpResponseMessage response = await _client.SendAsync(request);
 

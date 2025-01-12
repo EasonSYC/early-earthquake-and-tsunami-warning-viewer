@@ -3,10 +3,10 @@ using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.HttpRequest.Dto;
+using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -78,7 +78,6 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
         {
             currentConnections.Add(WebSocketConnectionTemplate.EmptyConnection);
         }
-
 
         WebSocketConnections = currentConnections;
     }
