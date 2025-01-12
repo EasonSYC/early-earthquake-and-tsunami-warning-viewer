@@ -3,10 +3,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.Responses;
 
 namespace EasonEetwViewer.HttpRequest;
 

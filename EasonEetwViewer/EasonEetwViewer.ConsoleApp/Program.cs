@@ -1,9 +1,9 @@
 ﻿using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
-using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
@@ -28,9 +28,9 @@ internal class Program
         // HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
         // IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
-        // string baseApi = config["BaseApi"] ?? string.Empty;
+        string baseApi = config["BaseApi"] ?? string.Empty;
 
-        // ApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
+        ApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
         // ApiCaller apiCaller = new(baseApi, oAuth);
 
         string baseTelegram = config["BaseTelegram"] ?? string.Empty;
@@ -39,14 +39,13 @@ internal class Program
 
         // await TestAuthenticator(apiKey);
         // await TestAuthenticator(oAuth);
-        // await TestApiCaller(apiCaller);
+        await TestApiCaller(apiCaller);
         // await TestWebSocket(apiCaller);
 
         await TestTelegramRetriever(telegramRetriever);
 
         // await TestKmoni();
     }
-
 
     private static async Task TestAuthenticator(IAuthenticator auth)
     {

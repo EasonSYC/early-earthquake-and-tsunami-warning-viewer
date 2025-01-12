@@ -2,7 +2,7 @@
 using EasonEetwViewer.HttpRequest.Dto.Model;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 
-namespace EasonEetwViewer.HttpRequest.Dto;
+namespace EasonEetwViewer.HttpRequest.Dto.Responses;
 
 /// <summary>
 /// Represents a response of an API call <c>parameter.earthquake</c>.

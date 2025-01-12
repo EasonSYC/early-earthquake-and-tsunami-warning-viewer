@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasonEetwViewer.HttpRequest.Dto;
+using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;

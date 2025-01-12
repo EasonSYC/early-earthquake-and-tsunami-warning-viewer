@@ -3,7 +3,7 @@ using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.Model;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 
-namespace EasonEetwViewer.HttpRequest.Dto;
+namespace EasonEetwViewer.HttpRequest.Dto.Responses;
 
 /// <summary>
 /// Represents the result of a POST request to start WebSocket.
