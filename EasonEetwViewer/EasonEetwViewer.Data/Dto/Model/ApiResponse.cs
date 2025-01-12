@@ -24,5 +24,5 @@ public abstract record ApiResponse
     /// Abstract and has to be overridden.
     /// </summary>
     [JsonPropertyName("status")]
-    public abstract HttpStatus ResponseStatus { get; }
+    public abstract ApiResponseStatus ResponseStatus { get; }
 }

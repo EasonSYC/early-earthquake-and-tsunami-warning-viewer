@@ -14,10 +14,10 @@ public record ErrorResponse : ApiResponse
     /// The <c>status</c> property. Always set to <c>Status.Error</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override HttpStatus ResponseStatus { get; } = HttpStatus.Error;
+    public override ApiResponseStatus ResponseStatus { get; } = ApiResponseStatus.Error;
     /// <summary>
     /// The <c>error</c> property. An object representing the error returned by the API Call.
     /// </summary>
     [JsonPropertyName("error")]
-    public required HttpError Error { get; init; }
+    public required ApiResponseError Error { get; init; }
 }

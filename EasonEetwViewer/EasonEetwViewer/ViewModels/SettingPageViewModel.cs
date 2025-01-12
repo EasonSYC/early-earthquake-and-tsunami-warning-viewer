@@ -14,21 +14,21 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
 {
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
     private const string _webSocketButtonTextConnected = "Disconnect from WebSocket";
-    internal string WebSocketButtonText => WebSocketConnectionStatus ? _webSocketButtonTextConnected : _webSocketButtonTextDisconnected;
+    internal string WebSocketButtonText => WebSocketConnected ? _webSocketButtonTextConnected : _webSocketButtonTextDisconnected;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(WebSocketButtonText))]
-    private bool _webSocketConnectionStatus = false;
+    private bool _webSocketConnected = false;
 
     [RelayCommand]
-    private void WebSocketButton() => WebSocketConnectionStatus ^= true;
+    private void WebSocketButton() => WebSocketConnected ^= true;
 
     [ObservableProperty]
     private ObservableCollection<WebSocketConnectionTemplate> _webSocketConnections = [];
 
     private async Task<int> GetAvaliableWebSocketConnections()
     {
-        ContractList contractList = await Options.ApiClient.GetContractListAsync();
+        ContractListResponse contractList = await Options.ApiClient.GetContractListAsync();
         List<Contract> contracts = contractList.ItemList;
         int result = 0;
         foreach (Contract contract in contracts)
@@ -51,7 +51,7 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
         // Cursor Token
         for (int i = 0; i < 5; ++i)
         {
-            WebSocketList webSocketList = await Options.ApiClient.GetWebSocketListAsync(connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
+            WebSocketListResponse webSocketList = await Options.ApiClient.GetWebSocketListAsync(connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
             wsList.AddRange(webSocketList.ItemList);
 
             if (webSocketList.NextToken is null)
@@ -65,7 +65,7 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
         }
 
         // This filtering is due to undefined filtering behaviour in the API, just in case.
-        wsList = wsList.Where(x => x.WebSocketStatus == ConnectionStatus.Open).ToList();
+        wsList = wsList.Where(x => x.WebSocketStatus == WebSocketConnectionStatus.Open).ToList();
 
         ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
         wsList.ForEach(

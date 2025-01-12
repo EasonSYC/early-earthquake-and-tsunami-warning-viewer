@@ -56,10 +56,10 @@ internal partial class UserOptions : ObservableObject
         _sensorChoice = sensorChoice;
         _dataChoice = dataChoice;
         AuthenticatorWrapper = authenticatorWrapper;
-        ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
+        ApiClient = new("https://api.dmdata.jp/", AuthenticatorWrapper);
     }
 
-    public UserOptions() => ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
+    public UserOptions() => ApiClient = new("https://api.dmdata.jp/", AuthenticatorWrapper);
 
     internal void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
     internal async Task SetAuthenticatorToOAuthAsync()

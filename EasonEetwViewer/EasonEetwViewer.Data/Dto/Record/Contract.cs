@@ -28,12 +28,12 @@ public record Contract
     /// The property <c>classifications</c>. The classification of the contract.
     /// </summary>
     [JsonPropertyName("classification")]
-    public required Classification Classification { get; init; }
+    public required ContractClassification Classification { get; init; }
     /// <summary>
     /// The property <c>price</c>. The price of the contract.
     /// </summary>
     [JsonPropertyName("price")]
-    public required UnitPrice Price { get; init; }
+    public required ContractUnitPrice Price { get; init; }
     /// <summary>
     /// The property <c>start</c>. The start time of the subscription.
     /// <c>null</c> if not subscribed to the contract.

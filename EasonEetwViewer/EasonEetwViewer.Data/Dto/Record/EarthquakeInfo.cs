@@ -38,28 +38,28 @@ public record EarthquakeInfo
     /// The property <c>hypocenter</c>. The hypocentre of the earthquake.
     /// </summary>
     [JsonPropertyName("hypocenter")]
-    public required Hypocentre Hypocentre { get; init; }
+    public required EarthquakeHypocentre Hypocentre { get; init; }
     /// <summary>
     /// The property <c>magnitude</c>. The magnitude of the earthquake.
     /// </summary>
     [JsonPropertyName("magnitude")]
-    public required Magnitude Magnitude { get; init; }
+    public required EarthquakeMagnitude Magnitude { get; init; }
     /// <summary>
     /// The property <c>maxInt</c>. The maximum intensity observed for the earthquake.
     /// <c>null</c> when this is a distant earthquake.
     /// </summary>
     [JsonPropertyName("maxInt")]
-    public Intensity? MaxIntensity { get; init; }
+    public EarthquakeIntensity? MaxIntensity { get; init; }
     /// <summary>
     /// The property <c>maxLgInt</c>. The maximum LPGM intensity observed for the earthquake.
     /// <c>null</c> when no LPGM observation report is issued.
     /// </summary>
     [JsonPropertyName("maxLgInt")]
-    public LgIntensity? MaxLgIntensity { get; init; }
+    public EarthquakeLgIntensity? MaxLgIntensity { get; init; }
     /// <summary>
     /// The property <c>lgCategory</c>. The LPGM intensity category of the earthquake.
     /// <c>null</c> when no LPGM observation report is issued.
     /// </summary>
     [JsonPropertyName("lgCategory")]
-    public LgCategory? LgCategory { get; init; }
+    public EarthquakeLgCategory? LgCategory { get; init; }
 }

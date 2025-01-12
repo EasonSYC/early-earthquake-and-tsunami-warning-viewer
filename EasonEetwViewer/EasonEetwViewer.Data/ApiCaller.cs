@@ -6,6 +6,7 @@ using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 
 namespace EasonEetwViewer.HttpRequest;
 
@@ -31,7 +32,7 @@ public class ApiCaller
         _authenticatorDto = authenticator;
     }
 
-    public async Task<ContractList> GetContractListAsync()
+    public async Task<ContractListResponse> GetContractListAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "contract");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -39,11 +40,11 @@ public class ApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        ContractList contractList = JsonSerializer.Deserialize<ContractList>(responseBody, _options) ?? throw new Exception();
+        ContractListResponse contractList = JsonSerializer.Deserialize<ContractListResponse>(responseBody, _options) ?? throw new Exception();
         return contractList;
     }
 
-    public async Task<WebSocketList> GetWebSocketListAsync(int id = -1, ConnectionStatus connectionStatus = ConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
+    public async Task<WebSocketListResponse> GetWebSocketListAsync(int id = -1, WebSocketConnectionStatus connectionStatus = WebSocketConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
     {
         NameValueCollection queryString = [];
         if (id != -1)
@@ -51,7 +52,7 @@ public class ApiCaller
             queryString.Add("id", id.ToString());
         }
 
-        if (connectionStatus != ConnectionStatus.Unknown)
+        if (connectionStatus != WebSocketConnectionStatus.Unknown)
         {
             queryString.Add("status", connectionStatus.ToUriString());
         }
@@ -72,7 +73,7 @@ public class ApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody, _options) ?? throw new Exception();
+        WebSocketListResponse webSocketList = JsonSerializer.Deserialize<WebSocketListResponse>(responseBody, _options) ?? throw new Exception();
         return webSocketList;
     }
 
@@ -103,7 +104,7 @@ public class ApiCaller
         return;
     }
 
-    public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
+    public async Task<EarthquakeParameterResponse> GetEarthquakeParameterAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "parameter/earthquake/station");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -111,11 +112,11 @@ public class ApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        EarthquakeParameter earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameter>(responseBody, _options) ?? throw new Exception();
+        EarthquakeParameterResponse earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameterResponse>(responseBody, _options) ?? throw new Exception();
         return earthquakeParameter;
     }
 
-    public async Task<PastEarthquakeList> GetPastEarthquakeListAsync()
+    public async Task<PastEarthquakeListResponse> GetPastEarthquakeListAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "gd/earthquake");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -123,7 +124,7 @@ public class ApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        PastEarthquakeList pastEarthquakeList = JsonSerializer.Deserialize<PastEarthquakeList>(responseBody, _options) ?? throw new Exception();
+        PastEarthquakeListResponse pastEarthquakeList = JsonSerializer.Deserialize<PastEarthquakeListResponse>(responseBody, _options) ?? throw new Exception();
         return pastEarthquakeList;
     }
 }

@@ -3,20 +3,23 @@ using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.WebSocket;
+using Microsoft.Extensions.Configuration;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
-    private static async Task Main() =>
-        // IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
+    private static async Task Main()
+    {
+        IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
-        // string apiKey = config["ApiKey"] ?? string.Empty;
-        // IAuthenticator apiKeyAuth = new ApiKey(apiKey);
+        string apiKey = config["ApiKey"] ?? string.Empty;
+        IAuthenticator apiKeyAuth = new ApiKey(apiKey);
 
         // IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         // string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
@@ -27,15 +30,23 @@ internal class Program
 
         // string baseApi = config["BaseApi"] ?? string.Empty;
 
-        // ApiCaller apiCaller = new(baseApi, apiKeyAuth);
+        // ApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
         // ApiCaller apiCaller = new(baseApi, oAuth);
+
+        string baseTelegram = config["BaseTelegram"] ?? string.Empty;
+
+        TelegramRetriever telegramRetriever = new(baseTelegram, new() { Authenticator = apiKeyAuth });
 
         // await TestAuthenticator(apiKey);
         // await TestAuthenticator(oAuth);
         // await TestApiCaller(apiCaller);
         // await TestWebSocket(apiCaller);
 
-        await TestKmoni();
+        await TestTelegramRetriever(telegramRetriever);
+
+        // await TestKmoni();
+    }
+
 
     private static async Task TestAuthenticator(IAuthenticator auth)
     {
@@ -51,19 +62,19 @@ internal class Program
 
     private static async Task TestApiCaller(ApiCaller apiCaller)
     {
-        ContractList contractList = await apiCaller.GetContractListAsync();
+        ContractListResponse contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList);
 
-        WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
+        WebSocketListResponse webSocketList = await apiCaller.GetWebSocketListAsync();
         Console.WriteLine(webSocketList);
 
         WebSocketStartPost start = new()
         {
-            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
+            Classifications = [ContractClassification.EewForecast, ContractClassification.TelegramEarthquake],
             Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
-            TestStatus = TestStatus.Include,
+            TestStatus = WebSocketTestStatus.Include,
             AppName = "Test",
-            FormatMode = FormatMode.Raw
+            FormatMode = WebSocketFormatMode.Raw
         };
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
@@ -71,7 +82,7 @@ internal class Program
         await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
         Console.WriteLine("Successfully closed WebSocket connection.");
 
-        EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
+        EarthquakeParameterResponse earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
         Console.WriteLine(earthquakeParameter.ResponseId);
         Console.WriteLine(earthquakeParameter.ResponseStatus);
         Console.WriteLine(earthquakeParameter.ResponseTime);
@@ -79,7 +90,7 @@ internal class Program
         Console.WriteLine(earthquakeParameter.ChangeTime);
         Console.WriteLine(earthquakeParameter.ItemList[0]);
 
-        PastEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
+        PastEarthquakeListResponse pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
         Console.WriteLine(pastEarthquakeList.ResponseId);
         Console.WriteLine(pastEarthquakeList.ResponseStatus);
         Console.WriteLine(pastEarthquakeList.ResponseTime);
@@ -88,15 +99,21 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         Console.WriteLine(pastEarthquakeList.ItemList[0]);
     }
+
+    private static async Task TestTelegramRetriever(TelegramRetriever telegramRetriever)
+    {
+        EarthquakeInformationSchema telegramVXSE53 = await telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>("225612eb1353a21b9ec8585adf5a49252b54a07f4fa667d9f580d5b8ffbeca6de6a7e841674a5c99451b2d7025e6e3c4");
+        Console.WriteLine(telegramVXSE53);
+    }
     private static async Task TestWebSocket(ApiCaller apiCaller)
     {
         WebSocketStartPost start = new()
         {
-            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
+            Classifications = [ContractClassification.EewForecast, ContractClassification.TelegramEarthquake],
             Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
-            TestStatus = TestStatus.Include,
+            TestStatus = WebSocketTestStatus.Include,
             AppName = "Test",
-            FormatMode = FormatMode.Raw
+            FormatMode = WebSocketFormatMode.Raw
         };
         WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);

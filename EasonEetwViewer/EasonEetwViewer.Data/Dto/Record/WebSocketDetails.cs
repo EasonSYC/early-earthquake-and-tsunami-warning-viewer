@@ -18,12 +18,12 @@ public record WebSocketDetails
     /// The property <c>classifications</c>. The classifications of telegrams that the WebSocket receives.
     /// </summary>
     [JsonPropertyName("classifications")]
-    public required List<Classification> Classifications { get; init; }
+    public required List<ContractClassification> Classifications { get; init; }
     /// <summary>
     /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
     /// </summary>
     [JsonPropertyName("test")]
-    public required TestStatus Test { get; init; }
+    public required WebSocketTestStatus Test { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the WebSocket receives.
     /// <c>null</c> when receiving all types from the classifications.
@@ -73,5 +73,5 @@ public record WebSocketDetails
     /// The property <c>status</c>. The status of the WebSocket connection.
     /// </summary>
     [JsonPropertyName("status")]
-    public required ConnectionStatus WebSocketStatus { get; init; }
+    public required WebSocketConnectionStatus WebSocketStatus { get; init; }
 }
