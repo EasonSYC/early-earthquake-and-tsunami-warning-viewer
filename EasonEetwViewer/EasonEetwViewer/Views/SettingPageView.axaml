@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
-             xmlns:enum="using:EasonEetwViewer.KyoshinMonitor.Dto.Enum"
+             xmlns:m="using:EasonEetwViewer.Models"
              mc:Ignorable="d"
 			 d:DesignWidth="800"
 			 d:DesignHeight="450"
@@ -93,7 +93,7 @@
 					<DataGridTextColumn Header="Application Name"  Binding="{Binding AppName}"/>
 					<DataGridTextColumn Header="Connection Time"  Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
 					<DataGridTemplateColumn Header="Disconnect">
-						<DataTemplate DataType="{x:Type vm:WebSocketConnectionTemplate}">
+						<DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
 							<Button IsEnabled="{Binding IsEnabled}"
 								    Content="Disconnect"
 									Command="{Binding DisconnectCommand}"/>

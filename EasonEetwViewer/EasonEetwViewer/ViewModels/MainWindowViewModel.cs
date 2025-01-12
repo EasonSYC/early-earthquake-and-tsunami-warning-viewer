@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.ViewModels;
 

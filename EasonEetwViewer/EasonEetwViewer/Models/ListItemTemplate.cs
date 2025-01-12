@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 
-namespace EasonEetwViewer.ViewModels;
+namespace EasonEetwViewer.Models;
 internal class ListItemTemplate
 {
     internal ListItemTemplate(Type type, ViewModelBase instance, string iconKey)
