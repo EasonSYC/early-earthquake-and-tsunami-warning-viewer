@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+﻿namespace EasonEetwViewer.HttpRequest.Dto.Enum;
 internal static class ConnectionStatusExtensions
 {
     public static string ToUriString(this ConnectionStatus connectionStatus) => connectionStatus switch
@@ -12,6 +6,6 @@ internal static class ConnectionStatusExtensions
         ConnectionStatus.Waiting => "waiting",
         ConnectionStatus.Open => "open",
         ConnectionStatus.Closed => "closed",
-        _ => "unknown"
+        ConnectionStatus.Unknown or _ => "unknown"
     };
 }
