@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Authentication;
 
 [JsonConverter(typeof(AuthenticatorDtoConverter))]
-internal record AuthenticatorDto
+public class AuthenticatorDto
 {
-    internal IAuthenticator Authenticator { get; set; } = new EmptyAuthenticator();
+    public IAuthenticator Authenticator = new EmptyAuthenticator();
     internal string ToJsonString() =>
         Authenticator is EmptyAuthenticator
             ? $"none://{Authenticator.ToJsonString()}"

@@ -2,8 +2,11 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EasonEetwViewer.HttpRequest.Dto;
+using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.HttpRequest.Dto.Enum;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -19,6 +22,66 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
 
     [RelayCommand]
     private void WebSocketButton() => WebSocketConnectionStatus ^= true;
+
+    [ObservableProperty]
+    private ObservableCollection<WebSocketConnectionTemplate> _webSocketConnections = [];
+
+    private async Task<int> GetAvaliableWebSocketConnections()
+    {
+        ContractList contractList = await Options.ApiClient.GetContractListAsync();
+        List<Contract> contracts = contractList.ItemList;
+        int result = 0;
+        foreach (Contract contract in contracts)
+        {
+            if (contract.IsValid)
+            {
+                result += contract.ConnectionCounts;
+            }
+        }
+
+        return result;
+    }
+
+    [RelayCommand]
+    private async Task WebSocketRefresh()
+    {
+        List<WebSocketDetails> wsList = [];
+        string currentCursorToken = string.Empty;
+
+        // Cursor Token
+        for (int i = 0; i < 5; ++i)
+        {
+            WebSocketList webSocketList = await Options.ApiClient.GetWebSocketListAsync(connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
+            wsList.AddRange(webSocketList.ItemList);
+
+            if (webSocketList.NextToken is null)
+            {
+                break;
+            }
+            else
+            {
+                currentCursorToken = webSocketList.NextToken;
+            }
+        }
+
+        // This filtering is due to undefined filtering behaviour in the API, just in case.
+        wsList = wsList.Where(x => x.WebSocketStatus == ConnectionStatus.Open).ToList();
+
+        ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
+        wsList.ForEach(
+            x =>
+                currentConnections.Add(new(x.WebSocketId, x.ApplicationName ?? string.Empty, x.StartTime, Options.ApiClient.DeleteWebSocketAsync))
+        );
+
+        int avaliableConnection = await GetAvaliableWebSocketConnections();
+        while (currentConnections.Count < avaliableConnection)
+        {
+            currentConnections.Add(WebSocketConnectionTemplate.EmptyConnection);
+        }
+
+
+        WebSocketConnections = currentConnections;
+    }
 
     private protected override void OptionPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {

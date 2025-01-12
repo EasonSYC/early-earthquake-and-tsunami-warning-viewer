@@ -67,14 +67,40 @@
 						   Text="{Binding OAuthText}"/>
 			</StackPanel>
 
-			<TextBlock Margin="0 20"
+			<StackPanel Margin="0"
+						Orientation="Horizontal">
+				<TextBlock Margin="0 20"
 					   FontSize="18"
 					   FontWeight="Bold">WebSocket Connections</TextBlock>
-			<Button Margin="10 0"
-					FontSize="15"
-					Content="{Binding WebSocketButtonText}"
-					Command="{Binding WebSocketButtonCommand}"/>
+				<Button Margin="10 0"
+						FontSize="15"
+						Content="{Binding WebSocketButtonText}"
+						Command="{Binding WebSocketButtonCommand}"/>
+				<Button Margin="10 0"
+						FontSize="15"
+						Content="Load/Refresh WebSocket List"
+						Command="{Binding WebSocketRefreshCommand}"/>
+			</StackPanel>
 
+			<DataGrid Margin="20"
+					  GridLinesVisibility="All"
+					  CanUserSortColumns="False"
+					  BorderThickness="1"
+					  BorderBrush="Gray"
+					  ItemsSource="{Binding WebSocketConnections}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Connection ID"  Binding="{Binding ConnectionId}"/>
+					<DataGridTextColumn Header="Application Name"  Binding="{Binding AppName}"/>
+					<DataGridTextColumn Header="Connection Time"  Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
+					<DataGridTemplateColumn Header="Disconnect">
+						<DataTemplate DataType="{x:Type vm:WebSocketConnectionTemplate}">
+							<Button IsEnabled="{Binding IsEnabled}"
+								    Content="Disconnect"
+									Command="{Binding DisconnectCommand}"/>
+						</DataTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+			</DataGrid>
 
 			<TextBlock Margin="0 20"
 					   FontSize="18"

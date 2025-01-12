@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
@@ -27,7 +28,7 @@ internal partial class UserOptions : ObservableObject
 
     [JsonInclude]
     [JsonPropertyName("authenticator")]
-    public AuthenticatorDto AuthenticatorWrapper { get; init; } = new AuthenticatorDto();
+    private AuthenticatorDto AuthenticatorWrapper { get; init; } = new();
 
     [JsonIgnore]
     private IAuthenticator Authenticator
@@ -48,9 +49,18 @@ internal partial class UserOptions : ObservableObject
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
 
     [JsonIgnore]
-    internal ApiCaller ApiClient { get; init; }
+    internal ApiCaller ApiClient { get; private init; }
 
-    public UserOptions() => ApiClient = new("https://api.dmdata.jp/v2/", Authenticator);
+    [JsonConstructor]
+    public UserOptions(Tuple<SensorType, string> sensorChoice, Tuple<KmoniDataType, string> dataChoice, AuthenticatorDto authenticatorWrapper)
+    {
+        _sensorChoice = sensorChoice;
+        _dataChoice = dataChoice;
+        AuthenticatorWrapper = authenticatorWrapper;
+        ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
+    }
+
+    public UserOptions() => ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
 
     internal void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
     internal async Task SetAuthenticatorToOAuthAsync()
