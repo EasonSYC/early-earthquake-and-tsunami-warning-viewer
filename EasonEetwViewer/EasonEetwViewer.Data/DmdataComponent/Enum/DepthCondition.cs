@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 /// <summary>
 /// Describes the special situations of the depth value.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeDepthCondition>))]
-public enum EarthquakeDepthCondition
+[JsonConverter(typeof(JsonStringEnumConverter<DepthCondition>))]
+public enum DepthCondition
 {
     /// <summary>
     /// Unknown. Default value.

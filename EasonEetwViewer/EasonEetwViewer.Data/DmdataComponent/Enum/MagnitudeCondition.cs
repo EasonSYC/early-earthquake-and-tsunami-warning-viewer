@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 /// <summary>
 /// Describes the special situations of the magnitude value.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeMagnitudeCondition>))]
-public enum EarthquakeMagnitudeCondition
+[JsonConverter(typeof(JsonStringEnumConverter<MagnitudeCondition>))]
+public enum MagnitudeCondition
 {
     /// <summary>
     /// Unknown. Default value.

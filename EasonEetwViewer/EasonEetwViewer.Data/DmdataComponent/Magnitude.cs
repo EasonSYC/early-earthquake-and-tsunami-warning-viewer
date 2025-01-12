@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 /// <summary>
 /// Describes the magnitude of an earthquake.
 /// </summary>
-public record EarthquakeMagnitude
+public record Magnitude
 {
     /// <summary>
     /// The property <c>type</c>. A constant <c>マグニチュード</c> for magnitude.
@@ -16,7 +16,7 @@ public record EarthquakeMagnitude
     /// The property <c>unit</c>. The units of the magnitude.
     /// </summary>
     [JsonPropertyName("unit")]
-    public required EarthquakeMagnitudeUnit Unit { get; init; }
+    public required MagnitudeUnit Unit { get; init; }
     /// <summary>
     /// The property <c>value</c>. The magnitude of the earthquake.
     /// <c>null</c> when unclear or greater than M8.
@@ -28,5 +28,5 @@ public record EarthquakeMagnitude
     /// <c>null</c> when the value is not <c>null</c>.
     /// </summary>
     [JsonPropertyName("condition")]
-    public EarthquakeMagnitudeCondition? Condition { get; init; }
+    public MagnitudeCondition? Condition { get; init; }
 }

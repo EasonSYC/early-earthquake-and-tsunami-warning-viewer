@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 
 /// <summary>
 /// Represents a distance.
 /// </summary>
-public record EarthquakeDistance
+public record Distance
 {
     /// <summary>
     /// The property <c>unit</c>. A constant <c>km</c>.

@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 /// <summary>
 /// Describes the units of the magnitude.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeMagnitudeUnit>))]
-public enum EarthquakeMagnitudeUnit
+[JsonConverter(typeof(JsonStringEnumConverter<MagnitudeUnit>))]
+public enum MagnitudeUnit
 {
     /// <summary>
     /// Unknown. Default value.

@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 /// <summary>
 /// Describes the depth of an earthquake.
 /// </summary>
-public record EarthquakeDepth
+public record Depth
 {
     /// <summary>
     /// The property <c>type</c>. A constant <c>深さ</c> for depth.
@@ -28,5 +28,5 @@ public record EarthquakeDepth
     /// <c>null</c> when the value is not <c>null</c> and not 0 or 700.
     /// </summary>
     [JsonPropertyName("condition")]
-    public EarthquakeDepthCondition? Condition { get; init; }
+    public DepthCondition? Condition { get; init; }
 }

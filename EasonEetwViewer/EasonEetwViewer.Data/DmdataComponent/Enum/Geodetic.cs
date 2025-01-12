@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 /// <summary>
 /// Represents the geodetic system used by a pair of coordinates.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeGeodetic>))]
-public enum EarthquakeGeodetic
+[JsonConverter(typeof(JsonStringEnumConverter<Geodetic>))]
+public enum Geodetic
 {
     /// <summary>
     /// Unknown. Default value.

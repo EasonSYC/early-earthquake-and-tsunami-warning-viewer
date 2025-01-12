@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 
 /// <summary>
 /// Represents a coordinate, either longitude or longitude.
 /// </summary>
-public record EarthquakeCoordinate
+public record Coordinate
 {
     /// <summary>
     /// The property <c>text</c>. The displayed text of the coordinate.

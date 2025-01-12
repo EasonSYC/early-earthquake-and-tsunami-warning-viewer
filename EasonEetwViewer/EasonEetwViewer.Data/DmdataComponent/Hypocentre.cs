@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 /// <summary>
 /// Represents the hypocentre of an earthquake.
 /// </summary>
-public record EarthquakeHypocentre
+public record Hypocentre
 {
     /// <summary>
     /// The property <c>name</c>. The name of the area of the hypocentre.
@@ -21,28 +21,28 @@ public record EarthquakeHypocentre
     /// The property <c>coordinate</c>. The position of the hypocentre.
     /// </summary>
     [JsonPropertyName("coordinate")]
-    public required EarthquakeCoordinatePosition Coordinates { get; init; }
+    public required CoordinateComponent Coordinates { get; init; }
     /// <summary>
     /// The property <c>depth</c>. The depth of the hypocentre.
     /// </summary>
     [JsonPropertyName("depth")]
-    public required EarthquakeDepth Depth { get; init; }
+    public required Depth Depth { get; init; }
     /// <summary>
     /// The property <c>detailed</c>. The extra details of the hypocentre.
     /// <c>null</c> when the earthquake happens within Japan.
     /// </summary>
     [JsonPropertyName("detailed")]
-    public EarthquakeHypocentreDetail? Detail { get; init; }
+    public HypocentreDetail? Detail { get; init; }
     /// <summary>
     /// The property <c>auxiliary</c>. The auxiliary information of the hypocentre.
     /// <c>null</c> depending on situation.
     /// </summary>
     [JsonPropertyName("auxiliary")]
-    public EarthquakeAuxiliary? Auxiliary { get; init; }
+    public Auxiliary? Auxiliary { get; init; }
     /// <summary>
     /// The property <c>source</c>. The source of the hypocentre information.
     /// <c>null</c> when the earthquake happens within Japan.
     /// </summary>
     [JsonPropertyName("source")]
-    public EarthquakeSource? Source { get; init; }
+    public Source? Source { get; init; }
 }

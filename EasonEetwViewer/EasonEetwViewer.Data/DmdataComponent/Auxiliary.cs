@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 
 /// <summary>
 /// Represents auxiliary information provided on the position of the hypocentre.
 /// </summary>
-public record EarthquakeAuxiliary
+public record Auxiliary
 {
     /// <summary>
     /// The property <c>text</c>. The position where the hypocentre is captured.
@@ -31,5 +31,5 @@ public record EarthquakeAuxiliary
     /// The property <c>distance</c>. The distance of the hypocentre to the area of capture.
     /// </summary>
     [JsonPropertyName("distance")]
-    public required EarthquakeDistance Distance { get; init; }
+    public required Distance Distance { get; init; }
 }

@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 
 /// <summary>
 /// Represents the height of a position.
 /// </summary>
-public record EarthquakeHeight
+public record Height
 {
     /// <summary>
     /// The property <c>type</c>. A constant <c>高さ</c> for the height.

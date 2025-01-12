@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Enum;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 /// <summary>
 /// Represents the source of information of a distant earthquake
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeSource>))]
-public enum EarthquakeSource
+[JsonConverter(typeof(JsonStringEnumConverter<Source>))]
+public enum Source
 {
     /// <summary>
     /// Unknown. Default value.

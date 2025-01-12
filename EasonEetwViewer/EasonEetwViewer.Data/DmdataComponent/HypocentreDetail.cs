@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.Record;
+namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 
 /// <summary>
 /// Provides details for the hypocentre area name.
 /// </summary>
-public record EarthquakeHypocentreDetail
+public record HypocentreDetail
 {
     /// <summary>
     /// The property <c>code</c>. The XML code for the area.
