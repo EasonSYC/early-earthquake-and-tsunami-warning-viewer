@@ -18,7 +18,7 @@ public record WebSocketDetails
     /// The property <c>classifications</c>. The classifications of telegrams that the WebSocket receives.
     /// </summary>
     [JsonPropertyName("classifications")]
-    public required PrintList<Classification> Classifications { get; init; }
+    public required List<Classification> Classifications { get; init; }
     /// <summary>
     /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
     /// </summary>
@@ -29,7 +29,7 @@ public record WebSocketDetails
     /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
-    public required PrintList<string>? Types { get; init; }
+    public required List<string>? Types { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
     /// <c>null</c> when not indicated.
