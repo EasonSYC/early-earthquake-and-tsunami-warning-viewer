@@ -1,6 +1,7 @@
 ﻿using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto;
+using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;

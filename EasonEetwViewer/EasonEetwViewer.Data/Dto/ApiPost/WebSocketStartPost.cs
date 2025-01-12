@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto;
+namespace EasonEetwViewer.HttpRequest.Dto.ApiPost;
 
 /// <summary>
 /// Outlines the necessary information provided in the JSON in the header in <c>socket.start</c> API call.
