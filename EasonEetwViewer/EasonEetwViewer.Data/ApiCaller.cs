@@ -1,6 +1,5 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -150,7 +149,7 @@ public class ApiCaller
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
-        Debug.WriteLine($"gd/earthquake?{queryString.ToString()}");
+        Debug.WriteLine($"gd/earthquake?{queryString}");
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();

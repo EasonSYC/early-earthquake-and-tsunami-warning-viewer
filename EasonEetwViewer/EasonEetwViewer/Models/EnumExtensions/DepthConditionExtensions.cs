@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
+﻿using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 
 namespace EasonEetwViewer.Models.EnumExtensions;
 public static class DepthConditionExtensions

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel.__Internals;
-using DynamicData.Diagnostics;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+﻿using EasonEetwViewer.HttpRequest.Dto.Enum;
 
 namespace EasonEetwViewer.Models.EnumExtensions;
 public static class EarthquakeIntensityExtensions
