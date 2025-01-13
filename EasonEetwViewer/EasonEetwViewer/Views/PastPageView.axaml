@@ -63,6 +63,7 @@
 									   HorizontalAlignment="Center"
 									   FontSize="28"
 									   FontWeight="ExtraBold"
+									   Foreground="{Binding IntensityColour}"
 									   Grid.Column="0"
 									   Grid.Row="0"
 									   Grid.RowSpan="2"/>

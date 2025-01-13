@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using DynamicData.Diagnostics;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 
@@ -21,5 +23,19 @@ public static class EarthquakeIntensityExtensions
         EarthquakeIntensity.SixStrong => "6+",
         EarthquakeIntensity.Seven => "7",
         EarthquakeIntensity.Unknown or _ => "Unknown"
+    };
+
+    public static string? ToColourString(this EarthquakeIntensity? intensity) => intensity switch
+    {
+        EarthquakeIntensity.One => "F2F2FF",
+        EarthquakeIntensity.Two => "00AAFF",
+        EarthquakeIntensity.Three => "0041FF",
+        EarthquakeIntensity.Four => "FAE696",
+        EarthquakeIntensity.FiveWeak => "FFE600",
+        EarthquakeIntensity.FiveStrong => "FF9900",
+        EarthquakeIntensity.SixWeak => "FF2800",
+        EarthquakeIntensity.SixStrong => "A50021",
+        EarthquakeIntensity.Seven => "B40068",
+        EarthquakeIntensity.Unknown or null or _ => null
     };
 }

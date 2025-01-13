@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.HttpRequest.DmdataComponent;
 using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
@@ -24,6 +25,7 @@ internal partial class EarthquakeItemTemplate : ObservableObject
     private string _eventId;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IntensityDisplay))]
+    [NotifyPropertyChangedFor(nameof(IntensityColour))]
     private EarthquakeIntensity? _intensity;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(OriginTimeDisplay))]
@@ -38,6 +40,7 @@ internal partial class EarthquakeItemTemplate : ObservableObject
     [NotifyPropertyChangedFor(nameof(MagnitudeUnitDisplay))]
     private Magnitude? _magnitude;
     public string IntensityDisplay => Intensity is EarthquakeIntensity intensity ? intensity.ToReadableString() : "-";
+    public IBrush? IntensityColour => Intensity.ToColourString() is string str ? new SolidColorBrush(Color.Parse($"#{str}")) : null;
     public string OriginTimeDisplay => OriginTime is DateTime time ? time.ToString("MM/dd HH:mm") : "不明";
     public string HypocentreDisplay => Hypocentre is Hypocentre hypocentre ? hypocentre.Name : "不明";
     public string DepthValueDisplay => Hypocentre is Hypocentre hypocentre
