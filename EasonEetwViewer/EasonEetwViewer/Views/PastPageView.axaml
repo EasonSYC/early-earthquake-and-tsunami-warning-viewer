@@ -15,41 +15,93 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200"></ColumnDefinition>
-			<ColumnDefinition Width="*"></ColumnDefinition>
-			<ColumnDefinition Width="300"></ColumnDefinition>
+			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="300"/>
 		</Grid.ColumnDefinitions>
-		<mapsui:MapControl Grid.Column="1" Grid.Row="0" x:Name="MapControl"/>
-		<StackPanel Margin="20"
-			        Grid.Column="2"
-					Grid.Row="0">
-			<Button Content="Refresh Earthquake List"
+
+		<Grid Grid.Column="1"
+			  Grid.Row="0">
+			<DockPanel>
+				<mapsui:MapControl x:Name="MapControl"/>
+			</DockPanel>
+			<Canvas>
+			</Canvas>
+		</Grid>
+		<Grid Grid.Column="2"
+		      Grid.Row="0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Button Grid.Column="0"
+					Grid.Row="0"
+					Content="Refresh Earthquake List"
 					Command="{Binding RefreshEarthquakeListCommand}"
-					HorizontalAlignment="Center"></Button>
-			<ListBox Margin="5 0"
-				     Padding="0"
+					HorizontalAlignment="Center"
+					Canvas.Top="0"
+					Canvas.Right="0"/>
+			<ListBox Grid.Column="0"
+					 Grid.Row="1"
+					 Padding="0"
 					 ItemsSource="{Binding EarthquakeList}"
-				     SelectedItem="{Binding SelectedEarthquake}"
-					 Canvas.Right="0"
-					 Canvas.Top="0"
-					 Canvas.Bottom="0">
+					 SelectedItem="{Binding SelectedEarthquake}">
 				<ListBox.ItemTemplate>
 					<DataTemplate DataType="{x:Type m:EarthquakeItemTemplate}">
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding IntensityDisplay}"/>
-							<StackPanel>
-								<TextBlock Text="{Binding OriginTimeDisplay}"/>
-								<TextBlock Text="{Binding HypocentreDisplay}"/>
-							</StackPanel>
-							<StackPanel>
-								<TextBlock Text="{Binding DepthDisplay}"/>
-								<TextBlock Text="{Binding MagnitudeDisplay}"/>
-							</StackPanel>
-						</StackPanel>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="90"/>
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="2*"/>
+								<RowDefinition Height="3*"/>
+							</Grid.RowDefinitions>
+							<TextBlock Text="{Binding IntensityDisplay}"
+									   VerticalAlignment="Center"
+									   HorizontalAlignment="Center"
+									   FontSize="28"
+									   FontWeight="ExtraBold"
+									   Grid.Column="0"
+									   Grid.Row="0"
+									   Grid.RowSpan="2"/>
+							<TextBlock Text="{Binding OriginTimeDisplay}"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Bottom"
+									   Grid.Column="1"
+									   Grid.Row="0"/>
+							<TextBlock Text="{Binding HypocentreDisplay}"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Bottom"
+									   FontSize="18"
+									   FontWeight="SemiBold"
+									   Grid.Column="1"
+									   Grid.Row="1"/>
+							<TextBlock HorizontalAlignment="Right"
+									   VerticalAlignment="Bottom"
+									   Grid.Column="2"
+									   Grid.Row="0">
+								<Run Text="{Binding DepthValueDisplay}"
+									 FontWeight="SemiBold"/>
+								<Run Text="{Binding DepthUnitDisplay}"
+									 FontWeight="SemiLight"/>
+							</TextBlock>
+							<TextBlock HorizontalAlignment="Right"
+									   VerticalAlignment="Bottom"
+									   Grid.Column="2"
+									   Grid.Row="1">
+								<Run Text="{Binding MagnitudeUnitDisplay}"
+									 FontWeight="SemiLight"/>
+								<Run Text="{Binding MagnitudeValueDisplay}"
+									 FontSize="18"
+									 FontWeight="SemiBold"/>
+							</TextBlock>
+						</Grid>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-		</StackPanel>
+		</Grid>
 	</Grid>
 	
 </UserControl>

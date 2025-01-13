@@ -30,18 +30,26 @@ internal partial class EarthquakeItemTemplate : ObservableObject
     private DateTime? _originTime;
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HypocentreDisplay))]
-    [NotifyPropertyChangedFor(nameof(DepthDisplay))]
+    [NotifyPropertyChangedFor(nameof(DepthValueDisplay))]
+    [NotifyPropertyChangedFor(nameof(DepthUnitDisplay))]
     private Hypocentre? _hypocentre;
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(MagnitudeDisplay))]
+    [NotifyPropertyChangedFor(nameof(MagnitudeValueDisplay))]
+    [NotifyPropertyChangedFor(nameof(MagnitudeUnitDisplay))]
     private Magnitude? _magnitude;
     public string IntensityDisplay => Intensity is EarthquakeIntensity intensity ? intensity.ToReadableString() : "-";
     public string OriginTimeDisplay => OriginTime is DateTime time ? time.ToString("MM/dd HH:mm") : "不明";
     public string HypocentreDisplay => Hypocentre is Hypocentre hypocentre ? hypocentre.Name : "不明";
-    public string DepthDisplay => Hypocentre is Hypocentre hypocentre 
-        ? hypocentre.Depth.Condition is DepthCondition condition ? condition.ToReadableString() : $"{hypocentre.Depth.Value} {hypocentre.Depth.Unit}"
+    public string DepthValueDisplay => Hypocentre is Hypocentre hypocentre
+        ? hypocentre.Depth.Condition is DepthCondition condition ? condition.ToReadableString() : $"{hypocentre.Depth.Value}"
         : "不明";
-    public string MagnitudeDisplay => Magnitude is Magnitude magnitude
-        ? magnitude.Condition is MagnitudeCondition condition ? condition.ToReadableString() : $"{magnitude.Unit.ToReadableString()} {magnitude.Value}"
+    public string DepthUnitDisplay => Hypocentre is Hypocentre hypocentre
+        ? hypocentre.Depth.Condition is DepthCondition ? string.Empty : hypocentre.Depth.Unit
+        : string.Empty;
+    public string MagnitudeValueDisplay => Magnitude is Magnitude magnitude
+        ? magnitude.Condition is MagnitudeCondition condition ? condition.ToReadableString() : $"{magnitude.Value}"
         : "不明";
+    public string MagnitudeUnitDisplay => Magnitude is Magnitude magnitude
+        ? magnitude.Condition is MagnitudeCondition ? "M" : magnitude.Unit.ToReadableString()
+        : "M";
 }

@@ -10,7 +10,7 @@ public static class MagnitudeConditionExtensions
 {
     public static string ToReadableString(this MagnitudeCondition magnitudeCondition) => magnitudeCondition switch
     {
-        MagnitudeCondition.Huge => "M8+",
+        MagnitudeCondition.Huge => "8+",
         MagnitudeCondition.Unclear => "不明",
         MagnitudeCondition.Unknown or _ => "Unknown"
     };

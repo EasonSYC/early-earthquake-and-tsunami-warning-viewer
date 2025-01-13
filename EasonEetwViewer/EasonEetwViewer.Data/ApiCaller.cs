@@ -1,7 +1,10 @@
 ﻿using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Numerics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Web;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
@@ -45,7 +48,7 @@ public class ApiCaller
 
     public async Task<WebSocketListResponse> GetWebSocketListAsync(int id = -1, WebSocketConnectionStatus connectionStatus = WebSocketConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
     {
-        NameValueCollection queryString = [];
+        NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
         if (id != -1)
         {
             queryString.Add("id", id.ToString());
@@ -115,11 +118,39 @@ public class ApiCaller
         return earthquakeParameter;
     }
 
-    public async Task<PastEarthquakeListResponse> GetPastEarthquakeListAsync()
+    public async Task<PastEarthquakeListResponse> GetPastEarthquakeListAsync(string hypocentreCode = "", EarthquakeIntensity maxInt = EarthquakeIntensity.Unknown, DateOnly date = new(), int limit = -1, string cursorToken = "")
     {
-        using HttpRequestMessage request = new(HttpMethod.Get, "gd/earthquake");
+        NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
+        if (hypocentreCode != string.Empty)
+        {
+            queryString.Add("hypocenter", hypocentreCode);
+        }
+
+        if (maxInt != EarthquakeIntensity.Unknown)
+        {
+            queryString.Add("maxInt", maxInt.ToUriString());
+        }
+
+        if (date != new DateOnly())
+        {
+            queryString.Add("date", date.ToString("yyyy-MM-dd"));
+        }
+
+        if (limit != -1)
+        {
+            queryString.Add("limit", limit.ToString());
+        }
+
+        if (cursorToken != string.Empty)
+        {
+            queryString.Add("cursorToken", cursorToken);
+        }
+
+        using HttpRequestMessage request = new(HttpMethod.Get, $"gd/earthquake?{queryString}");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
         using HttpResponseMessage response = await _client.SendAsync(request);
+
+        Debug.WriteLine($"gd/earthquake?{queryString.ToString()}");
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();

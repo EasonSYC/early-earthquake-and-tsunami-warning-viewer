@@ -52,7 +52,7 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
         // Cursor Token
         for (int i = 0; i < 5; ++i)
         {
-            WebSocketListResponse webSocketList = await Options.ApiClient.GetWebSocketListAsync(connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
+            WebSocketListResponse webSocketList = await Options.ApiClient.GetWebSocketListAsync(limit: 100, connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
             wsList.AddRange(webSocketList.ItemList);
 
             if (webSocketList.NextToken is null)
