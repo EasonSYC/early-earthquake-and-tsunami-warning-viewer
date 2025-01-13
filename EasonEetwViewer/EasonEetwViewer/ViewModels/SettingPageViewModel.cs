@@ -7,6 +7,7 @@ using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.ViewModels;
 

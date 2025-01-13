@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.Models;
 internal class SensorChoiceConverter : JsonConverter<Tuple<SensorType, string>>

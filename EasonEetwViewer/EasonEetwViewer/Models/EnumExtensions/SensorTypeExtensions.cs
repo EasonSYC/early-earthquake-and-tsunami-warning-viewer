@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.EnumExtensions;
 /// <summary>
 /// Provides extension methods for <c>SensorType</c>.
 /// </summary>

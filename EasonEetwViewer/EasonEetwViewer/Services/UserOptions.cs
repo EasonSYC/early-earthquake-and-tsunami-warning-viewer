@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.Models;
 

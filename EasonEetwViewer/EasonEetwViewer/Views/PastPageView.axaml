@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
+             xmlns:m="using:EasonEetwViewer.Models"
 			 xmlns:mapsui="using:Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.PastPageView"
@@ -12,5 +13,43 @@
 		<vm:PastPageViewModel/>
 	</Design.DataContext>
 
-	<mapsui:MapControl x:Name="MapControl"/>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="300"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<mapsui:MapControl Grid.Column="1" Grid.Row="0" x:Name="MapControl"/>
+		<StackPanel Margin="20"
+			        Grid.Column="2"
+					Grid.Row="0">
+			<Button Content="Refresh Earthquake List"
+					Command="{Binding RefreshEarthquakeListCommand}"
+					HorizontalAlignment="Center"></Button>
+			<ListBox Margin="5 0"
+				     Padding="0"
+					 ItemsSource="{Binding EarthquakeList}"
+				     SelectedItem="{Binding SelectedEarthquake}"
+					 Canvas.Right="0"
+					 Canvas.Top="0"
+					 Canvas.Bottom="0">
+				<ListBox.ItemTemplate>
+					<DataTemplate DataType="{x:Type m:EarthquakeItemTemplate}">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding IntensityDisplay}"/>
+							<StackPanel>
+								<TextBlock Text="{Binding OriginTimeDisplay}"/>
+								<TextBlock Text="{Binding HypocentreDisplay}"/>
+							</StackPanel>
+							<StackPanel>
+								<TextBlock Text="{Binding DepthDisplay}"/>
+								<TextBlock Text="{Binding MagnitudeDisplay}"/>
+							</StackPanel>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</StackPanel>
+	</Grid>
+	
 </UserControl>
