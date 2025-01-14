@@ -2,7 +2,7 @@
 
 namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 
-public record EarthquakeInformationObservationData
+public record EarthquakeInformationRegionData
 {
     [JsonPropertyName("code")]
     public required string Code { get; init; }

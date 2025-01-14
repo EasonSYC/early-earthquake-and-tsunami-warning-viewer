@@ -6,11 +6,11 @@ public record EarthquakeInformationIntensity
     [JsonPropertyName("maxInt")]
     public required Enum.EarthquakeIntensity MaxInt { get; init; }
     [JsonPropertyName("prefectures")]
-    public required List<EarthquakeInformationObservationData> Prefectures { get; init; }
+    public required List<EarthquakeInformationRegionData> Prefectures { get; init; }
     [JsonPropertyName("regions")]
-    public required List<EarthquakeInformationObservationData> Regions { get; init; }
+    public required List<EarthquakeInformationRegionData> Regions { get; init; }
     [JsonPropertyName("cities")]
-    public required List<EarthquakeInformationObservationDataWithCondition> Cities { get; init; }
+    public required List<EarthquakeInformationCityData> Cities { get; init; }
     [JsonPropertyName("stations")]
-    public required List<EarthquakeInformationObservationDataWithCondition> Stations { get; init; }
+    public required List<EarthquakeInformationStationData> Stations { get; init; }
 }

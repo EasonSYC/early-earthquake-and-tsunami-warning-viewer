@@ -15,11 +15,119 @@
 
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="300"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="300"/>
 		</Grid.ColumnDefinitions>
+		<Grid Grid.Column="0"
+			  Grid.Row="0"
+			  IsVisible="{Binding IsEarthquakeDetailsEnabled}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			
+			<StackPanel Grid.Column="0"
+					    Grid.Row="0">
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="16"
+					       FontWeight="SemiBold"
+					       Text="Max. Intensity"
+						   Margin="5 5"/>
+				<TextBlock HorizontalAlignment="Right"
+					       FontSize="52"
+					       FontWeight="ExtraBold"
+					       Text="{Binding EarthquakeDetails.IntensityDisplay}"
+					       Foreground="{Binding EarthquakeDetails.IntensityColour}"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="14"
+					       FontWeight="SemiBold"
+					       Text="Time"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+						   FontSize="24"
+						   FontWeight="SemiBold"
+						   Text="{Binding EarthquakeDetails.OriginTimeDisplay}"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="14"
+					       FontWeight="SemiBold"
+					       Text="Hypocentre"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+						   FontSize="24"
+						   FontWeight="SemiBold"
+						   Text="{Binding EarthquakeDetails.HypocentreDisplay}"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="14"
+					       FontWeight="SemiBold"
+					       Text="Hypocentre Depth"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+						   FontWeight="SemiBold"
+						   Margin="5 0">
+					<Run FontSize="24"
+						 Text="{Binding EarthquakeDetails.DepthValueDisplay}"/>
+					<Run FontSize="18"
+						 Text="{Binding EarthquakeDetails.DepthUnitDisplay}"/>
+				</TextBlock>
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="14"
+					       FontWeight="SemiBold"
+					       Text="Magnitude"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+						   FontWeight="SemiBold"
+						   Margin="5 0">
+					<Run FontSize="18"
+						 Text="{Binding EarthquakeDetails.MagnitudeUnitDisplay}"/>
+					<Run FontSize="24"
+						 Text="{Binding EarthquakeDetails.MagnitudeValueDisplay}"/>
+				</TextBlock>
+				<TextBlock HorizontalAlignment="Left"
+						   FontSize="14"
+					       FontWeight="SemiBold"
+					       Text="Last Updated"
+						   Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+						   FontSize="18"
+						   FontWeight="SemiBold"
+						   Text="{Binding EarthquakeDetails.LastUpdatedDisplay}"
+						   Margin="5 0"/>
+			</StackPanel>
 
+			<ScrollViewer Grid.Column="0"
+					      Grid.Row="1"
+						  Margin="0 5">
+				<ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailTree.ToItemControlDisplay}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
+							<StackPanel>
+								<TextBlock HorizontalAlignment="Stretch"
+									   TextAlignment="Left"
+									   FontSize="14"
+									   FontWeight="SemiBold"
+									   Foreground="{Binding ForegroundColour}"
+									   Margin="5">
+									<Run Text="Intensity"/>
+									<Run Text="{Binding DisplayText}"/>
+								</TextBlock>
+								<TreeView ItemsSource="{Binding PositionNodes}">
+									<TreeView.ItemTemplate>
+										<TreeDataTemplate DataType="{x:Type m:PositionNode}"
+														  ItemsSource="{Binding SubNodes}">
+											<TextBlock Text="{Binding Title}"/>
+										</TreeDataTemplate>
+									</TreeView.ItemTemplate>
+								</TreeView>
+							</StackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+		</Grid>
 		<Grid Grid.Column="1"
 			  Grid.Row="0">
 			<DockPanel>
@@ -39,7 +147,8 @@
 					Grid.Row="0"
 					Content="Refresh Earthquake List"
 					Command="{Binding RefreshEarthquakeListCommand}"
-					HorizontalAlignment="Center"/>
+					HorizontalAlignment="Center"
+					Margin="10"/>
 			<ListBox Grid.Column="0"
 					 Grid.Row="1"
 					 Padding="0"
@@ -49,9 +158,9 @@
 					<DataTemplate DataType="{x:Type m:EarthquakeItemTemplate}">
 						<Grid>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="50"/>
+								<ColumnDefinition Width="40"/>
 								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="90"/>
+								<ColumnDefinition Width="60"/>
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
 								<RowDefinition Height="2*"/>
@@ -105,7 +214,9 @@
 					Grid.Row="2"
 					Content="Load 10 More Earthquakes"
 					Command="{Binding LoadExtraEarthquakesCommand}"
-					HorizontalAlignment="Center"/>
+					IsEnabled="{Binding IsLoadExtraEnabled}"
+					HorizontalAlignment="Center"
+					Margin="10"/>
 		</Grid>
 	</Grid>
 	

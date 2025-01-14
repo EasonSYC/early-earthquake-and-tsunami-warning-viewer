@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using EasonEetwViewer.ViewModels;
-using Mapsui.UI.Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EasonEetwViewer.Views;
