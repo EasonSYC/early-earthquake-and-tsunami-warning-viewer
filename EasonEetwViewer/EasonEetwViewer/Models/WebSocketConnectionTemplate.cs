@@ -23,15 +23,9 @@ internal partial class WebSocketConnectionTemplate : ObservableObject
         _disconnectTask = (x) => Task.CompletedTask;
         IsEnabled = false;
     }
-
-    [ObservableProperty]
-    private int _connectionId;
-
-    [ObservableProperty]
-    private string _appName;
-
-    [ObservableProperty]
-    private DateTime _startTime;
+    internal int ConnectionId { get; private init; }
+    internal string AppName { get; private init; }
+    internal DateTime StartTime { get; private init; }
 
     [ObservableProperty]
     private bool _isEnabled;

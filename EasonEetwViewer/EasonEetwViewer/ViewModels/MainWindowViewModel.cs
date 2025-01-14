@@ -26,7 +26,7 @@ internal partial class MainWindowViewModel : ViewModelBase
         SelectedListItem = Items[0];
     }
 
-    internal ObservableCollection<ListItemTemplate> Items { get; init; }
+    internal List<ListItemTemplate> Items { get; init; }
 
     [ObservableProperty]
     private bool _isPaneOpen = true;

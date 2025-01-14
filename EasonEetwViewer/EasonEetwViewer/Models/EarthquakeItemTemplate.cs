@@ -6,7 +6,7 @@ using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.Models;
-internal partial class EarthquakeItemTemplate : ObservableObject
+internal record EarthquakeItemTemplate
 {
     public EarthquakeItemTemplate(string eventId, EarthquakeIntensity? intensity, DateTime? originTime, Hypocentre? hypocentre, Magnitude? magnitude)
     {
@@ -16,24 +16,11 @@ internal partial class EarthquakeItemTemplate : ObservableObject
         Hypocentre = hypocentre;
         Magnitude = magnitude;
     }
-    [ObservableProperty]
-    private string _eventId;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IntensityDisplay))]
-    [NotifyPropertyChangedFor(nameof(IntensityColour))]
-    private EarthquakeIntensity? _intensity;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(OriginTimeDisplay))]
-    private DateTime? _originTime;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(HypocentreDisplay))]
-    [NotifyPropertyChangedFor(nameof(DepthValueDisplay))]
-    [NotifyPropertyChangedFor(nameof(DepthUnitDisplay))]
-    private Hypocentre? _hypocentre;
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(MagnitudeValueDisplay))]
-    [NotifyPropertyChangedFor(nameof(MagnitudeUnitDisplay))]
-    private Magnitude? _magnitude;
+    internal string EventId { get; private init; }
+    internal EarthquakeIntensity? Intensity { get; private init; }
+    internal DateTime? OriginTime { get; private init; }
+    internal Hypocentre? Hypocentre { get; private init; }
+    internal Magnitude? Magnitude { get; private init; }
     public string IntensityDisplay => Intensity is EarthquakeIntensity intensity ? intensity.ToReadableString() : "-";
     public IBrush? IntensityColour => Intensity.ToColourString() is string str ? new SolidColorBrush(Color.Parse($"#{str}")) : null;
     public string OriginTimeDisplay => OriginTime is DateTime time ? time.ToString("MM/dd HH:mm") : "不明";

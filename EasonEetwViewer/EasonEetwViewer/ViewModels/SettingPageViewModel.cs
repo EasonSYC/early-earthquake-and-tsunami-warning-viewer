@@ -153,10 +153,10 @@ internal partial class SettingPageViewModel(UserOptions options) : PageViewModel
         AuthenticationStatus.None or _ => _nothingInUseText
     };
 
-    internal ObservableCollection<Tuple<SensorType, string>> SensorTypeChoices { get; init; } =
+    internal List<Tuple<SensorType, string>> SensorTypeChoices { get; init; } =
         new(Enum.GetValues<SensorType>()
             .Select(e => new Tuple<SensorType, string>(e, e.ToReadableString())));
-    internal ObservableCollection<Tuple<KmoniDataType, string>> DataTypeChoices { get; init; } =
+    internal List<Tuple<KmoniDataType, string>> DataTypeChoices { get; init; } =
         new(Enum.GetValues<KmoniDataType>()
             .Select(e => new Tuple<KmoniDataType, string>(e, e.ToReadableString())));
 }
