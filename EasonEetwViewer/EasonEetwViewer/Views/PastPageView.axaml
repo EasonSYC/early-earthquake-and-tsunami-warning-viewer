@@ -33,14 +33,13 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Button Grid.Column="0"
 					Grid.Row="0"
 					Content="Refresh Earthquake List"
 					Command="{Binding RefreshEarthquakeListCommand}"
-					HorizontalAlignment="Center"
-					Canvas.Top="0"
-					Canvas.Right="0"/>
+					HorizontalAlignment="Center"/>
 			<ListBox Grid.Column="0"
 					 Grid.Row="1"
 					 Padding="0"
@@ -102,6 +101,11 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
+			<Button Grid.Column="0"
+					Grid.Row="2"
+					Content="Load 10 More Earthquakes"
+					Command="{Binding LoadExtraEarthquakesCommand}"
+					HorizontalAlignment="Center"/>
 		</Grid>
 	</Grid>
 	
