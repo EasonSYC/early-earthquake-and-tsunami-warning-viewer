@@ -5,9 +5,9 @@ public static class DepthConditionExtensions
 {
     public static string ToReadableString(this DepthCondition depthCondition) => depthCondition switch
     {
-        DepthCondition.Deep => "700km以上",
-        DepthCondition.Shallow => "ごく浅い",
-        DepthCondition.Unclear => "不明",
+        DepthCondition.Deep => "700km+",
+        DepthCondition.Shallow => "Shallow",
+        DepthCondition.Unclear => "Unclear",
         DepthCondition.Unknown or _ => "Unknown"
     };
 }

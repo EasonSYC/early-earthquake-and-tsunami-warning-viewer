@@ -8,7 +8,7 @@ public record EarthquakeInformationStationData
     [JsonPropertyName("name")]
     public required string Name { get; init; }
     [JsonPropertyName("int")]
-    public Enum.EarthquakeIntensity MaxInt { get; init; }
+    public EarthquakeIntensityWithUnreceived MaxInt { get; init; }
     [JsonPropertyName("revise")]
     public EarthquakeInformationReviseStatus? Revise { get; init; }
     [JsonPropertyName("condition")]

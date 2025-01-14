@@ -37,14 +37,16 @@ public record EarthquakeInfo
     public required DateTime ArrivalTime { get; init; }
     /// <summary>
     /// The property <c>hypocenter</c>. The hypocentre of the earthquake.
+    /// <c>null</c> when there is only observation report of the earthquake.
     /// </summary>
     [JsonPropertyName("hypocenter")]
-    public required Hypocentre Hypocentre { get; init; }
+    public Hypocentre? Hypocentre { get; init; }
     /// <summary>
     /// The property <c>magnitude</c>. The magnitude of the earthquake.
+    /// <c>null</c> when there is only observation report of the earthquake.
     /// </summary>
     [JsonPropertyName("magnitude")]
-    public required Magnitude Magnitude { get; init; }
+    public Magnitude? Magnitude { get; init; }
     /// <summary>
     /// The property <c>maxInt</c>. The maximum intensity observed for the earthquake.
     /// <c>null</c> when this is a distant earthquake.

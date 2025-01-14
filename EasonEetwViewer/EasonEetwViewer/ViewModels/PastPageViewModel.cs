@@ -8,6 +8,7 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using System.Diagnostics;
+using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
@@ -53,16 +54,24 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                     List<EarthquakeInformationStationData> stationData = telegramInfo.Body.Intensity.Stations;
                     foreach (EarthquakeInformationStationData station in stationData)
                     {
-                        if (station.MaxInt is EarthquakeIntensity newInt && station.MaxInt != EarthquakeIntensity.Unknown)
+                        if (station.MaxInt is EarthquakeIntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != EarthquakeIntensity.Unknown)
                         {
-                            Station stationDetails = Options.EarthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList()[0];
-                            string prefectureCode = stationDetails.City.Code[0..2];
-                            PrefectureData prefectureData = Options.Prefectures.Where(x => x.Code == prefectureCode).ToList()[0];
-                            tree.AddPositionNode(newInt,
-                                new(prefectureData.Name, prefectureData.Code,
-                                    new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
-                                        new(stationDetails.City.KanjiName, stationDetails.City.Code,
-                                            new(stationDetails.KanjiName, stationDetails.XmlCode)))));
+                            List<Station> potnetialStations = Options.EarthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
+                            if (potnetialStations.Count != 0)
+                            {
+                                Station stationDetails = potnetialStations[0];
+                                string prefectureCode = stationDetails.City.Code[0..2];
+                                List<PrefectureData> potentialPrefectures = Options.Prefectures.Where(x => x.Code == prefectureCode).ToList();
+                                if (potentialPrefectures.Count != 0)
+                                {
+                                    PrefectureData prefectureData = potentialPrefectures[0];
+                                    tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
+                                        new(prefectureData.Name, prefectureData.Code,
+                                            new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
+                                                new(stationDetails.City.KanjiName, stationDetails.City.Code,
+                                                    new(stationDetails.KanjiName, stationDetails.XmlCode)))));
+                                }
+                            }
                         }
                     }
                 }
