@@ -29,6 +29,11 @@
 			
 			<StackPanel Grid.Column="0"
 					    Grid.Row="0">
+				<Button HorizontalAlignment="Center"
+						FontSize="16"
+						Content="Yahoo Earthquake Details"
+						Command="{Binding JumpYahooWebpageCommand}"
+						Margin="5"/>
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="16"
 					       FontWeight="SemiBold"

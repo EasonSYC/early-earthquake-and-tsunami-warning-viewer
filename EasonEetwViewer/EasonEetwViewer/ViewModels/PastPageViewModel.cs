@@ -78,7 +78,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
 
                 // draw the primary area mark on the map
 
-                EarthquakeDetails = new(value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
+                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
             }
             else
             {
@@ -90,6 +90,13 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
             EarthquakeDetails = null;
         }
     }
+
+    [RelayCommand]
+    private void JumpYahooWebpage() => _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
+    {
+        FileName = $"https://typhoon.yahoo.co.jp/weather/jp/earthquake/{EarthquakeDetails!.EventId}.html",
+        UseShellExecute = true
+    });
 
     [RelayCommand]
     private async Task RefreshEarthquakeList()

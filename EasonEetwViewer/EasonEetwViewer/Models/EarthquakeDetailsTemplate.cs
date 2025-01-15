@@ -15,8 +15,9 @@ using EasonEetwViewer.Models.EnumExtensions;
 namespace EasonEetwViewer.Models;
 internal class EarthquakeDetailsTemplate : ObservableObject
 {
-    internal EarthquakeDetailsTemplate(EarthquakeIntensity? intensity, DateTime? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTime? lastUpdated, IntensityDetailTree detailTree)
+    internal EarthquakeDetailsTemplate(string eventId, EarthquakeIntensity? intensity, DateTime? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTime? lastUpdated, IntensityDetailTree detailTree)
     {
+        EventId = eventId;
         Intensity = intensity;
         OriginTime = originTime;
         Hypocentre = hypocentre;
@@ -25,6 +26,7 @@ internal class EarthquakeDetailsTemplate : ObservableObject
         LastUpdated = lastUpdated;
         DetailTree = detailTree;
     }
+    internal string? EventId { get; private init; }
     internal EarthquakeIntensity? Intensity { get; private init; }
     internal DateTime? OriginTime { get; private init; }
     internal DateTime? LastUpdated { get; private init; }
