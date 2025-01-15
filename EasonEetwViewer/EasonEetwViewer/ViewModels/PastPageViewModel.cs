@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
-using System.Diagnostics;
 using EasonEetwViewer.Models.EnumExtensions;
 
 namespace EasonEetwViewer.ViewModels;

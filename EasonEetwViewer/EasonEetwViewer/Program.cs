@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using Avalonia.Logging;
 
 namespace EasonEetwViewer;
 
@@ -30,5 +29,5 @@ internal sealed class Program
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont();
-                //.LogToTrace(LogEventLevel.Verbose);
+    //.LogToTrace(LogEventLevel.Verbose);
 }

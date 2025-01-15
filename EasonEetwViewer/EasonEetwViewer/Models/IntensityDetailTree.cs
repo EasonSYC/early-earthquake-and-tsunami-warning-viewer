@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Media;
-using Avalonia.OpenGL.Surfaces;
+﻿using Avalonia.Media;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
-using ShimSkiaSharp;
 
 namespace EasonEetwViewer.Models;
 internal record IntensityDetailTree
