@@ -37,7 +37,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _timer.Enabled = true;
     }
 
-    private const string _layerName = "KmoniLayer";
+    private const string _realTimeLayerName = "KmoniLayer";
     private const int _kmoniDelaySeconds = 1;
     private readonly KmoniImageFetch _imageFetch;
     private readonly KmoniPointExtract _pointExtract;
@@ -49,13 +49,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         ILayer? newLayer = GetKmoniLayer();
         if (newLayer is not null)
         {
-            if (_kmoniLayer is not null)
-            {
-                _ = Map.Layers.Remove(_kmoniLayer);
-            }
+            _ = Map.Layers.Remove(x => x.Name == _realTimeLayerName);
 
-            _kmoniLayer = newLayer;
-            Map.Layers.Add(_kmoniLayer);
+            Map.Layers.Add(newLayer);
         }
     }
 
@@ -68,7 +64,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             ? null
             : new Layer()
             {
-                Name = _layerName,
+                Name = _realTimeLayerName,
                 DataSource = new MemoryProvider(kmoniObservationPoints),
                 IsMapInfoLayer = true,
                 Style = null

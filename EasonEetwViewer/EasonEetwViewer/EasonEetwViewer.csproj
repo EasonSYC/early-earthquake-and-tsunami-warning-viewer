@@ -21,6 +21,34 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.dbf" />
+	  <None Remove="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.shp" />
+	  <None Remove="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.shx" />
+	  <None Remove="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.dbf" />
+	  <None Remove="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.shp" />
+	  <None Remove="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.shx" />
+	  <None Remove="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.dbf" />
+	  <None Remove="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.shp" />
+	  <None Remove="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.shx" />
+	  <None Remove="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.dbf" />
+	  <None Remove="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.shp" />
+	  <None Remove="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.shx" />
+	  <None Remove="GisFiles\countries.dbf" />
+	  <None Remove="GisFiles\countries.prj" />
+	  <None Remove="GisFiles\countries.shp" />
+	  <None Remove="GisFiles\countries.shp.sidx" />
+	  <None Remove="GisFiles\countries.shx" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegion.dbf" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegion.prj" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegion.shp" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegion.shx" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp" />
+	  <None Remove="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.2.3" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3" />
 		<PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
@@ -42,6 +70,57 @@
 		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.HttpRequest.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.dbf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.shp">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaForecastEEW_GIS\緊急地震速報／地方予報区.shx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.dbf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.shp">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaForecastLocalEEW_GIS\緊急地震速報／府県予報区.shx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.dbf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.shp">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20190125_AreaInformationPrefectureEarthquake_GIS\地震情報／都道府県等.shx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.dbf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.shp">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\20240520_AreaForecastLocalE_GIS\地震情報／細分区域.shx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 
 	<ItemGroup>

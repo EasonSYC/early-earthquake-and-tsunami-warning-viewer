@@ -13,12 +13,12 @@ internal partial class MapViewModelBase : PageViewModelBase
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
     internal MapViewModelBase(UserOptions options) : base(options)
     {
-        MRect bounds = GetLimitsOfJapan();
+        //MRect bounds = GetLimitsOfJapan();
         MRect view = GetMainLimitsOfJapan();
         Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
         Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
         Map.Navigator.RotationLock = true;
-        Map.Navigator.OverridePanBounds = bounds;
+        //Map.Navigator.OverridePanBounds = bounds;
         Map.Home = n => n.ZoomToBox(view);
     }
 

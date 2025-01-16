@@ -19,7 +19,7 @@
 	<SplitView IsPaneOpen="{Binding IsPaneOpen}"
                CompactPaneLength="48"
                DisplayMode="CompactInline"
-               OpenPaneLength="300"
+               OpenPaneLength="200"
                Background="#1e1e1e"
                PaneBackground="#1e1e1e">
 		<SplitView.Pane>

@@ -7,6 +7,10 @@ using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
+using Mapsui;
+using Mapsui.Nts.Providers.Shapefile;
+using Mapsui.Projections;
+using Mapsui.Providers;
 
 namespace EasonEetwViewer.Models;
 
@@ -95,6 +99,21 @@ internal partial class UserOptions : ObservableObject
         EarthquakeObservationStations = rsp.ItemList;
     }
 
+    //[JsonIgnore]
+    //internal IProvider EewRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastEEW_GIS/緊急地震速報／地方予報区.shp");
+    //[JsonIgnore]
+    //internal IProvider EewPrefectureRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastLocalEEW_GIS/緊急地震速報／府県予報区.shp");
+    //[JsonIgnore]
+    //internal IProvider PastPrefecture { get; private init; } = ShapeFileToProvider("GisFiles/20190125_AreaInformationPrefectureEarthquake_GIS/地震情報／都道府県等.shp", true, true);
+
+    [JsonIgnore]
+    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider("GisFiles/Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
+
+
+    // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
+    private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
+        => new ProjectingProvider(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
+
     [JsonIgnore]
     internal ApiCaller ApiClient { get; private init; }
     [JsonIgnore]
@@ -154,8 +173,8 @@ internal partial class UserOptions : ObservableObject
     [JsonConstructor]
     public UserOptions(Tuple<SensorType, string> sensorChoice, Tuple<KmoniDataType, string> dataChoice, AuthenticatorDto authenticatorWrapper)
     {
-        _sensorChoice = sensorChoice;
-        _dataChoice = dataChoice;
+        SensorChoice = sensorChoice;
+        DataChoice = dataChoice;
         AuthenticatorWrapper = authenticatorWrapper;
         ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
         TelegramRetriever = new("https://data.api.dmdata.jp/v1/", AuthenticatorWrapper);

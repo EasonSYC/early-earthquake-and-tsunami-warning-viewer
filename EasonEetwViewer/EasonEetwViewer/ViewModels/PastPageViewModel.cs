@@ -8,11 +8,15 @@ using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
+using Mapsui.Layers;
+using Mapsui.Nts;
+using Mapsui.Styles;
+using Mapsui.Styles.Thematics;
+using NetTopologySuite.Geometries;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
 {
-
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
 
@@ -28,12 +32,23 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
     private string _cursorToken = string.Empty;
     public bool IsLoadExtraEnabled => CursorToken != string.Empty;
+
+
+    private const string _regionLayerName = "Regions";
+
     async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
     {
-        // draw the epicentre mark on the map
+        _ = Map.Layers.Remove((x => x.Name == _regionLayerName));
+
+        EarthquakeDetails = null;
 
         if (value is not null)
         {
+            if (value.Hypocentre is not null)
+            {
+                // Add hypocentre display
+            }
+
             PastEarthquakeEventResponse rsp = await Options.ApiClient.GetPathEarthquakeEventAsync(value.EventId);
             List<EarthquakeTelegram> telegrams = rsp.EarthquakeEvent.Telegrams;
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
@@ -73,22 +88,54 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                             }
                         }
                     }
-                }
 
-                // draw the primary area mark on the map
+                    Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
+
+                }
 
                 EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
             }
-            else
-            {
-                EarthquakeDetails = null;
-            }
-        }
-        else
-        {
-            EarthquakeDetails = null;
         }
     }
+
+    private ILayer CreateRegionLayer(List<EarthquakeInformationRegionData> regions)
+        => new Layer()
+        {
+            Name = _regionLayerName,
+            DataSource = Options.PastRegion,
+            Style = CreateThemeStyle(regions),
+            IsMapInfoLayer = true
+        };
+
+
+    // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile
+    private IThemeStyle CreateThemeStyle(List<EarthquakeInformationRegionData> regions)
+        => new ThemeStyle(f =>
+            {
+                if (f is GeometryFeature geometryFeature)
+                {
+                    if (geometryFeature.Geometry is Point)
+                    {
+
+                        return null;
+                    }
+                }
+
+                VectorStyle? style = null;
+
+                foreach (EarthquakeInformationRegionData region in regions)
+                {
+                    if (region.MaxInt is not null && f["code"]?.ToString()?.ToLower() == region.Code)
+                    {
+                        style = new VectorStyle()
+                        {
+                            Fill = new Brush(Color.Opacity(Color.FromString($"#{region.MaxInt!.ToColourString()}"), 0.60f))
+                        };
+                    }
+                }
+
+                return style;
+            });
 
     [RelayCommand]
     private void JumpYahooWebpage() => _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
