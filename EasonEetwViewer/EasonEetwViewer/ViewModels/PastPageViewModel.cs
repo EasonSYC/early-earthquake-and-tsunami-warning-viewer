@@ -6,18 +6,16 @@ using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
-using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
+using Mapsui;
+using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts;
 using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
-using Mapsui;
-using Mapsui.Extensions;
-using Mapsui.Utilities;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
@@ -38,13 +36,12 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     private string _cursorToken = string.Empty;
     public bool IsLoadExtraEnabled => CursorToken != string.Empty;
 
-
     private const string _regionLayerName = "Regions";
     private const string _obsPointLayerName = "Point";
     private const string _hypocentreLayerName = "Hypocentre";
     private CancellationTokenSource _cts = new();
 
-async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
+    async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
     {
         _ = Map.Layers.Remove((x => x.Name == _regionLayerName));
         _ = Map.Layers.Remove((x => x.Name == _hypocentreLayerName));
@@ -138,13 +135,12 @@ async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
         {
             Name = _regionLayerName,
             DataSource = Options.PastRegion,
-            Style = CreateThemeStyle(regions),
+            Style = CreateRegionThemeStyle(regions),
             IsMapInfoLayer = true
         };
 
-
     // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile
-    private IThemeStyle CreateThemeStyle(List<EarthquakeInformationRegionData> regions)
+    private IThemeStyle CreateRegionThemeStyle(List<EarthquakeInformationRegionData> regions)
         => new ThemeStyle(f =>
             {
                 if (f is GeometryFeature geometryFeature)

@@ -1,8 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Avalonia.Media.Imaging;
-using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
@@ -11,9 +8,7 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.ViewModels;
-using Mapsui;
 using Mapsui.Nts.Providers.Shapefile;
-using Mapsui.Projections;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Utilities;
@@ -114,7 +109,6 @@ internal partial class UserOptions : ObservableObject
 
     [JsonIgnore]
     internal IProvider PastRegion { get; private init; } = ShapeFileToProvider("Content/GisFiles/Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
-
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
     private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
