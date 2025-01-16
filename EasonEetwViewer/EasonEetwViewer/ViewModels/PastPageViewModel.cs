@@ -16,7 +16,6 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
-using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
