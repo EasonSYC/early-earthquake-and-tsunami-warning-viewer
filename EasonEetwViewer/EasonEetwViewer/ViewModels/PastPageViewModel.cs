@@ -47,6 +47,9 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
         _ = Map.Layers.Remove((x => x.Name == _obsPointLayerName));
         _ = Map.Layers.Remove((x => x.Name == _hypocentreLayerName));
 
+
+        // TODO: ZOOM FEATURE
+
         // async code needs cancellation token to prevent different ones add layers
         _cts.Cancel();
         _cts.Dispose();
@@ -161,14 +164,13 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
         };
 
     // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile
-    private IThemeStyle CreateRegionThemeStyle(List<EarthquakeInformationRegionData> regions)
-        => new ThemeStyle(f =>
+    private static ThemeStyle CreateRegionThemeStyle(List<EarthquakeInformationRegionData> regions)
+        => new(f =>
             {
                 if (f is GeometryFeature geometryFeature)
                 {
                     if (geometryFeature.Geometry is Point)
                     {
-
                         return null;
                     }
                 }
