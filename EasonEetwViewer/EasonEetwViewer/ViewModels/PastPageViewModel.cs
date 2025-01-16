@@ -16,6 +16,7 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
+using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
@@ -44,6 +45,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
     {
         _ = Map.Layers.Remove((x => x.Name == _regionLayerName));
+        _ = Map.Layers.Remove((x => x.Name == _obsPointLayerName));
         _ = Map.Layers.Remove((x => x.Name == _hypocentreLayerName));
 
         // async code needs cancellation token to prevent different ones add layers
@@ -72,6 +74,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
 
                 if (telegramInfo.Body.Intensity is not null)
                 {
+                    ICollection<IFeature> stationFeature = [];
                     List<EarthquakeInformationStationData> stationData = telegramInfo.Body.Intensity.Stations;
                     foreach (EarthquakeInformationStationData station in stationData)
                     {
@@ -81,6 +84,16 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                             if (potnetialStations.Count != 0)
                             {
                                 Station stationDetails = potnetialStations[0];
+
+                                PointFeature feature = new(SphericalMercator.FromLonLat(stationDetails.Longitude, stationDetails.Latitude).ToMPoint());
+                                feature.Styles.Add(new SymbolStyle()
+                                {
+                                    SymbolScale = 0.25,
+                                    Fill = new Brush(Color.FromString($"#{newInt.ToEarthquakeIntensity().ToColourString()}")),
+                                    Outline = new Pen { Color = Color.Black }
+                                });
+                                stationFeature.Add(feature);
+
                                 string prefectureCode = stationDetails.City.Code[0..2];
                                 List<PrefectureData> potentialPrefectures = Options.Prefectures.Where(x => x.Code == prefectureCode).ToList();
                                 if (potentialPrefectures.Count != 0)
@@ -96,9 +109,18 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                         }
                     }
 
+                    ILayer layer = new MemoryLayer()
+                    {
+                        Name = _obsPointLayerName,
+                        Features = stationFeature,
+                        IsMapInfoLayer = true,
+                        Style = null
+                    };
+
                     if (!token.IsCancellationRequested)
                     {
                         Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
+                        Map.Layers.Add(new RasterizingLayer(layer));
                     }
                 }
 
@@ -130,8 +152,8 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
         }
     }
 
-    private ILayer CreateRegionLayer(List<EarthquakeInformationRegionData> regions)
-        => new Layer()
+    private Layer CreateRegionLayer(List<EarthquakeInformationRegionData> regions)
+        => new()
         {
             Name = _regionLayerName,
             DataSource = Options.PastRegion,
@@ -179,7 +201,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(maxInt: EarthquakeIntensity.SixWeak, limit: 50);
+        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 50);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 

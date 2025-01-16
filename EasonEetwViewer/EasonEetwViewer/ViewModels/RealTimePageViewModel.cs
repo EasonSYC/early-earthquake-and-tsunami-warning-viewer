@@ -25,10 +25,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
 
-        _kmoniLayer = GetKmoniLayer();
-        if (_kmoniLayer is not null)
+        ILayer? newLayer = GetKmoniLayer();
+        if (newLayer is not null)
         {
-            Map.Layers.Add(_kmoniLayer);
+            Map.Layers.Add(newLayer);
         }
 
         _timer = new(1000);
@@ -42,7 +42,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly KmoniImageFetch _imageFetch;
     private readonly KmoniPointExtract _pointExtract;
 
-    private ILayer? _kmoniLayer;
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         OnPropertyChanged(nameof(TimeDisplayText));
@@ -57,15 +56,15 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
 
-    private ILayer? GetKmoniLayer()
+    private MemoryLayer? GetKmoniLayer()
     {
         IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints();
         return kmoniObservationPoints is null
             ? null
-            : new Layer()
+            : new MemoryLayer()
             {
                 Name = _realTimeLayerName,
-                DataSource = new MemoryProvider(kmoniObservationPoints),
+                Features = kmoniObservationPoints,
                 IsMapInfoLayer = true,
                 Style = null
             };
