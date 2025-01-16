@@ -1,5 +1,8 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Avalonia.Media.Imaging;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
@@ -7,10 +10,13 @@ using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
+using EasonEetwViewer.ViewModels;
 using Mapsui;
 using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Projections;
 using Mapsui.Providers;
+using Mapsui.Styles;
+using Mapsui.Utilities;
 
 namespace EasonEetwViewer.Models;
 
@@ -107,12 +113,18 @@ internal partial class UserOptions : ObservableObject
     //internal IProvider PastPrefecture { get; private init; } = ShapeFileToProvider("GisFiles/20190125_AreaInformationPrefectureEarthquake_GIS/地震情報／都道府県等.shp", true, true);
 
     [JsonIgnore]
-    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider("GisFiles/Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
+    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider("Content/GisFiles/Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
 
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
     private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
         => new ProjectingProvider(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
+
+    [JsonIgnore]
+    internal Mapsui.Styles.IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
+    {
+        BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
+    };
 
     [JsonIgnore]
     internal ApiCaller ApiClient { get; private init; }

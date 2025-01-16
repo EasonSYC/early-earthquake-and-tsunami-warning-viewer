@@ -6,13 +6,18 @@ using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
+using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
 using Mapsui.Layers;
 using Mapsui.Nts;
+using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
+using Mapsui;
+using Mapsui.Extensions;
+using Mapsui.Utilities;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
@@ -35,20 +40,25 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
 
 
     private const string _regionLayerName = "Regions";
+    private const string _obsPointLayerName = "Point";
+    private const string _hypocentreLayerName = "Hypocentre";
+    private CancellationTokenSource _cts = new();
 
-    async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
+async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
     {
         _ = Map.Layers.Remove((x => x.Name == _regionLayerName));
+        _ = Map.Layers.Remove((x => x.Name == _hypocentreLayerName));
+
+        // async code needs cancellation token to prevent different ones add layers
+        _cts.Cancel();
+        _cts.Dispose();
+        _cts = new CancellationTokenSource();
+        CancellationToken token = _cts.Token;
 
         EarthquakeDetails = null;
 
         if (value is not null)
         {
-            if (value.Hypocentre is not null)
-            {
-                // Add hypocentre display
-            }
-
             PastEarthquakeEventResponse rsp = await Options.ApiClient.GetPathEarthquakeEventAsync(value.EventId);
             List<EarthquakeTelegram> telegrams = rsp.EarthquakeEvent.Telegrams;
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
@@ -89,11 +99,36 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                         }
                     }
 
-                    Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
-
+                    if (!token.IsCancellationRequested)
+                    {
+                        Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
+                    }
                 }
 
-                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
+                if (!token.IsCancellationRequested)
+                {
+                    EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
+                }
+            }
+
+            if (value.Hypocentre is not null
+                && value.Hypocentre.Coordinates.Longitude is not null
+                && value.Hypocentre.Coordinates.Latitude is not null)
+            {
+                MPoint coords = SphericalMercator.FromLonLat(value.Hypocentre.Coordinates.Longitude.DoubleValue, value.Hypocentre.Coordinates.Latitude.DoubleValue).ToMPoint();
+
+                ILayer layer = new MemoryLayer()
+                {
+                    Name = _hypocentreLayerName,
+                    Features = [new PointFeature(coords)],
+                    Style = Options.HypocentreShapeStyle,
+                    IsMapInfoLayer = true
+                };
+
+                if (!token.IsCancellationRequested)
+                {
+                    Map.Layers.Add(layer);
+                }
             }
         }
     }
@@ -138,16 +173,17 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
             });
 
     [RelayCommand]
-    private void JumpYahooWebpage() => _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
-    {
-        FileName = $"https://typhoon.yahoo.co.jp/weather/jp/earthquake/{EarthquakeDetails!.EventId}.html",
-        UseShellExecute = true
-    });
+    private void JumpYahooWebpage()
+        => _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
+        {
+            FileName = $"https://typhoon.yahoo.co.jp/weather/jp/earthquake/{EarthquakeDetails!.EventId}.html",
+            UseShellExecute = true
+        });
 
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 50);
+        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(maxInt: EarthquakeIntensity.SixWeak, limit: 50);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
