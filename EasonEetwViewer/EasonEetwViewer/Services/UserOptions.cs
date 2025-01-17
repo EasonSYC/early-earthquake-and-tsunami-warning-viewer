@@ -17,13 +17,14 @@ namespace EasonEetwViewer.Models;
 
 internal partial class UserOptions : ObservableObject
 {
+    private const string _filePath = "userOptions.json";
     [ObservableProperty]
     [property: JsonInclude]
     [property: JsonConverter(typeof(SensorChoiceConverter))]
     [property: JsonPropertyName("kmoniSensor")]
     private Tuple<SensorType, string> _sensorChoice
         = new(SensorType.Surface, SensorType.Surface.ToReadableString());
-    partial void OnSensorChoiceChanged(Tuple<SensorType, string> value) => WriteJsonFile("userOptions.json");
+    partial void OnSensorChoiceChanged(Tuple<SensorType, string> value) => WriteJsonFile(_filePath);
 
     [ObservableProperty]
     [property: JsonInclude]
@@ -31,7 +32,7 @@ internal partial class UserOptions : ObservableObject
     [property: JsonPropertyName("kmoniData")]
     private Tuple<KmoniDataType, string> _dataChoice
         = new(KmoniDataType.MeasuredIntensity, KmoniDataType.MeasuredIntensity.ToReadableString());
-    partial void OnDataChoiceChanged(Tuple<KmoniDataType, string> value) => WriteJsonFile("userOptions.json");
+    partial void OnDataChoiceChanged(Tuple<KmoniDataType, string> value) => WriteJsonFile(_filePath);
 
     [JsonInclude]
     [JsonPropertyName("authenticator")]
@@ -46,7 +47,7 @@ internal partial class UserOptions : ObservableObject
             OnPropertyChanging(nameof(AuthenticationStatus));
             AuthenticatorWrapper.Authenticator = value;
             OnPropertyChanged(nameof(AuthenticationStatus));
-            WriteJsonFile("userOptions.json");
+            WriteJsonFile(_filePath);
         }
     }
 
@@ -100,6 +101,8 @@ internal partial class UserOptions : ObservableObject
         EarthquakeObservationStations = rsp.ItemList;
     }
 
+    private const string _baseGisFile = "Content/GisFiles/";
+
     //[JsonIgnore]
     //internal IProvider EewRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastEEW_GIS/緊急地震速報／地方予報区.shp");
     //[JsonIgnore]
@@ -108,7 +111,7 @@ internal partial class UserOptions : ObservableObject
     //internal IProvider PastPrefecture { get; private init; } = ShapeFileToProvider("GisFiles/20190125_AreaInformationPrefectureEarthquake_GIS/地震情報／都道府県等.shp", true, true);
 
     [JsonIgnore]
-    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider("Content/GisFiles/Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
+    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
     private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
@@ -119,6 +122,10 @@ internal partial class UserOptions : ObservableObject
     {
         BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
     };
+
+
+    private const string _baseApi = "https://api.dmdata.jp/v2/";
+    private const string _telegramApi = "https://data.api.dmdata.jp/v1/";
 
     [JsonIgnore]
     internal ApiCaller ApiClient { get; private init; }
@@ -182,13 +189,13 @@ internal partial class UserOptions : ObservableObject
         SensorChoice = sensorChoice;
         DataChoice = dataChoice;
         AuthenticatorWrapper = authenticatorWrapper;
-        ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
-        TelegramRetriever = new("https://data.api.dmdata.jp/v1/", AuthenticatorWrapper);
+        ApiClient = new(_baseApi, AuthenticatorWrapper);
+        TelegramRetriever = new(_telegramApi, AuthenticatorWrapper);
     }
 
     public UserOptions()
     {
-        ApiClient = new("https://api.dmdata.jp/v2/", AuthenticatorWrapper);
-        TelegramRetriever = new("https://data.api.dmdata.jp/v1/", AuthenticatorWrapper);
+        ApiClient = new(_baseApi, AuthenticatorWrapper);
+        TelegramRetriever = new(_telegramApi, AuthenticatorWrapper);
     }
 }

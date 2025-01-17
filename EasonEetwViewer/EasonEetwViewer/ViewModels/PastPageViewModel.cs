@@ -202,7 +202,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 50);
+        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 50, maxInt: EarthquakeIntensity.SixWeak);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
