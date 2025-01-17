@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Limiting;
 using Mapsui.Projections;
@@ -16,9 +17,10 @@ internal partial class MapViewModelBase : PageViewModelBase
         //MRect bounds = GetLimitsOfJapan();
         MRect view = GetMainLimitsOfJapan();
         Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
-        Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
+        //Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
         Map.Navigator.RotationLock = true;
         //Map.Navigator.OverridePanBounds = bounds;
+        //Map.Navigator.ZoomToBox(view);
         Map.Home = n => n.ZoomToBox(view);
     }
 

@@ -18,21 +18,6 @@ namespace EasonEetwViewer.Models;
 internal partial class UserOptions : ObservableObject
 {
     private const string _filePath = "userOptions.json";
-    [ObservableProperty]
-    [property: JsonInclude]
-    [property: JsonConverter(typeof(SensorChoiceConverter))]
-    [property: JsonPropertyName("kmoniSensor")]
-    private Tuple<SensorType, string> _sensorChoice
-        = new(SensorType.Surface, SensorType.Surface.ToReadableString());
-    partial void OnSensorChoiceChanged(Tuple<SensorType, string> value) => WriteJsonFile(_filePath);
-
-    [ObservableProperty]
-    [property: JsonInclude]
-    [property: JsonConverter(typeof(KmoniDataChoiceConverter))]
-    [property: JsonPropertyName("kmoniData")]
-    private Tuple<KmoniDataType, string> _dataChoice
-        = new(KmoniDataType.MeasuredIntensity, KmoniDataType.MeasuredIntensity.ToReadableString());
-    partial void OnDataChoiceChanged(Tuple<KmoniDataType, string> value) => WriteJsonFile(_filePath);
 
     [JsonInclude]
     [JsonPropertyName("authenticator")]
@@ -118,7 +103,7 @@ internal partial class UserOptions : ObservableObject
         => new ProjectingProvider(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
 
     [JsonIgnore]
-    internal Mapsui.Styles.IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
+    internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
     {
         BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
     };
@@ -184,10 +169,8 @@ internal partial class UserOptions : ObservableObject
     ];
 
     [JsonConstructor]
-    public UserOptions(Tuple<SensorType, string> sensorChoice, Tuple<KmoniDataType, string> dataChoice, AuthenticatorDto authenticatorWrapper)
+    public UserOptions(AuthenticatorDto authenticatorWrapper)
     {
-        SensorChoice = sensorChoice;
-        DataChoice = dataChoice;
         AuthenticatorWrapper = authenticatorWrapper;
         ApiClient = new(_baseApi, AuthenticatorWrapper);
         TelegramRetriever = new(_telegramApi, AuthenticatorWrapper);

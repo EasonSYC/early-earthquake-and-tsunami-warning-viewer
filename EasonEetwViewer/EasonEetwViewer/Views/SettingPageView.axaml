@@ -112,7 +112,7 @@
 						   FontSize="15"
 						   VerticalAlignment="Center">Observation Points:</TextBlock>
 				<ComboBox ItemsSource="{Binding SensorTypeChoices}"
-						  SelectedItem="{Binding Options.SensorChoice}">
+						  SelectedItem="{Binding KmoniOptions.SensorChoice}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding Item2}"/>
@@ -127,7 +127,7 @@
 						   FontSize="15"
 						   VerticalAlignment="Center">Data:</TextBlock>
 				<ComboBox ItemsSource="{Binding DataTypeChoices}"
-						  SelectedItem="{Binding Options.DataChoice}">
+						  SelectedItem="{Binding KmoniOptions.DataChoice}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
 							<TextBlock Text="{Binding Item2}"/>

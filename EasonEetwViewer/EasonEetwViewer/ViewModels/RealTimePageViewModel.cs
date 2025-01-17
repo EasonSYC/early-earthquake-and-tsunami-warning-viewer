@@ -3,6 +3,7 @@ using Avalonia.Logging;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Services;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -19,8 +20,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel(UserOptions options) : base(options)
+
+    internal KmoniOptions KmoniOptions { get; private init; }
+    public RealtimePageViewModel(UserOptions options, KmoniOptions kmoniOptions) : base(options)
     {
+        KmoniOptions = kmoniOptions;
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
 
@@ -74,8 +78,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         try
         {
             byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
-                Options.DataChoice.Item1,
-                Options.SensorChoice.Item1,
+                KmoniOptions.DataChoice.Item1,
+                KmoniOptions.SensorChoice.Item1,
                 DateTime.UtcNow.AddSeconds(-_kmoniDelaySeconds))).Result;
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
@@ -83,7 +87,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
 
-            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, Options.SensorChoice.Item1 == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
+            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, KmoniOptions.SensorChoice.Item1 == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
             List<(ObservationPoint point, double intensity)> intensities = [];
 
             foreach ((ObservationPoint p, SKColor c) in colours)

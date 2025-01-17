@@ -1,8 +1,12 @@
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Text.Json;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Services;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,15 +14,39 @@ using Microsoft.Extensions.DependencyInjection;
 namespace EasonEetwViewer;
 public partial class App : Application
 {
+    private const string _kmoniOptionsPath = "kmoniOptions.json";
+
     /// <inheritdoc/> 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
     public static ServiceProvider Service { get; private set; }
 
+    private KmoniOptions GetKmoniOptions()
+    {
+        IKmoniDto kmoniDto;
+        try
+        {
+            IKmoniDto? serialisedDto = JsonSerializer.Deserialize<KmoniSerialisableOptions>(File.ReadAllText(_kmoniOptionsPath));
+            kmoniDto = serialisedDto is not null ? serialisedDto : new KmoniDefaultOptions();
+        }
+        catch
+        {
+            kmoniDto = new KmoniDefaultOptions();
+        }
+
+        KmoniOptions kmoniOptions = new(kmoniDto);
+        kmoniOptions.PropertyChanged += (s, e)
+            => File.WriteAllText(_kmoniOptionsPath, JsonSerializer.Serialize(kmoniOptions.ToKmoniSerialisableOptions()));
+
+        return kmoniOptions;
+    }
+
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
         ServiceCollection collection = new();
+
+        _ = collection.AddSingleton(GetKmoniOptions());
         _ = collection.AddSingleton<MainWindowViewModel>();
         _ = collection.AddSingleton(UserOptions.FromJsonFile("userOptions.json"));
         _ = collection.AddSingleton<RealtimePageViewModel>();

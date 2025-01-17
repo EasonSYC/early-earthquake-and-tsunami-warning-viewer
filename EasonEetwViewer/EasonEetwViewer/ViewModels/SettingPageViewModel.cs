@@ -8,11 +8,17 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
+using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(UserOptions options) : PageViewModelBase(options)
+internal partial class SettingPageViewModel : PageViewModelBase
 {
+    internal KmoniOptions KmoniOptions { get; private init; }
+    public SettingPageViewModel(UserOptions options, KmoniOptions kmoniOptions) : base(options)
+    {
+        KmoniOptions = kmoniOptions;
+    }
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
     private const string _webSocketButtonTextConnected = "Disconnect from WebSocket";
     internal string WebSocketButtonText => WebSocketConnected ? _webSocketButtonTextConnected : _webSocketButtonTextDisconnected;
