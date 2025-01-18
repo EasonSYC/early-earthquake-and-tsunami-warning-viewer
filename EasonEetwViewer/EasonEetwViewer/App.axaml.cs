@@ -69,7 +69,7 @@ public partial class App : Application
         _ = collection.AddSingleton(GetKmoniOptions());
         _ = collection.AddSingleton(GetAuthenticatorDto());
         _ = collection.AddSingleton<OnAuthenticatorChanged>(v => File.WriteAllText(_authenticatorPath, JsonSerializer.Serialize(v)));
-        _ = collection.AddSingleton(s => new ApiCaller(_apiCallerBaseUri, s.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton<IApiCaller>(s => new ApiCaller(_apiCallerBaseUri, s.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton(s => new TelegramRetriever(_telegramRetrieverBaseUri, s.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<StaticResources>();
 

@@ -5,6 +5,7 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
@@ -12,14 +13,14 @@ internal partial class PageViewModelBase : ViewModelBase
     private protected StaticResources _resources;
     internal KmoniOptions KmoniOptions { get; private init; }
     private protected AuthenticatorDto _authenticatorDto;
-    private protected ApiCaller _apiCaller;
+    private protected IApiCaller _apiCaller;
     private protected TelegramRetriever _telegramRetriever;
 
     private readonly OnAuthenticatorChanged OnChange;
 
     // https://stackoverflow.com/a/5822249
 
-    internal PageViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    internal PageViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     {
         _resources = resources;
         KmoniOptions = kmoniOptions;

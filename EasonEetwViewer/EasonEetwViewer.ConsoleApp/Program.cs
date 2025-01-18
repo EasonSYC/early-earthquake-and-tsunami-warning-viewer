@@ -30,8 +30,8 @@ internal class Program
 
         string baseApi = config["BaseApi"] ?? string.Empty;
 
-        ApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
-        // ApiCaller apiCaller = new(baseApi, oAuth);
+        IApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
+        // IApiCaller apiCaller = new(baseApi, oAuth);
 
         string baseTelegram = config["BaseTelegram"] ?? string.Empty;
 
@@ -59,7 +59,7 @@ internal class Program
         Console.WriteLine(await auth.GetAuthenticationHeader());
     }
 
-    private static async Task TestApiCaller(ApiCaller apiCaller)
+    private static async Task TestApiCaller(IApiCaller apiCaller)
     {
         ContractListResponse contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList);
@@ -107,7 +107,7 @@ internal class Program
         EarthquakeInformationSchema telegramVXSE53 = await telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>("225612eb1353a21b9ec8585adf5a49252b54a07f4fa667d9f580d5b8ffbeca6de6a7e841674a5c99451b2d7025e6e3c4");
         Console.WriteLine(telegramVXSE53);
     }
-    private static async Task TestWebSocket(ApiCaller apiCaller)
+    private static async Task TestWebSocket(IApiCaller apiCaller)
     {
         WebSocketStartPost start = new()
         {

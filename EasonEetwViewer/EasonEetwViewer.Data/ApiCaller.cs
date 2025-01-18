@@ -10,7 +10,7 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 
 namespace EasonEetwViewer.HttpRequest;
 
-public class ApiCaller
+public class ApiCaller : IApiCaller
 {
     private readonly HttpClient _client;
     private readonly AuthenticatorDto _authenticatorDto;

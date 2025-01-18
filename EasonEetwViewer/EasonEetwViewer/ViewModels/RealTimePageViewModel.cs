@@ -13,6 +13,7 @@ using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using SkiaSharp;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -22,7 +23,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
         _imageFetch = new();

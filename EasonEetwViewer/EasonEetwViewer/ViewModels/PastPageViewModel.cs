@@ -12,6 +12,7 @@ using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -22,7 +23,7 @@ using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : MapViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
     [ObservableProperty]
