@@ -1,15 +1,12 @@
-﻿using System.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Authentication;
+﻿using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
-using EasonEetwViewer.ViewModels.ViewModelBases;
 
-namespace EasonEetwViewer.ViewModels;
+namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
 {
     private protected StaticResources _resources;
@@ -42,11 +39,7 @@ internal partial class PageViewModelBase : ViewModelBase
         }
     }
 
-    private protected virtual void OnAuthenticatorChanged()
-    {
-
-        OnChange(_authenticatorDto);
-    }
+    private protected virtual void OnAuthenticatorChanged() => OnChange(_authenticatorDto);
 
     private protected AuthenticationStatus AuthenticationStatus =>
         Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :

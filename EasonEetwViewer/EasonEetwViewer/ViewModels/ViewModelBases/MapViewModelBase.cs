@@ -1,15 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
-using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
-using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
-using Mapsui.Limiting;
 using Mapsui.Projections;
 
-namespace EasonEetwViewer.ViewModels;
+namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class MapViewModelBase : PageViewModelBase
 {
     [ObservableProperty]

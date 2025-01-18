@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Resources;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
@@ -23,7 +22,7 @@ using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange) 
+internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : MapViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
     [ObservableProperty]
@@ -49,9 +48,9 @@ internal partial class PastPageViewModel(StaticResources resources, KmoniOptions
 
     async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
     {
-        _ = Map.Layers.Remove((x => x.Name == _regionLayerName));
-        _ = Map.Layers.Remove((x => x.Name == _obsPointLayerName));
-        _ = Map.Layers.Remove((x => x.Name == _hypocentreLayerName));
+        _ = Map.Layers.Remove(x => x.Name == _regionLayerName);
+        _ = Map.Layers.Remove(x => x.Name == _obsPointLayerName);
+        _ = Map.Layers.Remove(x => x.Name == _hypocentreLayerName);
 
         // TODO: ZOOM FEATURE
 

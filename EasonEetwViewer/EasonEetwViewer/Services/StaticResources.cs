@@ -1,18 +1,10 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
-using EasonEetwViewer.HttpRequest.Dto.Record;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using EasonEetwViewer.Models.EnumExtensions;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EasonEetwViewer.Models;
 using EasonEetwViewer.ViewModels;
 using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Utilities;
-using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Services;
 

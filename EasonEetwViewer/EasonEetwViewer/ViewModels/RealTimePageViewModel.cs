@@ -1,11 +1,9 @@
-﻿using System.Resources;
-using System.Timers;
+﻿using System.Timers;
 using Avalonia.Logging;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using Mapsui;

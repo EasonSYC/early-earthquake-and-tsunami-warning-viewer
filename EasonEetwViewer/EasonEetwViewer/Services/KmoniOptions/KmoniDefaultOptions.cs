@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
 namespace EasonEetwViewer.Services.KmoniOptions;
 internal class KmoniDefaultOptions : IKmoniDto
