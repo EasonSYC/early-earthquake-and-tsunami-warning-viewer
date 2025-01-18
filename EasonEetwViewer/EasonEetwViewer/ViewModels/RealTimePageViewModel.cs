@@ -19,13 +19,15 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
+    internal KmoniOptions KmoniOptions { get; init; }
     private const int _jstAheadUtcHours = 9;
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
     public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
-    : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
+    : base(resources, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
+        KmoniOptions = kmoniOptions;
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
 

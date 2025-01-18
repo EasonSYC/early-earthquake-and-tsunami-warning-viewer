@@ -9,12 +9,18 @@ using Mapsui.Projections;
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class MapViewModelBase : PageViewModelBase
 {
+    private protected StaticResources _resources;
+
     [ObservableProperty]
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
-        : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange) => InitMapView();
+    internal MapViewModelBase(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+        : base(authenticatorDto, apiCaller, telegramRetriever, onChange)
+    {
+        _resources = resources;
+        InitMapView();
+    }
 
     private void InitMapView()
     {

@@ -9,8 +9,6 @@ using EasonEetwViewer.Services.KmoniOptions;
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
 {
-    private protected StaticResources _resources;
-    internal KmoniOptions KmoniOptions { get; private init; }
     private protected AuthenticatorDto _authenticatorDto;
     private protected IApiCaller _apiCaller;
     private protected ITelegramRetriever _telegramRetriever;
@@ -19,10 +17,8 @@ internal partial class PageViewModelBase : ViewModelBase
 
     // https://stackoverflow.com/a/5822249
 
-    internal PageViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    internal PageViewModelBase(AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     {
-        _resources = resources;
-        KmoniOptions = kmoniOptions;
         _authenticatorDto = authenticatorDto;
         _apiCaller = apiCaller;
         _telegramRetriever = telegramRetriever;

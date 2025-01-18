@@ -17,9 +17,10 @@ using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
-    : PageViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
+internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
+    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
+    #region languagesettings
     private readonly OnLanguageChanged LanguageChanged = onLangChange;
 
     [ObservableProperty]
@@ -32,9 +33,13 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     }
 
     internal IEnumerable<CultureInfo> LanguageChoices { get; init; } = [CultureInfo.InvariantCulture, new CultureInfo("ja-JP"), new CultureInfo("zh-CN")];
+    #endregion
 
+    #region kmoniSettings
+    internal KmoniOptions KmoniOptions { get; init; } = kmoniOptions;
     internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
     internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
+    #endregion
 
     [ObservableProperty]
     private bool _webSocketConnected = false;
