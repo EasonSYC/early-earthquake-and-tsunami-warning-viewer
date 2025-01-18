@@ -5,7 +5,6 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
-using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
@@ -40,9 +39,13 @@ internal partial class PageViewModelBase : ViewModelBase
         }
     }
 
-    private protected virtual void OnAuthenticatorChanged() => OnChange(_authenticatorDto);
+    private protected virtual void OnAuthenticatorChanged()
+    {
+        OnChange(_authenticatorDto);
+        OnPropertyChanged(nameof(AuthenticationStatus));
+    }
 
-    private protected AuthenticationStatus AuthenticationStatus =>
+    internal AuthenticationStatus AuthenticationStatus =>
         Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
     private protected List<Station>? _earthquakeObservationStations = null;

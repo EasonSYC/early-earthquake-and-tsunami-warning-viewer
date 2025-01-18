@@ -19,6 +19,9 @@
 	<UserControl.Resources>
 		<conv:KmoniDataChoiceConverter x:Key="DataChoiceConverter"/>
 		<conv:KmoniSensorChoiceConverter x:Key="SensorChoiceConverter"/>
+		<conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
+		<conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
+		<conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
 	</UserControl.Resources>
 
 	<ScrollViewer>
@@ -37,15 +40,18 @@
 						   FontSize="15"
 						   VerticalAlignment="Center">
 					<Run Text="{x:Static lang:Resources.SettingsStatusText}"/>
-					<Run Text="{Binding AuthenticationStatusText}"/>
+					<Run Text="{Binding AuthenticationStatus, Converter={StaticResource AuthConverter}, Mode=OneWay}"/>
 				</TextBlock>
+
+				<TextBlock Text=""/>
 			</StackPanel>
 			
 			<StackPanel Margin="10 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
-						   VerticalAlignment="Center">API Key</TextBlock>
+						   VerticalAlignment="Center"
+						   Text="{x:Static lang:Resources.SettingsApiText}"/>
 				<TextBox Margin="10 0"
 						 FontSize="15"
 						 Width="410"
@@ -55,37 +61,41 @@
 				<Button IsEnabled="{Binding ApiKeyButtonEnabled}"
 					    Margin="10 0"
 						FontSize="15"
-						Command="{Binding ApiKeyButtonCommand}">Confirm</Button>
+						Command="{Binding ApiKeyButtonCommand}"
+						Content="{x:Static lang:Resources.SettingsApiConfirmText}"/>
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{Binding ApiKeyConfirmationText}"/>
+					       Text="{x:Static lang:Resources.SettingsApiConfirmedText}"
+						   IsVisible="{Binding ApiKeyConfirmed}"/>
 			</StackPanel>
 
 			<StackPanel Margin="10"
 						Orientation="Horizontal">
 				<Button Margin="0 0"
 						FontSize="15"
-						Content="{Binding OAuthButtonText}"
+						Content="{Binding OAuthConnected, Converter={StaticResource OAuthConverter}}"
 						Command="{Binding OAuthButtonCommand}"/>
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{Binding OAuthText}"/>
+						   Text="{x:Static lang:Resources.SettingsOAuthConnectedText}"
+						   IsVisible="{Binding OAuthConnected}"/>
 			</StackPanel>
 
 			<StackPanel Margin="0"
 						Orientation="Horizontal">
 				<TextBlock Margin="0 20"
 					   FontSize="18"
-					   FontWeight="Bold">WebSocket Connections</TextBlock>
+					   FontWeight="Bold"
+					   Text="{x:Static lang:Resources.SettingsWebSocketText}"/>
 				<Button Margin="10 0"
 						FontSize="15"
-						Content="{Binding WebSocketButtonText}"
+						Content="{Binding WebSocketConnected, Converter={StaticResource WebSocketButtonConverter}}"
 						Command="{Binding WebSocketButtonCommand}"/>
 				<Button Margin="10 0"
 						FontSize="15"
-						Content="Load/Refresh WebSocket List"
+						Content="{x:Static lang:Resources.SettingsWebSocketListRefreshText}"
 						Command="{Binding WebSocketRefreshCommand}"/>
 			</StackPanel>
 
@@ -96,13 +106,17 @@
 					  BorderBrush="Gray"
 					  ItemsSource="{Binding WebSocketConnections}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="Connection ID"  Binding="{Binding ConnectionId}"/>
-					<DataGridTextColumn Header="Application Name"  Binding="{Binding AppName}"/>
-					<DataGridTextColumn Header="Connection Time"  Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
-					<DataGridTemplateColumn Header="Disconnect">
+					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketConnectionIdText}"
+										Binding="{Binding ConnectionId}"/>
+					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketApplicationNameText}"
+										Binding="{Binding AppName}"/>
+					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketConnectionTimeText}"
+										Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
+					<DataGridTemplateColumn Header="{x:Static lang:Resources.SettingsWebSocketDisconnectText}">
 						<DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
-							<Button IsEnabled="{Binding IsEnabled}"
-								    Content="Disconnect"
+							<Button HorizontalAlignment="Center"
+									IsEnabled="{Binding IsEnabled}"
+								    Content="{x:Static lang:Resources.SettingsWebSocketDisconnectText}"
 									Command="{Binding DisconnectCommand}"/>
 						</DataTemplate>
 					</DataGridTemplateColumn>
@@ -111,13 +125,15 @@
 
 			<TextBlock Margin="0 20"
 					   FontSize="18"
-					   FontWeight="Bold">Real-Time Monitor</TextBlock>
+					   FontWeight="Bold"
+					   Text="{x:Static lang:Resources.SettingsKmoniText}"/>
 
 			<StackPanel Margin="10 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
-						   VerticalAlignment="Center">Observation Points:</TextBlock>
+						   VerticalAlignment="Center"
+						   Text="{x:Static lang:Resources.SettingsKmoniStationText}"/>
 				<ComboBox ItemsSource="{Binding SensorTypeChoices}"
 						  SelectedItem="{Binding KmoniOptions.SensorChoice}">
 					<ComboBox.ItemTemplate>
@@ -132,7 +148,8 @@
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
-						   VerticalAlignment="Center">Data:</TextBlock>
+						   VerticalAlignment="Center"
+						   Text="{x:Static lang:Resources.SettingsKmoniDataText}"/>
 				<ComboBox ItemsSource="{Binding DataTypeChoices}"
 						  SelectedItem="{Binding KmoniOptions.DataChoice}">
 					<ComboBox.ItemTemplate>

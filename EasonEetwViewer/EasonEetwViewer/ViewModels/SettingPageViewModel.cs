@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
@@ -12,18 +13,17 @@ using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 
 internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : PageViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
-    private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";
-    private const string _webSocketButtonTextConnected = "Disconnect from WebSocket";
-    internal string WebSocketButtonText => WebSocketConnected ? _webSocketButtonTextConnected : _webSocketButtonTextDisconnected;
+    internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
+    internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(WebSocketButtonText))]
     private bool _webSocketConnected = false;
 
     [RelayCommand]
@@ -47,6 +47,9 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
 
         return result;
     }
+
+    private readonly WebSocketConnectionTemplate _emptyConnection
+        = new(-1, Resources.SettingsWebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
 
     [RelayCommand]
     private async Task WebSocketRefresh()
@@ -82,7 +85,7 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
         int avaliableConnection = await GetAvaliableWebSocketConnections();
         while (currentConnections.Count < avaliableConnection)
         {
-            currentConnections.Add(WebSocketConnectionTemplate.EmptyConnection);
+            currentConnections.Add(_emptyConnection);
         }
 
         WebSocketConnections = currentConnections;
@@ -91,24 +94,14 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     private protected override void OnAuthenticatorChanged()
     {
         base.OnAuthenticatorChanged();
-        OnPropertyChanged(nameof(OAuthText));
-        OnPropertyChanged(nameof(OAuthButtonText));
-        OnPropertyChanged(nameof(ApiKeyConfirmationText));
+        OnPropertyChanged(nameof(OAuthConnected));
+        OnPropertyChanged(nameof(ApiKeyConfirmed));
         OnPropertyChanged(nameof(ApiKeyButtonEnabled));
-        OnPropertyChanged(nameof(AuthenticationStatusText));
     }
 
-    private readonly string _oAuthTextDisconnected = string.Empty;
-    private const string _oAuthTextConnected = "Connected!";
-    internal string OAuthText =>
-        AuthenticationStatus == AuthenticationStatus.OAuth
-        ? _oAuthTextConnected : _oAuthTextDisconnected;
-
-    private const string _oAuthButtonTextDisconnected = "Connect to OAuth 2.0";
-    private const string _oAuthButtonTextConnected = "Disconnect from OAuth 2.0";
-    internal string OAuthButtonText =>
-        AuthenticationStatus == AuthenticationStatus.OAuth
-        ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
+    internal bool OAuthConnected => AuthenticationStatus == AuthenticationStatus.OAuth;
+    internal bool ApiKeyConfirmed => AuthenticationStatus == AuthenticationStatus.ApiKey;
+    internal bool ApiKeyButtonEnabled => AuthenticationStatus == AuthenticationStatus.None;
 
     [RelayCommand]
     private async Task OAuthButton()
@@ -123,14 +116,6 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
         }
     }
 
-    private const string _apiKeyConfirmedText = "Confirmed!";
-    private readonly string _apiKeyUnconfirmedText = string.Empty;
-    internal string ApiKeyConfirmationText =>
-        AuthenticationStatus == AuthenticationStatus.ApiKey
-        ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
-
-    internal bool ApiKeyButtonEnabled => AuthenticationStatus == AuthenticationStatus.None;
-
     [ObservableProperty]
     private string _apiKeyText = string.Empty;
 
@@ -143,19 +128,6 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
             await UnsetAuthenticatorAsync();
         }
     }
-
-    private const string _oAuthInUseText = "OAuth 2.0 In Use";
-    private const string _apiKeyInUseText = "API Key In Use";
-    private const string _nothingInUseText = "Please Configure Authentication Method";
-    public string AuthenticationStatusText => AuthenticationStatus switch
-    {
-        AuthenticationStatus.OAuth => _oAuthInUseText,
-        AuthenticationStatus.ApiKey => _apiKeyInUseText,
-        AuthenticationStatus.None or _ => _nothingInUseText
-    };
-
-    internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
-    internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
 
     private void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
     private async Task SetAuthenticatorToOAuthAsync()

@@ -117,13 +117,112 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="SettingsApiConfirmedText" xml:space="preserve">
+    <value>设定成功！</value>
+  </data>
+  <data name="SettingsApiText" xml:space="preserve">
+    <value>API密钥：</value>
+  </data>
+  <data name="SettingsApiConfirmText" xml:space="preserve">
+    <value>确认</value>
+  </data>
   <data name="SettingsDmdssText" xml:space="preserve">
     <value>DM-D.S.S. 数据源</value>
   </data>
   <data name="SettingsHeaderText" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="SettingsOAuthConnectedText" xml:space="preserve">
+    <value>认证成功！</value>
+  </data>
   <data name="SettingsStatusText" xml:space="preserve">
     <value>状况：</value>
+  </data>
+  <data name="SettingsWebSocketApplicationNameText" xml:space="preserve">
+    <value>应用名</value>
+  </data>
+  <data name="SettingsWebSocketConnectionIdText" xml:space="preserve">
+    <value>连接ID</value>
+  </data>
+  <data name="SettingsWebSocketConnectionTimeText" xml:space="preserve">
+    <value>连接时间</value>
+  </data>
+  <data name="SettingsWebSocketDisconnectText" xml:space="preserve">
+    <value>切断连接</value>
+  </data>
+  <data name="SettingsWebSocketListRefreshText" xml:space="preserve">
+    <value>更新WebSocket连接列表</value>
+  </data>
+  <data name="SettingsWebSocketText" xml:space="preserve">
+    <value>WebSocket连接情况</value>
+  </data>
+  <data name="SettingsKmoniText" xml:space="preserve">
+    <value>实时震动地图</value>
+  </data>
+  <data name="SettingsKmoniStationText" xml:space="preserve">
+    <value>观测点：</value>
+  </data>
+  <data name="SettingsKmoniDataText" xml:space="preserve">
+    <value>数据：</value>
+  </data>
+  <data name="KmoniSensorsBoreholeText" xml:space="preserve">
+    <value>地下</value>
+  </data>
+  <data name="KmoniSensorsSurfaceText" xml:space="preserve">
+    <value>地面</value>
+  </data>
+  <data name="KmoniDataIntensity" xml:space="preserve">
+    <value>实时震度</value>
+  </data>
+  <data name="KmoniDataPgv" xml:space="preserve">
+    <value>最大速度</value>
+  </data>
+  <data name="KmoniDataPga" xml:space="preserve">
+    <value>最大加速度</value>
+  </data>
+  <data name="KmoniDataPgd" xml:space="preserve">
+    <value>最大位移</value>
+  </data>
+  <data name="KmoniDataRsp0125" xml:space="preserve">
+    <value>0.125赫兹速度应答</value>
+  </data>
+  <data name="KmoniDataRsp0250" xml:space="preserve">
+    <value>0.250赫兹速度应答</value>
+  </data>
+  <data name="KmoniDataRsp0500" xml:space="preserve">
+    <value>0.500赫兹速度应答</value>
+  </data>
+  <data name="KmoniDataRsp1000" xml:space="preserve">
+    <value>1.000赫兹速度应答</value>
+  </data>
+  <data name="KmoniDataRsp2000" xml:space="preserve">
+    <value>2.000赫兹速度应答</value>
+  </data>
+  <data name="KmoniDataRsp4000" xml:space="preserve">
+    <value>4.000赫兹速度应答</value>
+  </data>
+  <data name="SettingsAuthStatusNoneText" xml:space="preserve">
+    <value>请设定认证方法</value>
+  </data>
+  <data name="SettingsAuthStatusApiKeyText" xml:space="preserve">
+    <value>API密钥使用中</value>
+  </data>
+  <data name="SettingsAuthStatusOAuthText" xml:space="preserve">
+    <value>OAuth使用中</value>
+  </data>
+  <data name="SettingsWebSocketDisconnectedButtonText" xml:space="preserve">
+    <value>连接WebSocket</value>
+  </data>
+  <data name="SettingsWebSocketConnectedButtonText" xml:space="preserve">
+    <value>切断WebSocket连接</value>
+  </data>
+  <data name="SettingsOAuthConnectedButtonText" xml:space="preserve">
+    <value>解除OAuth账号认证</value>
+  </data>
+  <data name="SettingsOAuthDisconnectedButtonText" xml:space="preserve">
+    <value>进行OAuth账号认证</value>
+  </data>
+  <data name="SettingsWebSocketEmptyConnectionName" xml:space="preserve">
+    <value>空的WebSocket连接</value>
   </data>
 </root>
