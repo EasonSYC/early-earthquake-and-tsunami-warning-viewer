@@ -19,7 +19,7 @@ namespace EasonEetwViewer.ViewModels;
 internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
     : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
-    #region languagesettings
+    #region languageSettings
     private readonly OnLanguageChanged LanguageChanged = onLangChange;
 
     [ObservableProperty]
@@ -40,6 +40,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
     internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
     #endregion
 
+    #region webSocketSettings
     [ObservableProperty]
     private bool _webSocketConnected = false;
 
@@ -107,7 +108,9 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
 
         WebSocketConnections = currentConnections;
     }
+    #endregion
 
+    #region authSettings
     private protected override void OnAuthenticatorChanged()
     {
         base.OnAuthenticatorChanged();
@@ -175,4 +178,5 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
 
         Authenticator = new EmptyAuthenticator();
     }
+    #endregion
 }
