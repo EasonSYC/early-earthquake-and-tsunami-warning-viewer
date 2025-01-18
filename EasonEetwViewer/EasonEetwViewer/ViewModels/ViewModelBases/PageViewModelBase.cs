@@ -18,15 +18,18 @@ internal partial class PageViewModelBase : ViewModelBase
     private protected ApiCaller _apiCaller;
     private protected TelegramRetriever _telegramRetriever;
 
+    private readonly OnAuthenticatorChanged OnChange;
+
     // https://stackoverflow.com/a/5822249
 
-    internal PageViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever)
+    internal PageViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     {
         _resources = resources;
         KmoniOptions = kmoniOptions;
         _authenticatorDto = authenticatorDto;
         _apiCaller = apiCaller;
         _telegramRetriever = telegramRetriever;
+        OnChange = onChange;
     }
 
     private protected IAuthenticator Authenticator
@@ -41,7 +44,8 @@ internal partial class PageViewModelBase : ViewModelBase
 
     private protected virtual void OnAuthenticatorChanged()
     {
-        ;
+
+        OnChange(_authenticatorDto);
     }
 
     private protected AuthenticationStatus AuthenticationStatus =>

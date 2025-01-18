@@ -24,12 +24,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-
-    internal KmoniOptions KmoniOptions { get; private init; }
-    public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever)
-    : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever)
+    public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
-        KmoniOptions = kmoniOptions;
         _imageFetch = new();
         _pointExtract = new KmoniPointExtract("ObservationPoints.json");
 

@@ -16,8 +16,8 @@ internal partial class MapViewModelBase : PageViewModelBase
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever)
-        : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever) => InitMapView();
+    internal MapViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+        : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange) => InitMapView();
 
     private void InitMapView()
     {
