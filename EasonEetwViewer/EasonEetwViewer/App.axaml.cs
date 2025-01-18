@@ -34,6 +34,8 @@ public partial class App : Application
             kmoniDto = new KmoniDefaultOptions();
         }
 
+
+        // https://stackoverflow.com/a/5822249
         KmoniOptions kmoniOptions = new(kmoniDto);
         kmoniOptions.PropertyChanged += (s, e)
             => File.WriteAllText(kmoniOptionsPath, JsonSerializer.Serialize(kmoniOptions.ToKmoniSerialisableOptions()));
