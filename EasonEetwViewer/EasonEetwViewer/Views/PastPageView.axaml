@@ -119,7 +119,7 @@
 			<ScrollViewer Grid.Column="0"
 					      Grid.Row="1"
 						  Margin="0 5">
-				<ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailTree.ToItemControlDisplay}">
+				<ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailDisplay}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
 							<StackPanel>
@@ -127,10 +127,10 @@
 									   TextAlignment="Left"
 									   FontSize="14"
 									   FontWeight="SemiBold"
-									   Foreground="{Binding ForegroundColour}"
+									   Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
 									   Margin="5">
-									<Run Text="Intensity"/>
-									<Run Text="{Binding DisplayText}"/>
+									<Run Text="{x:Static, lang:Resources.IntensityText}"/>
+									<Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
 								</TextBlock>
 								<TreeView ItemsSource="{Binding PositionNodes}">
 									<TreeView.ItemTemplate>

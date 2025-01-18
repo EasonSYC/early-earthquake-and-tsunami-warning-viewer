@@ -234,4 +234,7 @@
   <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
     <value>Mj</value>
   </data>
+  <data name="IntensityText" xml:space="preserve">
+    <value>震度</value>
+  </data>
 </root>

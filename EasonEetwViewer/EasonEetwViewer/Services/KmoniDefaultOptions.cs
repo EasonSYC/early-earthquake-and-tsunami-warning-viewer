@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
-namespace EasonEetwViewer.Services.KmoniOption;
+namespace EasonEetwViewer.Services;
 internal class KmoniDefaultOptions : IKmoniDto
 {
     SensorType IKmoniDto.SensorChoice => SensorType.Surface;

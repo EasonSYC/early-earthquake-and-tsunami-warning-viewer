@@ -124,7 +124,7 @@
     <value>地面</value>
   </data>
   <data name="KmoniDataIntensity" xml:space="preserve">
-    <value>实时震度</value>
+    <value>实时烈度</value>
   </data>
   <data name="KmoniDataPgv" xml:space="preserve">
     <value>最大速度</value>
@@ -233,5 +233,8 @@
   </data>
   <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
     <value>Mj</value>
+  </data>
+  <data name="IntensityText" xml:space="preserve">
+    <value>烈度</value>
   </data>
 </root>

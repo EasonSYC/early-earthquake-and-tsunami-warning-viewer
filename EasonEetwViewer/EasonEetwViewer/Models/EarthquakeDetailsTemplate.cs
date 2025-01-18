@@ -5,7 +5,7 @@ using EasonEetwViewer.Services;
 namespace EasonEetwViewer.Models;
 internal record EarthquakeDetailsTemplate
 {
-    internal EarthquakeDetailsTemplate(string eventId, EarthquakeIntensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, IntensityDetailTree detailTree)
+    internal EarthquakeDetailsTemplate(string eventId, EarthquakeIntensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, List<DetailIntensityTemplate> detailDisplay)
     {
         EventId = eventId;
         Intensity = intensity;
@@ -14,7 +14,7 @@ internal record EarthquakeDetailsTemplate
         Magnitude = magnitude;
         InformationalText = informationalText;
         LastUpdated = lastUpdated;
-        DetailTree = detailTree;
+        DetailDisplay = detailDisplay;
     }
     internal string? EventId { get; private init; }
     internal EarthquakeIntensity? Intensity { get; private init; }
@@ -23,5 +23,5 @@ internal record EarthquakeDetailsTemplate
     internal Hypocentre? Hypocentre { get; private init; }
     internal Magnitude? Magnitude { get; private init; }
     internal string? InformationalText { get; private init; }
-    internal IntensityDetailTree DetailTree { get; private init; }
+    internal List<DetailIntensityTemplate> DetailDisplay { get; private init; }
 }

@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
-using EasonEetwViewer.Models.Enums;
+using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;

@@ -3,7 +3,6 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Converters.EnumExtensions;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
@@ -90,7 +89,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                                 feature.Styles.Add(new SymbolStyle()
                                 {
                                     SymbolScale = 0.25,
-                                    Fill = new Brush(Color.FromString($"#{newInt.ToEarthquakeIntensity().ToColourString()}")),
+                                    Fill = new Brush(Color.FromString(newInt.ToEarthquakeIntensity().ToColourString())),
                                     Outline = new Pen { Color = Color.Black }
                                 });
                                 stationFeature.Add(feature);
@@ -127,8 +126,10 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
                 if (!token.IsCancellationRequested)
                 {
-                    EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree);
+                    EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
                 }
+
+                // TODO: informational text
             }
 
             if (value.Hypocentre is not null
@@ -182,7 +183,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     {
                         style = new VectorStyle()
                         {
-                            Fill = new Brush(Color.Opacity(Color.FromString($"#{region.MaxInt!.ToColourString()}"), 0.60f))
+                            Fill = new Brush(Color.Opacity(Color.FromString(((EarthquakeIntensity)region.MaxInt).ToColourString()), 0.60f))
                         };
                     }
                 }
@@ -217,7 +218,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50, maxInt: EarthquakeIntensity.SixWeak);
+        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 

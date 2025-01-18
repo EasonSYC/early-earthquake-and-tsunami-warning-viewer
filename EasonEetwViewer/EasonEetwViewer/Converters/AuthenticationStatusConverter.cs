@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Models.Enums;
+using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Converters;
 

@@ -295,6 +295,15 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intensity.
+        /// </summary>
+        public static string IntensityText {
+            get {
+                return ResourceManager.GetString("IntensityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Measured Intensity.
         /// </summary>
         public static string KmoniDataIntensity {

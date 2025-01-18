@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Models.Enums;
+﻿namespace EasonEetwViewer.Models;
 internal enum AuthenticationStatus
 {
     None = 0,

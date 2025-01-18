@@ -1,15 +1,15 @@
 ﻿using Avalonia.Media;
+using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.Models;
 internal record DetailIntensityTemplate
 {
-    internal string DisplayText { get; private init; }
-    internal IBrush ForegroundColour { get; private init; }
+    internal EarthquakeIntensity Intensity { get; init; }
     internal List<PositionNode> PositionNodes { get; private init; }
-    internal DetailIntensityTemplate(string displayText, IBrush foregroundColour, List<PositionNode> positionNodes)
+    internal DetailIntensityTemplate(EarthquakeIntensity intensity, List<PositionNode> positionNodes)
     {
-        DisplayText = displayText;
-        ForegroundColour = foregroundColour;
+        Intensity = intensity;
         PositionNodes = positionNodes;
     }
 }

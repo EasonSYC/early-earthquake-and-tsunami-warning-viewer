@@ -133,7 +133,7 @@
     <value>震级</value>
   </data>
   <data name="MaxIntensityText" xml:space="preserve">
-    <value>最大震度</value>
+    <value>最大烈度</value>
   </data>
   <data name="RefreshListText" xml:space="preserve">
     <value>加载/刷新过去地震列表</value>
