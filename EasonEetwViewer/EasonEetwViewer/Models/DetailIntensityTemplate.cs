@@ -1,6 +1,4 @@
-﻿using Avalonia.Media;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.Services;
+﻿using EasonEetwViewer.HttpRequest.Dto.Enum;
 
 namespace EasonEetwViewer.Models;
 internal record DetailIntensityTemplate

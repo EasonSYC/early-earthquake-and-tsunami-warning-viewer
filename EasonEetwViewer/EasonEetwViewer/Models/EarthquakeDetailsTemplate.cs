@@ -1,6 +1,5 @@
 ﻿using EasonEetwViewer.HttpRequest.DmdataComponent;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.Models;
 internal record EarthquakeDetailsTemplate

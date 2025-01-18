@@ -1,5 +1,4 @@
-﻿using Avalonia.Media;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+﻿using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Services;
