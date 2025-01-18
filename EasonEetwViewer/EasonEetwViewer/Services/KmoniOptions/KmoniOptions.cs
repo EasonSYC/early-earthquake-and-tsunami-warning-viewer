@@ -6,16 +6,16 @@ namespace EasonEetwViewer.Services.KmoniOptions;
 internal partial class KmoniOptions : ObservableObject
 {
     [ObservableProperty]
-    private Tuple<SensorType, string> _sensorChoice;
+    private SensorType _sensorChoice;
 
     [ObservableProperty]
-    private Tuple<KmoniDataType, string> _dataChoice;
+    private KmoniDataType _dataChoice;
 
     internal KmoniOptions(IKmoniDto kmoniDto)
     {
-        SensorChoice = new(kmoniDto.SensorChoice, kmoniDto.SensorChoice.ToReadableString());
-        DataChoice = new(kmoniDto.DataChoice, kmoniDto.DataChoice.ToReadableString());
+        SensorChoice = kmoniDto.SensorChoice;
+        DataChoice = kmoniDto.DataChoice;
     }
 
-    internal KmoniSerialisableOptions ToKmoniSerialisableOptions() => new(SensorChoice.Item1, DataChoice.Item1);
+    internal KmoniSerialisableOptions ToKmoniSerialisableOptions() => new(SensorChoice, DataChoice);
 }

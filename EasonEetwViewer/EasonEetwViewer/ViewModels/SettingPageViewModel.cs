@@ -154,12 +154,8 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
         AuthenticationStatus.None or _ => _nothingInUseText
     };
 
-    internal List<Tuple<SensorType, string>> SensorTypeChoices { get; init; } =
-        new(Enum.GetValues<SensorType>()
-            .Select(e => new Tuple<SensorType, string>(e, e.ToReadableString())));
-    internal List<Tuple<KmoniDataType, string>> DataTypeChoices { get; init; } =
-        new(Enum.GetValues<KmoniDataType>()
-            .Select(e => new Tuple<KmoniDataType, string>(e, e.ToReadableString())));
+    internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
+    internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
 
     private void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
     private async Task SetAuthenticatorToOAuthAsync()

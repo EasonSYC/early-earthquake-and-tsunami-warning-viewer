@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -64,6 +65,10 @@ public partial class App : Application
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
+        //Lang.Resources.Culture = CultureInfo.InvariantCulture;
+        //Lang.Resources.Culture = new CultureInfo("zh-CN");
+        Lang.Resources.Culture = new CultureInfo("ja-JP");
+
         IServiceCollection collection = new ServiceCollection();
 
         _ = collection.AddSingleton(GetKmoniOptions());

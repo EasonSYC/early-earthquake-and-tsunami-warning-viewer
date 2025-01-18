@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
              xmlns:m="using:EasonEetwViewer.Models"
+             xmlns:conv="using:EasonEetwViewer.Converters"
+			 xmlns:lang="clr-namespace:EasonEetwViewer.Lang"
              mc:Ignorable="d"
 			 d:DesignWidth="800"
 			 d:DesignHeight="450"
@@ -14,24 +16,29 @@
 		<vm:SettingPageViewModel/>
 	</Design.DataContext>
 
+	<UserControl.Resources>
+		<conv:KmoniDataChoiceConverter x:Key="DataChoiceConverter"/>
+		<conv:KmoniSensorChoiceConverter x:Key="SensorChoiceConverter"/>
+	</UserControl.Resources>
+
 	<ScrollViewer>
 		<StackPanel Margin="20">
 			<TextBlock Margin="0 20"
 					   FontSize="20"
-					   FontWeight="Bold">Settings</TextBlock>
-
-			<StackPanel Margin="0 0"
+					   FontWeight="Bold"
+					   Text="{x:Static lang:Resources.SettingsHeaderText}"/>
+		    <StackPanel Margin="0 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="0 20"
 						   FontSize="18"
-						   FontWeight="Bold">DM-D.S.S. Data Service</TextBlock>
+						   FontWeight="Bold"
+						   Text="{x:Static lang:Resources.SettingsDmdssText}"/>
 				<TextBlock Margin="10 0"
 						   FontSize="15"
-						   VerticalAlignment="Center">Status: </TextBlock>
-				<TextBlock Margin="0 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-						   Text="{Binding AuthenticationStatusText}"/>
+						   VerticalAlignment="Center">
+					<Run Text="{x:Static lang:Resources.SettingsStatusText}"/>
+					<Run Text="{Binding AuthenticationStatusText}"/>
+				</TextBlock>
 			</StackPanel>
 			
 			<StackPanel Margin="10 0"
@@ -115,7 +122,7 @@
 						  SelectedItem="{Binding KmoniOptions.SensorChoice}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Item2}"/>
+							<TextBlock Text="{Binding Converter={StaticResource SensorChoiceConverter}}"/>
 						</DataTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>
@@ -130,7 +137,7 @@
 						  SelectedItem="{Binding KmoniOptions.DataChoice}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Item2}"/>
+							<TextBlock Text="{Binding Converter={StaticResource DataChoiceConverter}}"/>
 						</DataTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>

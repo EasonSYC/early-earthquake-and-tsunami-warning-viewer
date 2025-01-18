@@ -79,8 +79,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         try
         {
             byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
-                KmoniOptions.DataChoice.Item1,
-                KmoniOptions.SensorChoice.Item1,
+                KmoniOptions.DataChoice,
+                KmoniOptions.SensorChoice,
                 DateTime.UtcNow.AddSeconds(-_kmoniDelaySeconds))).Result;
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
@@ -88,7 +88,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
 
-            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, KmoniOptions.SensorChoice.Item1 == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
+            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
             List<(ObservationPoint point, double intensity)> intensities = [];
 
             foreach ((ObservationPoint p, SKColor c) in colours)

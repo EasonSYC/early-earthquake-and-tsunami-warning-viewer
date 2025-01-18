@@ -25,20 +25,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf" />
-	  <None Remove="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj" />
-	  <None Remove="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp" />
-	  <None Remove="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <AvaloniaResource Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf" />
-	  <AvaloniaResource Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj" />
-	  <AvaloniaResource Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp" />
-	  <AvaloniaResource Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.2.3" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.3" />
 		<PackageReference Include="Avalonia.Desktop" Version="11.2.3" />
@@ -88,8 +74,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Views\RealTimePageView.axaml.cs">
-			<DependentUpon>RealtimePageView.axaml</DependentUpon>
+		<EmbeddedResource Update="Lang\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Lang\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
