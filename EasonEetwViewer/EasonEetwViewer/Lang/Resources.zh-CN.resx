@@ -225,4 +225,7 @@
   <data name="SettingsWebSocketEmptyConnectionName" xml:space="preserve">
     <value>空的WebSocket连接</value>
   </data>
+  <data name="SettingsLangText" xml:space="preserve">
+    <value>Language/言語/语言</value>
+  </data>
 </root>

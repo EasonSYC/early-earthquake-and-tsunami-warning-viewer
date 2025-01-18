@@ -37,6 +37,7 @@
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Mapsui.Avalonia" Version="4.1.8" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="SkiaSharp" Version="2.88.9" />
 	</ItemGroup>
@@ -89,6 +90,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="appsettings.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 		<None Update="ObservationPoints.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</None>

@@ -17,9 +17,22 @@ using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
     : PageViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
+    private readonly OnLanguageChanged LanguageChanged = onLangChange;
+
+    [ObservableProperty]
+    private CultureInfo _languageChoice = Resources.Culture;
+
+    partial void OnLanguageChoiceChanged(CultureInfo value)
+    {
+        Resources.Culture = value;
+        LanguageChanged(value);
+    }
+
+    internal IEnumerable<CultureInfo> LanguageChoices { get; init; } = [CultureInfo.InvariantCulture, new CultureInfo("ja-JP"), new CultureInfo("zh-CN")];
+
     internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
     internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
 

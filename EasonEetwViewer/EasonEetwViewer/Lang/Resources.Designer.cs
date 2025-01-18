@@ -268,6 +268,15 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language/言語/语言.
+        /// </summary>
+        public static string SettingsLangText {
+            get {
+                return ResourceManager.GetString("SettingsLangText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disconnect from OAuth 2.0.
         /// </summary>
         public static string SettingsOAuthConnectedButtonText {
