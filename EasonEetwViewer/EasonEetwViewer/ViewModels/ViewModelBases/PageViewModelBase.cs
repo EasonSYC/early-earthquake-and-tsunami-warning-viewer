@@ -1,7 +1,5 @@
 ﻿using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
-using EasonEetwViewer.HttpRequest.Dto.Record;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models.Enums;
 using EasonEetwViewer.Services;
 

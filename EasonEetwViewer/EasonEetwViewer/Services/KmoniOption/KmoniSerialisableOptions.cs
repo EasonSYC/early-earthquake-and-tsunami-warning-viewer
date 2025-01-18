@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 
-namespace EasonEetwViewer.Services.KmoniOptions;
+namespace EasonEetwViewer.Services.KmoniOption;
 internal class KmoniSerialisableOptions : IKmoniDto
 {
     [JsonInclude]

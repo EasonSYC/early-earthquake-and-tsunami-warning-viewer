@@ -12,7 +12,6 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.ViewModels.ViewModelBases;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
