@@ -226,6 +226,33 @@
     <value>(Empty Connection)</value>
   </data>
   <data name="SettingsLangText" xml:space="preserve">
-    <value>Language/言語/语言</value>
+    <value>Language / 言語 / 语言</value>
+  </data>
+  <data name="PastYahooText" xml:space="preserve">
+    <value>Yahoo Earthquake Details</value>
+  </data>
+  <data name="PastMaxIntensityText" xml:space="preserve">
+    <value>Max. Intensity</value>
+  </data>
+  <data name="PastTimeText" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="PastHypocentreText" xml:space="preserve">
+    <value>Hypocentre</value>
+  </data>
+  <data name="PastDepthText" xml:space="preserve">
+    <value>Hypocentre Depth</value>
+  </data>
+  <data name="PastMagnitudeText" xml:space="preserve">
+    <value>Magnitude</value>
+  </data>
+  <data name="PastLastUpdatedText" xml:space="preserve">
+    <value>Last Updated</value>
+  </data>
+  <data name="PastRefreshListText" xml:space="preserve">
+    <value>Load/Refresh Earthquake List</value>
+  </data>
+  <data name="PastLoadMoreText" xml:space="preserve">
+    <value>Load 10 More Earthquakes</value>
   </data>
 </root>

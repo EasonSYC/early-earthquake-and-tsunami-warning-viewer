@@ -5,7 +5,7 @@
              xmlns:vm="using:EasonEetwViewer.ViewModels"
              xmlns:m="using:EasonEetwViewer.Models"
              xmlns:conv="using:EasonEetwViewer.Converters"
-			 xmlns:lang="clr-namespace:EasonEetwViewer.Lang"
+			 xmlns:lang="using:EasonEetwViewer.Lang"
              mc:Ignorable="d"
 			 d:DesignWidth="800"
 			 d:DesignHeight="450"

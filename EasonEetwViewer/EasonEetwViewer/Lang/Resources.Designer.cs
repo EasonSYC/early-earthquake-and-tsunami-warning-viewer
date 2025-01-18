@@ -169,6 +169,87 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hypocentre Depth.
+        /// </summary>
+        public static string PastDepthText {
+            get {
+                return ResourceManager.GetString("PastDepthText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hypocentre.
+        /// </summary>
+        public static string PastHypocentreText {
+            get {
+                return ResourceManager.GetString("PastHypocentreText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Updated.
+        /// </summary>
+        public static string PastLastUpdatedText {
+            get {
+                return ResourceManager.GetString("PastLastUpdatedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load 10 More Earthquakes.
+        /// </summary>
+        public static string PastLoadMoreText {
+            get {
+                return ResourceManager.GetString("PastLoadMoreText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magnitude.
+        /// </summary>
+        public static string PastMagnitudeText {
+            get {
+                return ResourceManager.GetString("PastMagnitudeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max. Intensity.
+        /// </summary>
+        public static string PastMaxIntensityText {
+            get {
+                return ResourceManager.GetString("PastMaxIntensityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load/Refresh Earthquake List.
+        /// </summary>
+        public static string PastRefreshListText {
+            get {
+                return ResourceManager.GetString("PastRefreshListText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string PastTimeText {
+            get {
+                return ResourceManager.GetString("PastTimeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yahoo Earthquake Details.
+        /// </summary>
+        public static string PastYahooText {
+            get {
+                return ResourceManager.GetString("PastYahooText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmed!.
         /// </summary>
         public static string SettingsApiConfirmedText {
@@ -268,7 +349,7 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language/言語/语言.
+        ///   Looks up a localized string similar to Language / 言語 / 语言.
         /// </summary>
         public static string SettingsLangText {
             get {

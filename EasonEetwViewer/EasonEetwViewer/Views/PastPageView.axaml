@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
              xmlns:m="using:EasonEetwViewer.Models"
+             xmlns:conv="using:EasonEetwViewer.Converters"
+			 xmlns:lang="using:EasonEetwViewer.Lang"
 			 xmlns:mapsui="using:Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.PastPageView"
@@ -31,13 +33,13 @@
 					    Grid.Row="0">
 				<Button HorizontalAlignment="Center"
 						FontSize="16"
-						Content="Yahoo Earthquake Details"
+						Content="{x:Static lang:Resources.PastYahooText}"
 						Command="{Binding JumpYahooWebpageCommand}"
 						Margin="5"/>
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="16"
 					       FontWeight="SemiBold"
-					       Text="Max. Intensity"
+					       Text="{x:Static lang:Resources.PastMaxIntensityText}"
 						   Margin="5 5"/>
 				<TextBlock HorizontalAlignment="Right"
 					       FontSize="52"
@@ -48,7 +50,7 @@
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="14"
 					       FontWeight="SemiBold"
-					       Text="Time"
+					       Text="{x:Static lang:Resources.PastTimeText}"
 						   Margin="5 0"/>
 				<TextBlock HorizontalAlignment="Right"
 						   FontSize="24"
@@ -58,7 +60,7 @@
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="14"
 					       FontWeight="SemiBold"
-					       Text="Hypocentre"
+					       Text="{x:Static lang:Resources.PastHypocentreText}"
 						   Margin="5 0"/>
 				<TextBlock HorizontalAlignment="Right"
 						   FontSize="24"
@@ -68,7 +70,7 @@
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="14"
 					       FontWeight="SemiBold"
-					       Text="Hypocentre Depth"
+					       Text="{x:Static lang:Resources.PastDepthText}"
 						   Margin="5 0"/>
 				<TextBlock HorizontalAlignment="Right"
 						   FontWeight="SemiBold"
@@ -81,7 +83,7 @@
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="14"
 					       FontWeight="SemiBold"
-					       Text="Magnitude"
+					       Text="{x:Static lang:Resources.PastMagnitudeText}"
 						   Margin="5 0"/>
 				<TextBlock HorizontalAlignment="Right"
 						   FontWeight="SemiBold"
@@ -94,7 +96,7 @@
 				<TextBlock HorizontalAlignment="Left"
 						   FontSize="14"
 					       FontWeight="SemiBold"
-					       Text="Last Updated"
+					       Text="{x:Static lang:Resources.PastLastUpdatedText}"
 						   Margin="5 0"/>
 				<TextBlock HorizontalAlignment="Right"
 						   FontSize="18"
@@ -150,7 +152,7 @@
 			</Grid.RowDefinitions>
 			<Button Grid.Column="0"
 					Grid.Row="0"
-					Content="Refresh Earthquake List"
+					Content="{x:Static lang:Resources.PastRefreshListText}"
 					Command="{Binding RefreshEarthquakeListCommand}"
 					HorizontalAlignment="Center"
 					Margin="10"/>
@@ -217,7 +219,7 @@
 			</ListBox>
 			<Button Grid.Column="0"
 					Grid.Row="2"
-					Content="Load 10 More Earthquakes"
+					Content="{x:Static lang:Resources.PastLoadMoreText}"
 					Command="{Binding LoadExtraEarthquakesCommand}"
 					IsEnabled="{Binding IsLoadExtraEnabled}"
 					HorizontalAlignment="Center"

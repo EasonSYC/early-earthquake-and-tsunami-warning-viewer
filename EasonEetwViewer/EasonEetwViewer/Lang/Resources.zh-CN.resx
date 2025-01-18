@@ -121,7 +121,7 @@
     <value>设定成功！</value>
   </data>
   <data name="SettingsApiText" xml:space="preserve">
-    <value>API密钥：</value>
+    <value>API 密钥：</value>
   </data>
   <data name="SettingsApiConfirmText" xml:space="preserve">
     <value>确认</value>
@@ -142,7 +142,7 @@
     <value>应用名</value>
   </data>
   <data name="SettingsWebSocketConnectionIdText" xml:space="preserve">
-    <value>连接ID</value>
+    <value>连接 ID</value>
   </data>
   <data name="SettingsWebSocketConnectionTimeText" xml:space="preserve">
     <value>连接时间</value>
@@ -151,10 +151,10 @@
     <value>切断连接</value>
   </data>
   <data name="SettingsWebSocketListRefreshText" xml:space="preserve">
-    <value>更新WebSocket连接列表</value>
+    <value>更新 WebSocket 连接列表</value>
   </data>
   <data name="SettingsWebSocketText" xml:space="preserve">
-    <value>WebSocket连接情况</value>
+    <value>WebSocket 连接情况</value>
   </data>
   <data name="SettingsKmoniText" xml:space="preserve">
     <value>实时震动地图</value>
@@ -184,48 +184,75 @@
     <value>最大位移</value>
   </data>
   <data name="KmoniDataRsp0125" xml:space="preserve">
-    <value>0.125赫兹速度应答</value>
+    <value>0.125 赫兹速度应答</value>
   </data>
   <data name="KmoniDataRsp0250" xml:space="preserve">
-    <value>0.250赫兹速度应答</value>
+    <value>0.250 赫兹速度应答</value>
   </data>
   <data name="KmoniDataRsp0500" xml:space="preserve">
-    <value>0.500赫兹速度应答</value>
+    <value>0.500 赫兹速度应答</value>
   </data>
   <data name="KmoniDataRsp1000" xml:space="preserve">
-    <value>1.000赫兹速度应答</value>
+    <value>1.000 赫兹速度应答</value>
   </data>
   <data name="KmoniDataRsp2000" xml:space="preserve">
-    <value>2.000赫兹速度应答</value>
+    <value>2.000 赫兹速度应答</value>
   </data>
   <data name="KmoniDataRsp4000" xml:space="preserve">
-    <value>4.000赫兹速度应答</value>
+    <value>4.000 赫兹速度应答</value>
   </data>
   <data name="SettingsAuthStatusNoneText" xml:space="preserve">
     <value>请设定认证方法</value>
   </data>
   <data name="SettingsAuthStatusApiKeyText" xml:space="preserve">
-    <value>API密钥使用中</value>
+    <value>API 密钥使用中</value>
   </data>
   <data name="SettingsAuthStatusOAuthText" xml:space="preserve">
-    <value>OAuth使用中</value>
+    <value>OAuth 使用中</value>
   </data>
   <data name="SettingsWebSocketDisconnectedButtonText" xml:space="preserve">
-    <value>连接WebSocket</value>
+    <value>连接 WebSocket</value>
   </data>
   <data name="SettingsWebSocketConnectedButtonText" xml:space="preserve">
-    <value>切断WebSocket连接</value>
+    <value>切断 WebSocket 连接</value>
   </data>
   <data name="SettingsOAuthConnectedButtonText" xml:space="preserve">
-    <value>解除OAuth账号认证</value>
+    <value>解除 OAuth 账号认证</value>
   </data>
   <data name="SettingsOAuthDisconnectedButtonText" xml:space="preserve">
-    <value>进行OAuth账号认证</value>
+    <value>进行 OAuth 账号认证</value>
   </data>
   <data name="SettingsWebSocketEmptyConnectionName" xml:space="preserve">
-    <value>空的WebSocket连接</value>
+    <value>空的 WebSocket 连接</value>
   </data>
   <data name="SettingsLangText" xml:space="preserve">
-    <value>Language/言語/语言</value>
+    <value>语言 / Language / 言語</value>
+  </data>
+  <data name="PastYahooText" xml:space="preserve">
+    <value>Yahoo 地震情报</value>
+  </data>
+  <data name="PastMaxIntensityText" xml:space="preserve">
+    <value>最大震度</value>
+  </data>
+  <data name="PastTimeText" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="PastHypocentreText" xml:space="preserve">
+    <value>震中</value>
+  </data>
+  <data name="PastDepthText" xml:space="preserve">
+    <value>震源深度</value>
+  </data>
+  <data name="PastMagnitudeText" xml:space="preserve">
+    <value>震级</value>
+  </data>
+  <data name="PastLastUpdatedText" xml:space="preserve">
+    <value>更新时刻</value>
+  </data>
+  <data name="PastRefreshListText" xml:space="preserve">
+    <value>加载/刷新过去地震列表</value>
+  </data>
+  <data name="PastLoadMoreText" xml:space="preserve">
+    <value>加载10个过去地震</value>
   </data>
 </root>
