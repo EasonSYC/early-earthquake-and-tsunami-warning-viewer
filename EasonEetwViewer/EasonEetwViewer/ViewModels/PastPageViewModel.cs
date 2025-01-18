@@ -70,7 +70,7 @@ internal partial class PastPageViewModel(StaticResources resources, KmoniOptions
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
             if (telegrams.Count != 0)
             {
-                if (!_isStationsRetrieved)
+                if (!IsStationsRetrieved)
                 {
                     await UpdateEarthquakeObservationStations();
                 }

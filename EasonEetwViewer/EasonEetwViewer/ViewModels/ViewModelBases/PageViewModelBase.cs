@@ -44,16 +44,14 @@ internal partial class PageViewModelBase : ViewModelBase
         ;
     }
 
-    private protected AuthenticationStatus _authenticationStatus =>
+    private protected AuthenticationStatus AuthenticationStatus =>
         Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
-
     private protected List<Station>? _earthquakeObservationStations = null;
-    private protected bool _isStationsRetrieved = false;
+    private protected bool IsStationsRetrieved => _earthquakeObservationStations is not null;
     private protected async Task UpdateEarthquakeObservationStations()
     {
         EarthquakeParameterResponse rsp = await _apiCaller.GetEarthquakeParameterAsync();
         _earthquakeObservationStations = rsp.ItemList;
-        _isStationsRetrieved = true;
     }
 }

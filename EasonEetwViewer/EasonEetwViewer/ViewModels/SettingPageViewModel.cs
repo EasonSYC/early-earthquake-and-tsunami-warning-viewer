@@ -101,19 +101,19 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     private readonly string _oAuthTextDisconnected = string.Empty;
     private const string _oAuthTextConnected = "Connected!";
     internal string OAuthText =>
-        _authenticationStatus == AuthenticationStatus.OAuth
+        AuthenticationStatus == AuthenticationStatus.OAuth
         ? _oAuthTextConnected : _oAuthTextDisconnected;
 
     private const string _oAuthButtonTextDisconnected = "Connect to OAuth 2.0";
     private const string _oAuthButtonTextConnected = "Disconnect from OAuth 2.0";
     internal string OAuthButtonText =>
-        _authenticationStatus == AuthenticationStatus.OAuth
+        AuthenticationStatus == AuthenticationStatus.OAuth
         ? _oAuthButtonTextConnected : _oAuthButtonTextDisconnected;
 
     [RelayCommand]
     private async Task OAuthButton()
     {
-        if (_authenticationStatus == AuthenticationStatus.OAuth)
+        if (AuthenticationStatus == AuthenticationStatus.OAuth)
         {
             await UnsetAuthenticatorAsync();
         }
@@ -126,10 +126,10 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     private const string _apiKeyConfirmedText = "Confirmed!";
     private readonly string _apiKeyUnconfirmedText = string.Empty;
     internal string ApiKeyConfirmationText =>
-        _authenticationStatus == AuthenticationStatus.ApiKey
+        AuthenticationStatus == AuthenticationStatus.ApiKey
         ? _apiKeyConfirmedText : _apiKeyUnconfirmedText;
 
-    internal bool ApiKeyButtonEnabled => _authenticationStatus == AuthenticationStatus.None;
+    internal bool ApiKeyButtonEnabled => AuthenticationStatus == AuthenticationStatus.None;
 
     [ObservableProperty]
     private string _apiKeyText = string.Empty;
@@ -138,7 +138,7 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     private void ApiKeyButton() => SetAuthenticatorToApiKey(ApiKeyText);
     async partial void OnApiKeyTextChanged(string value)
     {
-        if (_authenticationStatus == AuthenticationStatus.ApiKey)
+        if (AuthenticationStatus == AuthenticationStatus.ApiKey)
         {
             await UnsetAuthenticatorAsync();
         }
@@ -147,7 +147,7 @@ internal partial class SettingPageViewModel(StaticResources resources, KmoniOpti
     private const string _oAuthInUseText = "OAuth 2.0 In Use";
     private const string _apiKeyInUseText = "API Key In Use";
     private const string _nothingInUseText = "Please Configure Authentication Method";
-    public string AuthenticationStatusText => _authenticationStatus switch
+    public string AuthenticationStatusText => AuthenticationStatus switch
     {
         AuthenticationStatus.OAuth => _oAuthInUseText,
         AuthenticationStatus.ApiKey => _apiKeyInUseText,
