@@ -2,7 +2,6 @@
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.Services;
-using EasonEetwViewer.Services.KmoniOptions;
 using Mapsui;
 using Mapsui.Projections;
 

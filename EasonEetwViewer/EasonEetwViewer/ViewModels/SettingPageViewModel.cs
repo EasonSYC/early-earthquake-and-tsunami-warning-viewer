@@ -8,12 +8,11 @@ using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
-using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 

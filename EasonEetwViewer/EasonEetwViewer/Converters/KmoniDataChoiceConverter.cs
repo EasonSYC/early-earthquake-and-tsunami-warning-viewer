@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

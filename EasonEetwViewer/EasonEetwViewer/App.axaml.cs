@@ -10,8 +10,8 @@ using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasonEetwViewer;
 public partial class App : Application
@@ -78,7 +78,6 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-
 
         string baseApi = config["BaseApi"]!;
         string baseTelegram = config["BaseTelegram"]!;

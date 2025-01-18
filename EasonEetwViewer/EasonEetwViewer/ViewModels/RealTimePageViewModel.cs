@@ -6,6 +6,7 @@ using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -13,7 +14,6 @@ using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using SkiaSharp;
-using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 

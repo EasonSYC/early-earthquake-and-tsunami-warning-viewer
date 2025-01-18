@@ -4,7 +4,6 @@ using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
-using EasonEetwViewer.Services.KmoniOptions;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
