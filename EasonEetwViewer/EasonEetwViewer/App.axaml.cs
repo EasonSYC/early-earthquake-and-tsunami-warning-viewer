@@ -99,12 +99,12 @@ public partial class App : Application
 
         IServiceCollection collection = new ServiceCollection();
 
-        _ = collection.AddSingleton(GetKmoniOptions(kmoniOptionsPath));
-        _ = collection.AddSingleton(GetAuthenticatorDto(authenticatorPath));
-        _ = collection.AddSingleton<OnAuthenticatorChanged>(v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)));
-        _ = collection.AddSingleton<OnLanguageChanged>(s => File.WriteAllText(languagePath, s.Name));
-        _ = collection.AddSingleton<IApiCaller>(s => new ApiCaller(baseApi, s.GetRequiredService<AuthenticatorDto>()));
-        _ = collection.AddSingleton<ITelegramRetriever>(s => new TelegramRetriever(baseTelegram, s.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath));
+        _ = collection.AddSingleton(sp => GetAuthenticatorDto(authenticatorPath));
+        _ = collection.AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)));
+        _ = collection.AddSingleton<OnLanguageChanged>(sp => s => File.WriteAllText(languagePath, s.Name));
+        _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<StaticResources>();
 
         _ = collection.AddSingleton<MainWindowViewModel>();
