@@ -4,9 +4,9 @@ namespace EasonEetwViewer.HttpRequest.DmdataComponent;
 public record EarthquakeComponent
 {
     [JsonPropertyName("originTime")]
-    public required DateTime OriginTime { get; init; }
+    public required DateTimeOffset OriginTime { get; init; }
     [JsonPropertyName("arrivalTime")]
-    public required DateTime ArrivalTime { get; init; }
+    public required DateTimeOffset ArrivalTime { get; init; }
     [JsonPropertyName("hypocenter")]
     public required Hypocentre Hypocentre { get; init; }
     [JsonPropertyName("magnitude")]

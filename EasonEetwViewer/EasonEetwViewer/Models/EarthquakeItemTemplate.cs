@@ -7,7 +7,7 @@ using EasonEetwViewer.Models.EnumExtensions;
 namespace EasonEetwViewer.Models;
 internal record EarthquakeItemTemplate
 {
-    public EarthquakeItemTemplate(string eventId, EarthquakeIntensity? intensity, DateTime? originTime, Hypocentre? hypocentre, Magnitude? magnitude)
+    public EarthquakeItemTemplate(string eventId, EarthquakeIntensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude)
     {
         EventId = eventId;
         Intensity = intensity;
@@ -17,12 +17,12 @@ internal record EarthquakeItemTemplate
     }
     internal string EventId { get; private init; }
     internal EarthquakeIntensity? Intensity { get; private init; }
-    internal DateTime? OriginTime { get; private init; }
+    internal DateTimeOffset? OriginTime { get; private init; }
     internal Hypocentre? Hypocentre { get; private init; }
     internal Magnitude? Magnitude { get; private init; }
     public string IntensityDisplay => Intensity is EarthquakeIntensity intensity ? intensity.ToReadableString() : "-";
     public IBrush? IntensityColour => Intensity.ToColourString() is string str ? new SolidColorBrush(Color.Parse($"#{str}")) : null;
-    public string OriginTimeDisplay => OriginTime is DateTime time ? time.ToString("MM/dd HH:mm") : "不明";
+    public string OriginTimeDisplay => OriginTime is DateTimeOffset time ? time.ToString("MM/dd HH:mm") : "不明";
     public string HypocentreDisplay => Hypocentre is Hypocentre hypocentre ? hypocentre.Name : "不明";
     public string DepthValueDisplay => Hypocentre is Hypocentre hypocentre
         ? hypocentre.Depth.Condition is DepthCondition condition ? condition.ToReadableString() : $"{hypocentre.Depth.Value}"

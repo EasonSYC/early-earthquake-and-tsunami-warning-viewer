@@ -9,7 +9,7 @@ public record EarthquakeXmlControl
     [JsonPropertyName("status")]
     public required TelegramStatus Status { get; init; }
     [JsonPropertyName("dateTime")]
-    public required DateTime Time { get; init; }
+    public required DateTimeOffset Time { get; init; }
     [JsonPropertyName("editorialOffice")]
     public required string EditorialOffice { get; init; }
     [JsonPropertyName("publishingOffice")]

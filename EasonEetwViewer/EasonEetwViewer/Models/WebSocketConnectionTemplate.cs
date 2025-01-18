@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Models;
 
 internal partial class WebSocketConnectionTemplate : ObservableObject
 {
-    internal WebSocketConnectionTemplate(int connectionId, string appName, DateTime startTime, OnDisconnectAsync disconnectTask, bool isEnabled = true)
+    internal WebSocketConnectionTemplate(int connectionId, string appName, DateTimeOffset startTime, OnDisconnectAsync disconnectTask, bool isEnabled = true)
     {
         ConnectionId = connectionId;
         AppName = appName;
@@ -16,7 +16,7 @@ internal partial class WebSocketConnectionTemplate : ObservableObject
 
     internal int ConnectionId { get; private init; }
     internal string AppName { get; private init; }
-    internal DateTime StartTime { get; private init; }
+    internal DateTimeOffset StartTime { get; private init; }
 
     [ObservableProperty]
     private bool _isEnabled;

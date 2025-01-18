@@ -8,7 +8,7 @@ using EasonEetwViewer.Models.EnumExtensions;
 namespace EasonEetwViewer.Models;
 internal class EarthquakeDetailsTemplate : ObservableObject
 {
-    internal EarthquakeDetailsTemplate(string eventId, EarthquakeIntensity? intensity, DateTime? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTime? lastUpdated, IntensityDetailTree detailTree)
+    internal EarthquakeDetailsTemplate(string eventId, EarthquakeIntensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, IntensityDetailTree detailTree)
     {
         EventId = eventId;
         Intensity = intensity;
@@ -21,15 +21,15 @@ internal class EarthquakeDetailsTemplate : ObservableObject
     }
     internal string? EventId { get; private init; }
     internal EarthquakeIntensity? Intensity { get; private init; }
-    internal DateTime? OriginTime { get; private init; }
-    internal DateTime? LastUpdated { get; private init; }
+    internal DateTimeOffset? OriginTime { get; private init; }
+    internal DateTimeOffset? LastUpdated { get; private init; }
     internal Hypocentre? Hypocentre { get; private init; }
     internal Magnitude? Magnitude { get; private init; }
     internal string? InformationalText { get; private init; }
     internal IntensityDetailTree DetailTree { get; private init; }
     internal string IntensityDisplay => Intensity is EarthquakeIntensity intensity ? intensity.ToReadableString() : "-";
     internal IBrush? IntensityColour => Intensity.ToColourString() is string str ? new SolidColorBrush(Color.Parse($"#{str}")) : null;
-    internal string OriginTimeDisplay => OriginTime is DateTime time ? time.ToString("yyyy/MM/dd HH:mm") : "不明";
+    internal string OriginTimeDisplay => OriginTime is DateTimeOffset time ? time.ToString("yyyy/MM/dd HH:mm") : "不明";
     internal string HypocentreDisplay => Hypocentre is Hypocentre hypocentre ? hypocentre.Name : "不明";
     internal string DepthValueDisplay => Hypocentre is Hypocentre hypocentre
         ? hypocentre.Depth.Condition is DepthCondition condition ? condition.ToReadableString() : $"{hypocentre.Depth.Value}"
@@ -43,5 +43,5 @@ internal class EarthquakeDetailsTemplate : ObservableObject
     internal string MagnitudeUnitDisplay => Magnitude is Magnitude magnitude
         ? magnitude.Condition is MagnitudeCondition ? "M" : magnitude.Unit.ToReadableString()
         : "M";
-    internal string LastUpdatedDisplay => LastUpdated is DateTime time ? time.ToString("yyyy/MM/dd HH:mm") : "不明";
+    internal string LastUpdatedDisplay => LastUpdated is DateTimeOffset time ? time.ToString("yyyy/MM/dd HH:mm") : "不明";
 }

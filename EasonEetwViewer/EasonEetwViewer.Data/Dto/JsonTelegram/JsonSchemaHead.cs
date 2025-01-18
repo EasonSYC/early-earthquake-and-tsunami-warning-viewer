@@ -22,17 +22,17 @@ public record JsonSchemaHead
     [JsonPropertyName("publishingOffice")]
     public required List<string> PublishingOffice { get; init; }
     [JsonPropertyName("pressDateTime")]
-    public required DateTime PressDateTime { get; init; }
+    public required DateTimeOffset PressDateTime { get; init; }
     [JsonPropertyName("reportDateTime")]
-    public required DateTime ReportDateTime { get; init; }
+    public required DateTimeOffset ReportDateTime { get; init; }
     [JsonPropertyName("targetDateTime")]
-    public required DateTime? TargetDateTime { get; init; }
+    public required DateTimeOffset? TargetDateTime { get; init; }
     [JsonPropertyName("targetDateTimeDubious")]
     public string? TargetDateTimeDubious { get; init; }
     [JsonPropertyName("targetDuration")]
     public string? TargetDuration { get; init; }
     [JsonPropertyName("validDateTime")]
-    public DateTime? ValidDateTime { get; init; }
+    public DateTimeOffset? ValidDateTime { get; init; }
     [JsonPropertyName("eventId")]
     public required string? EventId { get; init; }
     [JsonPropertyName("serialNo")]

@@ -31,13 +31,13 @@ public class KmoniImageFetch
     /// </summary>
     /// <param name="kmoniDataType">The data type plotted on the image.</param>
     /// <param name="sensorType">The sensor type included on the image.</param>
-    /// <param name="utcDateTime">The date and time in UTC to be fetched.</param>
+    /// <param name="dateTime">The date and time to be fetched.</param>
     /// <returns>The byte array obtained.</returns>
-    public async Task<byte[]> GetByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTime utcDateTime)
+    public async Task<byte[]> GetByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTimeOffset dateTime)
     {
         string kmoniDataTypeStr = kmoniDataType.ToUriString();
         string sensorTypeStr = sensorType.ToUriString();
-        DateTime jstDateTime = utcDateTime.AddHours(_jstAheadUtcHours);
+        DateTimeOffset jstDateTime = dateTime.ToOffset(new(_jstAheadUtcHours, 0, 0));
         string yearMonthDateStr = jstDateTime.ToString("yyyyMMdd");
         string hourMinuteSecondStr = jstDateTime.ToString("HHmmss");
 

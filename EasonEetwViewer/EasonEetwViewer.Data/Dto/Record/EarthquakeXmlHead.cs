@@ -19,13 +19,13 @@ public record EarthquakeXmlHead
     [JsonPropertyName("infoType")]
     public required TelegramType InfoType { get; init; }
     [JsonPropertyName("reportDateTime")]
-    public required DateTime ReportDateTime { get; init; }
+    public required DateTimeOffset ReportDateTime { get; init; }
     [JsonPropertyName("targetDateTime")]
-    public required DateTime? TargetDateTime { get; init; }
+    public required DateTimeOffset? TargetDateTime { get; init; }
     [JsonPropertyName("targetDateTimeDubious")]
     public string? TargetDateTimeDubious { get; init; }
     [JsonPropertyName("targetDuration")]
     public string? TargetDuration { get; init; }
     [JsonPropertyName("validDateTime")]
-    public DateTime? ValidDateTime { get; init; }
+    public DateTimeOffset? ValidDateTime { get; init; }
 }

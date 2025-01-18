@@ -19,7 +19,7 @@ internal class Token
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("expiry")]
-    internal DateTime Expiry { get; private set; }
+    internal DateTimeOffset Expiry { get; private set; }
 
     /// <summary>
     /// The validity timespan of the token.
@@ -31,12 +31,12 @@ internal class Token
     /// <summary>
     /// The validity of the token.
     /// </summary>
-    internal bool IsValid => Expiry.CompareTo(DateTime.Now) > 0;
+    internal bool IsValid => Expiry.CompareTo(DateTimeOffset.Now) > 0;
 
     /// <summary>
     /// Resets the validity of the token by calculating the new expiry time from now.
     /// </summary>
-    internal void ResetValidity() => Expiry = DateTime.Now + Validity;
+    internal void ResetValidity() => Expiry = DateTimeOffset.Now + Validity;
 
     /// <summary>
     /// Resets the token code and the expiry time.
@@ -44,7 +44,7 @@ internal class Token
     internal void Reset()
     {
         Code = string.Empty;
-        Expiry = new(0);
+        Expiry = new();
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ internal class Token
     internal Token(TimeSpan validity)
     {
         Code = string.Empty;
-        Expiry = new(0);
+        Expiry = new();
         Validity = validity;
     }
 
@@ -65,7 +65,7 @@ internal class Token
     /// <param name="expiry">The expiry time of the token.</param>
     /// <param name="validity">The validity timespan of the token.</param>
     [JsonConstructor]
-    internal Token(string code, DateTime expiry, TimeSpan validity)
+    internal Token(string code, DateTimeOffset expiry, TimeSpan validity)
     {
         Code = code;
         Expiry = expiry;

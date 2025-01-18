@@ -21,7 +21,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 {
     internal KmoniOptions KmoniOptions { get; init; }
     private const int _jstAheadUtcHours = 9;
-    internal static string TimeDisplayText => DateTime.UtcNow.AddHours(_jstAheadUtcHours).ToString("yyyy/MM/dd HH:mm:ss");
+    internal static string TimeDisplayText => DateTimeOffset.Now.ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
     public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
@@ -83,7 +83,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
                 KmoniOptions.DataChoice,
                 KmoniOptions.SensorChoice,
-                DateTime.UtcNow.AddSeconds(-_kmoniDelaySeconds))).Result;
+                DateTimeOffset.Now.AddSeconds(-_kmoniDelaySeconds))).Result;
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);

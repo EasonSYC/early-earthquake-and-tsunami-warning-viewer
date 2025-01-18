@@ -13,7 +13,7 @@ public record EarthquakeParameterResponse : ListResponse<Station>
     /// The property <c>changeTime</c>, representing the last time the list was changed.
     /// </summary>
     [JsonPropertyName("changeTime")]
-    public required DateTime ChangeTime { get; init; }
+    public required DateTimeOffset ChangeTime { get; init; }
     /// <summary>
     /// The property <c>version</c>, a string indicating the version of the list.
     /// </summary>

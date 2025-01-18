@@ -45,19 +45,19 @@ public record WebSocketDetails
     /// The property <c>start</c>. The start time of the connection.
     /// </summary>
     [JsonPropertyName("start")]
-    public required DateTime StartTime { get; init; }
+    public required DateTimeOffset StartTime { get; init; }
     /// <summary>
     /// The property <c>end</c>. The end time of the connection.
     /// <c>null</c> when the connection is still open.
     /// </summary>
     [JsonPropertyName("end")]
-    public required DateTime? EndTime { get; init; }
+    public required DateTimeOffset? EndTime { get; init; }
     /// <summary>
     /// The property <c>ping</c>. The previous ping-pong time of the connection.
     /// <c>null</c> when no ping-pong has been initiated/
     /// </summary>
     [JsonPropertyName("ping")]
-    public required DateTime? PingTime { get; init; }
+    public required DateTimeOffset? PingTime { get; init; }
     /// <summary>
     /// The property <c>ipAddress</c>. The IP Address of the connection.
     /// <c>null</c> when the connection has never started.

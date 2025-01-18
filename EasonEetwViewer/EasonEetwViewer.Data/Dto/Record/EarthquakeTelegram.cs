@@ -16,7 +16,7 @@ public record EarthquakeTelegram
     [JsonPropertyName("head")]
     public required EarthquakeTelegramHead TelegramHead { get; init; }
     [JsonPropertyName("receivedTime")]
-    public required DateTime ReceivedTime { get; init; }
+    public required DateTimeOffset ReceivedTime { get; init; }
     [JsonPropertyName("xmlReport")]
     public required EarthquakeXmlReport XmlReport { get; init; }
     [JsonPropertyName("schema")]

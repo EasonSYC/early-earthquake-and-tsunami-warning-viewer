@@ -18,7 +18,7 @@ public abstract record ApiResponse
     /// The <c>responseTime</c> property. The time when the call was received.
     /// </summary>
     [JsonPropertyName("responseTime")]
-    public required DateTime ResponseTime { get; init; }
+    public required DateTimeOffset ResponseTime { get; init; }
     /// <summary>
     /// The <c>status</c> property. An enum representing the status of the call.
     /// Abstract and has to be overridden.

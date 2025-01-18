@@ -8,7 +8,7 @@ public record EarthquakeTelegramHead
     [JsonPropertyName("author")]
     public required string Author { get; init; }
     [JsonPropertyName("time")]
-    public required DateTime Time { get; init; }
+    public required DateTimeOffset Time { get; init; }
     [JsonPropertyName("designation")]
     public required string? Designation { get; init; }
     [JsonPropertyName("test")]

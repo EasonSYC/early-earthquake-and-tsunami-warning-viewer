@@ -39,7 +39,7 @@ public record Contract
     /// <c>null</c> if not subscribed to the contract.
     /// </summary>
     [JsonPropertyName("start")]
-    public required DateTime? StartTime { get; init; }
+    public required DateTimeOffset? StartTime { get; init; }
     /// <summary>
     /// The property <c>isValid</c>. Whether the user is subscribed to the contract.
     /// </summary>

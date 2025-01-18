@@ -29,12 +29,12 @@ public record EarthquakeInfo
     /// <c>null</c> when there is only observation report of the earthquake.
     /// </summary>
     [JsonPropertyName("originTime")]
-    public DateTime? OriginTime { get; init; }
+    public DateTimeOffset? OriginTime { get; init; }
     /// <summary>
     /// The property <c>arrivalTime</c>. The time at which the earthquake is detected.
     /// </summary>
     [JsonPropertyName("arrivalTime")]
-    public required DateTime ArrivalTime { get; init; }
+    public required DateTimeOffset ArrivalTime { get; init; }
     /// <summary>
     /// The property <c>hypocenter</c>. The hypocentre of the earthquake.
     /// <c>null</c> when there is only observation report of the earthquake.
