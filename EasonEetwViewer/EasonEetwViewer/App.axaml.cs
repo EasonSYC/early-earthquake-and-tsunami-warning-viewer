@@ -5,8 +5,12 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using CommunityToolkit.Mvvm.ComponentModel.__Internals;
+using EasonEetwViewer.Authentication;
+using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +19,16 @@ namespace EasonEetwViewer;
 public partial class App : Application
 {
     private const string _kmoniOptionsPath = "kmoniOptions.json";
+    private const string _authenticatorPath = "authenticator.json";
+    private const string _apiCallerBaseUri = "https://api.dmdata.jp/v2/";
+    private const string _telegramRetrieverBaseUri = "https://data.api.dmdata.jp/v1/";
 
     /// <inheritdoc/> 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
-    public static ServiceProvider Service { get; private set; }
+    public static IServiceProvider Service { get; private set; }
 
-    private KmoniOptions GetKmoniOptions()
+    private static KmoniOptions GetKmoniOptions()
     {
         IKmoniDto kmoniDto;
         try
@@ -41,14 +48,35 @@ public partial class App : Application
         return kmoniOptions;
     }
 
+    private static AuthenticatorDto GetAuthenticatorDto()
+    {
+        AuthenticatorDto authenticatorDto;
+
+        try
+        {
+            AuthenticatorDto? serialisedDto = JsonSerializer.Deserialize<AuthenticatorDto>(File.ReadAllText(_authenticatorPath));
+            authenticatorDto = serialisedDto is not null ? serialisedDto : new AuthenticatorDto();
+        }
+        catch
+        {
+            authenticatorDto = new AuthenticatorDto();
+        }
+
+        return authenticatorDto;
+    }
+
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
-        ServiceCollection collection = new();
+        IServiceCollection collection = new ServiceCollection();
 
         _ = collection.AddSingleton(GetKmoniOptions());
+        _ = collection.AddSingleton(GetAuthenticatorDto());
+        _ = collection.AddSingleton(s => new ApiCaller(_apiCallerBaseUri, s.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton(s => new TelegramRetriever(_telegramRetrieverBaseUri, s.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton<StaticResources>();
+
         _ = collection.AddSingleton<MainWindowViewModel>();
-        _ = collection.AddSingleton(UserOptions.FromJsonFile("userOptions.json"));
         _ = collection.AddSingleton<RealtimePageViewModel>();
         _ = collection.AddSingleton<PastPageViewModel>();
         _ = collection.AddSingleton<SettingPageViewModel>();

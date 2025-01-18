@@ -12,112 +12,29 @@ using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Styles;
 using Mapsui.Utilities;
+using EasonEetwViewer.Models;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Services;
 
-internal partial class UserOptions : ObservableObject
+internal partial class StaticResources : ObservableObject
 {
-    private const string _filePath = "userOptions.json";
-
-    [JsonInclude]
-    [JsonPropertyName("authenticator")]
-    private AuthenticatorDto AuthenticatorWrapper { get; init; } = new();
-
-    [JsonIgnore]
-    private IAuthenticator Authenticator
-    {
-        get => AuthenticatorWrapper.Authenticator;
-        set
-        {
-            OnPropertyChanging(nameof(AuthenticationStatus));
-            AuthenticatorWrapper.Authenticator = value;
-            OnPropertyChanged(nameof(AuthenticationStatus));
-            WriteJsonFile(_filePath);
-        }
-    }
-
-    [JsonIgnore]
-    internal AuthenticationStatus AuthenticationStatus =>
-        Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
-        Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
-    internal void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
-    internal async Task SetAuthenticatorToOAuthAsync()
-    {
-        Authenticator = new OAuth("CId.RRV95iuUV9FrYzeIN_BYM9Z35MJwwQen5DIwJ8JQXaTm",
-            "https://manager.dmdata.jp/account/oauth2/v1/",
-            "manager.dmdata.jp",
-            [
-            "contract.list",
-            "eew.get.forecast",
-            "gd.earthquake",
-            "parameter.earthquake",
-            "socket.close",
-            "socket.list",
-            "socket.start",
-            "telegram.data",
-            "telegram.get.earthquake",
-            "telegram.list"
-        ]);
-        await ((OAuth)Authenticator).CheckAccessTokenAsync();
-    }
-    internal async Task UnsetAuthenticatorAsync()
-    {
-        if (Authenticator is OAuth auth)
-        {
-            await auth.RevokeTokens();
-        }
-
-        Authenticator = new EmptyAuthenticator();
-    }
-
-    private void WriteJsonFile(string filePath) => File.WriteAllText(filePath, JsonSerializer.Serialize(this));
-
-    public static UserOptions FromJsonFile(string filePath) =>
-        File.Exists(filePath)
-        ? JsonSerializer.Deserialize<UserOptions>(File.ReadAllText(filePath)) ?? new()
-        : new();
-
-    [JsonIgnore]
-    internal List<Station>? EarthquakeObservationStations { get; private set; } = null;
-    internal bool IsStationsRetrieved => EarthquakeObservationStations is not null;
-    internal async Task UpdateEarthquakeObservationStations()
-    {
-        EarthquakeParameterResponse rsp = await ApiClient.GetEarthquakeParameterAsync();
-        EarthquakeObservationStations = rsp.ItemList;
-    }
-
     private const string _baseGisFile = "Content/GisFiles/";
 
-    //[JsonIgnore]
     //internal IProvider EewRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastEEW_GIS/緊急地震速報／地方予報区.shp");
-    //[JsonIgnore]
     //internal IProvider EewPrefectureRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastLocalEEW_GIS/緊急地震速報／府県予報区.shp");
-    //[JsonIgnore]
     //internal IProvider PastPrefecture { get; private init; } = ShapeFileToProvider("GisFiles/20190125_AreaInformationPrefectureEarthquake_GIS/地震情報／都道府県等.shp", true, true);
 
-    [JsonIgnore]
     internal IProvider PastRegion { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
     private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
         => new ProjectingProvider(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
 
-    [JsonIgnore]
     internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
     {
         BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
     };
 
-
-    private const string _baseApi = "https://api.dmdata.jp/v2/";
-    private const string _telegramApi = "https://data.api.dmdata.jp/v1/";
-
-    [JsonIgnore]
-    internal ApiCaller ApiClient { get; private init; }
-    [JsonIgnore]
-    internal TelegramRetriever TelegramRetriever { get; private init; }
-
-    [JsonIgnore]
     internal List<PrefectureData> Prefectures { get; private init; } = [
         new PrefectureData() { Code = "01", Name = "北海道" },
         new PrefectureData() { Code = "02", Name = "青森県" },
@@ -167,18 +84,4 @@ internal partial class UserOptions : ObservableObject
         new PrefectureData() { Code = "46", Name = "鹿児島県" },
         new PrefectureData() { Code = "47", Name = "沖縄県" }
     ];
-
-    [JsonConstructor]
-    public UserOptions(AuthenticatorDto authenticatorWrapper)
-    {
-        AuthenticatorWrapper = authenticatorWrapper;
-        ApiClient = new(_baseApi, AuthenticatorWrapper);
-        TelegramRetriever = new(_telegramApi, AuthenticatorWrapper);
-    }
-
-    public UserOptions()
-    {
-        ApiClient = new(_baseApi, AuthenticatorWrapper);
-        TelegramRetriever = new(_telegramApi, AuthenticatorWrapper);
-    }
 }

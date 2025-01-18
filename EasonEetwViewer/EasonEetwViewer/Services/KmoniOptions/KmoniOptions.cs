@@ -2,7 +2,7 @@
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models.EnumExtensions;
 
-namespace EasonEetwViewer.Services;
+namespace EasonEetwViewer.Services.KmoniOptions;
 internal partial class KmoniOptions : ObservableObject
 {
     [ObservableProperty]

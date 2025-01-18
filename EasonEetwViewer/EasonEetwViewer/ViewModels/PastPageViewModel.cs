@@ -1,13 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Resources;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EasonEetwViewer.Authentication;
+using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.EnumExtensions;
+using EasonEetwViewer.Services;
+using EasonEetwViewer.Services.KmoniOptions;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -18,7 +23,8 @@ using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase(options)
+internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever) 
+    : MapViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever)
 {
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
@@ -59,18 +65,18 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
 
         if (value is not null)
         {
-            PastEarthquakeEventResponse rsp = await Options.ApiClient.GetPathEarthquakeEventAsync(value.EventId);
+            PastEarthquakeEventResponse rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
             List<EarthquakeTelegram> telegrams = rsp.EarthquakeEvent.Telegrams;
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
             if (telegrams.Count != 0)
             {
-                if (!Options.IsStationsRetrieved)
+                if (!_isStationsRetrieved)
                 {
-                    await Options.UpdateEarthquakeObservationStations();
+                    await UpdateEarthquakeObservationStations();
                 }
 
                 EarthquakeTelegram telegram = telegrams.MaxBy(x => x.Serial)!;
-                EarthquakeInformationSchema telegramInfo = await Options.TelegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
+                EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
                 IntensityDetailTree tree = new();
 
                 if (telegramInfo.Body.Intensity is not null)
@@ -81,7 +87,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                     {
                         if (station.MaxInt is EarthquakeIntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != EarthquakeIntensity.Unknown)
                         {
-                            List<Station> potnetialStations = Options.EarthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
+                            List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
                             if (potnetialStations.Count != 0)
                             {
                                 Station stationDetails = potnetialStations[0];
@@ -96,7 +102,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                                 stationFeature.Add(feature);
 
                                 string prefectureCode = stationDetails.City.Code[0..2];
-                                List<PrefectureData> potentialPrefectures = Options.Prefectures.Where(x => x.Code == prefectureCode).ToList();
+                                List<PrefectureData> potentialPrefectures = _resources.Prefectures.Where(x => x.Code == prefectureCode).ToList();
                                 if (potentialPrefectures.Count != 0)
                                 {
                                     PrefectureData prefectureData = potentialPrefectures[0];
@@ -141,7 +147,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
                 {
                     Name = _hypocentreLayerName,
                     Features = [new PointFeature(coords)],
-                    Style = Options.HypocentreShapeStyle,
+                    Style = _resources.HypocentreShapeStyle,
                     IsMapInfoLayer = true
                 };
 
@@ -157,7 +163,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
         => new()
         {
             Name = _regionLayerName,
-            DataSource = Options.PastRegion,
+            DataSource = _resources.PastRegion,
             Style = CreateRegionThemeStyle(regions),
             IsMapInfoLayer = true
         };
@@ -201,7 +207,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 50);
+        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
@@ -217,7 +223,7 @@ internal partial class PastPageViewModel(UserOptions options) : MapViewModelBase
     {
         if (CursorToken != string.Empty)
         {
-            PastEarthquakeListResponse rsp = await Options.ApiClient.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
+            PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
             List<EarthquakeInfo> eqList = rsp.ItemList;
             CursorToken = rsp.NextToken ?? string.Empty;
 

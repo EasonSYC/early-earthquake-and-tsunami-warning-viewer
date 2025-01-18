@@ -1,5 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EasonEetwViewer.Authentication;
+using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Services;
+using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Limiting;
@@ -12,7 +16,10 @@ internal partial class MapViewModelBase : PageViewModelBase
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(UserOptions options) : base(options)
+    internal MapViewModelBase(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, ApiCaller apiCaller, TelegramRetriever telegramRetriever)
+        : base(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever) => InitMapView();
+
+    private void InitMapView()
     {
         //MRect bounds = GetLimitsOfJapan();
         MRect view = GetMainLimitsOfJapan();
