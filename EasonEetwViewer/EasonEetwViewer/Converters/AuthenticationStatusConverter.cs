@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.Enums;
 
 namespace EasonEetwViewer.Converters;
 
@@ -10,9 +10,9 @@ internal class AuthenticationStatusConverter : IValueConverter
         => value is AuthenticationStatus authStatus
             ? authStatus switch
             {
-                AuthenticationStatus.ApiKey => Lang.Resources.SettingsAuthStatusApiKeyText,
-                AuthenticationStatus.OAuth => Lang.Resources.SettingsAuthStatusOAuthText,
-                AuthenticationStatus.None => Lang.Resources.SettingsAuthStatusNoneText,
+                AuthenticationStatus.ApiKey => Lang.SettingPageResources.AuthStatusApiKeyText,
+                AuthenticationStatus.OAuth => Lang.SettingPageResources.AuthStatusOAuthText,
+                AuthenticationStatus.None => Lang.SettingPageResources.AuthStatusNoneText,
                 _ => null
             }
             : null;

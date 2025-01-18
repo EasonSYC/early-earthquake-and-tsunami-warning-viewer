@@ -1,8 +1,9 @@
 ﻿using Avalonia.Media;
+using EasonEetwViewer.Converters.EnumExtensions;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.Models.EnumExtensions;
+using EasonEetwViewer.Models;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Services;
 internal record IntensityDetailTree
 {
     internal Dictionary<EarthquakeIntensity, PositionNode> Intensities { get; private set; } = [];

@@ -30,17 +30,17 @@
 			<TextBlock Margin="0 20"
 					   FontSize="20"
 					   FontWeight="Bold"
-					   Text="{x:Static lang:Resources.SettingsHeaderText}"/>
+					   Text="{x:Static lang:SettingPageResources.HeaderText}"/>
 		    <StackPanel Margin="0 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="0 20"
 						   FontSize="18"
 						   FontWeight="Bold"
-						   Text="{x:Static lang:Resources.SettingsDmdssText}"/>
+						   Text="{x:Static lang:SettingPageResources.DmdssText}"/>
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center">
-					<Run Text="{x:Static lang:Resources.SettingsStatusText}"/>
+					<Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
 					<Run Text="{Binding AuthenticationStatus, Converter={StaticResource AuthConverter}, Mode=OneWay}"/>
 				</TextBlock>
 
@@ -52,7 +52,7 @@
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{x:Static lang:Resources.SettingsApiText}"/>
+						   Text="{x:Static lang:SettingPageResources.ApiText}"/>
 				<TextBox Margin="10 0"
 						 FontSize="15"
 						 Width="410"
@@ -63,11 +63,11 @@
 					    Margin="10 0"
 						FontSize="15"
 						Command="{Binding ApiKeyButtonCommand}"
-						Content="{x:Static lang:Resources.SettingsApiConfirmText}"/>
+						Content="{x:Static lang:SettingPageResources.ApiConfirmText}"/>
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-					       Text="{x:Static lang:Resources.SettingsApiConfirmedText}"
+					       Text="{x:Static lang:SettingPageResources.ApiConfirmedText}"
 						   IsVisible="{Binding ApiKeyConfirmed}"/>
 			</StackPanel>
 
@@ -80,7 +80,7 @@
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{x:Static lang:Resources.SettingsOAuthConnectedText}"
+						   Text="{x:Static lang:SettingPageResources.OAuthConnectedText}"
 						   IsVisible="{Binding OAuthConnected}"/>
 			</StackPanel>
 
@@ -89,14 +89,14 @@
 				<TextBlock Margin="0 20"
 					   FontSize="18"
 					   FontWeight="Bold"
-					   Text="{x:Static lang:Resources.SettingsWebSocketText}"/>
+					   Text="{x:Static lang:SettingPageResources.WebSocketText}"/>
 				<Button Margin="10 0"
 						FontSize="15"
 						Content="{Binding WebSocketConnected, Converter={StaticResource WebSocketButtonConverter}}"
 						Command="{Binding WebSocketButtonCommand}"/>
 				<Button Margin="10 0"
 						FontSize="15"
-						Content="{x:Static lang:Resources.SettingsWebSocketListRefreshText}"
+						Content="{x:Static lang:SettingPageResources.WebSocketListRefreshText}"
 						Command="{Binding WebSocketRefreshCommand}"/>
 			</StackPanel>
 
@@ -107,17 +107,17 @@
 					  BorderBrush="Gray"
 					  ItemsSource="{Binding WebSocketConnections}">
 				<DataGrid.Columns>
-					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketConnectionIdText}"
+					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionIdText}"
 										Binding="{Binding ConnectionId}"/>
-					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketApplicationNameText}"
+					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketApplicationNameText}"
 										Binding="{Binding AppName}"/>
-					<DataGridTextColumn Header="{x:Static lang:Resources.SettingsWebSocketConnectionTimeText}"
+					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
 										Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
-					<DataGridTemplateColumn Header="{x:Static lang:Resources.SettingsWebSocketDisconnectText}">
+					<DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">
 						<DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
 							<Button HorizontalAlignment="Center"
 									IsEnabled="{Binding IsEnabled}"
-								    Content="{x:Static lang:Resources.SettingsWebSocketDisconnectText}"
+								    Content="{x:Static lang:SettingPageResources.WebSocketDisconnectText}"
 									Command="{Binding DisconnectCommand}"/>
 						</DataTemplate>
 					</DataGridTemplateColumn>
@@ -127,14 +127,14 @@
 			<TextBlock Margin="0 20"
 					   FontSize="18"
 					   FontWeight="Bold"
-					   Text="{x:Static lang:Resources.SettingsKmoniText}"/>
+					   Text="{x:Static lang:SettingPageResources.KmoniText}"/>
 
 			<StackPanel Margin="10 0"
 						Orientation="Horizontal">
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{x:Static lang:Resources.SettingsKmoniStationText}"/>
+						   Text="{x:Static lang:SettingPageResources.KmoniStationText}"/>
 				<ComboBox ItemsSource="{Binding SensorTypeChoices}"
 						  SelectedItem="{Binding KmoniOptions.SensorChoice}">
 					<ComboBox.ItemTemplate>
@@ -150,7 +150,7 @@
 				<TextBlock Margin="10 0"
 						   FontSize="15"
 						   VerticalAlignment="Center"
-						   Text="{x:Static lang:Resources.SettingsKmoniDataText}"/>
+						   Text="{x:Static lang:SettingPageResources.KmoniDataText}"/>
 				<ComboBox ItemsSource="{Binding DataTypeChoices}"
 						  SelectedItem="{Binding KmoniOptions.DataChoice}">
 					<ComboBox.ItemTemplate>
@@ -164,7 +164,7 @@
 			<TextBlock Margin="0 20"
 					   FontSize="18"
 					   FontWeight="Bold"
-					   Text="{x:Static lang:Resources.SettingsLangText}"/>
+					   Text="{x:Static lang:SettingPageResources.LangText}"/>
 
 			<ComboBox ItemsSource="{Binding LanguageChoices}"
 					  SelectedItem="{Binding LanguageChoice}">

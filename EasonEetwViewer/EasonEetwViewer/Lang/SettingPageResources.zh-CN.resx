@@ -117,121 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="KmoniSensorsBoreholeText" xml:space="preserve">
-    <value>地下</value>
+  <data name="ApiConfirmedText" xml:space="preserve">
+    <value>设定成功！</value>
   </data>
-  <data name="KmoniSensorsSurfaceText" xml:space="preserve">
-    <value>地面</value>
+  <data name="ApiConfirmText" xml:space="preserve">
+    <value>确认</value>
   </data>
-  <data name="KmoniDataIntensity" xml:space="preserve">
-    <value>实时震度</value>
+  <data name="ApiText" xml:space="preserve">
+    <value>API 密钥：</value>
   </data>
-  <data name="KmoniDataPgv" xml:space="preserve">
-    <value>最大速度</value>
+  <data name="AuthStatusApiKeyText" xml:space="preserve">
+    <value>API 密钥使用中</value>
   </data>
-  <data name="KmoniDataPga" xml:space="preserve">
-    <value>最大加速度</value>
+  <data name="AuthStatusNoneText" xml:space="preserve">
+    <value>请设定认证方法</value>
   </data>
-  <data name="KmoniDataPgd" xml:space="preserve">
-    <value>最大位移</value>
+  <data name="AuthStatusOAuthText" xml:space="preserve">
+    <value>OAuth 使用中</value>
   </data>
-  <data name="KmoniDataRsp0125" xml:space="preserve">
-    <value>0.125 赫兹速度应答</value>
+  <data name="DmdssText" xml:space="preserve">
+    <value>DM-D.S.S. 数据源</value>
   </data>
-  <data name="KmoniDataRsp0250" xml:space="preserve">
-    <value>0.250 赫兹速度应答</value>
+  <data name="HeaderText" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="KmoniDataRsp0500" xml:space="preserve">
-    <value>0.500 赫兹速度应答</value>
+  <data name="KmoniDataText" xml:space="preserve">
+    <value>数据：</value>
   </data>
-  <data name="KmoniDataRsp1000" xml:space="preserve">
-    <value>1.000 赫兹速度应答</value>
+  <data name="KmoniStationText" xml:space="preserve">
+    <value>观测点：</value>
   </data>
-  <data name="KmoniDataRsp2000" xml:space="preserve">
-    <value>2.000 赫兹速度应答</value>
+  <data name="KmoniText" xml:space="preserve">
+    <value>实时震动地图</value>
   </data>
-  <data name="KmoniDataRsp4000" xml:space="preserve">
-    <value>4.000 赫兹速度应答</value>
+  <data name="LangText" xml:space="preserve">
+    <value>语言 / Language / 言語</value>
   </data>
-  <data name="EarthquakeIntensityOneText" xml:space="preserve">
-    <value>1</value>
+  <data name="OAuthConnectedButtonText" xml:space="preserve">
+    <value>解除 OAuth 账号认证</value>
   </data>
-  <data name="EarthquakeIntensityOneColour" xml:space="preserve">
-    <value>#F2F2FF</value>
+  <data name="OAuthConnectedText" xml:space="preserve">
+    <value>认证成功！</value>
   </data>
-  <data name="EarthquakeIntensityTwoText" xml:space="preserve">
-    <value>2</value>
+  <data name="OAuthDisconnectedButtonText" xml:space="preserve">
+    <value>进行 OAuth 账号认证</value>
   </data>
-  <data name="EarthquakeIntensityTwoColour" xml:space="preserve">
-    <value>#00AAFF</value>
+  <data name="AuthStatusText" xml:space="preserve">
+    <value>状况：</value>
   </data>
-  <data name="EarthquakeIntensityThreeText" xml:space="preserve">
-    <value>3</value>
+  <data name="WebSocketApplicationNameText" xml:space="preserve">
+    <value>应用名</value>
   </data>
-  <data name="EarthquakeIntensityThreeColour" xml:space="preserve">
-    <value>#0041FF</value>
+  <data name="WebSocketConnectedButtonText" xml:space="preserve">
+    <value>切断 WebSocket 连接</value>
   </data>
-  <data name="EarthquakeIntensityFourText" xml:space="preserve">
-    <value>4</value>
+  <data name="WebSocketConnectionIdText" xml:space="preserve">
+    <value>连接 ID</value>
   </data>
-  <data name="EarthquakeIntensityFourColour" xml:space="preserve">
-    <value>#FAE696</value>
+  <data name="WebSocketConnectionTimeText" xml:space="preserve">
+    <value>连接时间</value>
   </data>
-  <data name="EarthquakeIntensityFiveWeakText" xml:space="preserve">
-    <value>5-</value>
+  <data name="WebSocketDisconnectedButtonText" xml:space="preserve">
+    <value>连接 WebSocket</value>
   </data>
-  <data name="EarthquakeIntensityFiveWeakColour" xml:space="preserve">
-    <value>#FFE600</value>
+  <data name="WebSocketDisconnectText" xml:space="preserve">
+    <value>切断连接</value>
   </data>
-  <data name="EarthquakeIntensityFiveStrongText" xml:space="preserve">
-    <value>5+</value>
+  <data name="WebSocketEmptyConnectionName" xml:space="preserve">
+    <value>空的 WebSocket 连接</value>
   </data>
-  <data name="EarthquakeIntensityFiveStrongColour" xml:space="preserve">
-    <value>#FF9900</value>
+  <data name="WebSocketListRefreshText" xml:space="preserve">
+    <value>更新 WebSocket 连接列表</value>
   </data>
-  <data name="EarthquakeIntensitySixWeakText" xml:space="preserve">
-    <value>6-</value>
-  </data>
-  <data name="EarthquakeIntensitySixWeakColour" xml:space="preserve">
-    <value>#FF2800</value>
-  </data>
-  <data name="EarthquakeIntensitySixStrongText" xml:space="preserve">
-    <value>6+</value>
-  </data>
-  <data name="EarthquakeIntensitySixStrongColour" xml:space="preserve">
-    <value>#A50021</value>
-  </data>
-  <data name="EarthquakeIntensitySevenText" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="EarthquakeIntensitySevenColour" xml:space="preserve">
-    <value>#B40068</value>
-  </data>
-  <data name="EarthquakeIntensityUnknownText" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="EarthquakeIntensityUnknownColour" xml:space="preserve">
-    <value>#C8C8CB</value>
-  </data>
-  <data name="UnknownText" xml:space="preserve">
-    <value>不明</value>
-  </data>
-  <data name="EarthquakeMagnitudeHuge" xml:space="preserve">
-    <value>8 以上</value>
-  </data>
-  <data name="EarthquakeDepthDeep" xml:space="preserve">
-    <value>800 km 以上</value>
-  </data>
-  <data name="EarthquakeDepthShallow" xml:space="preserve">
-    <value>非常浅</value>
-  </data>
-  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
-    <value>M</value>
-  </data>
-  <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
-    <value>Mw</value>
-  </data>
-  <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
-    <value>Mj</value>
+  <data name="WebSocketText" xml:space="preserve">
+    <value>WebSocket 连接情况</value>
   </data>
 </root>

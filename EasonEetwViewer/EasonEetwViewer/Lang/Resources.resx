@@ -117,54 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SettingsApiConfirmedText" xml:space="preserve">
-    <value>Confirmed!</value>
-  </data>
-  <data name="SettingsApiText" xml:space="preserve">
-    <value>API Key:</value>
-  </data>
-  <data name="SettingsApiConfirmText" xml:space="preserve">
-    <value>Confirm</value>
-  </data>
-  <data name="SettingsDmdssText" xml:space="preserve">
-    <value>DM-D.S.S. Data Service</value>
-  </data>
-  <data name="SettingsHeaderText" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="SettingsOAuthConnectedText" xml:space="preserve">
-    <value>Connected!</value>
-  </data>
-  <data name="SettingsStatusText" xml:space="preserve">
-    <value>Status: </value>
-  </data>
-  <data name="SettingsWebSocketApplicationNameText" xml:space="preserve">
-    <value>Application Name</value>
-  </data>
-  <data name="SettingsWebSocketConnectionIdText" xml:space="preserve">
-    <value>Connection ID</value>
-  </data>
-  <data name="SettingsWebSocketConnectionTimeText" xml:space="preserve">
-    <value>Connection Time</value>
-  </data>
-  <data name="SettingsWebSocketDisconnectText" xml:space="preserve">
-    <value>Disconnect</value>
-  </data>
-  <data name="SettingsWebSocketListRefreshText" xml:space="preserve">
-    <value>Load/Refresh WebSocket List</value>
-  </data>
-  <data name="SettingsWebSocketText" xml:space="preserve">
-    <value>WebSocket Connections</value>
-  </data>
-  <data name="SettingsKmoniText" xml:space="preserve">
-    <value>Real-Time Monitor</value>
-  </data>
-  <data name="SettingsKmoniStationText" xml:space="preserve">
-    <value>Observation Points:</value>
-  </data>
-  <data name="SettingsKmoniDataText" xml:space="preserve">
-    <value>Data:</value>
-  </data>
   <data name="KmoniSensorsBoreholeText" xml:space="preserve">
     <value>Borehole</value>
   </data>
@@ -201,58 +153,85 @@
   <data name="KmoniDataRsp4000" xml:space="preserve">
     <value>4.000 Hz PGV Response Spectrum</value>
   </data>
-  <data name="SettingsAuthStatusNoneText" xml:space="preserve">
-    <value>Please Configure Authentication Method</value>
+  <data name="EarthquakeIntensityOneText" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="SettingsAuthStatusApiKeyText" xml:space="preserve">
-    <value>API Key In Use</value>
+  <data name="EarthquakeIntensityOneColour" xml:space="preserve">
+    <value>#F2F2FF</value>
   </data>
-  <data name="SettingsAuthStatusOAuthText" xml:space="preserve">
-    <value>OAuth 2.0 In Use</value>
+  <data name="EarthquakeIntensityTwoText" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="SettingsWebSocketDisconnectedButtonText" xml:space="preserve">
-    <value>Connect to WebSocket</value>
+  <data name="EarthquakeIntensityTwoColour" xml:space="preserve">
+    <value>#00AAFF</value>
   </data>
-  <data name="SettingsWebSocketConnectedButtonText" xml:space="preserve">
-    <value>Disconnect from WebSocket</value>
+  <data name="EarthquakeIntensityThreeText" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="SettingsOAuthConnectedButtonText" xml:space="preserve">
-    <value>Disconnect from OAuth 2.0</value>
+  <data name="EarthquakeIntensityThreeColour" xml:space="preserve">
+    <value>#0041FF</value>
   </data>
-  <data name="SettingsOAuthDisconnectedButtonText" xml:space="preserve">
-    <value>Connect to OAuth 2.0</value>
+  <data name="EarthquakeIntensityFourText" xml:space="preserve">
+    <value>4</value>
   </data>
-  <data name="SettingsWebSocketEmptyConnectionName" xml:space="preserve">
-    <value>(Empty Connection)</value>
+  <data name="EarthquakeIntensityFourColour" xml:space="preserve">
+    <value>#FAE696</value>
   </data>
-  <data name="SettingsLangText" xml:space="preserve">
-    <value>Language / 言語 / 语言</value>
+  <data name="EarthquakeIntensityFiveWeakText" xml:space="preserve">
+    <value>5-</value>
   </data>
-  <data name="PastYahooText" xml:space="preserve">
-    <value>Yahoo Earthquake Details</value>
+  <data name="EarthquakeIntensityFiveWeakColour" xml:space="preserve">
+    <value>#FFE600</value>
   </data>
-  <data name="PastMaxIntensityText" xml:space="preserve">
-    <value>Max. Intensity</value>
+  <data name="EarthquakeIntensityFiveStrongText" xml:space="preserve">
+    <value>5+</value>
   </data>
-  <data name="PastTimeText" xml:space="preserve">
-    <value>Time</value>
+  <data name="EarthquakeIntensityFiveStrongColour" xml:space="preserve">
+    <value>#FF9900</value>
   </data>
-  <data name="PastHypocentreText" xml:space="preserve">
-    <value>Hypocentre</value>
+  <data name="EarthquakeIntensitySixWeakText" xml:space="preserve">
+    <value>6-</value>
   </data>
-  <data name="PastDepthText" xml:space="preserve">
-    <value>Hypocentre Depth</value>
+  <data name="EarthquakeIntensitySixWeakColour" xml:space="preserve">
+    <value>#FF2800</value>
   </data>
-  <data name="PastMagnitudeText" xml:space="preserve">
-    <value>Magnitude</value>
+  <data name="EarthquakeIntensitySixStrongText" xml:space="preserve">
+    <value>6+</value>
   </data>
-  <data name="PastLastUpdatedText" xml:space="preserve">
-    <value>Last Updated</value>
+  <data name="EarthquakeIntensitySixStrongColour" xml:space="preserve">
+    <value>#A50021</value>
   </data>
-  <data name="PastRefreshListText" xml:space="preserve">
-    <value>Load/Refresh Earthquake List</value>
+  <data name="EarthquakeIntensitySevenText" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="PastLoadMoreText" xml:space="preserve">
-    <value>Load 10 More Earthquakes</value>
+  <data name="EarthquakeIntensitySevenColour" xml:space="preserve">
+    <value>#B40068</value>
+  </data>
+  <data name="EarthquakeIntensityUnknownText" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="EarthquakeIntensityUnknownColour" xml:space="preserve">
+    <value>#C8C8CB</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="EarthquakeMagnitudeHuge" xml:space="preserve">
+    <value>8+</value>
+  </data>
+  <data name="EarthquakeDepthDeep" xml:space="preserve">
+    <value>800+ km</value>
+  </data>
+  <data name="EarthquakeDepthShallow" xml:space="preserve">
+    <value>Shallow</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
+    <value>Mw</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
+    <value>Mj</value>
   </data>
 </root>

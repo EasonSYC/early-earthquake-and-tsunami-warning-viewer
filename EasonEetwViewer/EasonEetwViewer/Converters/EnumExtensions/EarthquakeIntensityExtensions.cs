@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.HttpRequest.Dto.Enum;
 
-namespace EasonEetwViewer.Models.EnumExtensions;
+namespace EasonEetwViewer.Converters.EnumExtensions;
 public static class EarthquakeIntensityExtensions
 {
     public static string ToReadableString(this EarthquakeIntensity intensity) => intensity switch

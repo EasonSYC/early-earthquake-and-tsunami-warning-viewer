@@ -76,6 +76,13 @@ public partial class App : Application
         return culture;
     }
 
+    private static void LanguageChange(CultureInfo language)
+    {
+        Lang.Resources.Culture = language;
+        Lang.PastPageResources.Culture = language;
+        Lang.SettingPageResources.Culture = language;
+    }
+
     /// <inheritdoc/>
     public override void OnFrameworkInitializationCompleted()
     {
@@ -95,14 +102,19 @@ public partial class App : Application
         //HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
         //IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
-        Lang.Resources.Culture = GetLanguage(languagePath);
+        LanguageChange(GetLanguage(languagePath));
 
         IServiceCollection collection = new ServiceCollection();
 
         _ = collection.AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath));
         _ = collection.AddSingleton(sp => GetAuthenticatorDto(authenticatorPath));
         _ = collection.AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)));
-        _ = collection.AddSingleton<OnLanguageChanged>(sp => s => File.WriteAllText(languagePath, s.Name));
+        _ = collection.AddSingleton<OnLanguageChanged>(sp => s
+            =>
+                {
+                    LanguageChange(s);
+                    File.WriteAllText(languagePath, s.Name);
+                });
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<StaticResources>();

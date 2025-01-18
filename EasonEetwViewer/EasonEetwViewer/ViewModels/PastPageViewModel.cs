@@ -3,13 +3,13 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Converters.EnumExtensions;
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.Models.EnumExtensions;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
@@ -35,11 +35,6 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     [NotifyPropertyChangedFor(nameof(IsEarthquakeDetailsEnabled))]
     private EarthquakeDetailsTemplate? _earthquakeDetails;
     public bool IsEarthquakeDetailsEnabled => EarthquakeDetails is not null;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
-    private string _cursorToken = string.Empty;
-    public bool IsLoadExtraEnabled => CursorToken != string.Empty;
 
     private const string _regionLayerName = "Regions";
     private const string _obsPointLayerName = "Point";
@@ -203,10 +198,26 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             UseShellExecute = true
         });
 
+    #region earthquakeObservationStations
+    private List<Station>? _earthquakeObservationStations = null;
+    private bool IsStationsRetrieved => _earthquakeObservationStations is not null;
+    private async Task UpdateEarthquakeObservationStations()
+    {
+        EarthquakeParameterResponse rsp = await _apiCaller.GetEarthquakeParameterAsync();
+        _earthquakeObservationStations = rsp.ItemList;
+    }
+    #endregion
+
+    #region loadEarthquakeAction
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
+    private string _cursorToken = string.Empty;
+    public bool IsLoadExtraEnabled => CursorToken != string.Empty;
+
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
+        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50, maxInt: EarthquakeIntensity.SixWeak);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
@@ -229,4 +240,5 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             eqList.ForEach(x => EarthquakeList.Add(new(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
         }
     }
+    #endregion
 }

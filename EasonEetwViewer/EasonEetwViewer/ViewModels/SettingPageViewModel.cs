@@ -10,6 +10,7 @@ using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.Enums;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
@@ -27,7 +28,6 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
 
     partial void OnLanguageChoiceChanged(CultureInfo value)
     {
-        Resources.Culture = value;
         LanguageChanged(value);
     }
 
@@ -67,7 +67,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
     }
 
     private readonly WebSocketConnectionTemplate _emptyConnection
-        = new(-1, Resources.SettingsWebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
+        = new(-1, SettingPageResources.WebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
 
     [RelayCommand]
     private async Task WebSocketRefresh()

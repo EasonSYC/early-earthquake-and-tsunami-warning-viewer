@@ -2,7 +2,7 @@
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.HttpRequest.Dto.Responses;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.Enums;
 using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
@@ -34,15 +34,5 @@ internal partial class PageViewModelBase(AuthenticatorDto authenticatorDto, IApi
     internal AuthenticationStatus AuthenticationStatus =>
         Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
         Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
-    #endregion
-
-    #region earthquakeObservationStations
-    private protected List<Station>? _earthquakeObservationStations = null;
-    private protected bool IsStationsRetrieved => _earthquakeObservationStations is not null;
-    private protected async Task UpdateEarthquakeObservationStations()
-    {
-        EarthquakeParameterResponse rsp = await _apiCaller.GetEarthquakeParameterAsync();
-        _earthquakeObservationStations = rsp.ItemList;
-    }
     #endregion
 }

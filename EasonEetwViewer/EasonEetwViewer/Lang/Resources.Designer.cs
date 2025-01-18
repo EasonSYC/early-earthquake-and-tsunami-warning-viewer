@@ -61,6 +61,240 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 800+ km.
+        /// </summary>
+        public static string EarthquakeDepthDeep {
+            get {
+                return ResourceManager.GetString("EarthquakeDepthDeep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shallow.
+        /// </summary>
+        public static string EarthquakeDepthShallow {
+            get {
+                return ResourceManager.GetString("EarthquakeDepthShallow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF9900.
+        /// </summary>
+        public static string EarthquakeIntensityFiveStrongColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFiveStrongColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5+.
+        /// </summary>
+        public static string EarthquakeIntensityFiveStrongText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFiveStrongText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FFE600.
+        /// </summary>
+        public static string EarthquakeIntensityFiveWeakColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFiveWeakColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5-.
+        /// </summary>
+        public static string EarthquakeIntensityFiveWeakText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFiveWeakText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FAE696.
+        /// </summary>
+        public static string EarthquakeIntensityFourColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFourColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.
+        /// </summary>
+        public static string EarthquakeIntensityFourText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityFourText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F2F2FF.
+        /// </summary>
+        public static string EarthquakeIntensityOneColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityOneColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        public static string EarthquakeIntensityOneText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityOneText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #B40068.
+        /// </summary>
+        public static string EarthquakeIntensitySevenColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySevenColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7.
+        /// </summary>
+        public static string EarthquakeIntensitySevenText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySevenText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #A50021.
+        /// </summary>
+        public static string EarthquakeIntensitySixStrongColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySixStrongColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6+.
+        /// </summary>
+        public static string EarthquakeIntensitySixStrongText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySixStrongText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF2800.
+        /// </summary>
+        public static string EarthquakeIntensitySixWeakColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySixWeakColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6-.
+        /// </summary>
+        public static string EarthquakeIntensitySixWeakText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensitySixWeakText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #0041FF.
+        /// </summary>
+        public static string EarthquakeIntensityThreeColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityThreeColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.
+        /// </summary>
+        public static string EarthquakeIntensityThreeText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityThreeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #00AAFF.
+        /// </summary>
+        public static string EarthquakeIntensityTwoColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityTwoColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        public static string EarthquakeIntensityTwoText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityTwoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #C8C8CB.
+        /// </summary>
+        public static string EarthquakeIntensityUnknownColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityUnknownColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -.
+        /// </summary>
+        public static string EarthquakeIntensityUnknownText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityUnknownText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8+.
+        /// </summary>
+        public static string EarthquakeMagnitudeHuge {
+            get {
+                return ResourceManager.GetString("EarthquakeMagnitudeHuge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M.
+        /// </summary>
+        public static string EarthquakeMagnitudeUnitDefault {
+            get {
+                return ResourceManager.GetString("EarthquakeMagnitudeUnitDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mj.
+        /// </summary>
+        public static string EarthquakeMagnitudeUnitJma {
+            get {
+                return ResourceManager.GetString("EarthquakeMagnitudeUnitJma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mw.
+        /// </summary>
+        public static string EarthquakeMagnitudeUnitMoment {
+            get {
+                return ResourceManager.GetString("EarthquakeMagnitudeUnitMoment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Measured Intensity.
         /// </summary>
         public static string KmoniDataIntensity {
@@ -169,308 +403,11 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hypocentre Depth.
+        ///   Looks up a localized string similar to Unknown.
         /// </summary>
-        public static string PastDepthText {
+        public static string UnknownText {
             get {
-                return ResourceManager.GetString("PastDepthText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hypocentre.
-        /// </summary>
-        public static string PastHypocentreText {
-            get {
-                return ResourceManager.GetString("PastHypocentreText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last Updated.
-        /// </summary>
-        public static string PastLastUpdatedText {
-            get {
-                return ResourceManager.GetString("PastLastUpdatedText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load 10 More Earthquakes.
-        /// </summary>
-        public static string PastLoadMoreText {
-            get {
-                return ResourceManager.GetString("PastLoadMoreText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Magnitude.
-        /// </summary>
-        public static string PastMagnitudeText {
-            get {
-                return ResourceManager.GetString("PastMagnitudeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max. Intensity.
-        /// </summary>
-        public static string PastMaxIntensityText {
-            get {
-                return ResourceManager.GetString("PastMaxIntensityText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load/Refresh Earthquake List.
-        /// </summary>
-        public static string PastRefreshListText {
-            get {
-                return ResourceManager.GetString("PastRefreshListText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time.
-        /// </summary>
-        public static string PastTimeText {
-            get {
-                return ResourceManager.GetString("PastTimeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yahoo Earthquake Details.
-        /// </summary>
-        public static string PastYahooText {
-            get {
-                return ResourceManager.GetString("PastYahooText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirmed!.
-        /// </summary>
-        public static string SettingsApiConfirmedText {
-            get {
-                return ResourceManager.GetString("SettingsApiConfirmedText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Confirm.
-        /// </summary>
-        public static string SettingsApiConfirmText {
-            get {
-                return ResourceManager.GetString("SettingsApiConfirmText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to API Key:.
-        /// </summary>
-        public static string SettingsApiText {
-            get {
-                return ResourceManager.GetString("SettingsApiText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to API Key In Use.
-        /// </summary>
-        public static string SettingsAuthStatusApiKeyText {
-            get {
-                return ResourceManager.GetString("SettingsAuthStatusApiKeyText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please Configure Authentication Method.
-        /// </summary>
-        public static string SettingsAuthStatusNoneText {
-            get {
-                return ResourceManager.GetString("SettingsAuthStatusNoneText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OAuth 2.0 In Use.
-        /// </summary>
-        public static string SettingsAuthStatusOAuthText {
-            get {
-                return ResourceManager.GetString("SettingsAuthStatusOAuthText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DM-D.S.S. Data Service.
-        /// </summary>
-        public static string SettingsDmdssText {
-            get {
-                return ResourceManager.GetString("SettingsDmdssText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings.
-        /// </summary>
-        public static string SettingsHeaderText {
-            get {
-                return ResourceManager.GetString("SettingsHeaderText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data:.
-        /// </summary>
-        public static string SettingsKmoniDataText {
-            get {
-                return ResourceManager.GetString("SettingsKmoniDataText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Observation Points:.
-        /// </summary>
-        public static string SettingsKmoniStationText {
-            get {
-                return ResourceManager.GetString("SettingsKmoniStationText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Real-Time Monitor.
-        /// </summary>
-        public static string SettingsKmoniText {
-            get {
-                return ResourceManager.GetString("SettingsKmoniText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Language / 言語 / 语言.
-        /// </summary>
-        public static string SettingsLangText {
-            get {
-                return ResourceManager.GetString("SettingsLangText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disconnect from OAuth 2.0.
-        /// </summary>
-        public static string SettingsOAuthConnectedButtonText {
-            get {
-                return ResourceManager.GetString("SettingsOAuthConnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connected!.
-        /// </summary>
-        public static string SettingsOAuthConnectedText {
-            get {
-                return ResourceManager.GetString("SettingsOAuthConnectedText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connect to OAuth 2.0.
-        /// </summary>
-        public static string SettingsOAuthDisconnectedButtonText {
-            get {
-                return ResourceManager.GetString("SettingsOAuthDisconnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status: .
-        /// </summary>
-        public static string SettingsStatusText {
-            get {
-                return ResourceManager.GetString("SettingsStatusText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Application Name.
-        /// </summary>
-        public static string SettingsWebSocketApplicationNameText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketApplicationNameText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disconnect from WebSocket.
-        /// </summary>
-        public static string SettingsWebSocketConnectedButtonText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketConnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection ID.
-        /// </summary>
-        public static string SettingsWebSocketConnectionIdText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketConnectionIdText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection Time.
-        /// </summary>
-        public static string SettingsWebSocketConnectionTimeText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketConnectionTimeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connect to WebSocket.
-        /// </summary>
-        public static string SettingsWebSocketDisconnectedButtonText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketDisconnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Disconnect.
-        /// </summary>
-        public static string SettingsWebSocketDisconnectText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketDisconnectText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to (Empty Connection).
-        /// </summary>
-        public static string SettingsWebSocketEmptyConnectionName {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketEmptyConnectionName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Load/Refresh WebSocket List.
-        /// </summary>
-        public static string SettingsWebSocketListRefreshText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketListRefreshText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WebSocket Connections.
-        /// </summary>
-        public static string SettingsWebSocketText {
-            get {
-                return ResourceManager.GetString("SettingsWebSocketText", resourceCulture);
+                return ResourceManager.GetString("UnknownText", resourceCulture);
             }
         }
     }

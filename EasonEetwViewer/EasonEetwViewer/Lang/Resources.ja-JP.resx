@@ -117,54 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SettingsApiConfirmedText" xml:space="preserve">
-    <value>確認しました！</value>
-  </data>
-  <data name="SettingsApiText" xml:space="preserve">
-    <value>API キー：</value>
-  </data>
-  <data name="SettingsApiConfirmText" xml:space="preserve">
-    <value>確認</value>
-  </data>
-  <data name="SettingsDmdssText" xml:space="preserve">
-    <value>DM-D.S.S. データサービス</value>
-  </data>
-  <data name="SettingsHeaderText" xml:space="preserve">
-    <value>設定</value>
-  </data>
-  <data name="SettingsOAuthConnectedText" xml:space="preserve">
-    <value>認証しました！</value>
-  </data>
-  <data name="SettingsStatusText" xml:space="preserve">
-    <value>状況：</value>
-  </data>
-  <data name="SettingsWebSocketApplicationNameText" xml:space="preserve">
-    <value>アプリ</value>
-  </data>
-  <data name="SettingsWebSocketConnectionIdText" xml:space="preserve">
-    <value>接続ID</value>
-  </data>
-  <data name="SettingsWebSocketConnectionTimeText" xml:space="preserve">
-    <value>接続時刻</value>
-  </data>
-  <data name="SettingsWebSocketDisconnectText" xml:space="preserve">
-    <value>切断</value>
-  </data>
-  <data name="SettingsWebSocketListRefreshText" xml:space="preserve">
-    <value>WebSocket 接続リストを更新</value>
-  </data>
-  <data name="SettingsWebSocketText" xml:space="preserve">
-    <value>WebSocket 接続情報</value>
-  </data>
-  <data name="SettingsKmoniText" xml:space="preserve">
-    <value>強震モニタ</value>
-  </data>
-  <data name="SettingsKmoniStationText" xml:space="preserve">
-    <value>観測点：</value>
-  </data>
-  <data name="SettingsKmoniDataText" xml:space="preserve">
-    <value>データ：</value>
-  </data>
   <data name="KmoniSensorsBoreholeText" xml:space="preserve">
     <value>地中</value>
   </data>
@@ -201,58 +153,85 @@
   <data name="KmoniDataRsp4000" xml:space="preserve">
     <value>4.000Hz速度応答</value>
   </data>
-  <data name="SettingsAuthStatusNoneText" xml:space="preserve">
-    <value>認証を設定してください</value>
+  <data name="EarthquakeIntensityOneText" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="SettingsAuthStatusApiKeyText" xml:space="preserve">
-    <value>API キー使用中</value>
+  <data name="EarthquakeIntensityOneColour" xml:space="preserve">
+    <value>#F2F2FF</value>
   </data>
-  <data name="SettingsAuthStatusOAuthText" xml:space="preserve">
-    <value>OAuth 使用中</value>
+  <data name="EarthquakeIntensityTwoText" xml:space="preserve">
+    <value>2</value>
   </data>
-  <data name="SettingsWebSocketDisconnectedButtonText" xml:space="preserve">
-    <value>WebSocket を接続する</value>
+  <data name="EarthquakeIntensityTwoColour" xml:space="preserve">
+    <value>#00AAFF</value>
   </data>
-  <data name="SettingsWebSocketConnectedButtonText" xml:space="preserve">
-    <value>WebSocket を切断する</value>
+  <data name="EarthquakeIntensityThreeText" xml:space="preserve">
+    <value>3</value>
   </data>
-  <data name="SettingsOAuthConnectedButtonText" xml:space="preserve">
-    <value>OAuth アカウントを連携解除</value>
+  <data name="EarthquakeIntensityThreeColour" xml:space="preserve">
+    <value>#0041FF</value>
   </data>
-  <data name="SettingsOAuthDisconnectedButtonText" xml:space="preserve">
-    <value>OAuth アカウントを連携</value>
+  <data name="EarthquakeIntensityFourText" xml:space="preserve">
+    <value>4</value>
   </data>
-  <data name="SettingsWebSocketEmptyConnectionName" xml:space="preserve">
-    <value>利用可能の接続枠</value>
+  <data name="EarthquakeIntensityFourColour" xml:space="preserve">
+    <value>#FAE696</value>
   </data>
-  <data name="SettingsLangText" xml:space="preserve">
-    <value>言語 / Language / 语言</value>
+  <data name="EarthquakeIntensityFiveWeakText" xml:space="preserve">
+    <value>5-</value>
   </data>
-  <data name="PastYahooText" xml:space="preserve">
-    <value>Yahoo 地震情報</value>
+  <data name="EarthquakeIntensityFiveWeakColour" xml:space="preserve">
+    <value>#FFE600</value>
   </data>
-  <data name="PastMaxIntensityText" xml:space="preserve">
-    <value>最大震度</value>
+  <data name="EarthquakeIntensityFiveStrongText" xml:space="preserve">
+    <value>5+</value>
   </data>
-  <data name="PastTimeText" xml:space="preserve">
-    <value>発生時刻</value>
+  <data name="EarthquakeIntensityFiveStrongColour" xml:space="preserve">
+    <value>#FF9900</value>
   </data>
-  <data name="PastHypocentreText" xml:space="preserve">
-    <value>震源</value>
+  <data name="EarthquakeIntensitySixWeakText" xml:space="preserve">
+    <value>6-</value>
   </data>
-  <data name="PastDepthText" xml:space="preserve">
-    <value>深さ</value>
+  <data name="EarthquakeIntensitySixWeakColour" xml:space="preserve">
+    <value>#FF2800</value>
   </data>
-  <data name="PastMagnitudeText" xml:space="preserve">
-    <value>マグニチュード</value>
+  <data name="EarthquakeIntensitySixStrongText" xml:space="preserve">
+    <value>6+</value>
   </data>
-  <data name="PastLastUpdatedText" xml:space="preserve">
-    <value>更新時刻</value>
+  <data name="EarthquakeIntensitySixStrongColour" xml:space="preserve">
+    <value>#A50021</value>
   </data>
-  <data name="PastRefreshListText" xml:space="preserve">
-    <value>過去の地震リストの読み込み・更新</value>
+  <data name="EarthquakeIntensitySevenText" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="PastLoadMoreText" xml:space="preserve">
-    <value>さらに 10 個の地震</value>
+  <data name="EarthquakeIntensitySevenColour" xml:space="preserve">
+    <value>#B40068</value>
+  </data>
+  <data name="EarthquakeIntensityUnknownText" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="EarthquakeIntensityUnknownColour" xml:space="preserve">
+    <value>#C8C8CB</value>
+  </data>
+  <data name="UnknownText" xml:space="preserve">
+    <value>不明</value>
+  </data>
+  <data name="EarthquakeMagnitudeHuge" xml:space="preserve">
+    <value>8 以上</value>
+  </data>
+  <data name="EarthquakeDepthDeep" xml:space="preserve">
+    <value>800 km 以上</value>
+  </data>
+  <data name="EarthquakeDepthShallow" xml:space="preserve">
+    <value>ごく浅い</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
+    <value>Mw</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
+    <value>Mj</value>
   </data>
 </root>
