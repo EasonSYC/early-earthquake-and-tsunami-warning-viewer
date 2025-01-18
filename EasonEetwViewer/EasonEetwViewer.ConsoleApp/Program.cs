@@ -35,7 +35,7 @@ internal class Program
 
         string baseTelegram = config["BaseTelegram"] ?? string.Empty;
 
-        TelegramRetriever telegramRetriever = new(baseTelegram, new() { Authenticator = apiKeyAuth });
+        ITelegramRetriever telegramRetriever = new(baseTelegram, new() { Authenticator = apiKeyAuth });
 
         // await TestAuthenticator(apiKey);
         // await TestAuthenticator(oAuth);
@@ -102,7 +102,7 @@ internal class Program
         Console.WriteLine(pastEarthquakeEvent);
     }
 
-    private static async Task TestTelegramRetriever(TelegramRetriever telegramRetriever)
+    private static async Task TestTelegramRetriever(ITelegramRetriever telegramRetriever)
     {
         EarthquakeInformationSchema telegramVXSE53 = await telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>("225612eb1353a21b9ec8585adf5a49252b54a07f4fa667d9f580d5b8ffbeca6de6a7e841674a5c99451b2d7025e6e3c4");
         Console.WriteLine(telegramVXSE53);

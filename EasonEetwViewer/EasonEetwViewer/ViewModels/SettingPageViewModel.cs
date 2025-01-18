@@ -15,7 +15,7 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+internal partial class SettingPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : PageViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
     private const string _webSocketButtonTextDisconnected = "Connect to WebSocket";

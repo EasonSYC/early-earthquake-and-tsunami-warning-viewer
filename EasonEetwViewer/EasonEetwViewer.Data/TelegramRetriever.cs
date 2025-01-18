@@ -4,7 +4,7 @@ using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
 
 namespace EasonEetwViewer.HttpRequest;
-public class TelegramRetriever
+public class TelegramRetriever : ITelegramRetriever
 {
     private readonly HttpClient _client;
     private readonly AuthenticatorDto _authenticatorDto;

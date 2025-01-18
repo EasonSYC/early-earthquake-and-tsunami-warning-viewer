@@ -23,7 +23,7 @@ using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, TelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+internal partial class PastPageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : MapViewModelBase(resources, kmoniOptions, authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
     [ObservableProperty]
