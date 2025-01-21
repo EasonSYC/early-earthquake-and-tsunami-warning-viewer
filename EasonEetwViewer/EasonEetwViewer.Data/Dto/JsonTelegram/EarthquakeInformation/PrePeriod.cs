@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
 public record PrePeriod
@@ -12,7 +12,7 @@ public record PrePeriod
     [JsonPropertyName("periodicBand")]
     public required PeriodicBand Band { get; init; }
     [JsonPropertyName("lgInt")]
-    public required EarthquakeLgIntensity LgInt { get; init; }
+    public required LgIntensity LgInt { get; init; }
     [JsonPropertyName("sva")]
     public required Sva Sva { get; init; }
 }

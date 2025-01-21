@@ -1,5 +1,5 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
-using EasonEetwViewer.HttpRequest.Dto.Record;
+﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 /// <summary>

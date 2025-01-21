@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Caller;
 using EasonEetwViewer.Services;
 using Mapsui;
 using Mapsui.Projections;

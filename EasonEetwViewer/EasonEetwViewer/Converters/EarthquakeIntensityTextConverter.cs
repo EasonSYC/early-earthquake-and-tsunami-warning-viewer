@@ -1,25 +1,25 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;
 internal class EarthquakeIntensityTextConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        => value is EarthquakeIntensity?
+        => value is Intensity?
             ? value switch
             {
-                EarthquakeIntensity.One => Resources.EarthquakeIntensityOneText,
-                EarthquakeIntensity.Two => Resources.EarthquakeIntensityTwoText,
-                EarthquakeIntensity.Three => Resources.EarthquakeIntensityThreeText,
-                EarthquakeIntensity.Four => Resources.EarthquakeIntensityFourText,
-                EarthquakeIntensity.FiveWeak => Resources.EarthquakeIntensityFiveWeakText,
-                EarthquakeIntensity.FiveStrong => Resources.EarthquakeIntensityFiveStrongText,
-                EarthquakeIntensity.SixWeak => Resources.EarthquakeIntensitySixWeakText,
-                EarthquakeIntensity.SixStrong => Resources.EarthquakeIntensitySixStrongText,
-                EarthquakeIntensity.Seven => Resources.EarthquakeIntensitySevenText,
-                EarthquakeIntensity.Unknown or null or _ => Resources.EarthquakeIntensityUnknownText
+                Intensity.One => Resources.EarthquakeIntensityOneText,
+                Intensity.Two => Resources.EarthquakeIntensityTwoText,
+                Intensity.Three => Resources.EarthquakeIntensityThreeText,
+                Intensity.Four => Resources.EarthquakeIntensityFourText,
+                Intensity.FiveWeak => Resources.EarthquakeIntensityFiveWeakText,
+                Intensity.FiveStrong => Resources.EarthquakeIntensityFiveStrongText,
+                Intensity.SixWeak => Resources.EarthquakeIntensitySixWeakText,
+                Intensity.SixStrong => Resources.EarthquakeIntensitySixStrongText,
+                Intensity.Seven => Resources.EarthquakeIntensitySevenText,
+                Intensity.Unknown or null or _ => Resources.EarthquakeIntensityUnknownText
             }
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

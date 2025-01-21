@@ -1,15 +1,15 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
 public record IntensityDetails
 {
     [JsonPropertyName("maxInt")]
-    public required EarthquakeIntensity MaxInt { get; init; }
+    public required Intensity MaxInt { get; init; }
     [JsonPropertyName("maxLgInt")]
-    public EarthquakeLgIntensity? MaxLgInt { get; init; }
+    public LgIntensity? MaxLgInt { get; init; }
     [JsonPropertyName("lgCategory")]
-    public EarthquakeLgCategory? LgCategory { get; init; }
+    public LgCategory? LgCategory { get; init; }
     [JsonPropertyName("prefectures")]
     public required List<RegionIntensity> Prefectures { get; init; }
     [JsonPropertyName("regions")]

@@ -3,13 +3,14 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.EarthquakeParameter;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
-using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.ViewModels.ViewModelBases;
@@ -61,7 +62,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         if (value is not null)
         {
             GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
-            List<EarthquakeTelegram> telegrams = rsp.EarthquakeEvent.Telegrams;
+            List<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
             if (telegrams.Count != 0)
             {
@@ -70,7 +71,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     await UpdateEarthquakeObservationStations();
                 }
 
-                EarthquakeTelegram telegram = telegrams.MaxBy(x => x.Serial)!;
+                Telegram telegram = telegrams.MaxBy(x => x.Serial)!;
                 EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
                 IntensityDetailTree tree = new();
 
@@ -80,7 +81,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     List<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
                     foreach (StationIntensity station in stationData)
                     {
-                        if (station.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != EarthquakeIntensity.Unknown)
+                        if (station.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != Intensity.Unknown)
                         {
                             List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
                             if (potnetialStations.Count != 0)
@@ -185,7 +186,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     {
                         style = new VectorStyle()
                         {
-                            Fill = new Brush(Color.Opacity(Color.FromString(((EarthquakeIntensity)region.MaxInt).ToColourString()), 0.60f))
+                            Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.MaxInt).ToColourString()), 0.60f))
                         };
                     }
                 }

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
 
 namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
@@ -12,7 +12,7 @@ public record StationIntensity
     [JsonPropertyName("int")]
     public IntensityWithUnreceived? MaxInt { get; init; }
     [JsonPropertyName("lgInt")]
-    public EarthquakeLgIntensity? LgInt { get; init; }
+    public LgIntensity? LgInt { get; init; }
     [JsonPropertyName("sva")]
     public Sva? Sva { get; init; }
     [JsonPropertyName("prePeriods")]

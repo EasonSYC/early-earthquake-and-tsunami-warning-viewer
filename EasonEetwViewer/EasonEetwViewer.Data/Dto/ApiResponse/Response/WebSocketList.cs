@@ -1,5 +1,5 @@
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
-using EasonEetwViewer.HttpRequest.Dto.Record;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 /// <summary>

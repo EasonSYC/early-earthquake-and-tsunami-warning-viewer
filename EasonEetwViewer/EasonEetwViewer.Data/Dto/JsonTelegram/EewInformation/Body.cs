@@ -23,7 +23,7 @@ public record Body
     [JsonPropertyName("earthquake")]
     public Earthquake? Earthquake { get; init; }
     [JsonPropertyName("intensity")]
-    public Intensity? Intensity { get; init; }
+    public IntensityInfo? Intensity { get; init; }
     [JsonPropertyName("text")]
     public string? Text { get; init; }
     [JsonPropertyName("comments")]

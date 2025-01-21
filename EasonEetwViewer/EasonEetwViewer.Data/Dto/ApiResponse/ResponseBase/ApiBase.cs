@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
 
@@ -24,5 +24,5 @@ public abstract record ApiBase
     /// Abstract and has to be overridden.
     /// </summary>
     [JsonPropertyName("status")]
-    public abstract ApiResponseStatus ResponseStatus { get; }
+    public abstract ResponseStatus ResponseStatus { get; }
 }

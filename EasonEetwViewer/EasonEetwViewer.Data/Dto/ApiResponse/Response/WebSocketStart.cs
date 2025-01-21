@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.Record;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 
@@ -19,12 +20,12 @@ public record WebSocketStart : SuccessBase
     /// The property <c>classifications</c>. The classifications of telegrams that the WebSocket receives.
     /// </summary>
     [JsonPropertyName("classifications")]
-    public required List<ContractClassification> Classifications { get; init; }
+    public required List<Classification> Classifications { get; init; }
     /// <summary>
     /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
     /// </summary>
     [JsonPropertyName("test")]
-    public required WebSocketTestStatus Test { get; init; }
+    public required TestStatus Test { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the program receives.
     /// <c>null</c> when receiving all types from the classifications.
@@ -35,7 +36,7 @@ public record WebSocketStart : SuccessBase
     /// The property <c>formats</c>. A list of formats of telegrams the WebSocket receives.
     /// </summary>
     [JsonPropertyName("formats")]
-    public required List<WebSocketFormatType> Formats { get; init; }
+    public required List<FormatType> Formats { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
     /// <c>null</c> when not indicated.

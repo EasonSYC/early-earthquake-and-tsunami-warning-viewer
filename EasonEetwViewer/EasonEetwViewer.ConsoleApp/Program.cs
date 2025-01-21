@@ -1,7 +1,8 @@
 ﻿using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Caller;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schemas;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
@@ -68,11 +69,11 @@ internal class Program
 
         WebSocketStartPost start = new()
         {
-            Classifications = [ContractClassification.EewForecast, ContractClassification.TelegramEarthquake],
+            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
             Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
-            TestStatus = WebSocketTestStatus.Include,
+            TestStatus = TestStatus.Include,
             AppName = "Test",
-            FormatMode = WebSocketFormatMode.Raw
+            FormatMode = FormatMode.Raw
         };
         WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
@@ -110,11 +111,11 @@ internal class Program
     {
         WebSocketStartPost start = new()
         {
-            Classifications = [ContractClassification.EewForecast, ContractClassification.TelegramEarthquake],
+            Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
             Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
-            TestStatus = WebSocketTestStatus.Include,
+            TestStatus = TestStatus.Include,
             AppName = "Test",
-            FormatMode = WebSocketFormatMode.Raw
+            FormatMode = FormatMode.Raw
         };
         WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);

@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
 
@@ -13,5 +13,5 @@ public abstract record SuccessBase : ApiBase
     /// The <c>status</c> property. Always set to <c>Status.Success</c>.
     /// </summary>
     [JsonPropertyName("status")]
-    public override ApiResponseStatus ResponseStatus { get; } = ApiResponseStatus.Success;
+    public override ResponseStatus ResponseStatus { get; } = ResponseStatus.Success;
 }

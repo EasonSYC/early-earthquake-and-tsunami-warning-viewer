@@ -3,10 +3,11 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.Contract;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.Record;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
@@ -77,7 +78,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
         // Cursor Token
         for (int i = 0; i < 5; ++i)
         {
-            WebSocketList webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
+            WebSocketList webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
             wsList.AddRange(webSocketList.ItemList);
 
             if (webSocketList.NextToken is null)
@@ -91,7 +92,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
         }
 
         // This filtering is due to undefined filtering behaviour in the API, just in case.
-        wsList = wsList.Where(x => x.WebSocketStatus == WebSocketConnectionStatus.Open).ToList();
+        wsList = wsList.Where(x => x.WebSocketStatus == ConnectionStatus.Open).ToList();
 
         ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
         wsList.ForEach(

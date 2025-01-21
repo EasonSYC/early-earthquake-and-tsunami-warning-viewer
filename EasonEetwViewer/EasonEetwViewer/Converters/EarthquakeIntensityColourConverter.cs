@@ -1,26 +1,26 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using EasonEetwViewer.HttpRequest.Dto.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;
 internal class EarthquakeIntensityColourConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        => value is EarthquakeIntensity?
+        => value is Intensity?
             ? value switch
             {
-                EarthquakeIntensity.One => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityOneColour)),
-                EarthquakeIntensity.Two => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityTwoColour)),
-                EarthquakeIntensity.Three => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityThreeColour)),
-                EarthquakeIntensity.Four => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFourColour)),
-                EarthquakeIntensity.FiveWeak => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFiveWeakColour)),
-                EarthquakeIntensity.FiveStrong => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFiveStrongColour)),
-                EarthquakeIntensity.SixWeak => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixWeakColour)),
-                EarthquakeIntensity.SixStrong => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixStrongColour)),
-                EarthquakeIntensity.Seven => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySevenColour)),
-                EarthquakeIntensity.Unknown or null or _ => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityUnknownColour)),
+                Intensity.One => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityOneColour)),
+                Intensity.Two => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityTwoColour)),
+                Intensity.Three => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityThreeColour)),
+                Intensity.Four => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFourColour)),
+                Intensity.FiveWeak => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFiveWeakColour)),
+                Intensity.FiveStrong => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityFiveStrongColour)),
+                Intensity.SixWeak => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixWeakColour)),
+                Intensity.SixStrong => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixStrongColour)),
+                Intensity.Seven => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySevenColour)),
+                Intensity.Unknown or null or _ => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityUnknownColour)),
             }
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

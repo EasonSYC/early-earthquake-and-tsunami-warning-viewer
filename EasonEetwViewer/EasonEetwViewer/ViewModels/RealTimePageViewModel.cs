@@ -1,7 +1,7 @@
 ﻿using System.Timers;
 using Avalonia.Logging;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Caller;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Services;
