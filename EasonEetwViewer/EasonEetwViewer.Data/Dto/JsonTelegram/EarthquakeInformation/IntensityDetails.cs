@@ -6,6 +6,10 @@ public record IntensityDetails
 {
     [JsonPropertyName("maxInt")]
     public required EarthquakeIntensity MaxInt { get; init; }
+    [JsonPropertyName("maxLgInt")]
+    public EarthquakeLgIntensity? MaxLgInt { get; init; }
+    [JsonPropertyName("lgCategory")]
+    public EarthquakeLgCategory? LgCategory { get; init; }
     [JsonPropertyName("prefectures")]
     public required List<RegionIntensity> Prefectures { get; init; }
     [JsonPropertyName("regions")]

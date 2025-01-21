@@ -12,6 +12,8 @@ public record RegionIntensity
     public required string Name { get; init; }
     [JsonPropertyName("maxInt")]
     public EarthquakeIntensity? MaxInt { get; init; }
+    [JsonPropertyName("maxLgInt")]
+    public EarthquakeLgIntensity? MaxLgInt { get; init; }
     [JsonPropertyName("revise")]
     public ReviseStatus? Revise { get; init; }
 }
