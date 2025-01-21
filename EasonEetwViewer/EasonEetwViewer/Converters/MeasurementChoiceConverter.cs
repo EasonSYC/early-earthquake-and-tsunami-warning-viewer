@@ -4,7 +4,7 @@ using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;
-internal class KmoniDataChoiceConverter : IValueConverter
+internal class MeasurementChoiceConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is MeasurementType dataType

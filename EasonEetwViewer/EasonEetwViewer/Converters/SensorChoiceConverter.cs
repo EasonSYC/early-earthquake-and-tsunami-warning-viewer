@@ -5,7 +5,7 @@ using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;
 
-internal class KmoniSensorChoiceConverter : IValueConverter
+internal class SensorChoiceConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is SensorType sensorType
