@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.HttpRequest;
 public class TelegramRetriever : ITelegramRetriever
@@ -26,7 +26,7 @@ public class TelegramRetriever : ITelegramRetriever
         _authenticatorDto = authenticator;
     }
 
-    public async Task<T> GetTelegramJsonAsync<T>(string id) where T : JsonSchemaHead
+    public async Task<T> GetTelegramJsonAsync<T>(string id) where T : Head
     {
         using HttpRequestMessage request = new(HttpMethod.Get, $"{id}");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();

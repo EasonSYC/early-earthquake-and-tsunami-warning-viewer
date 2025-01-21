@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.HttpRequest.Dto.Record;
 public record EarthquakeTelegram
@@ -20,7 +20,7 @@ public record EarthquakeTelegram
     [JsonPropertyName("xmlReport")]
     public required EarthquakeXmlReport XmlReport { get; init; }
     [JsonPropertyName("schema")]
-    public required JsonSchemaVersionInfo SchemaVersion { get; init; }
+    public required SchemaVersionInformation SchemaVersion { get; init; }
     [JsonPropertyName("format")]
     public required WebSocketFormatType Format { get; init; }
     [JsonPropertyName("url")]

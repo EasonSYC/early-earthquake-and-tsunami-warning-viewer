@@ -10,7 +10,7 @@ namespace EasonEetwViewer.WebSocket;
 /// <summary>
 /// Represents a WebSocket connection in the program.
 /// </summary>
-public class WebSocketClient : IDisposable
+public class WebSocketClient : IDisposable, IWebSocketClient
 {
     /// <summary>
     /// The JSON Serializer Options to be used.

@@ -4,10 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.HttpRequest.Dto.Record;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.ViewModels.ViewModelBases;
@@ -58,7 +60,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
         if (value is not null)
         {
-            PastEarthquakeEventResponse rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
+            GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
             List<EarthquakeTelegram> telegrams = rsp.EarthquakeEvent.Telegrams;
             telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
             if (telegrams.Count != 0)
@@ -75,10 +77,10 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                 if (telegramInfo.Body.Intensity is not null)
                 {
                     ICollection<IFeature> stationFeature = [];
-                    List<EarthquakeInformationStationData> stationData = telegramInfo.Body.Intensity.Stations;
-                    foreach (EarthquakeInformationStationData station in stationData)
+                    List<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
+                    foreach (StationIntensity station in stationData)
                     {
-                        if (station.MaxInt is EarthquakeIntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != EarthquakeIntensity.Unknown)
+                        if (station.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != EarthquakeIntensity.Unknown)
                         {
                             List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
                             if (potnetialStations.Count != 0)
@@ -154,7 +156,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         }
     }
 
-    private Layer CreateRegionLayer(List<EarthquakeInformationRegionData> regions)
+    private Layer CreateRegionLayer(List<RegionIntensity> regions)
         => new()
         {
             Name = _regionLayerName,
@@ -164,7 +166,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         };
 
     // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile
-    private static ThemeStyle CreateRegionThemeStyle(List<EarthquakeInformationRegionData> regions)
+    private static ThemeStyle CreateRegionThemeStyle(List<RegionIntensity> regions)
         => new(f =>
             {
                 if (f is GeometryFeature geometryFeature)
@@ -177,7 +179,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
                 VectorStyle? style = null;
 
-                foreach (EarthquakeInformationRegionData region in regions)
+                foreach (RegionIntensity region in regions)
                 {
                     if (region.MaxInt is not null && f["code"]?.ToString()?.ToLower() == region.Code)
                     {
@@ -204,7 +206,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private bool IsStationsRetrieved => _earthquakeObservationStations is not null;
     private async Task UpdateEarthquakeObservationStations()
     {
-        EarthquakeParameterResponse rsp = await _apiCaller.GetEarthquakeParameterAsync();
+        EarthquakeParameter rsp = await _apiCaller.GetEarthquakeParameterAsync();
         _earthquakeObservationStations = rsp.ItemList;
     }
     #endregion
@@ -218,7 +220,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
+        GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
         List<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
@@ -234,7 +236,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     {
         if (CursorToken != string.Empty)
         {
-            PastEarthquakeListResponse rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
+            GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
             List<EarthquakeInfo> eqList = rsp.ItemList;
             CursorToken = rsp.NextToken ?? string.Empty;
 

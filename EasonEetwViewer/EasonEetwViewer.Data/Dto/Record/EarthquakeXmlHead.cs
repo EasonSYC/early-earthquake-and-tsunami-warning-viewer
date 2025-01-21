@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.HttpRequest.Dto.Record;
 public record EarthquakeXmlHead
@@ -17,7 +17,7 @@ public record EarthquakeXmlHead
     [JsonPropertyName("infoKindVersion")]
     public required string InfoKindVersion { get; init; }
     [JsonPropertyName("infoType")]
-    public required TelegramType InfoType { get; init; }
+    public required JsonTelegram.TelegramBase.Type InfoType { get; init; }
     [JsonPropertyName("reportDateTime")]
     public required DateTimeOffset ReportDateTime { get; init; }
     [JsonPropertyName("targetDateTime")]

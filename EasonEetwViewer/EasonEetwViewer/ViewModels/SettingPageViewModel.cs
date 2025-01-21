@@ -4,9 +4,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
 using EasonEetwViewer.HttpRequest.Dto.Record;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
@@ -51,7 +51,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
 
     private async Task<int> GetAvaliableWebSocketConnections()
     {
-        ContractListResponse contractList = await _apiCaller.GetContractListAsync();
+        ContractList contractList = await _apiCaller.GetContractListAsync();
         List<Contract> contracts = contractList.ItemList;
         int result = 0;
         foreach (Contract contract in contracts)
@@ -77,7 +77,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
         // Cursor Token
         for (int i = 0; i < 5; ++i)
         {
-            WebSocketListResponse webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
+            WebSocketList webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: WebSocketConnectionStatus.Open, cursorToken: currentCursorToken);
             wsList.AddRange(webSocketList.ItemList);
 
             if (webSocketList.NextToken is null)

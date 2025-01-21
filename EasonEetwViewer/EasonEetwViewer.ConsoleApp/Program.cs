@@ -2,8 +2,7 @@
 using EasonEetwViewer.HttpRequest;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schemas;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
@@ -61,10 +60,10 @@ internal class Program
 
     private static async Task TestApiCaller(IApiCaller apiCaller)
     {
-        ContractListResponse contractList = await apiCaller.GetContractListAsync();
+        ContractList contractList = await apiCaller.GetContractListAsync();
         Console.WriteLine(contractList);
 
-        WebSocketListResponse webSocketList = await apiCaller.GetWebSocketListAsync();
+        WebSocketList webSocketList = await apiCaller.GetWebSocketListAsync();
         Console.WriteLine(webSocketList);
 
         WebSocketStartPost start = new()
@@ -75,13 +74,13 @@ internal class Program
             AppName = "Test",
             FormatMode = WebSocketFormatMode.Raw
         };
-        WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
+        WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
         await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
         Console.WriteLine("Successfully closed WebSocket connection.");
 
-        EarthquakeParameterResponse earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
+        EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();
         Console.WriteLine(earthquakeParameter.ResponseId);
         Console.WriteLine(earthquakeParameter.ResponseStatus);
         Console.WriteLine(earthquakeParameter.ResponseTime);
@@ -89,7 +88,7 @@ internal class Program
         Console.WriteLine(earthquakeParameter.ChangeTime);
         Console.WriteLine(earthquakeParameter.ItemList[0]);
 
-        PastEarthquakeListResponse pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
+        GdEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
         Console.WriteLine(pastEarthquakeList.ResponseId);
         Console.WriteLine(pastEarthquakeList.ResponseStatus);
         Console.WriteLine(pastEarthquakeList.ResponseTime);
@@ -98,7 +97,7 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
         Console.WriteLine(pastEarthquakeList.ItemList[0]);
 
-        PastEarthquakeEventResponse pastEarthquakeEvent = await apiCaller.GetPathEarthquakeEventAsync("20250112232728");
+        GdEarthquakeEvent pastEarthquakeEvent = await apiCaller.GetPathEarthquakeEventAsync("20250112232728");
         Console.WriteLine(pastEarthquakeEvent);
     }
 
@@ -117,7 +116,7 @@ internal class Program
             AppName = "Test",
             FormatMode = WebSocketFormatMode.Raw
         };
-        WebSocketStartResponse response = await apiCaller.PostWebSocketStartAsync(start);
+        WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
         using WebSocketClient ws = new(response.WebSockerUrl.Url);

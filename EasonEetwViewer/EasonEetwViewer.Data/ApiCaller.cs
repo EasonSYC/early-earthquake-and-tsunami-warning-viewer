@@ -5,8 +5,8 @@ using System.Text.Json.Serialization;
 using System.Web;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
 using EasonEetwViewer.HttpRequest.Dto.Enum;
-using EasonEetwViewer.HttpRequest.Dto.Responses;
 
 namespace EasonEetwViewer.HttpRequest;
 
@@ -32,7 +32,7 @@ public class ApiCaller : IApiCaller
         _authenticatorDto = authenticator;
     }
 
-    public async Task<ContractListResponse> GetContractListAsync()
+    public async Task<ContractList> GetContractListAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "contract");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -40,11 +40,11 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        ContractListResponse contractList = JsonSerializer.Deserialize<ContractListResponse>(responseBody, _options) ?? throw new Exception();
+        ContractList contractList = JsonSerializer.Deserialize<ContractList>(responseBody, _options) ?? throw new Exception();
         return contractList;
     }
 
-    public async Task<WebSocketListResponse> GetWebSocketListAsync(int id = -1, WebSocketConnectionStatus connectionStatus = WebSocketConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
+    public async Task<WebSocketList> GetWebSocketListAsync(int id = -1, WebSocketConnectionStatus connectionStatus = WebSocketConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
     {
         NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
         if (id != -1)
@@ -73,11 +73,11 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        WebSocketListResponse webSocketList = JsonSerializer.Deserialize<WebSocketListResponse>(responseBody, _options) ?? throw new Exception();
+        WebSocketList webSocketList = JsonSerializer.Deserialize<WebSocketList>(responseBody, _options) ?? throw new Exception();
         return webSocketList;
     }
 
-    public async Task<WebSocketStartResponse> PostWebSocketStartAsync(WebSocketStartPost postData)
+    public async Task<WebSocketStart> PostWebSocketStartAsync(WebSocketStartPost postData)
     {
         string postDataJson = JsonSerializer.Serialize(postData);
         StringContent content = new(postDataJson, Encoding.UTF8, "application/json");
@@ -88,7 +88,7 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        WebSocketStartResponse startResponse = JsonSerializer.Deserialize<WebSocketStartResponse>(responseBody, _options) ?? throw new Exception();
+        WebSocketStart startResponse = JsonSerializer.Deserialize<WebSocketStart>(responseBody, _options) ?? throw new Exception();
         return startResponse;
     }
 
@@ -104,7 +104,7 @@ public class ApiCaller : IApiCaller
         return;
     }
 
-    public async Task<EarthquakeParameterResponse> GetEarthquakeParameterAsync()
+    public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "parameter/earthquake/station");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -112,11 +112,11 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        EarthquakeParameterResponse earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameterResponse>(responseBody, _options) ?? throw new Exception();
+        EarthquakeParameter earthquakeParameter = JsonSerializer.Deserialize<EarthquakeParameter>(responseBody, _options) ?? throw new Exception();
         return earthquakeParameter;
     }
 
-    public async Task<PastEarthquakeListResponse> GetPastEarthquakeListAsync(string hypocentreCode = "", EarthquakeIntensity maxInt = EarthquakeIntensity.Unknown, DateOnly date = new(), int limit = -1, string cursorToken = "")
+    public async Task<GdEarthquakeList> GetPastEarthquakeListAsync(string hypocentreCode = "", EarthquakeIntensity maxInt = EarthquakeIntensity.Unknown, DateOnly date = new(), int limit = -1, string cursorToken = "")
     {
         NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
         if (hypocentreCode != string.Empty)
@@ -150,11 +150,11 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        PastEarthquakeListResponse pastEarthquakeList = JsonSerializer.Deserialize<PastEarthquakeListResponse>(responseBody, _options) ?? throw new Exception();
+        GdEarthquakeList pastEarthquakeList = JsonSerializer.Deserialize<GdEarthquakeList>(responseBody, _options) ?? throw new Exception();
         return pastEarthquakeList;
     }
 
-    public async Task<PastEarthquakeEventResponse> GetPathEarthquakeEventAsync(string eventId)
+    public async Task<GdEarthquakeEvent> GetPathEarthquakeEventAsync(string eventId)
     {
         using HttpRequestMessage request = new(HttpMethod.Get, $"gd/earthquake/{eventId}");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
@@ -162,7 +162,7 @@ public class ApiCaller : IApiCaller
 
         _ = response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        PastEarthquakeEventResponse pastEarthquakeEvent = JsonSerializer.Deserialize<PastEarthquakeEventResponse>(responseBody, _options) ?? throw new Exception();
+        GdEarthquakeEvent pastEarthquakeEvent = JsonSerializer.Deserialize<GdEarthquakeEvent>(responseBody, _options) ?? throw new Exception();
         return pastEarthquakeEvent;
     }
 }
