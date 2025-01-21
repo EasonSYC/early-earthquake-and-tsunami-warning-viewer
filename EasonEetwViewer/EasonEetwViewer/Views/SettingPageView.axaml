@@ -17,8 +17,8 @@
 	</Design.DataContext>
 
 	<UserControl.Resources>
-		<conv:KmoniDataChoiceConverter x:Key="DataChoiceConverter"/>
-		<conv:KmoniSensorChoiceConverter x:Key="SensorChoiceConverter"/>
+		<conv:MeasurementChoiceConverter x:Key="MeasurementChoiceConverter"/>
+		<conv:SensorChoiceConverter x:Key="SensorChoiceConverter"/>
 		<conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
 		<conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
 		<conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
@@ -155,7 +155,7 @@
 						  SelectedItem="{Binding KmoniOptions.DataChoice}">
 					<ComboBox.ItemTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Converter={StaticResource DataChoiceConverter}}"/>
+							<TextBlock Text="{Binding Converter={StaticResource MeasurementChoiceConverter}}"/>
 						</DataTemplate>
 					</ComboBox.ItemTemplate>
 				</ComboBox>

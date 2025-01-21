@@ -19,28 +19,21 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
+
+
     internal KmoniOptions KmoniOptions { get; init; }
     private const int _jstAheadUtcHours = 9;
     internal static string TimeDisplayText => DateTimeOffset.Now.ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
 
     private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel(StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    public RealtimePageViewModel(ImageFetch imageFetch, PointExtract pointExtract, System.Timers.Timer timer, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
     : base(resources, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
         KmoniOptions = kmoniOptions;
-        _imageFetch = new();
-        _pointExtract = new PointExtract("ObservationPoints.json");
-
-        ILayer? newLayer = GetKmoniLayer();
-        if (newLayer is not null)
-        {
-            Map.Layers.Add(newLayer);
-        }
-
-        _timer = new(1000);
+        _imageFetch = imageFetch;
+        _pointExtract = pointExtract;
+        _timer = timer;
         _timer.Elapsed += OnTimedEvent;
-        _timer.AutoReset = true;
-        _timer.Enabled = true;
     }
 
     private const string _realTimeLayerName = "KmoniLayer";

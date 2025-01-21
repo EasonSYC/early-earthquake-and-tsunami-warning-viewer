@@ -1,11 +1,13 @@
 using System.Globalization;
 using System.Text.Json;
+using System.Timers;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
@@ -94,6 +96,8 @@ public partial class App : Application
         string authenticatorPath = config["AuthenticatorPath"]!;
         string languagePath = config["LanguagePath"]!;
 
+        string pointExtractPath = config["PointExtractPath"]!;
+
         //IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         //string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
         //string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
@@ -107,6 +111,7 @@ public partial class App : Application
 
         _ = collection.AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath));
         _ = collection.AddSingleton(sp => GetAuthenticatorDto(authenticatorPath));
+
         _ = collection.AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)));
         _ = collection.AddSingleton<OnLanguageChanged>(sp => s
             =>
@@ -114,8 +119,20 @@ public partial class App : Application
                     LanguageChange(s);
                     File.WriteAllText(languagePath, s.Name);
                 });
+
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
+
+        _ = collection.AddSingleton<ImageFetch>();
+        _ = collection.AddSingleton(sp => new PointExtract(pointExtractPath));
+
+        _ = collection.AddSingleton(sp
+            => new System.Timers.Timer(1000)
+            {
+                AutoReset = true,
+                Enabled = true
+            });
+
         _ = collection.AddSingleton<StaticResources>();
 
         _ = collection.AddSingleton<MainWindowViewModel>();
