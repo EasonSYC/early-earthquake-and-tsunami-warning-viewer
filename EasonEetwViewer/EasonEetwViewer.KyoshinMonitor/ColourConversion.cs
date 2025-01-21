@@ -5,7 +5,7 @@ namespace EasonEetwViewer.KyoshinMonitor;
 /// <summary>
 /// Provides methods to convert between different values.
 /// </summary>
-public class KmoniColourConversion
+public class ColourConversion
 {
     /// <summary>
     /// Converts intensity to normalised height.

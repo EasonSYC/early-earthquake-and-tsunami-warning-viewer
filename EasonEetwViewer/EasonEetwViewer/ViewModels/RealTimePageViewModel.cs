@@ -29,7 +29,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         KmoniOptions = kmoniOptions;
         _imageFetch = new();
-        _pointExtract = new KmoniPointExtract("ObservationPoints.json");
+        _pointExtract = new PointExtract("ObservationPoints.json");
 
         ILayer? newLayer = GetKmoniLayer();
         if (newLayer is not null)
@@ -45,8 +45,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     private const string _realTimeLayerName = "KmoniLayer";
     private const int _kmoniDelaySeconds = 1;
-    private readonly KmoniImageFetch _imageFetch;
-    private readonly KmoniPointExtract _pointExtract;
+    private readonly ImageFetch _imageFetch;
+    private readonly PointExtract _pointExtract;
 
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
@@ -95,7 +95,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             foreach ((ObservationPoint p, SKColor c) in colours)
             {
-                intensities.Add((p, KmoniColourConversion.HeightToIntensity(KmoniColourConversion.ColourToHeight(c))));
+                intensities.Add((p, ColourConversion.HeightToIntensity(ColourConversion.ColourToHeight(c))));
             }
 
             return colours.Select(pc =>

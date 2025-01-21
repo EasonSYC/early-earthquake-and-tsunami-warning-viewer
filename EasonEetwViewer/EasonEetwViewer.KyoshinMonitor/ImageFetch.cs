@@ -5,7 +5,7 @@ namespace EasonEetwViewer.KyoshinMonitor;
 /// <summary>
 /// Represents the functionality to fetch a kmoni image.
 /// </summary>
-public class KmoniImageFetch
+public class ImageFetch
 {
     /// <summary>
     /// The base URI for the images.
@@ -29,20 +29,20 @@ public class KmoniImageFetch
     /// <summary>
     /// Gets the GIF image as a byte array with the specified parameters.
     /// </summary>
-    /// <param name="kmoniDataType">The data type plotted on the image.</param>
+    /// <param name="measurementType">The data type plotted on the image.</param>
     /// <param name="sensorType">The sensor type included on the image.</param>
     /// <param name="dateTime">The date and time to be fetched.</param>
     /// <returns>The byte array obtained.</returns>
-    public async Task<byte[]> GetByteArrayAsync(KmoniDataType kmoniDataType, SensorType sensorType, DateTimeOffset dateTime)
+    public async Task<byte[]> GetByteArrayAsync(MeasurementType measurementType, SensorType sensorType, DateTimeOffset dateTime)
     {
-        string kmoniDataTypeStr = kmoniDataType.ToUriString();
+        string measurementTypeStr = measurementType.ToUriString();
         string sensorTypeStr = sensorType.ToUriString();
         DateTimeOffset jstDateTime = dateTime.ToOffset(new(_jstAheadUtcHours, 0, 0));
         string yearMonthDateStr = jstDateTime.ToString("yyyyMMdd");
         string hourMinuteSecondStr = jstDateTime.ToString("HHmmss");
 
         string relativeUri = _relativeUri
-            .Replace("[#1]", kmoniDataTypeStr)
+            .Replace("[#1]", measurementTypeStr)
             .Replace("[#2]", sensorTypeStr)
             .Replace("[yyyyMMdd]", yearMonthDateStr)
             .Replace("[HHmmss]", hourMinuteSecondStr);

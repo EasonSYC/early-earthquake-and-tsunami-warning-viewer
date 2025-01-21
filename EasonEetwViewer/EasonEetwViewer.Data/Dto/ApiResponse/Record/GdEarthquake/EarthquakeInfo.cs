@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.HttpRequest.DmdataComponent;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.Earthquake;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
 

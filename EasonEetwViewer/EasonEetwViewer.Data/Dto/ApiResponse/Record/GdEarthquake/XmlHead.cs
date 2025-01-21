@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
 public record XmlHead

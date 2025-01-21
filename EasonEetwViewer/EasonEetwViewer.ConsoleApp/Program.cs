@@ -3,7 +3,6 @@ using EasonEetwViewer.HttpRequest.Caller;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schemas;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
@@ -130,8 +129,8 @@ internal class Program
 
     private static async Task TestKmoni()
     {
-        KmoniImageFetch imageFetch = new();
-        byte[] imageBytes = await imageFetch.GetByteArrayAsync(KmoniDataType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow);
+        ImageFetch imageFetch = new();
+        byte[] imageBytes = await imageFetch.GetByteArrayAsync(MeasurementType.MeasuredIntensity, SensorType.Surface, DateTime.UtcNow);
         using SKImage image = SKImage.FromEncodedData(imageBytes);
         using SKBitmap bm = SKBitmap.FromImage(image);
 
@@ -142,14 +141,14 @@ internal class Program
         color1.ToHsv(out float h, out float s, out float v);
         Console.WriteLine($"{h}, {s}, {v}");
 
-        KmoniPointExtract pointExtract = new("ObservationPoints.json");
+        PointExtract pointExtract = new("ObservationPoints.json");
         pointExtract.WritePoints("OutputObservationPoints.json");
         List<(ObservationPoint point, SKColor colour)> colours = pointExtract.ExtractColours(bm);
         List<(ObservationPoint point, double intensity)> intensities = [];
 
         foreach ((ObservationPoint p, SKColor c) in colours)
         {
-            intensities.Add((p, KmoniColourConversion.HeightToIntensity(KmoniColourConversion.ColourToHeight(c))));
+            intensities.Add((p, ColourConversion.HeightToIntensity(ColourConversion.ColourToHeight(c))));
         }
 
         for (int i = 0; i < 100; ++i)
@@ -161,10 +160,10 @@ internal class Program
 
         foreach ((ObservationPoint p, double i) in intensities)
         {
-            double height = KmoniColourConversion.IntensityToHeight(i);
-            double hue = KmoniColourConversion.HeightToHue(height);
-            double saturation = KmoniColourConversion.HeightToSaturation(height) * 100;
-            double value = KmoniColourConversion.HeightToValue(height) * 100;
+            double height = ColourConversion.IntensityToHeight(i);
+            double hue = ColourConversion.HeightToHue(height);
+            double saturation = ColourConversion.HeightToSaturation(height) * 100;
+            double value = ColourConversion.HeightToValue(height) * 100;
             Console.WriteLine($"{hue}, {saturation}, {value}");
             SKColor colour = SKColor.FromHsv((float)hue, (float)saturation, (float)value);
 

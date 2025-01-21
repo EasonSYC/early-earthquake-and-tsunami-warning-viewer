@@ -4,5 +4,5 @@ namespace EasonEetwViewer.Services;
 internal class KmoniDefaultOptions : IKmoniDto
 {
     SensorType IKmoniDto.SensorChoice => SensorType.Surface;
-    KmoniDataType IKmoniDto.DataChoice => KmoniDataType.MeasuredIntensity;
+    MeasurementType IKmoniDto.DataChoice => MeasurementType.MeasuredIntensity;
 }

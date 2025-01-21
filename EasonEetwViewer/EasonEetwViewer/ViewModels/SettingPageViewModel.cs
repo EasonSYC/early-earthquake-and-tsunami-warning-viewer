@@ -37,7 +37,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
     #region kmoniSettings
     internal KmoniOptions KmoniOptions { get; init; } = kmoniOptions;
     internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
-    internal IEnumerable<KmoniDataType> DataTypeChoices { get; init; } = Enum.GetValues<KmoniDataType>();
+    internal IEnumerable<MeasurementType> DataTypeChoices { get; init; } = Enum.GetValues<MeasurementType>();
     #endregion
 
     #region webSocketSettings

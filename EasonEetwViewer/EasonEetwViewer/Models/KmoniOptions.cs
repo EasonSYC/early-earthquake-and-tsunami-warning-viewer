@@ -8,7 +8,7 @@ internal partial class KmoniOptions : ObservableObject
     private SensorType _sensorChoice;
 
     [ObservableProperty]
-    private KmoniDataType _dataChoice;
+    private MeasurementType _dataChoice;
 
     internal KmoniOptions(IKmoniDto kmoniDto)
     {

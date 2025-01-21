@@ -2,7 +2,7 @@
 /// <summary>
 /// Represents the data type for the data map in kmoni.
 /// </summary>
-public enum KmoniDataType
+public enum MeasurementType
 {
     /// <summary>
     /// Real-time measured intensity. The value <c>jma</c>.

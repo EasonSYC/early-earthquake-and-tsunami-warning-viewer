@@ -10,10 +10,10 @@ internal class KmoniSerialisableOptions : IKmoniDto
 
     [JsonInclude]
     [JsonPropertyName("dataChoice")]
-    public KmoniDataType DataChoice { get; private init; }
+    public MeasurementType DataChoice { get; private init; }
 
     [JsonConstructor]
-    internal KmoniSerialisableOptions(SensorType sensorChoice, KmoniDataType dataChoice)
+    internal KmoniSerialisableOptions(SensorType sensorChoice, MeasurementType dataChoice)
     {
         SensorChoice = sensorChoice;
         DataChoice = dataChoice;
