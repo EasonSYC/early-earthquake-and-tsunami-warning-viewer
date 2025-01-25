@@ -27,7 +27,7 @@ internal partial class StaticResources : ObservableObject
         BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
     };
 
-    internal List<PrefectureData> Prefectures { get; private init; } = [
+    internal IEnumerable<PrefectureData> Prefectures { get; private init; } = [
         new PrefectureData() { Code = "01", Name = "北海道" },
         new PrefectureData() { Code = "02", Name = "青森県" },
         new PrefectureData() { Code = "03", Name = "岩手県" },

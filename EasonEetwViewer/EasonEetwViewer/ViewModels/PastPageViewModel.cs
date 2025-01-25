@@ -38,6 +38,8 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private EarthquakeDetailsTemplate? _earthquakeDetails;
     public bool IsEarthquakeDetailsEnabled => EarthquakeDetails is not null;
 
+    private const double _extendFactor = 1.2;
+
     private const string _regionLayerName = "Regions";
     private const string _obsPointLayerName = "Point";
     private const string _hypocentreLayerName = "Hypocentre";
@@ -49,7 +51,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         _ = Map.Layers.Remove(x => x.Name == _obsPointLayerName);
         _ = Map.Layers.Remove(x => x.Name == _hypocentreLayerName);
 
-        // TODO: ZOOM FEATURE
+        Map.Navigator.ZoomToBox(GetMainLimitsOfJapan());
 
         // async code needs cancellation token to prevent different ones add layers
         _cts.Cancel();
@@ -59,101 +61,136 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
         EarthquakeDetails = null;
 
-        if (value is not null)
+        if (value is null)
         {
-            GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
-            List<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
-            telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
-            if (telegrams.Count != 0)
+            return;
+        }
+
+        MRect? regionLimits = null;
+
+        GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
+        List<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
+        telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
+        if (telegrams.Count != 0)
+        {
+            if (!IsStationsRetrieved)
             {
-                if (!IsStationsRetrieved)
-                {
-                    await UpdateEarthquakeObservationStations();
-                }
-
-                Telegram telegram = telegrams.MaxBy(x => x.Serial)!;
-                EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
-                IntensityDetailTree tree = new();
-
-                if (telegramInfo.Body.Intensity is not null)
-                {
-                    ICollection<IFeature> stationFeature = [];
-                    List<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
-                    foreach (StationIntensity station in stationData)
-                    {
-                        if (station.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() != Intensity.Unknown)
-                        {
-                            List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
-                            if (potnetialStations.Count != 0)
-                            {
-                                Station stationDetails = potnetialStations[0];
-
-                                PointFeature feature = new(SphericalMercator.FromLonLat(stationDetails.Longitude, stationDetails.Latitude).ToMPoint());
-                                feature.Styles.Add(new SymbolStyle()
-                                {
-                                    SymbolScale = 0.25,
-                                    Fill = new Brush(Color.FromString(newInt.ToEarthquakeIntensity().ToColourString())),
-                                    Outline = new Pen { Color = Color.Black }
-                                });
-                                stationFeature.Add(feature);
-
-                                string prefectureCode = stationDetails.City.Code[0..2];
-                                List<PrefectureData> potentialPrefectures = _resources.Prefectures.Where(x => x.Code == prefectureCode).ToList();
-                                if (potentialPrefectures.Count != 0)
-                                {
-                                    PrefectureData prefectureData = potentialPrefectures[0];
-                                    tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
-                                        new(prefectureData.Name, prefectureData.Code,
-                                            new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
-                                                new(stationDetails.City.KanjiName, stationDetails.City.Code,
-                                                    new(stationDetails.KanjiName, stationDetails.XmlCode)))));
-                                }
-                            }
-                        }
-                    }
-
-                    ILayer layer = new MemoryLayer()
-                    {
-                        Name = _obsPointLayerName,
-                        Features = stationFeature,
-                        IsMapInfoLayer = true,
-                        Style = null
-                    };
-
-                    if (!token.IsCancellationRequested)
-                    {
-                        Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
-                        Map.Layers.Add(new RasterizingLayer(layer));
-                    }
-                }
-
-                if (!token.IsCancellationRequested)
-                {
-                    EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
-                }
-
-                // TODO: informational text
+                await UpdateEarthquakeObservationStations();
             }
 
-            if (value.Hypocentre is not null
-                && value.Hypocentre.Coordinates.Longitude is not null
-                && value.Hypocentre.Coordinates.Latitude is not null)
+            Telegram telegram = telegrams.MaxBy(x => x.Serial)!;
+            EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
+            IntensityDetailTree tree = new();
+
+            if (telegramInfo.Body.Intensity is not null)
             {
-                MPoint coords = SphericalMercator.FromLonLat(value.Hypocentre.Coordinates.Longitude.DoubleValue, value.Hypocentre.Coordinates.Latitude.DoubleValue).ToMPoint();
+                ICollection<IFeature> stationFeature = [];
+                List<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
+
+                foreach (StationIntensity station in stationData)
+                {
+                    if (station.MaxInt is not IntensityWithUnreceived newInt || newInt.ToEarthquakeIntensity() == Intensity.Unknown)
+                    {
+                        continue;
+                    }
+
+                    List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
+                    if (potnetialStations.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    Station stationDetails = potnetialStations[0];
+
+                    PointFeature feature = new(SphericalMercator.FromLonLat(stationDetails.Longitude, stationDetails.Latitude).ToMPoint());
+                    feature.Styles.Add(new SymbolStyle()
+                    {
+                        SymbolScale = 0.25,
+                        Fill = new Brush(Color.FromString(newInt.ToEarthquakeIntensity().ToColourString())),
+                        Outline = new Pen { Color = Color.Black }
+                    });
+                    stationFeature.Add(feature);
+
+                    string prefectureCode = stationDetails.City.Code[0..2];
+                    List<PrefectureData> potentialPrefectures = _resources.Prefectures.Where(x => x.Code == prefectureCode).ToList();
+                    if (potentialPrefectures.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    PrefectureData prefectureData = potentialPrefectures[0];
+                    tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
+                        new(prefectureData.Name, prefectureData.Code,
+                            new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
+                                new(stationDetails.City.KanjiName, stationDetails.City.Code,
+                                    new(stationDetails.KanjiName, stationDetails.XmlCode)))));
+                }
 
                 ILayer layer = new MemoryLayer()
                 {
-                    Name = _hypocentreLayerName,
-                    Features = [new PointFeature(coords)],
-                    Style = _resources.HypocentreShapeStyle,
-                    IsMapInfoLayer = true
+                    Name = _obsPointLayerName,
+                    Features = stationFeature,
+                    IsMapInfoLayer = true,
+                    Style = null
                 };
 
                 if (!token.IsCancellationRequested)
                 {
-                    Map.Layers.Add(layer);
+                    Map.Layers.Add(new RasterizingLayer(CreateRegionLayer(telegramInfo.Body.Intensity.Regions!)));
+                    Map.Layers.Add(new RasterizingLayer(layer));
+                }
+
+                List<IFeature> features = (await _resources.PastRegion.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1)))).ToList();
+                List<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
+                foreach (RegionIntensity region in regionData)
+                {
+                    List<IFeature> potentialFeatures = features.Where(f => (f["code"]?.ToString()?.ToLower() == region.Code)).ToList();
+                    if (potentialFeatures.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    regionLimits = regionLimits is null ? potentialFeatures[0].Extent : regionLimits.Join(potentialFeatures[0].Extent);
                 }
             }
+
+            if (!token.IsCancellationRequested)
+            {
+                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
+            }
+
+            // TODO: informational text
+        }
+
+        // Mark Hypocentre
+        MRect? hypocentreLimits = null;
+        if (value.Hypocentre is not null
+            && value.Hypocentre.Coordinates.Longitude is not null
+            && value.Hypocentre.Coordinates.Latitude is not null)
+        {
+            MPoint coords = SphericalMercator.FromLonLat(value.Hypocentre.Coordinates.Longitude.DoubleValue, value.Hypocentre.Coordinates.Latitude.DoubleValue).ToMPoint();
+            hypocentreLimits = coords.MRect;
+
+            ILayer layer = new MemoryLayer()
+            {
+                Name = _hypocentreLayerName,
+                Features = [new PointFeature(coords)],
+                Style = _resources.HypocentreShapeStyle,
+                IsMapInfoLayer = true
+            };
+
+            if (!token.IsCancellationRequested)
+            {
+                Map.Layers.Add(layer);
+            }
+        }
+
+        if (!token.IsCancellationRequested)
+        {
+            MRect limits = regionLimits is null ? GetMainLimitsOfJapan() : regionLimits;
+            limits = hypocentreLimits is null ? limits : limits.Join(hypocentreLimits);
+
+            Map.Navigator.ZoomToBox(limits.Multiply(_extendFactor));
         }
     }
 

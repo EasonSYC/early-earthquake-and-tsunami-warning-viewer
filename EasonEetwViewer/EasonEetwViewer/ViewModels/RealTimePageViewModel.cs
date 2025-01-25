@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 using Avalonia.Logging;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
@@ -43,7 +44,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #region eew
     public void OnDataReceived(string data, FormatType? format)
     {
-
+        Debug.WriteLine(data);
     }
     #endregion
 

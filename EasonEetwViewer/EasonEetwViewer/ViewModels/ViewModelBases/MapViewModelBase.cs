@@ -3,6 +3,7 @@ using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Services;
 using Mapsui;
+using Mapsui.Limiting;
 using Mapsui.Projections;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
@@ -23,27 +24,36 @@ internal partial class MapViewModelBase : PageViewModelBase
 
     private void InitMapView()
     {
-        //MRect bounds = GetLimitsOfJapan();
-        MRect view = GetMainLimitsOfJapan();
         Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
-        //Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
         Map.Navigator.RotationLock = true;
-        //Map.Navigator.OverridePanBounds = bounds;
+
+        Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
+        //MRect bounds = GetLimitsOfJapan();
+        Map.Navigator.OverridePanBounds = GetMapBounds();
+
+        MRect view = GetMainLimitsOfJapan();
         //Map.Navigator.ZoomToBox(view);
         Map.Home = n => n.ZoomToBox(view);
     }
 
-    private static MRect GetLimitsOfJapan()
-    {
-        (double minX, double minY) = SphericalMercator.FromLonLat(122, 20);
-        (double maxX, double maxY) = SphericalMercator.FromLonLat(154, 46);
-        return new MRect(minX, minY, maxX, maxY);
-    }
+    //private protected static MRect GetLimitsOfJapan()
+    //{
+    //    (double minX, double minY) = SphericalMercator.FromLonLat(122, 20);
+    //    (double maxX, double maxY) = SphericalMercator.FromLonLat(154, 46);
+    //    return new MRect(minX, minY, maxX, maxY);
+    //}
 
-    private static MRect GetMainLimitsOfJapan()
+    private protected static MRect GetMainLimitsOfJapan()
     {
         (double minX, double minY) = SphericalMercator.FromLonLat(122, 27);
         (double maxX, double maxY) = SphericalMercator.FromLonLat(154, 46);
         return new MRect(minX, minY, maxX, maxY);
     }
+
+    private protected static MRect GetMapBounds() => new(
+        SphericalMercator.FromLonLat(-180, 85).x,
+        SphericalMercator.FromLonLat(-180, 85).y,
+        SphericalMercator.FromLonLat(180, -85).x,
+        SphericalMercator.FromLonLat(180, -85).y);
+
 }
