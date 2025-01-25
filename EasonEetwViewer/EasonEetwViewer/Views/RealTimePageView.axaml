@@ -1,30 +1,30 @@
-	<UserControl xmlns="https://github.com/avaloniaui"
+    <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
-			 xmlns:mapsui="using:Mapsui.UI.Avalonia"
+             xmlns:mapsui="using:Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.RealtimePageView"
              x:DataType="vm:RealtimePageViewModel">
 
-	<Design.DataContext>
-		<vm:RealtimePageViewModel/>
-	</Design.DataContext>
+    <Design.DataContext>
+        <vm:RealtimePageViewModel/>
+    </Design.DataContext>
 
-	<Grid>
-		<DockPanel>
-			<mapsui:MapControl x:Name="MapControl"/>
-		</DockPanel>
-		<Canvas>
-			<TextBlock Margin="0"
-					   FontSize="20"
-					   FontWeight="Bold"
-					   Text="{Binding TimeDisplayText}"
-					   Background="Gray"
-					   Canvas.Bottom="0"
-					   Canvas.Left="0"/>
-		</Canvas>
-	</Grid>
-	
+    <Grid>
+        <DockPanel>
+            <mapsui:MapControl x:Name="MapControl"/>
+        </DockPanel>
+        <Canvas>
+            <TextBlock Margin="0"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Text="{Binding TimeDisplayText}"
+                       Background="Gray"
+                       Canvas.Bottom="0"
+                       Canvas.Left="0"/>
+        </Canvas>
+    </Grid>
+    
 </UserControl>

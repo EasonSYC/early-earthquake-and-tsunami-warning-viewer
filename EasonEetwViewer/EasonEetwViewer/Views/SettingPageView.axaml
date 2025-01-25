@@ -5,176 +5,176 @@
              xmlns:vm="using:EasonEetwViewer.ViewModels"
              xmlns:m="using:EasonEetwViewer.Models"
              xmlns:conv="using:EasonEetwViewer.Converters"
-			 xmlns:lang="using:EasonEetwViewer.Lang"
+             xmlns:lang="using:EasonEetwViewer.Lang"
              mc:Ignorable="d"
-			 d:DesignWidth="800"
-			 d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.SettingPageView"
              x:DataType="vm:SettingPageViewModel">
 
-	<Design.DataContext>
-		<vm:SettingPageViewModel/>
-	</Design.DataContext>
+    <Design.DataContext>
+        <vm:SettingPageViewModel/>
+    </Design.DataContext>
 
-	<UserControl.Resources>
-		<conv:MeasurementChoiceConverter x:Key="MeasurementChoiceConverter"/>
-		<conv:SensorChoiceConverter x:Key="SensorChoiceConverter"/>
-		<conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
-		<conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
-		<conv:WebSocketNameConverter x:Key="WebSocketNameConverter"/>
-		<conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
-		<conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
-	</UserControl.Resources>
+    <UserControl.Resources>
+        <conv:MeasurementChoiceConverter x:Key="MeasurementChoiceConverter"/>
+        <conv:SensorChoiceConverter x:Key="SensorChoiceConverter"/>
+        <conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
+        <conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
+        <conv:WebSocketNameConverter x:Key="WebSocketNameConverter"/>
+        <conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
+        <conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
+    </UserControl.Resources>
 
-	<ScrollViewer>
-		<StackPanel Margin="20">
-			<TextBlock Margin="0 20"
-					   FontSize="20"
-					   FontWeight="Bold"
-					   Text="{x:Static lang:SettingPageResources.HeaderText}"/>
-		    <StackPanel Margin="0 0"
-						Orientation="Horizontal">
-				<TextBlock Margin="0 20"
-						   FontSize="18"
-						   FontWeight="Bold"
-						   Text="{x:Static lang:SettingPageResources.DmdssText}"/>
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center">
-					<Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
-					<Run Text="{Binding AuthenticationStatus, Converter={StaticResource AuthConverter}, Mode=OneWay}"/>
-				</TextBlock>
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <TextBlock Margin="0 20"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Text="{x:Static lang:SettingPageResources.HeaderText}"/>
+            <StackPanel Margin="0 0"
+                        Orientation="Horizontal">
+                <TextBlock Margin="0 20"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Text="{x:Static lang:SettingPageResources.DmdssText}"/>
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center">
+                    <Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
+                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource AuthConverter}, Mode=OneWay}"/>
+                </TextBlock>
 
-				<TextBlock Text=""/>
-			</StackPanel>
-			
-			<StackPanel Margin="10 0"
-						Orientation="Horizontal">
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-						   Text="{x:Static lang:SettingPageResources.ApiText}"/>
-				<TextBox Margin="10 0"
-						 FontSize="15"
-						 Width="410"
-						 PasswordChar="*"
-						 Watermark="AKe.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-						 Text="{Binding ApiKeyText}"/>
-				<Button IsEnabled="{Binding ApiKeyButtonEnabled}"
-					    Margin="10 0"
-						FontSize="15"
-						Command="{Binding ApiKeyButtonCommand}"
-						Content="{x:Static lang:SettingPageResources.ApiConfirmText}"/>
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-					       Text="{x:Static lang:SettingPageResources.ApiConfirmedText}"
-						   IsVisible="{Binding ApiKeyConfirmed}"/>
-			</StackPanel>
+                <TextBlock Text=""/>
+            </StackPanel>
+            
+            <StackPanel Margin="10 0"
+                        Orientation="Horizontal">
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Text="{x:Static lang:SettingPageResources.ApiText}"/>
+                <TextBox Margin="10 0"
+                         FontSize="15"
+                         Width="410"
+                         PasswordChar="*"
+                         Watermark="AKe.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                         Text="{Binding ApiKeyText}"/>
+                <Button IsEnabled="{Binding ApiKeyButtonEnabled}"
+                        Margin="10 0"
+                        FontSize="15"
+                        Command="{Binding ApiKeyButtonCommand}"
+                        Content="{x:Static lang:SettingPageResources.ApiConfirmText}"/>
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Text="{x:Static lang:SettingPageResources.ApiConfirmedText}"
+                           IsVisible="{Binding ApiKeyConfirmed}"/>
+            </StackPanel>
 
-			<StackPanel Margin="10"
-						Orientation="Horizontal">
-				<Button Margin="0 0"
-						FontSize="15"
-						Content="{Binding OAuthConnected, Converter={StaticResource OAuthConverter}}"
-						Command="{Binding OAuthButtonCommand}"/>
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-						   Text="{x:Static lang:SettingPageResources.OAuthConnectedText}"
-						   IsVisible="{Binding OAuthConnected}"/>
-			</StackPanel>
+            <StackPanel Margin="10"
+                        Orientation="Horizontal">
+                <Button Margin="0 0"
+                        FontSize="15"
+                        Content="{Binding OAuthConnected, Converter={StaticResource OAuthConverter}}"
+                        Command="{Binding OAuthButtonCommand}"/>
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Text="{x:Static lang:SettingPageResources.OAuthConnectedText}"
+                           IsVisible="{Binding OAuthConnected}"/>
+            </StackPanel>
 
-			<StackPanel Margin="0"
-						Orientation="Horizontal">
-				<TextBlock Margin="0 20"
-					   FontSize="18"
-					   FontWeight="Bold"
-					   Text="{x:Static lang:SettingPageResources.WebSocketText}"/>
-				<Button Margin="10 0"
-						FontSize="15"
-						Content="{Binding WebSocketConnected, Converter={StaticResource WebSocketButtonConverter}}"
-						Command="{Binding WebSocketButtonCommand}"/>
-				<Button Margin="10 0"
-						FontSize="15"
-						Content="{x:Static lang:SettingPageResources.WebSocketListRefreshText}"
-						Command="{Binding WebSocketRefreshCommand}"/>
-			</StackPanel>
+            <StackPanel Margin="0"
+                        Orientation="Horizontal">
+                <TextBlock Margin="0 20"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Text="{x:Static lang:SettingPageResources.WebSocketText}"/>
+                <Button Margin="10 0"
+                        FontSize="15"
+                        Content="{Binding WebSocketConnected, Converter={StaticResource WebSocketButtonConverter}}"
+                        Command="{Binding WebSocketButtonCommand}"/>
+                <Button Margin="10 0"
+                        FontSize="15"
+                        Content="{x:Static lang:SettingPageResources.WebSocketListRefreshText}"
+                        Command="{Binding WebSocketRefreshCommand}"/>
+            </StackPanel>
 
-			<DataGrid Margin="20"
-					  GridLinesVisibility="All"
-					  CanUserSortColumns="False"
-					  BorderThickness="1"
-					  BorderBrush="Gray"
-					  ItemsSource="{Binding WebSocketConnections}">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionIdText}"
-										Binding="{Binding ConnectionId}"/>
-					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketApplicationNameText}"
-										Binding="{Binding AppName, Converter={StaticResource WebSocketNameConverter}, Mode=OneWay}"/>
-					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
-										Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
-					<DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">
-						<DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
-							<Button HorizontalAlignment="Center"
-									IsEnabled="{Binding IsEnabled}"
-								    Content="{x:Static lang:SettingPageResources.WebSocketDisconnectText}"
-									Command="{Binding DisconnectCommand}"/>
-						</DataTemplate>
-					</DataGridTemplateColumn>
-				</DataGrid.Columns>
-			</DataGrid>
+            <DataGrid Margin="20"
+                      GridLinesVisibility="All"
+                      CanUserSortColumns="False"
+                      BorderThickness="1"
+                      BorderBrush="Gray"
+                      ItemsSource="{Binding WebSocketConnections}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionIdText}"
+                                        Binding="{Binding ConnectionId}"/>
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketApplicationNameText}"
+                                        Binding="{Binding AppName, Converter={StaticResource WebSocketNameConverter}, Mode=OneWay}"/>
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
+                                        Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
+                    <DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">
+                        <DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
+                            <Button HorizontalAlignment="Center"
+                                    IsEnabled="{Binding IsEnabled}"
+                                    Content="{x:Static lang:SettingPageResources.WebSocketDisconnectText}"
+                                    Command="{Binding DisconnectCommand}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
 
-			<TextBlock Margin="0 20"
-					   FontSize="18"
-					   FontWeight="Bold"
-					   Text="{x:Static lang:SettingPageResources.KmoniText}"/>
+            <TextBlock Margin="0 20"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Text="{x:Static lang:SettingPageResources.KmoniText}"/>
 
-			<StackPanel Margin="10 0"
-						Orientation="Horizontal">
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-						   Text="{x:Static lang:SettingPageResources.KmoniStationText}"/>
-				<ComboBox ItemsSource="{Binding SensorTypeChoices}"
-						  SelectedItem="{Binding KmoniOptions.SensorChoice}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding Converter={StaticResource SensorChoiceConverter}}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>
-			</StackPanel>
+            <StackPanel Margin="10 0"
+                        Orientation="Horizontal">
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Text="{x:Static lang:SettingPageResources.KmoniStationText}"/>
+                <ComboBox ItemsSource="{Binding SensorTypeChoices}"
+                          SelectedItem="{Binding KmoniOptions.SensorChoice}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource SensorChoiceConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-			<StackPanel Margin="10"
-						Orientation="Horizontal">
-				<TextBlock Margin="10 0"
-						   FontSize="15"
-						   VerticalAlignment="Center"
-						   Text="{x:Static lang:SettingPageResources.KmoniDataText}"/>
-				<ComboBox ItemsSource="{Binding DataTypeChoices}"
-						  SelectedItem="{Binding KmoniOptions.DataChoice}">
-					<ComboBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding Converter={StaticResource MeasurementChoiceConverter}}"/>
-						</DataTemplate>
-					</ComboBox.ItemTemplate>
-				</ComboBox>
-			</StackPanel>
+            <StackPanel Margin="10"
+                        Orientation="Horizontal">
+                <TextBlock Margin="10 0"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           Text="{x:Static lang:SettingPageResources.KmoniDataText}"/>
+                <ComboBox ItemsSource="{Binding DataTypeChoices}"
+                          SelectedItem="{Binding KmoniOptions.DataChoice}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource MeasurementChoiceConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
 
-			<TextBlock Margin="0 20"
-					   FontSize="18"
-					   FontWeight="Bold"
-					   Text="{x:Static lang:SettingPageResources.LangText}"/>
+            <TextBlock Margin="0 20"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Text="{x:Static lang:SettingPageResources.LangText}"/>
 
-			<ComboBox ItemsSource="{Binding LanguageChoices}"
-					  SelectedItem="{Binding LanguageChoice}">
-				<ComboBox.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Converter={StaticResource LanguageChoiceConverter}}"/>
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
-		</StackPanel>
-	</ScrollViewer>
+            <ComboBox ItemsSource="{Binding LanguageChoices}"
+                      SelectedItem="{Binding LanguageChoice}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource LanguageChoiceConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

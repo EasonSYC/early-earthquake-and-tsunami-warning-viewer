@@ -5,237 +5,243 @@
              xmlns:vm="using:EasonEetwViewer.ViewModels"
              xmlns:m="using:EasonEetwViewer.Models"
              xmlns:conv="using:EasonEetwViewer.Converters"
-			 xmlns:lang="using:EasonEetwViewer.Lang"
-			 xmlns:mapsui="using:Mapsui.UI.Avalonia"
+             xmlns:lang="using:EasonEetwViewer.Lang"
+             xmlns:mapsui="using:Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.PastPageView"
              x:DataType="vm:PastPageViewModel">
 
-	<Design.DataContext>
-		<vm:PastPageViewModel/>
-	</Design.DataContext>
+    <Design.DataContext>
+        <vm:PastPageViewModel/>
+    </Design.DataContext>
 
-	<UserControl.Resources>
-		<conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
-		<conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
-		<conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
-		<conv:DepthValueConverter x:Key="DepthValueConverter"/>
-		<conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
-		<conv:HypocentreConverter x:Key="HypocentreConverter"/>
-		<conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
-		<conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
-	</UserControl.Resources>
+    <UserControl.Resources>
+        <conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
+        <conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
+        <conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
+        <conv:DepthValueConverter x:Key="DepthValueConverter"/>
+        <conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
+        <conv:HypocentreConverter x:Key="HypocentreConverter"/>
+        <conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
+        <conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
+    </UserControl.Resources>
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="300"/>
-			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="300"/>
-		</Grid.ColumnDefinitions>
-		<Grid Grid.Column="0"
-			  Grid.Row="0"
-			  IsVisible="{Binding IsEarthquakeDetailsEnabled}">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-			</Grid.RowDefinitions>
-			
-			<StackPanel Grid.Column="0"
-					    Grid.Row="0">
-				<Button HorizontalAlignment="Center"
-						FontSize="16"
-						Content="{x:Static lang:PastPageResources.YahooText}"
-						Command="{Binding JumpYahooWebpageCommand}"
-						Margin="5"/>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="16"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.MaxIntensityText}"
-						   Margin="5 5"/>
-				<TextBlock HorizontalAlignment="Right"
-					       FontSize="52"
-					       FontWeight="ExtraBold"
-					       Text="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityTextConverter}}"
-					       Foreground="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityColourConverter}}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="14"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.TimeText}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Right"
-						   FontSize="24"
-						   FontWeight="SemiBold"
-						   Text="{Binding EarthquakeDetails.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="14"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.HypocentreText}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Right"
-						   FontSize="24"
-						   FontWeight="SemiBold"
-						   Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource HypocentreConverter}}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="14"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.DepthText}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Right"
-						   FontWeight="SemiBold"
-						   Margin="5 0">
-					<Run FontSize="24"
-						 Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
-					<Run FontSize="18"
-						 Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
-				</TextBlock>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="14"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.MagnitudeText}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Right"
-						   FontWeight="SemiBold"
-						   Margin="5 0">
-					<Run FontSize="18"
-						 Text="{Binding EarthquakeDetails.Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"/>
-					<Run FontSize="24"
-						 Text="{Binding EarthquakeDetails.Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}}"/>
-				</TextBlock>
-				<TextBlock HorizontalAlignment="Left"
-						   FontSize="14"
-					       FontWeight="SemiBold"
-					       Text="{x:Static lang:PastPageResources.LastUpdatedText}"
-						   Margin="5 0"/>
-				<TextBlock HorizontalAlignment="Right"
-						   FontSize="18"
-						   FontWeight="SemiBold"
-						   Text="{Binding EarthquakeDetails.LastUpdated, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
-						   Margin="5 0"/>
-			</StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
+              Grid.Row="0"
+              IsVisible="{Binding IsEarthquakeDetailsEnabled}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Column="0"
+                        Grid.Row="0">
+                <Button HorizontalAlignment="Center"
+                        FontSize="16"
+                        Content="{x:Static lang:PastPageResources.YahooText}"
+                        Command="{Binding JumpYahooWebpageCommand}"
+                        Margin="5"/>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.MaxIntensityText}"
+                           Margin="5 5"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontSize="52"
+                           FontWeight="ExtraBold"
+                           Text="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityTextConverter}}"
+                           Foreground="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityColourConverter}}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.TimeText}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Text="{Binding EarthquakeDetails.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.HypocentreText}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource HypocentreConverter}}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.DepthText}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontWeight="SemiBold"
+                           Margin="5 0">
+                    <Run FontSize="24"
+                         Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
+                    <Run FontSize="18"
+                         Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.MagnitudeText}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontWeight="SemiBold"
+                           Margin="5 0">
+                    <Run FontSize="18"
+                         Text="{Binding EarthquakeDetails.Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"/>
+                    <Run FontSize="24"
+                         Text="{Binding EarthquakeDetails.Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}}"/>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:PastPageResources.LastUpdatedText}"
+                           Margin="5 0"/>
+                <TextBlock HorizontalAlignment="Right"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Text="{Binding EarthquakeDetails.LastUpdated, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Margin="5 0"/>
+                
+                <TextBlock HorizontalAlignment="Left"
+                           FontSize="15"
+                           Text="{Binding EarthquakeDetails.InformationalText}"
+                           TextWrapping="Wrap"
+                           Margin="8"/>
+            </StackPanel>
 
-			<ScrollViewer Grid.Column="0"
-					      Grid.Row="1"
-						  Margin="0 5">
-				<ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailDisplay}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
-							<StackPanel>
-								<TextBlock HorizontalAlignment="Stretch"
-									   TextAlignment="Left"
-									   FontSize="14"
-									   FontWeight="SemiBold"
-									   Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
-									   Margin="5">
-									<Run Text="{x:Static, lang:Resources.IntensityText}"/>
-									<Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
-								</TextBlock>
-								<TreeView ItemsSource="{Binding PositionNodes}">
-									<TreeView.ItemTemplate>
-										<TreeDataTemplate DataType="{x:Type m:PositionNode}"
-														  ItemsSource="{Binding SubNodes}">
-											<TextBlock Text="{Binding Title}"/>
-										</TreeDataTemplate>
-									</TreeView.ItemTemplate>
-								</TreeView>
-							</StackPanel>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</ScrollViewer>
-		</Grid>
-		<Grid Grid.Column="1"
-			  Grid.Row="0">
-			<DockPanel>
-				<mapsui:MapControl x:Name="MapControl"/>
-			</DockPanel>
-			<Canvas>
-			</Canvas>
-		</Grid>
-		<Grid Grid.Column="2"
-		      Grid.Row="0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="*"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<Button Grid.Column="0"
-					Grid.Row="0"
-					Content="{x:Static lang:PastPageResources.RefreshListText}"
-					Command="{Binding RefreshEarthquakeListCommand}"
-					HorizontalAlignment="Center"
-					Margin="10"/>
-			<ListBox Grid.Column="0"
-					 Grid.Row="1"
-					 Padding="0"
-					 ItemsSource="{Binding EarthquakeList}"
-					 SelectedItem="{Binding SelectedEarthquake}">
-				<ListBox.ItemTemplate>
-					<DataTemplate DataType="{x:Type m:EarthquakeItemTemplate}">
-						<Grid>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="40"/>
-								<ColumnDefinition Width="*"/>
-								<ColumnDefinition Width="65"/>
-							</Grid.ColumnDefinitions>
-							<Grid.RowDefinitions>
-								<RowDefinition Height="2*"/>
-								<RowDefinition Height="3*"/>
-							</Grid.RowDefinitions>
-							<TextBlock Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}}"
-									   VerticalAlignment="Center"
-									   HorizontalAlignment="Center"
-									   FontSize="28"
-									   FontWeight="ExtraBold"
-									   Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
-									   Grid.Column="0"
-									   Grid.Row="0"
-									   Grid.RowSpan="2"/>
-							<TextBlock Text="{Binding OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=short}"
-									   HorizontalAlignment="Left"
-									   VerticalAlignment="Bottom"
-									   Grid.Column="1"
-									   Grid.Row="0"/>
-							<TextBlock Text="{Binding Hypocentre, Converter={StaticResource HypocentreConverter}}"
-									   HorizontalAlignment="Left"
-									   VerticalAlignment="Bottom"
-									   FontSize="18"
-									   FontWeight="SemiBold"
-									   Grid.Column="1"
-									   Grid.Row="1"/>
-							<TextBlock HorizontalAlignment="Right"
-									   VerticalAlignment="Bottom"
-									   Grid.Column="2"
-									   Grid.Row="0">
-								<Run Text="{Binding Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"
-									 FontWeight="SemiBold"/>
-								<Run Text="{Binding Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"
-									 FontWeight="SemiLight"/>
-							</TextBlock>
-							<TextBlock HorizontalAlignment="Right"
-									   VerticalAlignment="Bottom"
-									   Grid.Column="2"
-									   Grid.Row="1">
-								<Run Text="{Binding Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"
-									 FontWeight="SemiLight"/>
-								<Run Text="{Binding Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}"
-									 FontSize="18"
-									 FontWeight="SemiBold"/>
-							</TextBlock>
-						</Grid>
-					</DataTemplate>
-				</ListBox.ItemTemplate>
-			</ListBox>
-			<Button Grid.Column="0"
-					Grid.Row="2"
-					Content="{x:Static lang:PastPageResources.LoadMoreText}"
-					Command="{Binding LoadExtraEarthquakesCommand}"
-					IsEnabled="{Binding IsLoadExtraEnabled}"
-					HorizontalAlignment="Center"
-					Margin="10"/>
-		</Grid>
-	</Grid>
-	
+            <ScrollViewer Grid.Column="0"
+                          Grid.Row="1"
+                          Margin="0 5">
+                <ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailDisplay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
+                            <StackPanel>
+                                <TextBlock HorizontalAlignment="Stretch"
+                                       TextAlignment="Left"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
+                                       Margin="5">
+                                    <Run Text="{x:Static, lang:Resources.IntensityText}"/>
+                                    <Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
+                                </TextBlock>
+                                <TreeView ItemsSource="{Binding PositionNodes}">
+                                    <TreeView.ItemTemplate>
+                                        <TreeDataTemplate DataType="{x:Type m:PositionNode}"
+                                                          ItemsSource="{Binding SubNodes}">
+                                            <TextBlock Text="{Binding Title}"/>
+                                        </TreeDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Column="1"
+              Grid.Row="0">
+            <DockPanel>
+                <mapsui:MapControl x:Name="MapControl"/>
+            </DockPanel>
+            <Canvas>
+            </Canvas>
+        </Grid>
+        <Grid Grid.Column="2"
+              Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Column="0"
+                    Grid.Row="0"
+                    Content="{x:Static lang:PastPageResources.RefreshListText}"
+                    Command="{Binding RefreshEarthquakeListCommand}"
+                    HorizontalAlignment="Center"
+                    Margin="10"/>
+            <ListBox Grid.Column="0"
+                     Grid.Row="1"
+                     Padding="0"
+                     ItemsSource="{Binding EarthquakeList}"
+                     SelectedItem="{Binding SelectedEarthquake}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type m:EarthquakeItemTemplate}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="65"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition Height="3*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="28"
+                                       FontWeight="ExtraBold"
+                                       Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"/>
+                            <TextBlock Text="{Binding OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=short}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="1"
+                                       Grid.Row="0"/>
+                            <TextBlock Text="{Binding Hypocentre, Converter={StaticResource HypocentreConverter}}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Bottom"
+                                       FontSize="18"
+                                       FontWeight="SemiBold"
+                                       Grid.Column="1"
+                                       Grid.Row="1"/>
+                            <TextBlock HorizontalAlignment="Right"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="2"
+                                       Grid.Row="0">
+                                <Run Text="{Binding Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"
+                                     FontWeight="SemiBold"/>
+                                <Run Text="{Binding Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"
+                                     FontWeight="SemiLight"/>
+                            </TextBlock>
+                            <TextBlock HorizontalAlignment="Right"
+                                       VerticalAlignment="Bottom"
+                                       Grid.Column="2"
+                                       Grid.Row="1">
+                                <Run Text="{Binding Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"
+                                     FontWeight="SemiLight"/>
+                                <Run Text="{Binding Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}"
+                                     FontSize="18"
+                                     FontWeight="SemiBold"/>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Grid.Column="0"
+                    Grid.Row="2"
+                    Content="{x:Static lang:PastPageResources.LoadMoreText}"
+                    Command="{Binding LoadExtraEarthquakesCommand}"
+                    IsEnabled="{Binding IsLoadExtraEnabled}"
+                    HorizontalAlignment="Center"
+                    Margin="10"/>
+        </Grid>
+    </Grid>
+    
 </UserControl>

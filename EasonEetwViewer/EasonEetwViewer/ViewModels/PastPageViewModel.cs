@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Text;
+using Avalonia.Animation.Easings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
@@ -123,7 +125,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                         new(prefectureData.Name, prefectureData.Code,
                             new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
                                 new(stationDetails.City.KanjiName, stationDetails.City.Code,
-                                    new(stationDetails.KanjiName, stationDetails.XmlCode)))));
+                                    new(station.Name, stationDetails.XmlCode)))));
                 }
 
                 ILayer layer = new MemoryLayer()
@@ -154,9 +156,36 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                 }
             }
 
+            StringBuilder sb = new();
+
+            if (telegramInfo.Body.Text is not null)
+            {
+                _ = sb.AppendLine(telegramInfo.Body.Text);
+            }
+
+            if (telegramInfo.Body.Comments is not null)
+            {
+                if (telegramInfo.Body.Comments.FreeText is not null)
+                {
+                    _ = sb.AppendLine(telegramInfo.Body.Comments.FreeText);
+                }
+
+                if (telegramInfo.Body.Comments.Forecast is not null)
+                {
+                    _ = sb.AppendLine(telegramInfo.Body.Comments.Forecast.Text);
+                }
+
+                if (telegramInfo.Body.Comments.Var is not null)
+                {
+                    _ = sb.AppendLine(telegramInfo.Body.Comments.Var.Text);
+                }
+            }
+
+            Debug.WriteLine(sb.ToString());
+
             if (!token.IsCancellationRequested)
             {
-                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, "Test", telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
+                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, sb.ToString(), telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
             }
 
             // TODO: informational text
@@ -190,7 +219,12 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             MRect limits = regionLimits is null ? GetMainLimitsOfJapan() : regionLimits;
             limits = hypocentreLimits is null ? limits : limits.Join(hypocentreLimits);
 
-            Map.Navigator.ZoomToBox(limits.Multiply(_extendFactor));
+            if (regionLimits is not null || hypocentreLimits is not null)
+            {
+                limits = limits.Multiply(_extendFactor);
+            }
+
+            Map.Navigator.ZoomToBox(limits);
         }
     }
 

@@ -5,8 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-		d:DesignWidth="800"
-		d:DesignHeight="450"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
         x:Class="EasonEetwViewer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -16,55 +16,55 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-	<SplitView IsPaneOpen="{Binding IsPaneOpen}"
+    <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                CompactPaneLength="48"
                DisplayMode="CompactInline"
                OpenPaneLength="200"
                Background="#1e1e1e"
                PaneBackground="#1e1e1e">
-		<SplitView.Pane>
-			<StackPanel Orientation="Vertical"
+        <SplitView.Pane>
+            <StackPanel Orientation="Vertical"
                         Spacing="5"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
-				<Button HorizontalAlignment="Left"
+                <Button HorizontalAlignment="Left"
                         Width="32"
                         Height="32"
                         Margin="8 10"
                         Command="{Binding TriggerPaneCommand}">
-					<PathIcon Height="11"
-							  Data="{StaticResource SidebarRegular}" />
-				</Button>
-				<ListBox Margin="5 0"
-						 Padding="0"
-						 ItemsSource="{Binding Items}"
-						 SelectedItem="{Binding SelectedListItem}">
-					<ListBox.Styles>
-						<Style Selector="ListBoxItem">
-							<Setter Property="Padding"
-									Value="12 8"></Setter>
-						</Style>
-					</ListBox.Styles>
-					<ListBox.ItemTemplate>
-						<DataTemplate DataType="{x:Type m:ListItemTemplate}">
-							<StackPanel Spacing="15"
-										Orientation="Horizontal">
-								<PathIcon Data="{Binding ListItemIcon}"
-										  Width="14" />
-								<TextBlock Text="{Binding Label}"/>
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</StackPanel>
-		</SplitView.Pane>
+                    <PathIcon Height="11"
+                              Data="{StaticResource SidebarRegular}" />
+                </Button>
+                <ListBox Margin="5 0"
+                         Padding="0"
+                         ItemsSource="{Binding Items}"
+                         SelectedItem="{Binding SelectedListItem}">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="Padding"
+                                    Value="12 8"></Setter>
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type m:ListItemTemplate}">
+                            <StackPanel Spacing="15"
+                                        Orientation="Horizontal">
+                                <PathIcon Data="{Binding ListItemIcon}"
+                                          Width="14" />
+                                <TextBlock Text="{Binding Label}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </SplitView.Pane>
 
-		<SplitView.Content>
-			<Border CornerRadius="12 0 0 0"
+        <SplitView.Content>
+            <Border CornerRadius="12 0 0 0"
                     Background="#2d2d2d">
-				<TransitioningContentControl Content="{Binding CurrentPage}" />
-			</Border>
-		</SplitView.Content>
-	</SplitView>
+                <TransitioningContentControl Content="{Binding CurrentPage}" />
+            </Border>
+        </SplitView.Content>
+    </SplitView>
 
 </Window>
