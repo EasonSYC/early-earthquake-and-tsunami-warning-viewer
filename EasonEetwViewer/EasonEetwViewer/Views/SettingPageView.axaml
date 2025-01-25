@@ -21,6 +21,7 @@
 		<conv:SensorChoiceConverter x:Key="SensorChoiceConverter"/>
 		<conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
 		<conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
+		<conv:WebSocketNameConverter x:Key="WebSocketNameConverter"/>
 		<conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
 		<conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
 	</UserControl.Resources>
@@ -110,7 +111,7 @@
 					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionIdText}"
 										Binding="{Binding ConnectionId}"/>
 					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketApplicationNameText}"
-										Binding="{Binding AppName}"/>
+										Binding="{Binding AppName, Converter={StaticResource WebSocketNameConverter}, Mode=OneWay}"/>
 					<DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
 										Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
 					<DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">

@@ -86,7 +86,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
     }
 
     private readonly WebSocketConnectionTemplate _emptyConnection
-        = new(-1, SettingPageResources.WebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
+        = new(-1, () => SettingPageResources.WebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
 
     [RelayCommand]
     private async Task WebSocketRefresh()
@@ -116,7 +116,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
         ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
         wsList.ForEach(
             x =>
-                currentConnections.Add(new(x.WebSocketId, x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync))
+                currentConnections.Add(new(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync))
         );
 
         int avaliableConnection = await GetAvaliableWebSocketConnections();
