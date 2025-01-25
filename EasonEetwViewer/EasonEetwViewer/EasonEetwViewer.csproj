@@ -37,6 +37,7 @@
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Mapsui.Avalonia" Version="4.1.8" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="SkiaSharp" Version="2.88.9" />
@@ -44,9 +45,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.HttpRequest.csproj" />
+		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.Dmdata.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

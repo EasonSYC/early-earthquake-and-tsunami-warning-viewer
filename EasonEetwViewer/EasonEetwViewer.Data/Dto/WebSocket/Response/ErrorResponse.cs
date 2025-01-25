@@ -1,11 +1,12 @@
 using System.Text.Json.Serialization;
+using EasonEetwViewer.WebSocket.Dto;
 
-namespace EasonEetwViewer.WebSocket.Dto;
+namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 
 /// <summary>
 /// Represents an error response from the WebSocket.
 /// </summary>
-internal record ErrorResponse : Response
+internal record ErrorResponse : ResponseBase
 {
     /// <summary>
     /// The property <c>type</c>, a constant <c>WebSocketResponseType.Error</c>.

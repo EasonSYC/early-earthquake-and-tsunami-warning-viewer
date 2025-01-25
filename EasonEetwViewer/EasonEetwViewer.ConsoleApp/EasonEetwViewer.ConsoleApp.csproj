@@ -28,8 +28,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.HttpRequest.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
+		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.Dmdata.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
 	</ItemGroup>
 

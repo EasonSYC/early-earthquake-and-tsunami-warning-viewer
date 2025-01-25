@@ -1,8 +1,15 @@
-﻿using EasonEetwViewer.Authentication;
+﻿using System.Data;
+using System.IO.Compression;
+using System.Net.NetworkInformation;
+using System.Text;
+using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.HttpRequest.Caller;
 using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
+using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
@@ -15,10 +22,10 @@ internal class Program
 {
     private static async Task Main()
     {
-        IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
+        //IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
-        string apiKey = config["ApiKey"] ?? string.Empty;
-        IAuthenticator apiKeyAuth = new ApiKey(apiKey);
+        //string apiKey = config["ApiKey"] ?? string.Empty;
+        //IAuthenticator apiKeyAuth = new ApiKey(apiKey);
 
         // IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         // string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
@@ -27,23 +34,40 @@ internal class Program
         // HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
         // IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
 
-        string baseApi = config["BaseApi"] ?? string.Empty;
+        //string baseApi = config["BaseApi"] ?? string.Empty;
 
-        IApiCaller apiCaller = new(baseApi, new() { Authenticator = apiKeyAuth });
+        //IApiCaller apiCaller = new ApiCaller(baseApi, new() { Authenticator = apiKeyAuth });
         // IApiCaller apiCaller = new(baseApi, oAuth);
 
-        string baseTelegram = config["BaseTelegram"] ?? string.Empty;
+        //string baseTelegram = config["BaseTelegram"] ?? string.Empty;
 
-        ITelegramRetriever telegramRetriever = new(baseTelegram, new() { Authenticator = apiKeyAuth });
+        //ITelegramRetriever telegramRetriever = new TelegramRetriever(baseTelegram, new() { Authenticator = apiKeyAuth });
 
         // await TestAuthenticator(apiKey);
         // await TestAuthenticator(oAuth);
-        await TestApiCaller(apiCaller);
-        // await TestWebSocket(apiCaller);
+        // await TestApiCaller(apiCaller);
+        //await TestWebSocket(apiCaller);
 
         // await TestTelegramRetriever(telegramRetriever);
 
         // await TestKmoni();
+
+        // TestDecode();
+    }
+
+    private static void TestDecode()
+    {
+        string decode = "H4sIAAAAAAAAAI2Sz2sTQRTH/5e5mpSZ2U2yu1e9FEUvwYMiYXbmTTKw2Q07k2opgaRFK2LxIKjFggbUVg8lPYnx4B+zbpr9L5ypifRQoTCHx3uf9+v7Zgd1slx1VcqSTYEiFFAfB+CJwMfYwx4n0gskbragQTjjMQl5IwYiQLCm72MquWz5fhM3gREWQ4C9RsjiwCOMkjhshZQEfsAkBQ4COAOBaqijeQ/6DEU7yGwPwDYFeFxXqczyPjMqSy2zBbl2VoTIBt7AaFRbs+ffXyzGn8ujWXW0X40/lB/PqqcHv39Ni71nxe6PYu+5zTbKJNdltWFmqC28/PqlOnltPW6S9qrZ4Xw5PbE+EMpYnVhyT0rFXaj8dFy9+3Z+Oi1fzhezt8uzaflqZsnBME6U7qm0u0YfolV8PkGPLJCD1reYgbbqu0IU00YdkzqlbYwj9+gDWyeHQZab/3DhX+7GheEWZnkXrgvDFqTm4tiOwoRSHGKMqRMD3I53M6f7SonbKhVXSnkpfv/ytTquRw+YSFRqR0mHSVJDcSa23cGVvsO02bR5KJIs0WCL6Jss5ZDYv7F2GXhiruxZTE7/3a56/3PxZr+YHBeTw2K8i0ajP8lMMtbMAgAA";
+        byte[] bytes = Convert.FromBase64String(decode);
+        using MemoryStream stream = new(bytes);
+        using GZipStream gZipStream = new(stream, CompressionMode.Decompress);
+        using MemoryStream outputStream = new();
+        gZipStream.CopyTo(outputStream);
+        byte[] uncompressed = outputStream.ToArray();
+        string decompressed = Encoding.UTF8.GetString(uncompressed);
+
+        Console.WriteLine(decompressed);
+
     }
 
     private static async Task TestAuthenticator(IAuthenticator auth)
@@ -111,20 +135,19 @@ internal class Program
         WebSocketStartPost start = new()
         {
             Classifications = [Classification.EewForecast, Classification.TelegramEarthquake],
-            Types = ["VXSE45", "VXSE51", "VXSE52", "VXSE53"],
+            //Types = ["VXSE42", "VXSE45", "VTSE41"],
             TestStatus = TestStatus.Include,
-            AppName = "Test",
-            FormatMode = FormatMode.Raw
+            //AppName = "Test",
+            FormatMode = FormatMode.Json
         };
         WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        using WebSocketClient ws = new(response.WebSockerUrl.Url);
+        IWebSocketClient ws = new WebSocketClient();
         Console.WriteLine("Created!");
-        await ws.ConnectAsync();
+        await ws.ConnectAsync(response.WebSockerUrl.Url);
         Console.WriteLine(value: "Connected!");
-        await Task.Delay(60000);
-        await ws.DisconnectAsync();
+        await Task.Delay(60000000);
     }
 
     private static async Task TestKmoni()

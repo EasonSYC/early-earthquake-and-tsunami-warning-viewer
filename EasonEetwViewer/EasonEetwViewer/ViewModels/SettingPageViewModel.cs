@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.HttpRequest.Dto.ApiPost;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.Contract;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.WebSocket;
@@ -17,7 +19,7 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
+internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, WebSocketStartPost startPost, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
     : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, onChange)
 {
     #region languageSettings
@@ -41,11 +43,28 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, Authentic
     #endregion
 
     #region webSocketSettings
-    [ObservableProperty]
-    private bool _webSocketConnected = false;
+    private readonly IWebSocketClient _webSocketClient = webSocketClient;
+    private readonly WebSocketStartPost _startPost = startPost;
+
+    internal bool WebSocketConnected => _webSocketClient.IsWebSocketConnected;
 
     [RelayCommand]
-    private void WebSocketButton() => WebSocketConnected ^= true;
+    private async Task WebSocketButton()
+    {
+        OnPropertyChanged(nameof(WebSocketConnected));
+
+        if (!WebSocketConnected)
+        {
+            WebSocketStart webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
+            await _webSocketClient.ConnectAsync(webSocket.WebSockerUrl.Url);
+        }
+        else
+        {
+            await _webSocketClient.DisconnectAsync();
+        }
+
+        OnPropertyChanged(nameof(WebSocketConnected));
+    }
 
     [ObservableProperty]
     private ObservableCollection<WebSocketConnectionTemplate> _webSocketConnections = [];

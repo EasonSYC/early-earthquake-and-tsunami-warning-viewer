@@ -1,5 +1,5 @@
 ﻿using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 

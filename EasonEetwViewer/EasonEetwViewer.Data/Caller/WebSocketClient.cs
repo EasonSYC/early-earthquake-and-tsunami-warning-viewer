@@ -1,9 +1,15 @@
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Net.WebSockets;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.Dto.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.WebSocket.Request;
+using EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 using EasonEetwViewer.WebSocket.Dto;
 
 namespace EasonEetwViewer.WebSocket;
@@ -11,7 +17,7 @@ namespace EasonEetwViewer.WebSocket;
 /// <summary>
 /// Represents a WebSocket connection in the program.
 /// </summary>
-public class WebSocketClient : IDisposable, IWebSocketClient
+public class WebSocketClient : IWebSocketClient
 {
     /// <summary>
     /// The JSON Serializer Options to be used.
@@ -23,19 +29,15 @@ public class WebSocketClient : IDisposable, IWebSocketClient
     /// <summary>
     /// The WebSocket client used for the connections.
     /// </summary>
-    private readonly ClientWebSocket _client;
-    /// <summary>
-    /// The URI of the WebSocket connection.
-    /// </summary>
-    private readonly Uri _serverUri;
+    private ClientWebSocket _client;
     /// <summary>
     /// The cancellation token source.
     /// </summary>
-    private readonly CancellationTokenSource _tokenSource;
+    private CancellationTokenSource _tokenSource;
     /// <summary>
     /// The cancellation token associated with the cancellation token source.
     /// </summary>
-    private readonly CancellationToken _token;
+    private CancellationToken _token;
     /// <summary>
     /// The queue of ping codes that have not yet received a response.
     /// </summary>
@@ -53,10 +55,6 @@ public class WebSocketClient : IDisposable, IWebSocketClient
     /// </summary>
     private readonly TimeSpan _checkPingInterval = TimeSpan.FromSeconds(15);
     /// <summary>
-    /// Whether this instance is already disposed.
-    /// </summary>
-    private bool _isDisposed;
-    /// <summary>
     /// The receive buffer size.
     /// </summary>
     private const int _recieveBufferSize = 32768; // https://stackoverflow.com/a/41926694
@@ -72,6 +70,10 @@ public class WebSocketClient : IDisposable, IWebSocketClient
     /// The length of a Ping Id.
     /// </summary>
     private const int _pingIdLength = 4;
+
+    public OnDataReceived DataReceivedAction { get; set; }
+    public bool IsWebSocketConnected => _client.State == WebSocketState.Open;
+
     /// <summary>
     /// A task that sends ping requests to the WebSocket server with interval <c>_pingInterval</c>, until the token has been cancelled.
     /// </summary>
@@ -126,17 +128,19 @@ public class WebSocketClient : IDisposable, IWebSocketClient
 
                 string responseBody = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
 
-                Response webSocketResponse = JsonSerializer.Deserialize<Response>(responseBody, _options) ?? throw new Exception();
+                ResponseBase webSocketResponse = JsonSerializer.Deserialize<ResponseBase>(responseBody, _options) ?? throw new FormatException();
                 Debug.WriteLine($"Response received: {responseBody}");
 
                 switch (webSocketResponse.Type)
                 {
                     case ResponseType.Start:
-                        Debug.WriteLine("Start response received!");
+                        StartResponse startResponse = JsonSerializer.Deserialize<StartResponse>(responseBody, _options) ?? throw new FormatException();
+                        Debug.WriteLine(startResponse);
+
                         break;
 
                     case ResponseType.Ping:
-                        PingResponse pingResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new Exception();
+                        PingResponse pingResponse = JsonSerializer.Deserialize<PingResponse>(responseBody, _options) ?? throw new FormatException();
 
                         PongRequest pongRequest = new()
                         {
@@ -148,7 +152,7 @@ public class WebSocketClient : IDisposable, IWebSocketClient
                         break;
 
                     case ResponseType.Pong:
-                        PongResponse pongResponse = JsonSerializer.Deserialize<PongResponse>(responseBody, _options) ?? throw new Exception();
+                        PongResponse pongResponse = JsonSerializer.Deserialize<PongResponse>(responseBody, _options) ?? throw new FormatException();
 
                         if (_pingStrings.Contains(pongResponse.PingId!))
                         {
@@ -162,7 +166,7 @@ public class WebSocketClient : IDisposable, IWebSocketClient
                         break;
 
                     case ResponseType.Error:
-                        ErrorResponse errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseBody, _options) ?? throw new Exception();
+                        ErrorResponse errorResponse = JsonSerializer.Deserialize<ErrorResponse>(responseBody, _options) ?? throw new FormatException();
                         Debug.WriteLine(value: $"Error Response: {errorResponse}");
 
                         if (errorResponse.Close)
@@ -173,12 +177,59 @@ public class WebSocketClient : IDisposable, IWebSocketClient
                         break;
 
                     case ResponseType.Data:
+                        DataResponse dataResponse = JsonSerializer.Deserialize<DataResponse>(responseBody, _options) ?? throw new FormatException();
                         Debug.WriteLine("This is a data response.");
+
+                        string bodyString = dataResponse.Body;
+                        string finalString;
+
+                        switch (dataResponse.Encoding)
+                        {
+                            case EncodingType.Base64:
+                                byte[] bytes = Convert.FromBase64String(bodyString);
+                                using (MemoryStream stream = new(bytes))
+                                {
+                                    switch (dataResponse.Compression)
+                                    {
+                                        case CompressionType.Gzip:
+                                            using (GZipStream gZipStream = new(stream, CompressionMode.Decompress))
+                                            {
+                                                using MemoryStream outputStream = new();
+                                                gZipStream.CopyTo(outputStream);
+                                                byte[] uncompressed = outputStream.ToArray();
+                                                finalString = Encoding.UTF8.GetString(uncompressed);
+                                            }
+
+                                            break;
+
+                                        case CompressionType.Zip:
+                                            throw new NotImplementedException();
+
+                                        case CompressionType.Unknown:
+                                        case null:
+                                        default:
+                                            throw new FormatException();
+                                    }
+                                }
+
+                                break;
+
+                            case EncodingType.Utf8:
+                            case null:
+                                finalString = bodyString;
+                                break;
+
+                            case EncodingType.Unknown:
+                            default:
+                                throw new FormatException();
+                        }
+
+                        DataReceivedAction(finalString, dataResponse.Format);
                         break;
 
                     case ResponseType.Unknown:
                     default:
-                        throw new Exception();
+                        throw new FormatException();
                 }
             }
         }
@@ -190,30 +241,25 @@ public class WebSocketClient : IDisposable, IWebSocketClient
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="webSocketUrl"></param>
-    public WebSocketClient(string webSocketUrl)
+    public WebSocketClient()
     {
         _client = new();
-        _serverUri = new(webSocketUrl);
+        _pingStrings = new();
         _tokenSource = new();
         _token = _tokenSource.Token;
-        _isDisposed = false;
-        _pingStrings = new();
     }
     /// <summary>
     /// 
     /// </summary>
     /// <returns>A Task that represents the asynchronous operation.</returns>
-    public async Task ConnectAsync()
+    public async Task ConnectAsync(string webSocketUrl)
     {
-        ObjectDisposedException.ThrowIf(_isDisposed, this);
-
         if (_client.State == WebSocketState.Open)
         {
-            return;
+            await DisconnectAsync();
         }
 
-        await _client.ConnectAsync(_serverUri, _token);
+        await _client.ConnectAsync(new Uri(webSocketUrl), _token);
         _ = await Task.Factory.StartNew(ReceiveLoop, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         _ = await Task.Factory.StartNew(SendPingLoop, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         _ = await Task.Factory.StartNew(CheckPingLoop, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
@@ -224,9 +270,20 @@ public class WebSocketClient : IDisposable, IWebSocketClient
     /// <returns>A Task that represents the asynchronous operation.</returns>
     public async Task DisconnectAsync()
     {
-        ObjectDisposedException.ThrowIf(_isDisposed, this);
+        if (_client.State != WebSocketState.Closed)
+        {
+            _tokenSource.CancelAfter(_cancelWaitInterval);
+            await _client.CloseAsync(
+                    WebSocketCloseStatus.NormalClosure,
+                    "WebSocket is closing ue to user.",
+                    _token);
 
-        Dispose();
+            _tokenSource = new();
+            _token = _tokenSource.Token;
+            _pingStrings.Clear();
+            _client.Dispose();
+            _client = new ClientWebSocket();
+        }
     }
     /// <summary>
     /// 
@@ -246,25 +303,5 @@ public class WebSocketClient : IDisposable, IWebSocketClient
             _token);
 
         Debug.WriteLine($"Sent: {dataJson}");
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public void Dispose()
-    {
-        if (_client.State != WebSocketState.Closed)
-        {
-            _tokenSource.CancelAfter(_cancelWaitInterval);
-            _client.CloseAsync(
-                    WebSocketCloseStatus.NormalClosure,
-                    "Closing",
-                    _token).Wait();
-        }
-
-        _client.Dispose();
-        _tokenSource.Dispose();
-
-        _isDisposed = true;
-        GC.SuppressFinalize(this);
     }
 }

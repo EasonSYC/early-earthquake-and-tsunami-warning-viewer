@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
 
-namespace EasonEetwViewer.HttpRequest.Caller;
+namespace EasonEetwViewer.Dmdata.Caller.Helpers;
 internal static class ConnectionStatusExtensions
 {
     public static string ToUriString(this ConnectionStatus connectionStatus) => connectionStatus switch

@@ -1,7 +1,9 @@
 ﻿using System.Timers;
 using Avalonia.Logging;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.Dto.WebSocket;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Services;
@@ -19,14 +21,7 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
-
-
-    internal KmoniOptions KmoniOptions { get; init; }
-    private const int _jstAheadUtcHours = 9;
-    internal static string TimeDisplayText => DateTimeOffset.Now.ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
-
-    private readonly System.Timers.Timer _timer;
-    public RealtimePageViewModel(ImageFetch imageFetch, PointExtract pointExtract, System.Timers.Timer timer, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange)
+    public RealtimePageViewModel(ImageFetch imageFetch, PointExtract pointExtract, System.Timers.Timer timer, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange)
     : base(resources, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
         KmoniOptions = kmoniOptions;
@@ -34,7 +29,30 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _pointExtract = pointExtract;
         _timer = timer;
         _timer.Elapsed += OnTimedEvent;
+
+        _webSocketClient = webSocketClient;
+        _webSocketClient.DataReceivedAction += OnDataReceived;
     }
+
+    private readonly IWebSocketClient _webSocketClient;
+
+    #region eewSwitch
+
+    #endregion
+
+    #region eew
+    public void OnDataReceived(string data, FormatType? format)
+    {
+
+    }
+    #endregion
+
+    #region kmoni
+    internal KmoniOptions KmoniOptions { get; init; }
+
+    private const int _jstAheadUtcHours = 9;
+    internal static string TimeDisplayText => DateTimeOffset.Now.ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
+    private readonly System.Timers.Timer _timer;
 
     private const string _realTimeLayerName = "KmoniLayer";
     private const int _kmoniDelaySeconds = 1;
@@ -121,4 +139,5 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         return null;
     }
+    #endregion
 }

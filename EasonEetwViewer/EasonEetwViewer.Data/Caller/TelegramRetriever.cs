@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.HttpRequest.Caller;

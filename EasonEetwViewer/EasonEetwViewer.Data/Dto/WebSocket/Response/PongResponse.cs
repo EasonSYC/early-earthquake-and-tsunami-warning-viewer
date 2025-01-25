@@ -1,11 +1,12 @@
 using System.Text.Json.Serialization;
+using EasonEetwViewer.WebSocket.Dto;
 
-namespace EasonEetwViewer.WebSocket.Dto;
+namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 
 /// <summary>
 /// Represents a pong response from the WebSocket.
 /// </summary>
-internal record PongResponse : Response
+internal record PongResponse : ResponseBase
 {
     /// <summary>
     /// The property <c>type</c>, a constant <c>WebSocketResponseType.Pong</c>.

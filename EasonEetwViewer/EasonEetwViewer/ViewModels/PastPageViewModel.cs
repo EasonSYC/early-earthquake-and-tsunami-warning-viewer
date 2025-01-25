@@ -3,7 +3,7 @@ using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.EarthquakeParameter;
 using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;

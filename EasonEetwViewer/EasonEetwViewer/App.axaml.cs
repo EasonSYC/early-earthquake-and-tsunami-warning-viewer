@@ -1,17 +1,22 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
-using System.Timers;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.HttpRequest.Caller;
+using EasonEetwViewer.HttpRequest.Dto.ApiPost;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
+using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -77,6 +82,16 @@ public partial class App : Application
         return culture;
     }
 
+    private static WebSocketStartPost WebSocketStartParam(IConfigurationSection webSocketConfig, string appName)
+        => new()
+        {
+            AppName = appName,
+            Classifications = webSocketConfig.GetSection("Classifications").Get<List<Classification>>()!,
+            Types = webSocketConfig.GetSection("Types").Get<List<string>>(),
+            FormatMode = webSocketConfig.GetSection("FormatMode").Get<FormatMode>(),
+            TestStatus = webSocketConfig.GetSection("TestStatus").Get<TestStatus>()
+        };
+
     private static void LanguageChange(CultureInfo language)
     {
         Lang.Resources.Culture = language;
@@ -89,14 +104,21 @@ public partial class App : Application
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        string baseApi = config["BaseApi"]!;
-        string baseTelegram = config["BaseTelegram"]!;
+        IConfigurationSection metaData = config.GetSection("AppMetaInfo");
+        string appName = metaData["Name"]!;
+        string appVersion = metaData["Version"]!;
 
-        string kmoniOptionsPath = config["KmoniOptionsPath"]!;
-        string authenticatorPath = config["AuthenticatorPath"]!;
-        string languagePath = config["LanguagePath"]!;
+        IConfigurationSection baseUrls = config.GetSection("BaseUrls");
+        string baseApi = baseUrls["Api"]!;
+        string baseTelegram = baseUrls["Telegram"]!;
 
-        string pointExtractPath = config["PointExtractPath"]!;
+        IConfigurationSection configPaths = config.GetSection("ConfigPaths");
+        string kmoniOptionsPath = configPaths["KmoniOptions"]!;
+        string authenticatorPath = configPaths["Authenticator"]!;
+        string pointExtractPath = configPaths["PointExtract"]!;
+        string languagePath = configPaths["Language"]!;
+
+        IConfigurationSection webSocketConfig = config.GetSection("WebSocketParams");
 
         //IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         //string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
@@ -109,6 +131,7 @@ public partial class App : Application
 
         IServiceCollection collection = new ServiceCollection();
 
+        _ = collection.AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"));
         _ = collection.AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath));
         _ = collection.AddSingleton(sp => GetAuthenticatorDto(authenticatorPath));
 
@@ -122,6 +145,7 @@ public partial class App : Application
 
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton<IWebSocketClient, WebSocketClient>();
 
         _ = collection.AddSingleton<ImageFetch>();
         _ = collection.AddSingleton(sp => new PointExtract(pointExtractPath));
