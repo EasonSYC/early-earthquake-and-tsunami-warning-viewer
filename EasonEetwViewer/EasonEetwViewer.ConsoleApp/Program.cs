@@ -1,6 +1,13 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller;
+using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.Dto.ApiPost;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
