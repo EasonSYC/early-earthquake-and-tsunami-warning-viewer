@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
 
 [JsonConverter(typeof(JsonStringEnumConverter<Hypocentre>))]
 public enum Hypocentre

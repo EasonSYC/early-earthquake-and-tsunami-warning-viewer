@@ -1,20 +1,9 @@
-﻿using System.Data;
-using System.IO.Compression;
-using System.Net.NetworkInformation;
+﻿using System.IO.Compression;
 using System.Text;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.HttpRequest.Caller;
-using EasonEetwViewer.HttpRequest.Dto.ApiPost;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using EasonEetwViewer.WebSocket;
-using Microsoft.Extensions.Configuration;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 

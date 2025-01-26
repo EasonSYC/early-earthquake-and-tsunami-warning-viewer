@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.Models;
 internal record DetailIntensityTemplate

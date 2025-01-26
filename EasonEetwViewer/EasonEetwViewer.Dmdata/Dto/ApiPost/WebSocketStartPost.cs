@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiPost;
+namespace EasonEetwViewer.Dmdata.Dto.ApiPost;
 
 /// <summary>
 /// Outlines the necessary information provided in the JSON in the header in <c>socket.start</c> API call.

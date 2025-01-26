@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Globalization;
 using System.Text.Json;
 using Avalonia;
@@ -6,17 +5,16 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.HttpRequest.Caller;
-using EasonEetwViewer.HttpRequest.Dto.ApiPost;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiPost;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
-using EasonEetwViewer.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

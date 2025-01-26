@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
-using EasonEetwViewer.WebSocket.Dto;
+﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.GdEarthquake;
 
 namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 internal record DataResponse : ResponseBase

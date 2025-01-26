@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
+﻿namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
 public enum MagnitudePoint
 {
     Unknown = 0,

@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Converters;

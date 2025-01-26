@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.HttpRequest.DmdataComponent;
+using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

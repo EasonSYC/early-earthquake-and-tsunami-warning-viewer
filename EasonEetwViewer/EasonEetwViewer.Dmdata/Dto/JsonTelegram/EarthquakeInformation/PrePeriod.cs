@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
 public record PrePeriod
 {
     [JsonPropertyName("periodicBand")]

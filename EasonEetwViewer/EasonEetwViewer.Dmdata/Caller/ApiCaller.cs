@@ -6,12 +6,12 @@ using System.Web;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Helpers;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.HttpRequest.Dto.ApiPost;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
+using EasonEetwViewer.Dmdata.Dto.ApiPost;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 
-namespace EasonEetwViewer.HttpRequest.Caller;
+namespace EasonEetwViewer.Dmdata.Caller;
 
 public class ApiCaller : IApiCaller
 {

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.WebSocket.Dto;
+﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
 namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 internal record StartResponse : ResponseBase
@@ -14,7 +8,7 @@ internal record StartResponse : ResponseBase
     [JsonInclude]
     [JsonPropertyName("type")]
     internal override ResponseType Type { get; init; } = ResponseType.Start;
-    
+
     [JsonInclude]
     [JsonPropertyName("time")]
     internal required DateTimeOffset Time { get; init; }

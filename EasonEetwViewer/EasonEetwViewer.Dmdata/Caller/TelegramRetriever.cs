@@ -2,9 +2,9 @@
 using System.Text.Json.Serialization;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.HttpRequest.Caller;
+namespace EasonEetwViewer.Dmdata.Caller;
 public class TelegramRetriever : ITelegramRetriever
 {
     private readonly HttpClient _client;

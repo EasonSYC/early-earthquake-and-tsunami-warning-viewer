@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
 /// <summary>
 /// Represents the status of the WebSocket connection.

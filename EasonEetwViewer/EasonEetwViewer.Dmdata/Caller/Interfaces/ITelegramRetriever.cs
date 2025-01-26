@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
+﻿using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.Dmdata.Caller.Interfaces;
 public interface ITelegramRetriever

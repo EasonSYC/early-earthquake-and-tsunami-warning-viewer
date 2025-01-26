@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.GdEarthquake;
 public record EarthquakeInfoWithTelegrams : EarthquakeInfo
 {
     [JsonPropertyName("telegrams")]

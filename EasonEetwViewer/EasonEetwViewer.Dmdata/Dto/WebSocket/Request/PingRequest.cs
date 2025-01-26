@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
-using EasonEetwViewer.WebSocket.Dto;
 
 namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Request;
 

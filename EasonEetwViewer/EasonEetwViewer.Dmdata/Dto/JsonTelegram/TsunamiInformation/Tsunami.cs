@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TsunamiInformation;
+﻿namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
 public record Tsunami
 {
     //[JsonPropertyName("forecasts")]

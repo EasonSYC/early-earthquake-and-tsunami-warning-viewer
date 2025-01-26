@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
 
 [JsonConverter(typeof(JsonStringEnumConverter<ReviseStatus>))]
 public enum ReviseStatus

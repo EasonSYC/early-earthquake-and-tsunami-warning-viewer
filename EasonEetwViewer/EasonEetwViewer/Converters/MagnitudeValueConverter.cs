@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.HttpRequest.DmdataComponent;
-using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
+using EasonEetwViewer.Dmdata.DmdataComponent;
+using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

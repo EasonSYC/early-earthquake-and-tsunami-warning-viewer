@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.DmdataComponent.Enum;
+using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
 
-namespace EasonEetwViewer.HttpRequest.DmdataComponent;
+namespace EasonEetwViewer.Dmdata.DmdataComponent;
 /// <summary>
 /// Describes the magnitude of an earthquake.
 /// </summary>

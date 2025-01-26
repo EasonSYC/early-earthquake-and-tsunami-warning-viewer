@@ -1,15 +1,13 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.Dmdata.Dto.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Models;
@@ -22,7 +20,6 @@ using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
-using NetTopologySuite.Noding;
 using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
@@ -50,7 +47,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _cts = new();
         _token = _cts.Token;
 
-        StartLongRunning().Wait();
+        Task.Run(StartLongRunning).Wait();
     }
 
     private async Task StartLongRunning()

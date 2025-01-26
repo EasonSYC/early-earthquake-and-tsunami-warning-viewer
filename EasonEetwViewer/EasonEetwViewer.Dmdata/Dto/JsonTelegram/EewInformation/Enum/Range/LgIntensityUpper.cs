@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EewInformation.Enum.Range;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
 public enum LgIntensityUpper
 {
     /// <summary>

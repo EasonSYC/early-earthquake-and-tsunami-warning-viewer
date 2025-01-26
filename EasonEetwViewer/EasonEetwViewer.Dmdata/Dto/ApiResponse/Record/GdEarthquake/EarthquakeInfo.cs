@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.DmdataComponent;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.DmdataComponent;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.GdEarthquake;
 
 /// <summary>
 /// Represents an earthquake in the API call <c>gd.earthquake.list</c>.

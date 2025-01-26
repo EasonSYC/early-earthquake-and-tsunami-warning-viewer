@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 
 /// <summary>
 /// Represents an Error HTTP response.

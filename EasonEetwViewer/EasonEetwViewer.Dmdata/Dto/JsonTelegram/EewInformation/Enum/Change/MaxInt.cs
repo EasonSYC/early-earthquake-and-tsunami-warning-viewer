@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EewInformation.Enum.Change;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Change;
 [JsonConverter(typeof(JsonStringEnumConverter<MaxInt>))]
 public enum MaxInt
 {

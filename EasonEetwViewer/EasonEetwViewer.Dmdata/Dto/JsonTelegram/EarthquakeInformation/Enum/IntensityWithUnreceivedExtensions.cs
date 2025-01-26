@@ -1,6 +1,6 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
+﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
 public static class IntensityWithUnreceivedExtensions
 {
     public static Intensity ToEarthquakeIntensity(this IntensityWithUnreceived intensity) => intensity switch

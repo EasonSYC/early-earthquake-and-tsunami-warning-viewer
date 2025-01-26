@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
 public record PeriodicBand
 {
     [JsonPropertyName("unit")]

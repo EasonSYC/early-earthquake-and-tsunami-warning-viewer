@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
 public record CityIntensity
 {
     [JsonPropertyName("code")]

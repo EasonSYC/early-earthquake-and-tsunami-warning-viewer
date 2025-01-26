@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.DmdataComponent;
+namespace EasonEetwViewer.Dmdata.DmdataComponent;
 public record EarthquakeComponent
 {
     [JsonPropertyName("originTime")]

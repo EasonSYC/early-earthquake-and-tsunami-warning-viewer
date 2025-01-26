@@ -1,7 +1,7 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.GdEarthquake;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
+﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.GdEarthquake;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 /// <summary>
 /// Represents the result of an API call on <c>gd.earthquake.list</c> API.
 /// </summary>

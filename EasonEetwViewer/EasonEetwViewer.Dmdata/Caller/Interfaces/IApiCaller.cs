@@ -1,7 +1,7 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiPost;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Response;
+﻿using EasonEetwViewer.Dmdata.Dto.ApiPost;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 
 namespace EasonEetwViewer.Dmdata.Caller.Interfaces;
 public interface IApiCaller

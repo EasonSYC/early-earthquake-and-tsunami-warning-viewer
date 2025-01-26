@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.EewInformation;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 public record AreaKind
 {
     [JsonPropertyName("code")]

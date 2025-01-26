@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Net.WebSockets;
-using System.Reflection.Emit;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -10,9 +9,8 @@ using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.WebSocket.Request;
 using EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
-using EasonEetwViewer.WebSocket.Dto;
 
-namespace EasonEetwViewer.WebSocket;
+namespace EasonEetwViewer.Dmdata.Caller;
 
 /// <summary>
 /// Represents a WebSocket connection in the program.

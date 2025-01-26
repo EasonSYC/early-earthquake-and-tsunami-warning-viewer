@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.ResponseBase;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
 
 /// <summary>
 /// Outlines the model of a list response from an API call.

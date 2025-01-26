@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.DmdataComponent;
+namespace EasonEetwViewer.Dmdata.DmdataComponent;
 
 /// <summary>
 /// Provides details for the hypocentre area name.

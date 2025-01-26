@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 
 [JsonConverter(typeof(JsonStringEnumConverter<Type>))]
 public enum Type

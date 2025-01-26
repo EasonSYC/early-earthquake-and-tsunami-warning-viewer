@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.HttpRequest.DmdataComponent;
+namespace EasonEetwViewer.Dmdata.DmdataComponent;
 
 /// <summary>
 /// Represents auxiliary information provided on the position of the hypocentre.

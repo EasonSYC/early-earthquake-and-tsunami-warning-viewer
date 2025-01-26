@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum;
-using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
-namespace EasonEetwViewer.HttpRequest.Dto.ApiResponse.Record.WebSocket;
+namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.WebSocket;
 
 /// <summary>
 /// Details of a WebSocket connection.

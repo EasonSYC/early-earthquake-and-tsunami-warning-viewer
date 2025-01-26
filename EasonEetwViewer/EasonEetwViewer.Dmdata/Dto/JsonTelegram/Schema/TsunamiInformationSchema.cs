@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TelegramBase;
-using EasonEetwViewer.HttpRequest.Dto.JsonTelegram.TsunamiInformation;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
 
-namespace EasonEetwViewer.HttpRequest.Dto.JsonTelegram.Schema;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 public record TsunamiInformationSchema : Head
 {
     [JsonPropertyName("body")]

@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.HttpRequest.Dto.ApiResponse.Enum.WebSocket;
+﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
 namespace EasonEetwViewer.Dmdata.Caller.Helpers;
 internal static class ConnectionStatusExtensions
