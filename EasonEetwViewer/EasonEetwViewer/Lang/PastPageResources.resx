@@ -117,29 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DepthText" xml:space="preserve">
-    <value>Hypocentre Depth</value>
-  </data>
-  <data name="HypocentreText" xml:space="preserve">
-    <value>Hypocentre</value>
-  </data>
-  <data name="LastUpdatedText" xml:space="preserve">
-    <value>Last Updated</value>
-  </data>
   <data name="LoadMoreText" xml:space="preserve">
     <value>Load 10 More Earthquakes</value>
   </data>
-  <data name="MagnitudeText" xml:space="preserve">
-    <value>Magnitude</value>
-  </data>
-  <data name="MaxIntensityText" xml:space="preserve">
-    <value>Max. Intensity</value>
-  </data>
   <data name="RefreshListText" xml:space="preserve">
     <value>Load/Refresh Earthquake List</value>
-  </data>
-  <data name="TimeText" xml:space="preserve">
-    <value>Time</value>
   </data>
   <data name="YahooText" xml:space="preserve">
     <value>Yahoo Earthquake Details</value>

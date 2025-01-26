@@ -117,42 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="KmoniSensorsBoreholeText" xml:space="preserve">
-    <value>地下</value>
-  </data>
-  <data name="KmoniSensorsSurfaceText" xml:space="preserve">
-    <value>地面</value>
-  </data>
-  <data name="KmoniDataIntensity" xml:space="preserve">
-    <value>实时烈度</value>
-  </data>
-  <data name="KmoniDataPgv" xml:space="preserve">
-    <value>最大速度</value>
-  </data>
-  <data name="KmoniDataPga" xml:space="preserve">
-    <value>最大加速度</value>
-  </data>
-  <data name="KmoniDataPgd" xml:space="preserve">
-    <value>最大位移</value>
-  </data>
-  <data name="KmoniDataRsp0125" xml:space="preserve">
-    <value>0.125 赫兹速度应答</value>
-  </data>
-  <data name="KmoniDataRsp0250" xml:space="preserve">
-    <value>0.250 赫兹速度应答</value>
-  </data>
-  <data name="KmoniDataRsp0500" xml:space="preserve">
-    <value>0.500 赫兹速度应答</value>
-  </data>
-  <data name="KmoniDataRsp1000" xml:space="preserve">
-    <value>1.000 赫兹速度应答</value>
-  </data>
-  <data name="KmoniDataRsp2000" xml:space="preserve">
-    <value>2.000 赫兹速度应答</value>
-  </data>
-  <data name="KmoniDataRsp4000" xml:space="preserve">
-    <value>4.000 赫兹速度应答</value>
-  </data>
   <data name="EarthquakeIntensityOneText" xml:space="preserve">
     <value>1</value>
   </data>
@@ -234,7 +198,25 @@
   <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
     <value>Mj</value>
   </data>
-  <data name="IntensityText" xml:space="preserve">
+  <data name="DetailsIntensityText" xml:space="preserve">
     <value>烈度</value>
+  </data>
+  <data name="DetailsMaxIntensityText" xml:space="preserve">
+    <value>最大烈度</value>
+  </data>
+  <data name="DetailsLastUpdatedText" xml:space="preserve">
+    <value>更新时刻</value>
+  </data>
+  <data name="DetailsMagnitudeText" xml:space="preserve">
+    <value>震级</value>
+  </data>
+  <data name="DetailsDepthText" xml:space="preserve">
+    <value>震源深度</value>
+  </data>
+  <data name="DetailsTimeText" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="DetailsHypocentreText" xml:space="preserve">
+    <value>震中</value>
   </data>
 </root>

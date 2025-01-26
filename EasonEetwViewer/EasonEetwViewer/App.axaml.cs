@@ -150,13 +150,6 @@ public partial class App : Application
         _ = collection.AddSingleton<ImageFetch>();
         _ = collection.AddSingleton(sp => new PointExtract(pointExtractPath));
 
-        _ = collection.AddSingleton(sp
-            => new System.Timers.Timer(1000)
-            {
-                AutoReset = true,
-                Enabled = true
-            });
-
         _ = collection.AddSingleton<StaticResources>();
 
         _ = collection.AddSingleton<MainWindowViewModel>();

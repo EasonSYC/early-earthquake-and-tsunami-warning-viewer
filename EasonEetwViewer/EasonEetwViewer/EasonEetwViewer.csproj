@@ -64,6 +64,10 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>PastPageResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Lang\RealtimePageResources.resx">
+		  <Generator>ResXFileCodeGenerator</Generator>
+		  <LastGenOutput>RealtimePageResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Lang\Resources.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -80,6 +84,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>PastPageResources.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Lang\RealtimePageResources.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>RealtimePageResources.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Lang\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -90,34 +99,25 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>SettingPageResources.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Views\RealtimePageView.axaml.cs">
+		  <DependentUpon>RealtimePageView.axaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Update="appsettings.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.dbf">
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.dbf">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.prj">
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.prj">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.shp">
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shp">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.shx">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx">
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shx">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="ObservationPoints.json">

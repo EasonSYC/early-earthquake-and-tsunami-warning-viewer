@@ -117,29 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DepthText" xml:space="preserve">
-    <value>震源深度</value>
-  </data>
-  <data name="HypocentreText" xml:space="preserve">
-    <value>震中</value>
-  </data>
-  <data name="LastUpdatedText" xml:space="preserve">
-    <value>更新时刻</value>
-  </data>
   <data name="LoadMoreText" xml:space="preserve">
     <value>加载10个过去地震</value>
   </data>
-  <data name="MagnitudeText" xml:space="preserve">
-    <value>震级</value>
-  </data>
-  <data name="MaxIntensityText" xml:space="preserve">
-    <value>最大烈度</value>
-  </data>
   <data name="RefreshListText" xml:space="preserve">
     <value>加载/刷新过去地震列表</value>
-  </data>
-  <data name="TimeText" xml:space="preserve">
-    <value>时间</value>
   </data>
   <data name="YahooText" xml:space="preserve">
     <value>Yahoo 地震情报</value>

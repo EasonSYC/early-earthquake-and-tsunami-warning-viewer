@@ -11,8 +11,8 @@ internal class SensorChoiceConverter : IValueConverter
         => value is SensorType sensorType
             ? sensorType switch
             {
-                SensorType.Surface => Resources.KmoniSensorsSurfaceText,
-                SensorType.Borehole => Resources.KmoniSensorsBoreholeText,
+                SensorType.Surface => SettingPageResources.KmoniSensorsSurfaceText,
+                SensorType.Borehole => SettingPageResources.KmoniSensorsBoreholeText,
                 _ => null,
             }
             : (object?)null;

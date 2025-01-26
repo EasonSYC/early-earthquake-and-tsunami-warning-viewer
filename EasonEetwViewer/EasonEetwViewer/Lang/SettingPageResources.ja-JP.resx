@@ -192,4 +192,40 @@
   <data name="WebSocketText" xml:space="preserve">
     <value>WebSocket 接続情報</value>
   </data>
+  <data name="KmoniSensorsBoreholeText" xml:space="preserve">
+    <value>地中</value>
+  </data>
+  <data name="KmoniSensorsSurfaceText" xml:space="preserve">
+    <value>地表</value>
+  </data>
+  <data name="KmoniDataRsp4000" xml:space="preserve">
+    <value>4.000Hz速度応答</value>
+  </data>
+  <data name="KmoniDataIntensity" xml:space="preserve">
+    <value>リアルタイム震度</value>
+  </data>
+  <data name="KmoniDataPga" xml:space="preserve">
+    <value>最大加速度</value>
+  </data>
+  <data name="KmoniDataPgd" xml:space="preserve">
+    <value>最大変位</value>
+  </data>
+  <data name="KmoniDataPgv" xml:space="preserve">
+    <value>最大速度</value>
+  </data>
+  <data name="KmoniDataRsp0125" xml:space="preserve">
+    <value>0.125Hz速度応答</value>
+  </data>
+  <data name="KmoniDataRsp0250" xml:space="preserve">
+    <value>0.250Hz速度応答</value>
+  </data>
+  <data name="KmoniDataRsp0500" xml:space="preserve">
+    <value>0.500Hz速度応答</value>
+  </data>
+  <data name="KmoniDataRsp1000" xml:space="preserve">
+    <value>1.000Hz速度応答</value>
+  </data>
+  <data name="KmoniDataRsp2000" xml:space="preserve">
+    <value>2.000Hz速度応答</value>
+  </data>
 </root>

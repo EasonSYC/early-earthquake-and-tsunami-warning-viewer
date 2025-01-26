@@ -10,16 +10,16 @@ internal class MeasurementChoiceConverter : IValueConverter
         => value is MeasurementType dataType
             ? dataType switch
             {
-                MeasurementType.MeasuredIntensity => Resources.KmoniDataIntensity,
-                MeasurementType.PeakGroundAcceleration => Resources.KmoniDataPga,
-                MeasurementType.PeakGroundVelocity => Resources.KmoniDataPgv,
-                MeasurementType.PeakGroundDisplacement => Resources.KmoniDataPgd,
-                MeasurementType.Response0125 => Resources.KmoniDataRsp0125,
-                MeasurementType.Response0250 => Resources.KmoniDataRsp0250,
-                MeasurementType.Response0500 => Resources.KmoniDataRsp0500,
-                MeasurementType.Response1000 => Resources.KmoniDataRsp1000,
-                MeasurementType.Response2000 => Resources.KmoniDataRsp2000,
-                MeasurementType.Response4000 => Resources.KmoniDataRsp4000,
+                MeasurementType.MeasuredIntensity => SettingPageResources.KmoniDataIntensity,
+                MeasurementType.PeakGroundAcceleration => SettingPageResources.KmoniDataPga,
+                MeasurementType.PeakGroundVelocity => SettingPageResources.KmoniDataPgv,
+                MeasurementType.PeakGroundDisplacement => SettingPageResources.KmoniDataPgd,
+                MeasurementType.Response0125 => SettingPageResources.KmoniDataRsp0125,
+                MeasurementType.Response0250 => SettingPageResources.KmoniDataRsp0250,
+                MeasurementType.Response0500 => SettingPageResources.KmoniDataRsp0500,
+                MeasurementType.Response1000 => SettingPageResources.KmoniDataRsp1000,
+                MeasurementType.Response2000 => SettingPageResources.KmoniDataRsp2000,
+                MeasurementType.Response4000 => SettingPageResources.KmoniDataRsp4000,
                 _ => null,
             }
             : null;

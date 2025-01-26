@@ -117,29 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DepthText" xml:space="preserve">
-    <value>深さ</value>
-  </data>
-  <data name="HypocentreText" xml:space="preserve">
-    <value>震源</value>
-  </data>
-  <data name="LastUpdatedText" xml:space="preserve">
-    <value>更新時刻</value>
-  </data>
   <data name="LoadMoreText" xml:space="preserve">
     <value>さらに 10 個の地震</value>
   </data>
-  <data name="MagnitudeText" xml:space="preserve">
-    <value>マグニチュード</value>
-  </data>
-  <data name="MaxIntensityText" xml:space="preserve">
-    <value>最大震度</value>
-  </data>
   <data name="RefreshListText" xml:space="preserve">
     <value>過去の地震リストの読み込み・更新</value>
-  </data>
-  <data name="TimeText" xml:space="preserve">
-    <value>発生時刻</value>
   </data>
   <data name="YahooText" xml:space="preserve">
     <value>Yahoo 地震情報</value>

@@ -181,8 +181,6 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                 }
             }
 
-            Debug.WriteLine(sb.ToString());
-
             if (!token.IsCancellationRequested)
             {
                 EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, sb.ToString(), telegramInfo.ReportDateTime, tree.ToItemControlDisplay());

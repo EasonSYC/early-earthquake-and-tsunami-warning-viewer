@@ -50,7 +50,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="16"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.MaxIntensityText}"
+                           Text="{x:Static lang:Resources.DetailsMaxIntensityText}"
                            Margin="5 5"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="52"
@@ -61,7 +61,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.TimeText}"
+                           Text="{x:Static lang:Resources.DetailsTimeText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="24"
@@ -71,7 +71,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.HypocentreText}"
+                           Text="{x:Static lang:Resources.DetailsHypocentreText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="24"
@@ -81,7 +81,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.DepthText}"
+                           Text="{x:Static lang:Resources.DetailsDepthText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontWeight="SemiBold"
@@ -94,7 +94,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.MagnitudeText}"
+                           Text="{x:Static lang:Resources.DetailsMagnitudeText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontWeight="SemiBold"
@@ -107,7 +107,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:PastPageResources.LastUpdatedText}"
+                           Text="{x:Static lang:Resources.DetailsLastUpdatedText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="18"
@@ -135,7 +135,7 @@
                                        FontWeight="SemiBold"
                                        Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
                                        Margin="5">
-                                    <Run Text="{x:Static, lang:Resources.IntensityText}"/>
+                                    <Run Text="{x:Static, lang:Resources.DetailsIntensityText}"/>
                                     <Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
                                 </TextBlock>
                                 <TreeView ItemsSource="{Binding PositionNodes}">

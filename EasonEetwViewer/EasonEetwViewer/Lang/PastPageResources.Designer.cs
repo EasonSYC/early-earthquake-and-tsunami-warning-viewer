@@ -61,33 +61,6 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hypocentre Depth.
-        /// </summary>
-        public static string DepthText {
-            get {
-                return ResourceManager.GetString("DepthText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hypocentre.
-        /// </summary>
-        public static string HypocentreText {
-            get {
-                return ResourceManager.GetString("HypocentreText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last Updated.
-        /// </summary>
-        public static string LastUpdatedText {
-            get {
-                return ResourceManager.GetString("LastUpdatedText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Load 10 More Earthquakes.
         /// </summary>
         public static string LoadMoreText {
@@ -97,38 +70,11 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Magnitude.
-        /// </summary>
-        public static string MagnitudeText {
-            get {
-                return ResourceManager.GetString("MagnitudeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Max. Intensity.
-        /// </summary>
-        public static string MaxIntensityText {
-            get {
-                return ResourceManager.GetString("MaxIntensityText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Load/Refresh Earthquake List.
         /// </summary>
         public static string RefreshListText {
             get {
                 return ResourceManager.GetString("RefreshListText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Time.
-        /// </summary>
-        public static string TimeText {
-            get {
-                return ResourceManager.GetString("TimeText", resourceCulture);
             }
         }
         
