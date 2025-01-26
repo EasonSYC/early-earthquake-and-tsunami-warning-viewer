@@ -45,7 +45,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.Data\EasonEetwViewer.Dmdata.csproj" />
+		<ProjectReference Include="..\EasonEetwViewer.Dmdata\EasonEetwViewer.Dmdata.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
 	</ItemGroup>
 
