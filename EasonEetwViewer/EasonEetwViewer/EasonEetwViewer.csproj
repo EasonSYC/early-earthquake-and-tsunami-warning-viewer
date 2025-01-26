@@ -36,11 +36,11 @@
 			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-		<PackageReference Include="Mapsui.Avalonia" Version="4.1.8" />
+		<PackageReference Include="Mapsui.Avalonia" Version="5.0.0-beta.4" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-		<PackageReference Include="SkiaSharp" Version="2.88.9" />
+		<PackageReference Include="SkiaSharp" Version="3.116.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,7 +50,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\hypo.svg" />
+	  <EmbeddedResource Include="Resources\hypo.svg">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

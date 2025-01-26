@@ -32,8 +32,7 @@ internal partial class MapViewModelBase : PageViewModelBase
         Map.Navigator.OverridePanBounds = GetMapBounds();
 
         MRect view = GetMainLimitsOfJapan();
-        //Map.Navigator.ZoomToBox(view);
-        Map.Home = n => n.ZoomToBox(view);
+        Map.Navigator.ZoomToBox(view);
     }
 
     //private protected static MRect GetLimitsOfJapan()

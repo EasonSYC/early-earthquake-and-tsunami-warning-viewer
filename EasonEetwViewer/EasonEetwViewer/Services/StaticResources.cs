@@ -19,7 +19,7 @@ internal partial class StaticResources : ObservableObject
 
     internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
     {
-        BitmapId = typeof(PastPageViewModel).LoadSvgId("Resources.hypo.svg")
+        ImageSource = "embedded://EasonEetwViewer.Resources.hypo.svg"
     };
 
     internal IEnumerable<PrefectureData> Prefectures { get; private init; } = [
