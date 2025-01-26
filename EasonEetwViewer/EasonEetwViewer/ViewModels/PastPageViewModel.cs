@@ -131,7 +131,6 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                 {
                     Name = _obsPointLayerName,
                     Features = stationFeature,
-                    IsMapInfoLayer = true,
                     Style = null
                 };
 
@@ -201,8 +200,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             {
                 Name = _hypocentreLayerName,
                 Features = [new PointFeature(coords)],
-                Style = _resources.HypocentreShapeStyle,
-                IsMapInfoLayer = true
+                Style = _resources.HypocentreShapeStyle
             };
 
             if (!token.IsCancellationRequested)
@@ -230,8 +228,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         {
             Name = _regionLayerName,
             DataSource = _resources.PastRegion,
-            Style = CreateRegionThemeStyle(regions),
-            IsMapInfoLayer = true
+            Style = CreateRegionThemeStyle(regions)
         };
 
     // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile

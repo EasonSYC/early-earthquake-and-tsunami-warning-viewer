@@ -213,7 +213,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 Name = _realTimeLayerName,
                 Features = kmoniObservationPoints,
-                IsMapInfoLayer = true,
                 Style = null
             };
     }
