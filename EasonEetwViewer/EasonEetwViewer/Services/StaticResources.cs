@@ -12,10 +12,7 @@ internal partial class StaticResources : ObservableObject
 {
     private const string _baseGisFile = "Content/GisFiles/";
 
-    //internal IProvider EewRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastEEW_GIS/緊急地震速報／地方予報区.shp");
-    //internal IProvider EewPrefectureRegion { get; private init; } = new ShapeFile("GisFiles/20190125_AreaForecastLocalEEW_GIS/緊急地震速報／府県予報区.shp");
-    //internal IProvider PastPrefecture { get; private init; } = ShapeFileToProvider("GisFiles/20190125_AreaInformationPrefectureEarthquake_GIS/地震情報／都道府県等.shp", true, true);
-
+    internal IProvider EewPrefecture { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20190125_AreaForecastLocalEEW_GIS/EewPrefecture.shp", true, true);
     internal IProvider PastRegion { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/PastRegions.shp", true, true);
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection

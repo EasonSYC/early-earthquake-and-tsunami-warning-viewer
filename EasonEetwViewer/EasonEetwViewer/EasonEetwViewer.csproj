@@ -50,21 +50,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <EmbeddedResource Include="Resources\hypo.svg" />
 	</ItemGroup>
 
@@ -109,10 +94,34 @@
 
 	<ItemGroup>
 		<None Update="appsettings.json">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.dbf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.prj">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.shp">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20190125_AreaForecastLocalEEW_GIS\EewPrefecture.shx">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.dbf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.prj">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shp">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\PastRegions.shx">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 		<None Update="ObservationPoints.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>
