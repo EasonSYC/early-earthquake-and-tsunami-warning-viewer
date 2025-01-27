@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text;
 using System.Text.Json;
 using System.Timers;
 using Avalonia.Logging;
@@ -20,6 +21,7 @@ using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
+using RTools_NTS.Util;
 using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
@@ -53,7 +55,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private async Task StartLongRunning()
     {
         _ = await Task.Factory.StartNew(SwitchEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        _ = await Task.Factory.StartNew(DrawEewCircles, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         _ = await Task.Factory.StartNew(ClearExpiredEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
 
@@ -68,6 +69,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromMilliseconds(500);
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
+    private readonly TimeSpan _eewLifeTime = TimeSpan.FromSeconds(90);
 
     #region eew
     [ObservableProperty]
@@ -79,25 +81,80 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CurrentDisplayEew))]
     private uint? _currentEewIndex = null;
-    private void OnEewReceived(EewInformationSchema eew)
+    private async Task OnEewReceived(EewInformationSchema eew)
     {
         for (int i = LiveEewList.Count - 1; i >= 0; --i)
         {
             if (LiveEewList[i].EventId == eew.EventId)
             {
-                LiveEewList.RemoveAt(i);
+                RemoveEewAt(i);
                 break;
             }
         }
 
-        // Add the new eew to the list by leaving only the details to be displayed
-        // LiveEewList.Add();
+        StringBuilder sb = new();
+        if (eew.Body.Text is not null)
+        {
+            _ = sb.AppendLine(eew.Body.Text);
+        }
+
+        if (eew.Body.Comments is not null)
+        {
+            if (eew.Body.Comments.FreeText is not null)
+            {
+                _ = sb.AppendLine(eew.Body.Comments.FreeText);
+            }
+
+            if (eew.Body.Comments.Warning is not null)
+            {
+                _ = sb.AppendLine(eew.Body.Comments.Warning.Text);
+            }
+        }
+
+
+        EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, sb.ToString());
+        LiveEewList.Add(eewTemplate);
 
         // Add the layer for the hypocentre
+        if (eew.Body.Earthquake is not null)
+        {
+            if (eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null && eew.Body.Earthquake.Hypocentre.Coordinate.Latitude is not null)
+            {
+                MPoint point = SphericalMercator.FromLonLat(eew.Body.Earthquake.Hypocentre.Coordinate.Longitude!.DoubleValue, eew.Body.Earthquake.Hypocentre.Coordinate.Latitude!.DoubleValue).ToMPoint();
+
+                ILayer layer;
+
+                if (eew.Body.Earthquake.Condition is not "仮定震源要素")
+                {
+                    // TODO: PLUM Hypocentre
+                    layer = new MemoryLayer()
+                    {
+                        Name = _eewHypocentreLayerPrefix + eew.EventId,
+                        Features = [new PointFeature(point)],
+                        Style = _resources.HypocentreShapeStyle
+                    };
+                }
+                else
+                {
+                    layer = new MemoryLayer()
+                    {
+                        Name = _eewHypocentreLayerPrefix + eew.EventId,
+                        Features = [new PointFeature(point)],
+                        Style = _resources.HypocentreShapeStyle
+                    };
+                }
+
+                if (!eewTemplate.Token.IsCancellationRequested)
+                {
+                    Map.Layers.Add(layer);
+                }
+            }
+        }
+
+        // TODO: Add the layer for the regions
         // Map.Layers.Add;
 
-        // Add the layer for the regions
-        // Map.Layers.Add;
+        _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
     private async Task SwitchEew()
     {
@@ -113,13 +170,16 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             await Task.Delay(_switchEewInterval);
         }
     }
-    private async Task DrawEewCircles()
+    private async Task DrawEewCircles(EewDetailsTemplate eew)
     {
-        while (!_token.IsCancellationRequested)
+        while (!eew.Token.IsCancellationRequested)
         {
+            // TODO: Draw circles
 
             await Task.Delay(_refreshCircleInterval);
         }
+
+        _ = Map.Layers.Remove(x => x.Name == (_eewWavefrontLayerPrefix + eew.EventId));
     }
     private async Task ClearExpiredEew()
     {
@@ -129,20 +189,23 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 if (LiveEewList[i].ExpiryTime < DateTimeOffset.Now)
                 {
-                    RemoveEew(LiveEewList[i]);
+                    RemoveEewAt(i);
                 }
             }
 
             await Task.Delay(_removeExpiredEewInterval);
         }
     }
-    private void RemoveEew(EewDetailsTemplate eew)
+    private void RemoveEewAt(int i)
     {
+        EewDetailsTemplate eew = LiveEewList[i];
+        eew.TokenSource.Cancel();
+        eew.TokenSource.Dispose();
+        LiveEewList.RemoveAt(i);
         if (LiveEewList.Remove(eew))
         {
             _ = Map.Layers.Remove(x => x.Name == (_eewHypocentreLayerPrefix + eew.EventId));
             _ = Map.Layers.Remove(x => x.Name == (_eewRegionLayerPrefix + eew.EventId));
-            _ = Map.Layers.Remove(x => x.Name == (_eewWavefrontLayerPrefix + eew.EventId));
         }
     }
     #endregion

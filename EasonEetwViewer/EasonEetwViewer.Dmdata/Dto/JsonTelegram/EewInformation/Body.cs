@@ -6,7 +6,7 @@ public record Body
     [JsonPropertyName("isLastInfo")]
     public required bool IsLastInfo { get; init; }
     [JsonPropertyName("isCanceled")]
-    public required bool IsCanceled { get; init; }
+    public required bool IsCancelled { get; init; }
     [JsonPropertyName("isWarning")]
     public bool? IsWarning { get; init; }
     [JsonPropertyName("zones")]

@@ -183,8 +183,6 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             {
                 EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, sb.ToString(), telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
             }
-
-            // TODO: informational text
         }
 
         // Mark Hypocentre
