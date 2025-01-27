@@ -11,7 +11,7 @@ namespace EasonEetwViewer.Services;
 internal partial class StaticResources : ObservableObject
 {
     private const string _baseGisFile = "Content/GisFiles/";
-    internal IProvider PastRegion { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/Regions.shp", true, true);
+    internal IProvider Region { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/Regions.shp", true, true);
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
     private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)

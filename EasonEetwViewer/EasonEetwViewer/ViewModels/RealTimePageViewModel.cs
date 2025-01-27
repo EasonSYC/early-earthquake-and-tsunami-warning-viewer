@@ -6,7 +6,10 @@ using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.KyoshinMonitor;
@@ -18,9 +21,12 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
+using Mapsui.Nts;
 using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
+using Mapsui.Styles.Thematics;
+using NetTopologySuite.Geometries;
 using RTools_NTS.Util;
 using SkiaSharp;
 
@@ -115,7 +121,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, sb.ToString());
         LiveEewList.Add(eewTemplate);
 
-        // Add the layer for the hypocentre
         if (eew.Body.Earthquake is not null)
         {
             if (eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null && eew.Body.Earthquake.Hypocentre.Coordinate.Latitude is not null)
@@ -151,11 +156,51 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             }
         }
 
-        // TODO: Add the layer for the regions
-        // Map.Layers.Add;
+        if (eew.Body.Intensity is not null)
+        {
+            List<Region> regions = eew.Body.Intensity.Regions;
+
+            ILayer layer = new Layer()
+            {
+                Name = _eewRegionLayerPrefix + eew.EventId,
+                DataSource = _resources.Region,
+                Style = CreateRegionThemeStyle(regions)
+            };
+
+            if (!eewTemplate.Token.IsCancellationRequested)
+            {
+                Map.Layers.Add(new RasterizingLayer(layer));
+            }
+        }
 
         _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
+
+    private static ThemeStyle CreateRegionThemeStyle(List<Region> regions)
+        => new(f =>
+            {
+                if (f is GeometryFeature geometryFeature)
+                {
+                    if (geometryFeature.Geometry is Point)
+                    {
+                        return null;
+                    }
+                }
+
+                foreach (Region region in regions)
+                {
+                    if (f["code"]?.ToString()?.ToLower() == region.Code)
+                    {
+                        return new VectorStyle()
+                        {
+                            Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.ForecastMaxInt.From).ToColourString()), 0.60f))
+                        };
+                    }
+                }
+
+                return null;
+            });
+
     private async Task SwitchEew()
     {
         while (!_token.IsCancellationRequested)

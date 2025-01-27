@@ -140,7 +140,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     Map.Layers.Add(new RasterizingLayer(layer));
                 }
 
-                List<IFeature> features = (await _resources.PastRegion.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1)))).ToList();
+                List<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1)))).ToList();
                 List<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
                 foreach (RegionIntensity region in regionData)
                 {
@@ -225,7 +225,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         => new()
         {
             Name = _regionLayerName,
-            DataSource = _resources.PastRegion,
+            DataSource = _resources.Region,
             Style = CreateRegionThemeStyle(regions)
         };
 
@@ -241,20 +241,20 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     }
                 }
 
-                VectorStyle? style = null;
-
                 foreach (RegionIntensity region in regions)
                 {
-                    if (region.MaxInt is not null && f["code"]?.ToString()?.ToLower() == region.Code)
+                    if (f["code"]?.ToString()?.ToLower() == region.Code)
                     {
-                        style = new VectorStyle()
-                        {
-                            Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.MaxInt).ToColourString()), 0.60f))
-                        };
+                        return region.MaxInt is not null
+                            ? new VectorStyle()
+                            {
+                                Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.MaxInt).ToColourString()), 0.60f))
+                            }
+                            : null;
                     }
                 }
 
-                return style;
+                return null;
             });
 
     [RelayCommand]
