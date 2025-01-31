@@ -10,6 +10,7 @@ using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -143,10 +144,11 @@ public partial class App : Application
 
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
+        _ = collection.AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile("tjma2001.txt"));
         _ = collection.AddSingleton<IWebSocketClient, WebSocketClient>();
 
-        _ = collection.AddSingleton<ImageFetch>();
-        _ = collection.AddSingleton(sp => new PointExtract(pointExtractPath));
+        _ = collection.AddSingleton<IImageFetch, ImageFetch>();
+        _ = collection.AddSingleton<IPointExtract>(sp => new PointExtract(pointExtractPath));
 
         _ = collection.AddSingleton<StaticResources>();
 

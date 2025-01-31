@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller;
@@ -8,6 +9,7 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
+using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
@@ -49,6 +51,25 @@ internal class Program
         // await TestKmoni();
 
         // TestDecode();
+
+        TestTimeTableProvider();
+    }
+
+    private static void TestTimeTableProvider()
+    {
+        ITimeTableProvider timeTable = TimeTableProvider.FromFile("tjma2001.txt");
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 0));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 1));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 2));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 3));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 4));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 500));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 0));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 1));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 2));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 3));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 4));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 500));
     }
 
     private static void TestDecode()

@@ -8,7 +8,7 @@ namespace EasonEetwViewer.KyoshinMonitor;
 /// Represents the functionality to extract the colour of points from a <c>SKBitmap</c>.
 /// </summary>
 /// <param name="filePath">The path to the file that stores the list of observation points.</param>
-public class PointExtract(string filePath)
+public class PointExtract(string filePath) : IPointExtract
 {
     /// <summary>
     /// The list of observation points.

@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.ViewModels;
 using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Styles;
-using Mapsui.Utilities;
 
 namespace EasonEetwViewer.Services;
 

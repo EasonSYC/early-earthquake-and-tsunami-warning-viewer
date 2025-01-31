@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.KyoshinMoni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer", "EasonEetwViewer\EasonEetwViewer.csproj", "{058FBE52-A267-4D75-8446-71F0F4B55CB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.JmaTravelTime", "EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj", "{DDAC7851-F537-4382-96A2-9AD6079F24AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{058FBE52-A267-4D75-8446-71F0F4B55CB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDAC7851-F537-4382-96A2-9AD6079F24AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDAC7851-F537-4382-96A2-9AD6079F24AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDAC7851-F537-4382-96A2-9AD6079F24AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDAC7851-F537-4382-96A2-9AD6079F24AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

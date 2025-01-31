@@ -5,7 +5,7 @@ namespace EasonEetwViewer.KyoshinMonitor;
 /// <summary>
 /// Represents the functionality to fetch a kmoni image.
 /// </summary>
-public class ImageFetch
+public class ImageFetch : IImageFetch
 {
     /// <summary>
     /// The base URI for the images.

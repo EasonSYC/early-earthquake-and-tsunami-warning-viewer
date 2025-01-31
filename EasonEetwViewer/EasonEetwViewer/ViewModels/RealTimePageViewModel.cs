@@ -8,10 +8,10 @@ using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Models;
@@ -27,14 +27,13 @@ using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
-using RTools_NTS.Util;
 using SkiaSharp;
 
 namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
-    public RealtimePageViewModel(ImageFetch imageFetch, PointExtract pointExtract, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange)
+    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTableProvider timeTableProvider, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange)
     : base(resources, authenticatorDto, apiCaller, telegramRetriever, onChange)
     {
         KmoniOptions = kmoniOptions;
@@ -52,6 +51,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _webSocketClient = webSocketClient;
         _webSocketClient.DataReceivedAction += OnDataReceived;
 
+        _timeTableProvider = timeTableProvider;
+
         _cts = new();
         _token = _cts.Token;
 
@@ -68,25 +69,29 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly CancellationTokenSource _cts;
     private readonly CancellationToken _token;
 
+    #region eew
     private const string _eewHypocentreLayerPrefix = "Hypocentre";
     private const string _eewRegionLayerPrefix = "Regions";
     private const string _eewWavefrontLayerPrefix = "Wavefront";
 
+    private readonly ITimeTableProvider _timeTableProvider;
+
     private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromMilliseconds(500);
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
-    private readonly TimeSpan _eewLifeTime = TimeSpan.FromSeconds(90);
+    private readonly TimeSpan _eewLifeTime = TimeSpan.FromSeconds(150);
 
-    #region eew
     [ObservableProperty]
     private ObservableCollection<EewDetailsTemplate> _liveEewList = [];
     public EewDetailsTemplate? CurrentDisplayEew
         => CurrentEewIndex is null || CurrentEewIndex >= LiveEewList.Count
             ? null
             : LiveEewList[(int)CurrentEewIndex];
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CurrentDisplayEew))]
     private uint? _currentEewIndex = null;
+
     private async Task OnEewReceived(EewInformationSchema eew)
     {
         for (int i = LiveEewList.Count - 1; i >= 0; --i)
@@ -116,7 +121,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 _ = sb.AppendLine(eew.Body.Comments.Warning.Text);
             }
         }
-
 
         EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, sb.ToString());
         LiveEewList.Add(eewTemplate);
@@ -255,8 +259,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     }
     #endregion
 
-    private const string _tsunamiWarningLayerName = "Tsunami";
     #region tsunami
+    private const string _tsunamiWarningLayerName = "Tsunami";
     private void OnTsunamiReceived(TsunamiInformationSchema schema)
     {
         ;
@@ -295,8 +299,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     private const string _realTimeLayerName = "KmoniLayer";
     private const int _kmoniDelaySeconds = 1;
-    private readonly ImageFetch _imageFetch;
-    private readonly PointExtract _pointExtract;
+    private readonly IImageFetch _imageFetch;
+    private readonly IPointExtract _pointExtract;
 
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
