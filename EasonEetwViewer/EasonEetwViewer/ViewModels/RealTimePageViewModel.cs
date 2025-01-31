@@ -1,16 +1,11 @@
-﻿using System.Buffers;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.Json;
 using System.Timers;
-using System.Xml.Linq;
-using Avalonia.Controls.Shapes;
 using Avalonia.Logging;
-using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
@@ -33,14 +28,11 @@ using Mapsui.Providers;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
-using Mapsui.UI.Objects;
-using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using SkiaSharp;
-using Svg.Model.Drawables.Elements;
+using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
-using Coordinate = NetTopologySuite.Geometries.Coordinate;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -267,7 +259,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             return;
         }
-
 
         int depth = (int)eew.Earthquake.Hypocentre.Depth.Value;
 

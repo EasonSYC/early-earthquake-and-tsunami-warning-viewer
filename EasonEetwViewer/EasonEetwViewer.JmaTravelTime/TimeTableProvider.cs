@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace EasonEetwViewer.JmaTravelTime;
 public partial class TimeTableProvider : ITimeTableProvider
@@ -41,8 +35,8 @@ public partial class TimeTableProvider : ITimeTableProvider
         int startIndex = depth switch
         {
             >= 0 and <= 50 => depth / 2 * _rowsPerDepth,
-            >= 50 and <= 200 => (25 + (depth - 50) / 5) * _rowsPerDepth,
-            >= 200 and <= 700 => (55 + (depth - 200) / 10) * _rowsPerDepth,
+            >= 50 and <= 200 => (25 + ((depth - 50) / 5)) * _rowsPerDepth,
+            >= 200 and <= 700 => (55 + ((depth - 200) / 10)) * _rowsPerDepth,
             _ => throw new ArgumentOutOfRangeException(nameof(depth)),
         };
         int endIndex = startIndex + _rowsPerDepth;
@@ -74,7 +68,7 @@ public partial class TimeTableProvider : ITimeTableProvider
         double x2 = _timeTable.ElementAt(leftPoint + 1).Times.ElementAt(index);
         double y2 = _timeTable.ElementAt(leftPoint + 1).Radius;
 
-        return y1 + (timeSecond - x1) * (y2 - y1) / (x2 - x1);
+        return y1 + ((timeSecond - x1) * (y2 - y1) / (x2 - x1));
     }
 
     [GeneratedRegex(@"^P [\d\s]{4}.\d{3} S [\d\s]{4}.\d{3} [\d\s]{3}  [\d\s]{5}$")]

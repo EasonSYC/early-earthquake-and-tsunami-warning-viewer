@@ -1,5 +1,4 @@
 ﻿using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller;
@@ -18,8 +17,7 @@ namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
-    private static async Task Main()
-    {
+    private static async Task Main() =>
         //IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         //string apiKey = config["ApiKey"] ?? string.Empty;
@@ -53,7 +51,6 @@ internal class Program
         // TestDecode();
 
         TestTimeTableProvider();
-    }
 
     private static void TestTimeTableProvider()
     {

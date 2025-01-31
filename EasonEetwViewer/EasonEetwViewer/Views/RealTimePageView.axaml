@@ -24,6 +24,13 @@
                        Background="Gray"
                        Canvas.Bottom="0"
                        Canvas.Left="0"/>
+            <TextBlock Margin="0"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Text="{Binding TimeDisplayText}"
+                       Background="Gray"
+                       Canvas.Top="0"
+                       Canvas.Left="0"/>
         </Canvas>
     </Grid>
     
