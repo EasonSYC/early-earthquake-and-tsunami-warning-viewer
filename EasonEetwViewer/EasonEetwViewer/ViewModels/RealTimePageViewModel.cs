@@ -1,11 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Buffers;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.Json;
 using System.Timers;
+using System.Xml.Linq;
+using Avalonia.Controls.Shapes;
 using Avalonia.Logging;
+using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
@@ -22,12 +27,20 @@ using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts;
+using Mapsui.Nts.Extensions;
 using Mapsui.Projections;
+using Mapsui.Providers;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using Mapsui.UI.Objects;
+using NetTopologySuite.Features;
 using NetTopologySuite.Geometries;
 using SkiaSharp;
+using Svg.Model.Drawables.Elements;
+using IFeature = Mapsui.IFeature;
+using Polygon = NetTopologySuite.Geometries.Polygon;
+using Coordinate = NetTopologySuite.Geometries.Coordinate;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -219,16 +232,104 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             await Task.Delay(_switchEewInterval);
         }
     }
+
+    // TODO: P/S Circle Styles
+
+    private readonly IStyle pCircleStyle
+        = new VectorStyle
+        {
+            Outline = new Pen
+            {
+                Color = Color.Blue,
+                Width = 2
+            },
+            Fill = null
+        };
+
+    private readonly IStyle sCircleStyle
+       = new VectorStyle
+       {
+           Outline = new Pen
+           {
+               Color = Color.Orange,
+               Width = 2
+           },
+           Fill = null
+       };
+
     private async Task DrawEewCircles(EewDetailsTemplate eew)
     {
-        while (!eew.Token.IsCancellationRequested)
+        if (eew.Earthquake is null
+            || eew.Earthquake.Hypocentre.Depth.Value is null
+            || eew.Earthquake.Hypocentre.Coordinate.Latitude is null
+            || eew.Earthquake.Hypocentre.Coordinate.Longitude is null
+            || eew.Earthquake.OriginTime is null)
         {
-            // TODO: Draw circles
-
-            await Task.Delay(_refreshCircleInterval);
+            return;
         }
 
-        _ = Map.Layers.Remove(x => x.Name == (_eewWavefrontLayerPrefix + eew.EventId));
+
+        int depth = (int)eew.Earthquake.Hypocentre.Depth.Value;
+
+        if (depth is < 0 or > 700)
+        {
+            return;
+        }
+
+        string pLayerName = _eewWavefrontLayerPrefix + "P" + eew.EventId;
+        string sLayerName = _eewWavefrontLayerPrefix + "S" + eew.EventId;
+
+        while (!eew.Token.IsCancellationRequested)
+        {
+            double time = ((TimeSpan)(DateTimeOffset.Now - eew.Earthquake.OriginTime)).Seconds;
+            (double pDistance, double sDistance) = _timeTableProvider.DistanceFromDepthTime(depth, time);
+
+            double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
+            double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
+
+            Polygon pCirclePolygon = CreateCircleRing(latitude, longitude, pDistance);
+            Polygon sCirclePolygon = CreateCircleRing(latitude, longitude, sDistance);
+
+            ILayer pLayer = new Layer
+            {
+                Name = pLayerName,
+                DataSource = new MemoryProvider(pCirclePolygon.ToFeature()),
+                Style = pCircleStyle
+            };
+
+            ILayer sLayer = new Layer
+            {
+                Name = sLayerName,
+                DataSource = new MemoryProvider(sCirclePolygon.ToFeature()),
+                Style = sCircleStyle
+            };
+
+            Map.Layers.Add(pLayer);
+            Map.Layers.Add(sLayer);
+
+            await Task.Delay(_refreshCircleInterval);
+
+            _ = Map.Layers.Remove(x => x.Name == pLayerName);
+            _ = Map.Layers.Remove(x => x.Name == sLayerName);
+        }
+    }
+    private static Polygon CreateCircleRing(double latitude, double longitude, double radius, double quality = 360)
+    {
+        (double x, double y) = SphericalMercator.FromLonLat(longitude, latitude);
+        radius *= 1000;
+        radius *= 1.23;
+
+        List<Coordinate> outerRing = [];
+        double increment = 360d / (quality < 3 ? 3 : (quality > 360 ? 360 : quality));
+        for (double angle = 0; angle < 360; angle += increment)
+        {
+            double angleInRadians = angle / 180 * Math.PI;
+            outerRing.Add(new Coordinate(x + (Math.Sin(angleInRadians) * radius), y + (Math.Cos(angleInRadians) * radius)));
+        }
+
+        outerRing.Add(outerRing[0]);
+
+        return new Polygon(new LinearRing([.. outerRing]));
     }
     private async Task ClearExpiredEew()
     {
