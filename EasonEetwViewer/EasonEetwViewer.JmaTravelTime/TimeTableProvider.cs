@@ -49,7 +49,7 @@ public partial class TimeTableProvider : ITimeTableProvider
         int leftPoint;
         if (timeSecond <= _timeTable.ElementAt(startIndex).Times.ElementAt(index))
         {
-            leftPoint = 0;
+            return 0;
         }
         else if (timeSecond >= _timeTable.ElementAt(endIndex - 1).Times.ElementAt(index))
         {

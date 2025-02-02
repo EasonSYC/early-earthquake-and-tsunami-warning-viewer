@@ -60,13 +60,21 @@ internal class Program
         Console.WriteLine(timeTable.DistanceFromDepthTime(0, 2));
         Console.WriteLine(timeTable.DistanceFromDepthTime(0, 3));
         Console.WriteLine(timeTable.DistanceFromDepthTime(0, 4));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 500));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 5));
+        for(int i = 10; i <= 180; ++i)
+        {
+            Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(0, i)}");
+        }
         Console.WriteLine(timeTable.DistanceFromDepthTime(700, 0));
         Console.WriteLine(timeTable.DistanceFromDepthTime(700, 1));
         Console.WriteLine(timeTable.DistanceFromDepthTime(700, 2));
         Console.WriteLine(timeTable.DistanceFromDepthTime(700, 3));
         Console.WriteLine(timeTable.DistanceFromDepthTime(700, 4));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 500));
+        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 5));
+        for (int i = 10; i <= 180; ++i)
+        {
+            Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(700, i)}");
+        }
     }
 
     private static void TestDecode()
