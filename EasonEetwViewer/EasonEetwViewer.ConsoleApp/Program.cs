@@ -54,26 +54,11 @@ internal class Program
 
     private static void TestTimeTableProvider()
     {
+        int depth = 10;
         ITimeTableProvider timeTable = TimeTableProvider.FromFile("tjma2001.txt");
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 0));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 1));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 2));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 3));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 4));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(0, 5));
-        for(int i = 10; i <= 180; ++i)
+        for(int i = 0; i <= 180; ++i)
         {
-            Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(0, i)}");
-        }
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 0));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 1));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 2));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 3));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 4));
-        Console.WriteLine(timeTable.DistanceFromDepthTime(700, 5));
-        for (int i = 10; i <= 180; ++i)
-        {
-            Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(700, i)}");
+            Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(depth, i)}");
         }
     }
 
