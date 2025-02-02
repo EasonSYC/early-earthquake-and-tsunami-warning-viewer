@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -42,6 +44,10 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
+    private readonly JsonSerializerOptions _options = new()
+    {
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
+    };
     public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTableProvider timeTableProvider, KmoniOptions kmoniOptions, IWebSocketClient webSocketClient,
         StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
     : base(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
@@ -84,10 +90,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     private readonly ITimeTableProvider _timeTableProvider;
 
-    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromMilliseconds(500);
+    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromMilliseconds(250);
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
-    private readonly TimeSpan _eewLifeTime = TimeSpan.FromSeconds(150);
+    private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
 
     [ObservableProperty]
     private ObservableCollection<EewDetailsTemplate> _liveEewList = [];
@@ -296,14 +302,17 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 Style = sCircleStyle
             };
 
+
+            _ = Map.Layers.Remove(x => x.Name == pLayerName);
+            _ = Map.Layers.Remove(x => x.Name == sLayerName);
             Map.Layers.Add(pLayer);
             Map.Layers.Add(sLayer);
 
             await Task.Delay(_refreshCircleInterval);
-
-            _ = Map.Layers.Remove(x => x.Name == pLayerName);
-            _ = Map.Layers.Remove(x => x.Name == sLayerName);
         }
+
+        _ = Map.Layers.Remove(x => x.Name == pLayerName);
+        _ = Map.Layers.Remove(x => x.Name == sLayerName);
     }
     private static Polygon CreateCircleRing(double latitude, double longitude, double radius, double quality = 360)
     {
@@ -344,11 +353,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         eew.TokenSource.Cancel();
         eew.TokenSource.Dispose();
         LiveEewList.RemoveAt(i);
-        if (LiveEewList.Remove(eew))
-        {
-            _ = Map.Layers.Remove(x => x.Name == (_eewHypocentreLayerPrefix + eew.EventId));
-            _ = Map.Layers.Remove(x => x.Name == (_eewRegionLayerPrefix + eew.EventId));
-        }
+        _ = Map.Layers.Remove(x => x.Name == (_eewHypocentreLayerPrefix + eew.EventId));
+        _ = Map.Layers.Remove(x => x.Name == (_eewRegionLayerPrefix + eew.EventId));
     }
     #endregion
 
@@ -368,14 +374,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             Head headData = JsonSerializer.Deserialize<Head>(data) ?? throw new ArgumentNullException(nameof(data));
             if (headData.Schema.Type == "eew-information" && headData.Schema.Version == "1.0.0")
             {
-                EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(data)!;
+                EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(data, _options)!;
                 OnEewReceived(eew);
                 return;
             }
 
             if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.1.0")
             {
-                TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(data)!;
+                TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(data, _options)!;
                 OnTsunamiReceived(tsunami);
                 return;
             }

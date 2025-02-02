@@ -13,5 +13,5 @@ public record IntensityInfo
     [JsonPropertyName("regions")]
     public required List<Region> Regions { get; init; }
     [JsonPropertyName("stations")]
-    public required List<Station> Stations { get; init; }
+    public List<Station>? Stations { get; init; }
 }

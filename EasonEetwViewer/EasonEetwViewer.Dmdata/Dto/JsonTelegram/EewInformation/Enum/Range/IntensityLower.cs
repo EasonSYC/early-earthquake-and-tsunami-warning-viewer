@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
+[JsonConverter(typeof(JsonStringEnumConverter<IntensityLower>))]
 public enum IntensityLower
 {
     /// <summary>

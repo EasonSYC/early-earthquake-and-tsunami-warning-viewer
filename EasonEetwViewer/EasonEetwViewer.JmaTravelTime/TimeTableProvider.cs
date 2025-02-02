@@ -61,6 +61,8 @@ public partial class TimeTableProvider : ITimeTableProvider
             {
                 ;
             }
+
+            leftPoint -= 1;
         }
 
         double x1 = _timeTable.ElementAt(leftPoint).Times.ElementAt(index);
