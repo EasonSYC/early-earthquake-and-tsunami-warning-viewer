@@ -4,11 +4,12 @@ using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
-internal partial class PageViewModelBase(AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, OnAuthenticatorChanged onChange) : ViewModelBase
+internal partial class PageViewModelBase(AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange) : ViewModelBase
 {
     private protected AuthenticatorDto _authenticatorDto = authenticatorDto;
     private protected IApiCaller _apiCaller = apiCaller;
     private protected ITelegramRetriever _telegramRetriever = telegramRetriever;
+    private protected ITimeProvider _timeProvider = timeProvider;
 
     private readonly OnAuthenticatorChanged OnChange = onChange;
 

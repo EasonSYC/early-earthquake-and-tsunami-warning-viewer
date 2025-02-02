@@ -3,6 +3,7 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
@@ -18,8 +19,9 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, WebSocketStartPost startPost, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange, OnLanguageChanged onLangChange)
-    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, onChange)
+internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocketStartPost startPost, IWebSocketClient webSocketClient, OnLanguageChanged onLangChange,
+    AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
+    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
 {
     #region languageSettings
     private readonly OnLanguageChanged LanguageChanged = onLangChange;

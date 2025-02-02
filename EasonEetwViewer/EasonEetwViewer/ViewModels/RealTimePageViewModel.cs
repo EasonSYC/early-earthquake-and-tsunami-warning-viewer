@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.Json;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DynamicData;
 using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
@@ -14,6 +17,7 @@ using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
+using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -38,19 +42,18 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
-    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTableProvider timeTableProvider, StaticResources resources, KmoniOptions kmoniOptions, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, IWebSocketClient webSocketClient, OnAuthenticatorChanged onChange)
-    : base(resources, authenticatorDto, apiCaller, telegramRetriever, onChange)
+    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTableProvider timeTableProvider, KmoniOptions kmoniOptions, IWebSocketClient webSocketClient,
+        StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
+    : base(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
     {
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;
         _pointExtract = pointExtract;
-
         _timer = new System.Timers.Timer(1000)
         {
             AutoReset = true,
             Enabled = true,
         };
-
         _timer.Elapsed += OnTimedEvent;
 
         _webSocketClient = webSocketClient;
@@ -225,8 +228,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         }
     }
 
-    // TODO: P/S Circle Styles
-
     private readonly IStyle pCircleStyle
         = new VectorStyle
         {
@@ -272,7 +273,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         while (!eew.Token.IsCancellationRequested)
         {
-            double time = ((TimeSpan)(DateTimeOffset.Now - eew.Earthquake.OriginTime)).Seconds;
+            double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).Seconds;
             (double pDistance, double sDistance) = _timeTableProvider.DistanceFromDepthTime(depth, time);
 
             double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
@@ -328,7 +329,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             for (int i = LiveEewList.Count - 1; i >= 0; --i)
             {
-                if (LiveEewList[i].ExpiryTime < DateTimeOffset.Now)
+                if (LiveEewList[i].ExpiryTime < _timeProvider.DateTimeOffsetNow())
                 {
                     RemoveEewAt(i);
                 }
@@ -386,7 +387,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal KmoniOptions KmoniOptions { get; init; }
 
     private const int _jstAheadUtcHours = 9;
-    internal static string TimeDisplayText => DateTimeOffset.Now.ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
+    internal string TimeDisplayText => _timeProvider.DateTimeOffsetNow().ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
     private readonly System.Timers.Timer _timer;
 
     private const string _realTimeLayerName = "KmoniLayer";
@@ -428,7 +429,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
                 KmoniOptions.DataChoice,
                 KmoniOptions.SensorChoice,
-                DateTimeOffset.Now.AddSeconds(-_kmoniDelaySeconds))).Result;
+                _timeProvider.DateTimeOffsetNow().AddSeconds(-_kmoniDelaySeconds))).Result;
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);

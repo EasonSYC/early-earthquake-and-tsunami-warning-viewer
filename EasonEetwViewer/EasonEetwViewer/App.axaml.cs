@@ -142,6 +142,8 @@ public partial class App : Application
                     File.WriteAllText(languagePath, s.Name);
                 });
 
+        _ = collection.AddSingleton<ITimeProvider, DefaultTimeProvider>();
+
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile("tjma2001.txt"));
