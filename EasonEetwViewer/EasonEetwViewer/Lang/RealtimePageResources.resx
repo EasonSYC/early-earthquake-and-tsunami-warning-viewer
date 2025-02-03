@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EewPlumSpecificText" xml:space="preserve">
-    <value>PLUM仮定震源要素</value>
+    <value>Hypocentre assumed from PLUM method</value>
   </data>
   <data name="EewCancellingText" xml:space="preserve">
     <value>Cancelled</value>
@@ -129,8 +129,8 @@
   <data name="EewForecastText" xml:space="preserve">
     <value>Forecast</value>
   </data>
-  <data name="EewLevelInaccurateText" xml:space="preserve">
-    <value>レベル法</value>
+  <data name="EewLevelSpecificText" xml:space="preserve">
+    <value>No hypocentre using level method</value>
   </data>
   <data name="EewNumberTextAfter" xml:space="preserve">
     <value />
@@ -153,7 +153,7 @@
   <data name="RoundBracketsStart" xml:space="preserve">
     <value>(</value>
   </data>
-  <data name="EewIpfOneWaringText" xml:space="preserve">
-    <value />
+  <data name="EewOnePointWarningText" xml:space="preserve">
+    <value>Information may have low accuracy due to single-point ovservation</value>
   </data>
 </root>

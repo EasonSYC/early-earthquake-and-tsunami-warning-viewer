@@ -152,6 +152,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+		
         <Grid Grid.Column="1"
               Grid.Row="0">
             <DockPanel>
@@ -243,5 +244,4 @@
                     Margin="10"/>
         </Grid>
     </Grid>
-    
 </UserControl>

@@ -88,20 +88,11 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to No hypocentre using level method.
         /// </summary>
-        public static string EewIpfOneWaringText {
+        public static string EewLevelSpecificText {
             get {
-                return ResourceManager.GetString("EewIpfOneWaringText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to レベル法.
-        /// </summary>
-        public static string EewLevelInaccurateText {
-            get {
-                return ResourceManager.GetString("EewLevelInaccurateText", resourceCulture);
+                return ResourceManager.GetString("EewLevelSpecificText", resourceCulture);
             }
         }
         
@@ -124,7 +115,16 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PLUM仮定震源要素.
+        ///   Looks up a localized string similar to Information may have low accuracy due to single-point ovservation.
+        /// </summary>
+        public static string EewOnePointWarningText {
+            get {
+                return ResourceManager.GetString("EewOnePointWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hypocentre assumed from PLUM method.
         /// </summary>
         public static string EewPlumSpecificText {
             get {
