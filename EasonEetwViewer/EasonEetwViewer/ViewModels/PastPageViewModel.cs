@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using Avalonia.Metadata;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Authentication;
@@ -35,9 +36,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private EarthquakeItemTemplate? _selectedEarthquake;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsEarthquakeDetailsEnabled))]
     private EarthquakeDetailsTemplate? _earthquakeDetails;
-    public bool IsEarthquakeDetailsEnabled => EarthquakeDetails is not null;
 
     private const double _extendFactor = 1.2;
 
@@ -95,15 +94,13 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                         continue;
                     }
 
-                    List<Station> potnetialStations = _earthquakeObservationStations!.Where(x => x.XmlCode == station.Code).ToList();
-                    if (potnetialStations.Count == 0)
+                    Station? potnetialStation = _earthquakeObservationStations!.FirstOrDefault(x => x.XmlCode == station.Code);
+                    if (potnetialStation is null)
                     {
                         continue;
                     }
 
-                    Station stationDetails = potnetialStations[0];
-
-                    PointFeature feature = new(SphericalMercator.FromLonLat(stationDetails.Longitude, stationDetails.Latitude).ToMPoint());
+                    PointFeature feature = new(SphericalMercator.FromLonLat(potnetialStation.Longitude, potnetialStation.Latitude).ToMPoint());
                     feature.Styles.Add(new SymbolStyle()
                     {
                         SymbolScale = 0.25,
@@ -112,19 +109,16 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     });
                     stationFeature.Add(feature);
 
-                    string prefectureCode = stationDetails.City.Code[0..2];
-                    List<PrefectureData> potentialPrefectures = _resources.Prefectures.Where(x => x.Code == prefectureCode).ToList();
-                    if (potentialPrefectures.Count == 0)
+                    string prefectureCode = potnetialStation.City.Code[0..2];
+                    PrefectureData? prefecture = _resources.Prefectures.FirstOrDefault(x => x.Code == prefectureCode);
+                    if (prefecture is not null)
                     {
-                        continue;
+                        tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
+                            new(prefecture.Name, prefecture.Code,
+                                new(potnetialStation.Region.KanjiName, potnetialStation.Region.Code,
+                                    new(potnetialStation.City.KanjiName, potnetialStation.City.Code,
+                                        new(station.Name, potnetialStation.XmlCode)))));
                     }
-
-                    PrefectureData prefectureData = potentialPrefectures[0];
-                    tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
-                        new(prefectureData.Name, prefectureData.Code,
-                            new(stationDetails.Region.KanjiName, stationDetails.Region.Code,
-                                new(stationDetails.City.KanjiName, stationDetails.City.Code,
-                                    new(station.Name, stationDetails.XmlCode)))));
                 }
 
                 ILayer layer = new MemoryLayer()
@@ -140,48 +134,23 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     Map.Layers.Add(new RasterizingLayer(layer));
                 }
 
-                List<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1)))).ToList();
+                IEnumerable<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1))));
                 List<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
                 foreach (RegionIntensity region in regionData)
                 {
-                    List<IFeature> potentialFeatures = features.Where(f => (f["code"]?.ToString()?.ToLower() == region.Code)).ToList();
-                    if (potentialFeatures.Count == 0)
+                    IFeature? potentialFeature = features.FirstOrDefault(f => (f["code"]?.ToString()?.ToLower() == region.Code));
+                    if (potentialFeature is not null)
                     {
-                        continue;
+                        regionLimits = regionLimits is null ? potentialFeature.Extent : regionLimits.Join(potentialFeature.Extent);
                     }
-
-                    regionLimits = regionLimits is null ? potentialFeatures[0].Extent : regionLimits.Join(potentialFeatures[0].Extent);
                 }
             }
 
-            StringBuilder sb = new();
-
-            if (telegramInfo.Body.Text is not null)
-            {
-                _ = sb.AppendLine(telegramInfo.Body.Text);
-            }
-
-            if (telegramInfo.Body.Comments is not null)
-            {
-                if (telegramInfo.Body.Comments.FreeText is not null)
-                {
-                    _ = sb.AppendLine(telegramInfo.Body.Comments.FreeText);
-                }
-
-                if (telegramInfo.Body.Comments.Forecast is not null)
-                {
-                    _ = sb.AppendLine(telegramInfo.Body.Comments.Forecast.Text);
-                }
-
-                if (telegramInfo.Body.Comments.Var is not null)
-                {
-                    _ = sb.AppendLine(telegramInfo.Body.Comments.Var.Text);
-                }
-            }
+            string informationalText = ToInformationString(telegramInfo);
 
             if (!token.IsCancellationRequested)
             {
-                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, sb.ToString(), telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
+                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, informationalText, telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
             }
         }
 
@@ -221,6 +190,36 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         }
     }
 
+    private string ToInformationString(EarthquakeInformationSchema earthquake)
+    {
+        StringBuilder sb = new();
+
+        if (earthquake.Body.Text is not null)
+        {
+            _ = sb.AppendLine(earthquake.Body.Text);
+        }
+
+        if (earthquake.Body.Comments is not null)
+        {
+            if (earthquake.Body.Comments.FreeText is not null)
+            {
+                _ = sb.AppendLine(earthquake.Body.Comments.FreeText);
+            }
+
+            if (earthquake.Body.Comments.Forecast is not null)
+            {
+                _ = sb.AppendLine(earthquake.Body.Comments.Forecast.Text);
+            }
+
+            if (earthquake.Body.Comments.Var is not null)
+            {
+                _ = sb.AppendLine(earthquake.Body.Comments.Var.Text);
+            }
+        }
+
+        return sb.ToString();
+    }
+
     private Layer CreateRegionLayer(List<RegionIntensity> regions)
         => new()
         {
@@ -233,14 +232,6 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private static ThemeStyle CreateRegionThemeStyle(List<RegionIntensity> regions)
         => new(f =>
             {
-                if (f is GeometryFeature geometryFeature)
-                {
-                    if (geometryFeature.Geometry is Point)
-                    {
-                        return null;
-                    }
-                }
-
                 foreach (RegionIntensity region in regions)
                 {
                     if (f["code"]?.ToString()?.ToLower() == region.Code)

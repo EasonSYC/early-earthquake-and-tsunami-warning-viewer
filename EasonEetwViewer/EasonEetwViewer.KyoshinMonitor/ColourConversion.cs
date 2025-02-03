@@ -94,6 +94,7 @@ public class ColourConversion
                                         : height is >= 0.3 and <= 0.4
                                                     ? (0.2 * height) + 0.92
                                                     : height is >= 0.4 and <= 0.8 ? 1 : height is >= 0.8 and <= 0.9 ? (-0.3 * height) + 1.24 : (-2.9 * height) + 3.58;
+    public static SKColor HeightToColour(double height) => SKColor.FromHsv((float)HeightToHue(height), (float)HeightToSaturation(height) * 100, (float)HeightToValue(height) * 100);
     /// <summary>
     /// Converts the colour to the normalised height.
     /// </summary>

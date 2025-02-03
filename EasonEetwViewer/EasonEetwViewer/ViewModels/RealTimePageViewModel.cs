@@ -35,6 +35,7 @@ using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
+using NetTopologySuite.Noding;
 using SkiaSharp;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
@@ -106,17 +107,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     [NotifyPropertyChangedFor(nameof(CurrentDisplayEew))]
     private uint? _currentEewIndex = null;
 
-    private async Task OnEewReceived(EewInformationSchema eew)
+    private static string ToInformationString(EewInformationSchema eew)
     {
-        for (int i = LiveEewList.Count - 1; i >= 0; --i)
-        {
-            if (LiveEewList[i].EventId == eew.EventId)
-            {
-                RemoveEewAt(i);
-                break;
-            }
-        }
-
         StringBuilder sb = new();
         if (eew.Body.Text is not null)
         {
@@ -136,41 +128,61 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             }
         }
 
-        EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, sb.ToString());
+        return sb.ToString();
+    }
+    private async Task OnEewReceived(EewInformationSchema eew)
+    {
+        if (!int.TryParse(eew.SerialNo, out int serial))
+        {
+            serial = 0;
+        }
+
+        for (int i = 0; i < LiveEewList.Count; ++i)
+        {
+            if (LiveEewList[i].EventId == eew.EventId)
+            {
+                if (LiveEewList[i].Serial > serial)
+                {
+                    return;
+                }
+
+                RemoveEewAt(i);
+                break;
+            }
+        }
+
+        string informationalText = ToInformationString(eew);
+
+        EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, serial, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, eew.Body.Intensity, informationalText);
         LiveEewList.Add(eewTemplate);
 
-        if (eew.Body.Earthquake is not null)
+        if (eew.Body.Earthquake is not null
+            && eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null
+            && eew.Body.Earthquake.Hypocentre.Coordinate.Latitude is not null)
         {
-            if (eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null && eew.Body.Earthquake.Hypocentre.Coordinate.Latitude is not null)
+            MPoint point = SphericalMercator.FromLonLat(
+                eew.Body.Earthquake.Hypocentre.Coordinate.Longitude!.DoubleValue,
+                eew.Body.Earthquake.Hypocentre.Coordinate.Latitude!.DoubleValue).ToMPoint();
+
+            MemoryLayer layer = new()
             {
-                MPoint point = SphericalMercator.FromLonLat(eew.Body.Earthquake.Hypocentre.Coordinate.Longitude!.DoubleValue, eew.Body.Earthquake.Hypocentre.Coordinate.Latitude!.DoubleValue).ToMPoint();
+                Name = _eewHypocentreLayerPrefix + eew.EventId,
+                Features = [new PointFeature(point)],
+            };
 
-                ILayer layer;
+            if (eew.Body.Earthquake.Condition is not "仮定震源要素")
+            {
+                // TODO: PLUM Hypocentre
+                layer.Style = _resources.HypocentreShapeStyle;
+            }
+            else
+            {
+                layer.Style = _resources.HypocentreShapeStyle;
+            }
 
-                if (eew.Body.Earthquake.Condition is not "仮定震源要素")
-                {
-                    // TODO: PLUM Hypocentre
-                    layer = new MemoryLayer()
-                    {
-                        Name = _eewHypocentreLayerPrefix + eew.EventId,
-                        Features = [new PointFeature(point)],
-                        Style = _resources.HypocentreShapeStyle
-                    };
-                }
-                else
-                {
-                    layer = new MemoryLayer()
-                    {
-                        Name = _eewHypocentreLayerPrefix + eew.EventId,
-                        Features = [new PointFeature(point)],
-                        Style = _resources.HypocentreShapeStyle
-                    };
-                }
-
-                if (!eewTemplate.Token.IsCancellationRequested)
-                {
-                    Map.Layers.Add(layer);
-                }
+            if (!eewTemplate.Token.IsCancellationRequested)
+            {
+                Map.Layers.Add(layer);
             }
         }
 
@@ -193,18 +205,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
-
     private static ThemeStyle CreateRegionThemeStyle(List<Region> regions)
         => new(f =>
             {
-                if (f is GeometryFeature geometryFeature)
-                {
-                    if (geometryFeature.Geometry is Point)
-                    {
-                        return null;
-                    }
-                }
-
                 foreach (Region region in regions)
                 {
                     if (f["code"]?.ToString()?.ToLower() == region.Code)
@@ -218,7 +221,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
                 return null;
             });
-
     private async Task SwitchEew()
     {
         while (!_token.IsCancellationRequested)
@@ -233,7 +235,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             await Task.Delay(_switchEewInterval);
         }
     }
-
     private readonly IStyle pCircleStyle
         = new VectorStyle
         {
@@ -244,18 +245,16 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             },
             Fill = null
         };
-
     private readonly IStyle sCircleStyle
-       = new VectorStyle
-       {
-           Outline = new Pen
-           {
-               Color = Color.Orange,
-               Width = 2
-           },
-           Fill = null
-       };
-
+        = new VectorStyle
+        {
+            Outline = new Pen
+            {
+                Color = Color.Orange,
+                Width = 2
+            },
+            Fill = null
+        };
     private async Task DrawEewCircles(EewDetailsTemplate eew)
     {
         if (eew.Earthquake is null
@@ -277,36 +276,45 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         string pLayerName = _eewWavefrontLayerPrefix + "P" + eew.EventId;
         string sLayerName = _eewWavefrontLayerPrefix + "S" + eew.EventId;
 
+        double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
+        double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
+
+
         while (!eew.Token.IsCancellationRequested)
         {
             double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).Seconds;
             (double pDistance, double sDistance) = _timeTableProvider.DistanceFromDepthTime(depth, time);
 
-            double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
-            double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
-
-            Polygon pCirclePolygon = CreateCircleRing(latitude, longitude, pDistance);
-            Polygon sCirclePolygon = CreateCircleRing(latitude, longitude, sDistance);
-
-            ILayer pLayer = new Layer
+            if (pDistance != 0)
             {
-                Name = pLayerName,
-                DataSource = new MemoryProvider(pCirclePolygon.ToFeature()),
-                Style = pCircleStyle
-            };
+                Polygon pCirclePolygon = CreateCircleRing(latitude, longitude, pDistance);
 
-            ILayer sLayer = new Layer
+                ILayer pLayer = new Layer
+                {
+                    Name = pLayerName,
+                    DataSource = new MemoryProvider(pCirclePolygon.ToFeature()),
+                    Style = pCircleStyle
+                };
+
+                _ = Map.Layers.Remove(x => x.Name == pLayerName);
+                Map.Layers.Add(pLayer);
+            }
+
+            if (sDistance != 0)
             {
-                Name = sLayerName,
-                DataSource = new MemoryProvider(sCirclePolygon.ToFeature()),
-                Style = sCircleStyle
-            };
+                Polygon sCirclePolygon = CreateCircleRing(latitude, longitude, sDistance);
+
+                ILayer sLayer = new Layer
+                {
+                    Name = sLayerName,
+                    DataSource = new MemoryProvider(sCirclePolygon.ToFeature()),
+                    Style = sCircleStyle
+                };
 
 
-            _ = Map.Layers.Remove(x => x.Name == pLayerName);
-            _ = Map.Layers.Remove(x => x.Name == sLayerName);
-            Map.Layers.Add(pLayer);
-            Map.Layers.Add(sLayer);
+                _ = Map.Layers.Remove(x => x.Name == sLayerName);
+                Map.Layers.Add(sLayer);
+            }
 
             await Task.Delay(_refreshCircleInterval);
         }
@@ -408,7 +416,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         if (newLayer is not null)
         {
             _ = Map.Layers.Remove(x => x.Name == _realTimeLayerName);
-
             Map.Layers.Add(newLayer);
         }
     }
@@ -439,24 +446,23 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);
-
             using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
 
             List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
-            List<(ObservationPoint point, double intensity)> intensities = [];
+            List<(ObservationPoint point, double height)> heights = [];
 
             foreach ((ObservationPoint p, SKColor c) in colours)
             {
-                intensities.Add((p, ColourConversion.HeightToIntensity(ColourConversion.ColourToHeight(c))));
+                heights.Add((p, ColourConversion.ColourToHeight(c)));
             }
 
-            return colours.Select(pc =>
+            return heights.Select(pc =>
             {
                 PointFeature feature = new(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint());
                 feature.Styles.Add(new SymbolStyle()
                 {
                     SymbolScale = 0.2,
-                    Fill = new Brush(pc.colour.ToMapsui())
+                    Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
                 });
                 return feature;
             });
@@ -472,10 +478,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
                 return ex is HttpRequestException;
             });
-        }
-        catch (ArgumentException ex)
-        {
-            Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"ArgumentException: {ex.Message}");
         }
 
         return null;

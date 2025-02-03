@@ -3,6 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
+             xmlns:conv="using:EasonEetwViewer.Converters"
+             xmlns:lang="using:EasonEetwViewer.Lang"
              xmlns:mapsui="using:Mapsui.UI.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="EasonEetwViewer.Views.RealtimePageView"
@@ -11,6 +13,17 @@
     <Design.DataContext>
         <vm:RealtimePageViewModel/>
     </Design.DataContext>
+
+	<UserControl.Resources>
+		<conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
+		<conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
+		<conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
+		<conv:DepthValueConverter x:Key="DepthValueConverter"/>
+		<conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
+		<conv:HypocentreConverter x:Key="HypocentreConverter"/>
+		<conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
+		<conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
+	</UserControl.Resources>
 
     <Grid>
         <DockPanel>
@@ -24,13 +37,85 @@
                        Background="Gray"
                        Canvas.Bottom="0"
                        Canvas.Left="0"/>
-            <TextBlock Margin="0"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       Text="{Binding TimeDisplayText}"
-                       Background="Gray"
-                       Canvas.Top="0"
-                       Canvas.Left="0"/>
+
+
+			<StackPanel Canvas.Top="0"
+                        Canvas.Left="0"
+						IsVisible="{Binding CurrentDisplayEew, Converter={x:Static ObjectConverters.IsNotNull}}">
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsMaxIntensityText}"
+                           Margin="5 5"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontSize="52"
+                           FontWeight="ExtraBold"
+                           Text="{Binding CurrentDisplayEew.IntensityInfo, Converter={StaticResource IntensityTextConverter}}"
+                           Foreground="{Binding CurrentDisplayEew.IntensityInfo, Converter={StaticResource IntensityColourConverter}}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsTimeText}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Text="{Binding CurrentDisplayEew.Earthquake.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsHypocentreText}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontSize="24"
+                           FontWeight="SemiBold"
+                           Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource HypocentreConverter}}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsDepthText}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontWeight="SemiBold"
+                           Margin="5 0">
+					<Run FontSize="24"
+                         Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
+					<Run FontSize="18"
+                         Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
+				</TextBlock>
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsMagnitudeText}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontWeight="SemiBold"
+                           Margin="5 0">
+					<Run FontSize="18"
+                         Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"/>
+					<Run FontSize="24"
+                         Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}}"/>
+				</TextBlock>
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           Text="{x:Static lang:Resources.DetailsLastUpdatedText}"
+                           Margin="5 0"/>
+				<TextBlock HorizontalAlignment="Right"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           Text="{Binding CurrentDisplayEew.UpdateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Margin="5 0"/>
+
+				<TextBlock HorizontalAlignment="Left"
+                           FontSize="15"
+                           Text="{Binding CurrentDisplayEew.InformationalText}"
+                           TextWrapping="Wrap"
+                           Margin="8"/>
+			</StackPanel>
         </Canvas>
     </Grid>
     

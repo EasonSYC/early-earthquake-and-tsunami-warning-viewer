@@ -34,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0"
               Grid.Row="0"
-              IsVisible="{Binding IsEarthquakeDetailsEnabled}">
+              IsVisible="{Binding EarthquakeDetails, Converter={x:Static ObjectConverters.IsNotNull}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
