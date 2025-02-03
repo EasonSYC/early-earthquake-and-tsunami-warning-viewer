@@ -126,6 +126,16 @@
   <data name="EewForecastText" xml:space="preserve">
     <value>予報</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="EewLevelInaccurateText" type="System.Resources.ResXNullRef, System.Windows.Forms">
+    <value />
+  </data>
+  <data name="EewNumberTextAfter" xml:space="preserve">
+    <value>報</value>
+  </data>
+  <data name="EewNumberTextBefore" xml:space="preserve">
+    <value>第</value>
+  </data>
   <data name="EewPrecision" xml:space="preserve">
     <value>精度</value>
   </data>
@@ -134,5 +144,11 @@
   </data>
   <data name="EewWarningText" xml:space="preserve">
     <value>警報</value>
+  </data>
+  <data name="RoundBracketsEnd" xml:space="preserve">
+    <value>）</value>
+  </data>
+  <data name="RoundBracketsStart" xml:space="preserve">
+    <value>（</value>
   </data>
 </root>

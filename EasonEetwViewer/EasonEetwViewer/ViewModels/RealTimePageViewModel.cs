@@ -110,6 +110,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private static string ToInformationString(EewInformationSchema eew)
     {
         StringBuilder sb = new();
+        if (eew.Headline is not null)
+        {
+            _ = sb.AppendLine(eew.Headline);
+        }
+
         if (eew.Body.Text is not null)
         {
             _ = sb.AppendLine(eew.Body.Text);
@@ -151,10 +156,21 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             }
         }
 
+        DateTimeOffset lifeTime = eew.PressDateTime + _eewLifeTime;
+        if (lifeTime < _timeProvider.DateTimeOffsetNow())
+        {
+            return;
+        }
+
         string informationalText = ToInformationString(eew);
 
-        EewDetailsTemplate eewTemplate = new(eew.PressDateTime + _eewLifeTime, eew.PressDateTime, serial, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning, eew.Body.Earthquake, eew.Body.Intensity, informationalText);
+        EewDetailsTemplate eewTemplate = new(lifeTime, eew.PressDateTime, serial, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning ?? false, eew.Body.Earthquake, eew.Body.Intensity, informationalText);
         LiveEewList.Add(eewTemplate);
+
+        if (eew.Body.IsCancelled)
+        {
+            return;
+        }
 
         if (eew.Body.Earthquake is not null
             && eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null
@@ -282,7 +298,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         while (!eew.Token.IsCancellationRequested)
         {
-            double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).Seconds;
+            double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).TotalSeconds;
             (double pDistance, double sDistance) = _timeTableProvider.DistanceFromDepthTime(depth, time);
 
             if (pDistance != 0)
@@ -461,7 +477,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 PointFeature feature = new(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint());
                 feature.Styles.Add(new SymbolStyle()
                 {
-                    SymbolScale = 0.2,
+                    SymbolScale = 0.1,
                     Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
                 });
                 return feature;

@@ -22,7 +22,7 @@ namespace EasonEetwViewer.Lang {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class RealtimePageResources {
+    public class RealtimePageResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EasonEetwViewer.Lang {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EasonEetwViewer.Lang.RealtimePageResources", typeof(RealtimePageResources).Assembly);
@@ -51,7 +51,7 @@ namespace EasonEetwViewer.Lang {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Cancelled.
         /// </summary>
-        internal static string EewCancellingText {
+        public static string EewCancellingText {
             get {
                 return ResourceManager.GetString("EewCancellingText", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Final.
         /// </summary>
-        internal static string EewFinalText {
+        public static string EewFinalText {
             get {
                 return ResourceManager.GetString("EewFinalText", resourceCulture);
             }
@@ -81,16 +81,61 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Forecast.
         /// </summary>
-        internal static string EewForecastText {
+        public static string EewForecastText {
             get {
                 return ResourceManager.GetString("EewForecastText", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string EewIpfOneWaringText {
+            get {
+                return ResourceManager.GetString("EewIpfOneWaringText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to レベル法.
+        /// </summary>
+        public static string EewLevelInaccurateText {
+            get {
+                return ResourceManager.GetString("EewLevelInaccurateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string EewNumberTextAfter {
+            get {
+                return ResourceManager.GetString("EewNumberTextAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Issue No..
+        /// </summary>
+        public static string EewNumberTextBefore {
+            get {
+                return ResourceManager.GetString("EewNumberTextBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLUM仮定震源要素.
+        /// </summary>
+        public static string EewPlumSpecificText {
+            get {
+                return ResourceManager.GetString("EewPlumSpecificText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Precision.
         /// </summary>
-        internal static string EewPrecision {
+        public static string EewPrecision {
             get {
                 return ResourceManager.GetString("EewPrecision", resourceCulture);
             }
@@ -99,7 +144,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to EEW.
         /// </summary>
-        internal static string EewText {
+        public static string EewText {
             get {
                 return ResourceManager.GetString("EewText", resourceCulture);
             }
@@ -108,9 +153,27 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
-        internal static string EewWarningText {
+        public static string EewWarningText {
             get {
                 return ResourceManager.GetString("EewWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ).
+        /// </summary>
+        public static string RoundBracketsEnd {
+            get {
+                return ResourceManager.GetString("RoundBracketsEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (.
+        /// </summary>
+        public static string RoundBracketsStart {
+            get {
+                return ResourceManager.GetString("RoundBracketsStart", resourceCulture);
             }
         }
     }
