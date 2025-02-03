@@ -133,6 +133,78 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Since information is created within seconds after an earthquake, false reports may occure..
+        /// </summary>
+        public static string GeneralText1 {
+            get {
+                return ResourceManager.GetString("GeneralText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information immediately after the detection of an earthquake may have low accuracy in predicting the epicentre, the magnitude and the expected intensity..
+        /// </summary>
+        public static string GeneralText2 {
+            get {
+                return ResourceManager.GetString("GeneralText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Even under normal conditions, there may be an error of one level for the estimated intensity..
+        /// </summary>
+        public static string GeneralText3 {
+            get {
+                return ResourceManager.GetString("GeneralText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information for the epicentre (magnitude, depth, position) do not have seismological meaning for information only using the PLUM method or from detecting 100gal..
+        /// </summary>
+        public static string GeneralText4 {
+            get {
+                return ResourceManager.GetString("GeneralText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum expected intensity will not be reported for earthquakes with depth greater than 150km (it may be reported via PLUM method)..
+        /// </summary>
+        public static string GeneralText5 {
+            get {
+                return ResourceManager.GetString("GeneralText5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depending on the communications environment, there might be a delay of one second or more for the receival of the information after the announcement. Please use a stable connection environment with a bandwidth of at least 5Mbps..
+        /// </summary>
+        public static string GeneralText6 {
+            get {
+                return ResourceManager.GetString("GeneralText6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  - .
+        /// </summary>
+        public static string GeneralTextBullet {
+            get {
+                return ResourceManager.GetString("GeneralTextBullet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information on EEW (Please Read).
+        /// </summary>
+        public static string GeneralTextHeader {
+            get {
+                return ResourceManager.GetString("GeneralTextHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string HeaderText {

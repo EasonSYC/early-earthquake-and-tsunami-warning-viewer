@@ -219,4 +219,13 @@
   <data name="DetailsHypocentreText" xml:space="preserve">
     <value>Hypocentre</value>
   </data>
+  <data name="PageNameRealtime" xml:space="preserve">
+    <value>Real-time Monitor</value>
+  </data>
+  <data name="PageNamePast" xml:space="preserve">
+    <value>Past Earthquakes</value>
+  </data>
+  <data name="PageNameSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

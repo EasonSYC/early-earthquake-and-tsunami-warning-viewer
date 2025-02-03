@@ -135,7 +135,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                 }
 
                 IEnumerable<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1))));
-                List<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
+                IEnumerable<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
                 foreach (RegionIntensity region in regionData)
                 {
                     IFeature? potentialFeature = features.FirstOrDefault(f => (f["code"]?.ToString()?.ToLower() == region.Code));
@@ -190,9 +190,14 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         }
     }
 
-    private string ToInformationString(EarthquakeInformationSchema earthquake)
+    private static string ToInformationString(EarthquakeInformationSchema earthquake)
     {
         StringBuilder sb = new();
+
+        if (earthquake.Headline is not null)
+        {
+            _ = sb.AppendLine(earthquake.Headline);
+        }
 
         if (earthquake.Body.Text is not null)
         {

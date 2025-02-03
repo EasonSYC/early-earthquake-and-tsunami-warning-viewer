@@ -219,4 +219,13 @@
   <data name="DetailsHypocentreText" xml:space="preserve">
     <value>震源</value>
   </data>
+  <data name="PageNameRealtime" xml:space="preserve">
+    <value>リアルタイム</value>
+  </data>
+  <data name="PageNamePast" xml:space="preserve">
+    <value>過去の地震速報</value>
+  </data>
+  <data name="PageNameSettings" xml:space="preserve">
+    <value>設定</value>
+  </data>
 </root>

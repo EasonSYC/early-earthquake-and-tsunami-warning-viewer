@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 
@@ -18,14 +19,14 @@ internal partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel(RealtimePageViewModel rtvm, PastPageViewModel ppvm, SettingPageViewModel spvm)
     {
         Items = [
-            new ListItemTemplate(typeof(RealtimePageViewModel), rtvm, "LiveRegular"),
-            new ListItemTemplate(typeof(PastPageViewModel), ppvm, "HistoryRegular"),
-            new ListItemTemplate(typeof(SettingPageViewModel), spvm, "SettingsRegular"),
+            new ListItemTemplate(typeof(RealtimePageViewModel), rtvm, "LiveRegular", () => Resources.PageNameRealtime),
+            new ListItemTemplate(typeof(PastPageViewModel), ppvm, "HistoryRegular", () => Resources.PageNamePast),
+            new ListItemTemplate(typeof(SettingPageViewModel), spvm, "SettingsRegular", () => Resources.PageNameSettings),
         ];
-        SelectedListItem = Items[0];
+        SelectedListItem = Items.ElementAt(0);
     }
 
-    internal List<ListItemTemplate> Items { get; init; }
+    internal IEnumerable<ListItemTemplate> Items { get; init; }
 
     [ObservableProperty]
     private bool _isPaneOpen = true;

@@ -4,17 +4,24 @@
         xmlns:m="using:EasonEetwViewer.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv="using:EasonEetwViewer.Converters"
+        xmlns:lang="using:EasonEetwViewer.Lang"
         mc:Ignorable="d"
         d:DesignWidth="800"
         d:DesignHeight="450"
         x:Class="EasonEetwViewer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="EasonEetwViewer">
+        Title="Eason's Early Earthquake and Tsunami Warning Viewer">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+
+
+	<Window.Resources>
+		<conv:StringNameConverter x:Key="StringNameConverter"/>
+	</Window.Resources>
 
     <SplitView IsPaneOpen="{Binding IsPaneOpen}"
                CompactPaneLength="48"
@@ -51,7 +58,7 @@
                                         Orientation="Horizontal">
                                 <PathIcon Data="{Binding ListItemIcon}"
                                           Width="14" />
-                                <TextBlock Text="{Binding Label}"/>
+                                <TextBlock Text="{Binding Label, Converter={StaticResource StringNameConverter}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

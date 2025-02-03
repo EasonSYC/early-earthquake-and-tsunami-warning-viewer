@@ -228,4 +228,28 @@
   <data name="KmoniDataRsp2000" xml:space="preserve">
     <value>2.000Hz速度応答</value>
   </data>
+  <data name="GeneralText2" xml:space="preserve">
+    <value>地震検知直後の情報は震源やマグニチュードの推定や、予測震度の精度が低いことがあります。</value>
+  </data>
+  <data name="GeneralText1" xml:space="preserve">
+    <value>地震発生後、数秒で情報を作成するため、誤報が発生することがあります。</value>
+  </data>
+  <data name="GeneralText3" xml:space="preserve">
+    <value>通常でも推定震度は1階級程度の誤差があります。</value>
+  </data>
+  <data name="GeneralText4" xml:space="preserve">
+    <value>PLUM法のみの情報・100gal検知の場合、震源要素（規模、深さ、震央）は地震学的に意味がない仮の値となります。</value>
+  </data>
+  <data name="GeneralText5" xml:space="preserve">
+    <value>深さ150kmより深い地震の場合、予想最大震度は発表されません（※PLUM法により発表される場合があります）。</value>
+  </data>
+  <data name="GeneralText6" xml:space="preserve">
+    <value>ご利用の通信環境により、発表から情報到達まで1秒以上かかる可能性があります。5Mbps以上の安定した通信環境をご用意ください。</value>
+  </data>
+  <data name="GeneralTextHeader" xml:space="preserve">
+    <value>緊急地震速報（EEW）について（必ずお読みください）</value>
+  </data>
+  <data name="GeneralTextBullet" xml:space="preserve">
+    <value> - </value>
+  </data>
 </root>

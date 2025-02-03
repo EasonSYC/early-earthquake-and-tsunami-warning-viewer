@@ -11,6 +11,7 @@ internal class DateTimeOffsetConverter : IValueConverter
             : value is DateTimeOffset dt
                 ? parameter switch
                 {
+                    "verylong" => dt.ToString("yyyy/MM/dd HH:mm:ss"),
                     "long" => dt.ToString("yyyy/MM/dd HH:mm"),
                     "short" => dt.ToString("MM/dd HH:mm"),
                     _ => null

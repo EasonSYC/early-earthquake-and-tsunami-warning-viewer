@@ -358,6 +358,33 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Past Earthquakes.
+        /// </summary>
+        public static string PageNamePast {
+            get {
+                return ResourceManager.GetString("PageNamePast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Real-time Monitor.
+        /// </summary>
+        public static string PageNameRealtime {
+            get {
+                return ResourceManager.GetString("PageNameRealtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string PageNameSettings {
+            get {
+                return ResourceManager.GetString("PageNameSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string UnknownText {
