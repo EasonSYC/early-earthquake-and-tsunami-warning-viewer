@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -292,6 +293,12 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         while (!eew.Token.IsCancellationRequested)
         {
             double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).TotalSeconds;
+
+            if (time < 0)
+            {
+                continue;
+            }
+
             (double pDistance, double sDistance) = _timeTableProvider.DistanceFromDepthTime(depth, time);
 
             if (pDistance != 0)
@@ -418,31 +425,35 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private const int _kmoniDelaySeconds = 1;
     private readonly IImageFetch _imageFetch;
     private readonly IPointExtract _pointExtract;
+    private MemoryLayer? _kmoniLayer;
 
+
+    // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         OnPropertyChanged(nameof(TimeDisplayText));
-        ILayer? newLayer = GetKmoniLayer();
-        if (newLayer is not null)
-        {
-            _ = Map.Layers.Remove(x => x.Name == _realTimeLayerName);
-            Map.Layers.Add(newLayer);
-        }
-    }
 
-    // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
-
-    private MemoryLayer? GetKmoniLayer()
-    {
         IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints();
-        return kmoniObservationPoints is null
-            ? null
-            : new MemoryLayer()
+        if (kmoniObservationPoints is null)
+        {
+            return;
+        }
+
+        if (_kmoniLayer is null)
+        {
+            _kmoniLayer = new()
             {
                 Name = _realTimeLayerName,
                 Features = kmoniObservationPoints,
                 Style = null
             };
+            Map.Layers.Add(_kmoniLayer);
+        }
+        else
+        {
+            _kmoniLayer.Features = kmoniObservationPoints;
+            _kmoniLayer.DataHasChanged();
+        }
     }
 
     private IEnumerable<IFeature>? GetKmoniObservationPoints()
