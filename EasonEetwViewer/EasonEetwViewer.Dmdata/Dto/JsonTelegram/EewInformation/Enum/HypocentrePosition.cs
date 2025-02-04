@@ -1,9 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
+namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum;
 
-[JsonConverter(typeof(JsonStringEnumConverter<Hypocentre>))]
-public enum Hypocentre
+[JsonConverter(typeof(JsonStringEnumConverter<HypocentrePosition>))]
+public enum HypocentrePosition
 {
     Unknown = 0,
     [JsonStringEnumMemberName("内陸")]

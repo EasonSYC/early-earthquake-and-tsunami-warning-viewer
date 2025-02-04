@@ -32,6 +32,9 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
+
+        <!--Earthquake Info Display-->
+
         <Grid Grid.Column="0"
               Grid.Row="0"
               IsVisible="{Binding EarthquakeDetails, Converter={x:Static ObjectConverters.IsNotNull}}">
@@ -39,14 +42,22 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
+            <!--Earthquake Info Display-->
+
             <StackPanel Grid.Column="0"
                         Grid.Row="0">
+
+                <!--Jump to Yahoo Weather Button-->
+
                 <Button HorizontalAlignment="Center"
                         FontSize="16"
                         Content="{x:Static lang:PastPageResources.YahooText}"
                         Command="{Binding JumpYahooWebpageCommand}"
                         Margin="5"/>
+
+                <!--Intensity Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="16"
                            FontWeight="SemiBold"
@@ -58,6 +69,9 @@
                            Text="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityTextConverter}}"
                            Foreground="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityColourConverter}}"
                            Margin="5 0"/>
+
+                <!--Origin Time Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -68,6 +82,9 @@
                            FontWeight="SemiBold"
                            Text="{Binding EarthquakeDetails.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
                            Margin="5 0"/>
+
+                <!--Hypocentre Position Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -78,6 +95,9 @@
                            FontWeight="SemiBold"
                            Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource HypocentreConverter}}"
                            Margin="5 0"/>
+
+                <!--Depth Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -91,6 +111,9 @@
                     <Run FontSize="18"
                          Text="{Binding EarthquakeDetails.Hypocentre.Depth, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
                 </TextBlock>
+
+                <!--Magnitude Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -104,6 +127,9 @@
                     <Run FontSize="24"
                          Text="{Binding EarthquakeDetails.Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}}"/>
                 </TextBlock>
+
+                <!--Update Time Display-->
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
@@ -114,13 +140,15 @@
                            FontWeight="SemiBold"
                            Text="{Binding EarthquakeDetails.LastUpdated, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
                            Margin="5 0"/>
-                
+
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            Text="{Binding EarthquakeDetails.InformationalText}"
                            TextWrapping="Wrap"
                            Margin="8"/>
             </StackPanel>
+
+            <!--Intensity Detail Tree-->
 
             <ScrollViewer Grid.Column="0"
                           Grid.Row="1"
@@ -129,6 +157,9 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
                             <StackPanel>
+
+                                <!--Intensity Text-->
+
                                 <TextBlock HorizontalAlignment="Stretch"
                                        TextAlignment="Left"
                                        FontSize="14"
@@ -138,6 +169,9 @@
                                     <Run Text="{x:Static, lang:Resources.DetailsIntensityText}"/>
                                     <Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
                                 </TextBlock>
+
+                                <!--Observation Point Tree-->
+
                                 <TreeView ItemsSource="{Binding PositionNodes}">
                                     <TreeView.ItemTemplate>
                                         <TreeDataTemplate DataType="{x:Type m:PositionNode}"
@@ -152,7 +186,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-		
+
         <Grid Grid.Column="1"
               Grid.Row="0">
             <DockPanel>
@@ -161,6 +195,9 @@
             <Canvas>
             </Canvas>
         </Grid>
+        
+        <!--Past Earthquake List-->
+        
         <Grid Grid.Column="2"
               Grid.Row="0">
             <Grid.RowDefinitions>

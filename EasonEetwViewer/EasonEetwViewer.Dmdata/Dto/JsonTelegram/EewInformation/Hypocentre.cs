@@ -15,7 +15,7 @@ public record Hypocentre
     [JsonPropertyName("reduce")]
     public required ReducedName ShortName { get; init; }
     [JsonPropertyName("landOrSea")]
-    public Enum.Accuracy.Hypocentre? Position { get; init; }
+    public Enum.HypocentrePosition? Position { get; init; }
     [JsonPropertyName("accuracy")]
     public required Accuracy Accuracy { get; init; }
 }

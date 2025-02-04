@@ -68,7 +68,7 @@
 		  <LastGenOutput>PastPageResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Lang\RealtimePageResources.resx">
-		  <Generator>ResXFileCodeGenerator</Generator>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>RealtimePageResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Lang\Resources.resx">
