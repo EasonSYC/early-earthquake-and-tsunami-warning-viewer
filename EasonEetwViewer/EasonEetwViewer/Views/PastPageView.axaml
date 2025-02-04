@@ -195,9 +195,9 @@
             <Canvas>
             </Canvas>
         </Grid>
-        
+
         <!--Past Earthquake List-->
-        
+
         <Grid Grid.Column="2"
               Grid.Row="0">
             <Grid.RowDefinitions>
@@ -205,12 +205,18 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+
+            <!--Refresh List Button-->
+
             <Button Grid.Column="0"
                     Grid.Row="0"
                     Content="{x:Static lang:PastPageResources.RefreshListText}"
                     Command="{Binding RefreshEarthquakeListCommand}"
                     HorizontalAlignment="Center"
                     Margin="10"/>
+
+            <!--Past Earthquake List-->
+
             <ListBox Grid.Column="0"
                      Grid.Row="1"
                      Padding="0"
@@ -228,6 +234,7 @@
                                 <RowDefinition Height="2*"/>
                                 <RowDefinition Height="3*"/>
                             </Grid.RowDefinitions>
+
                             <TextBlock Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
@@ -237,11 +244,13 @@
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Grid.RowSpan="2"/>
+
                             <TextBlock Text="{Binding OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=short}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Bottom"
                                        Grid.Column="1"
                                        Grid.Row="0"/>
+
                             <TextBlock Text="{Binding Hypocentre, Converter={StaticResource HypocentreConverter}}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Bottom"
@@ -249,6 +258,7 @@
                                        FontWeight="SemiBold"
                                        Grid.Column="1"
                                        Grid.Row="1"/>
+
                             <TextBlock HorizontalAlignment="Right"
                                        VerticalAlignment="Bottom"
                                        Grid.Column="2"
@@ -258,6 +268,7 @@
                                 <Run Text="{Binding Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"
                                      FontWeight="SemiLight"/>
                             </TextBlock>
+
                             <TextBlock HorizontalAlignment="Right"
                                        VerticalAlignment="Bottom"
                                        Grid.Column="2"
@@ -272,6 +283,9 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <!--Load 10 More Earthquakes-->
+
             <Button Grid.Column="0"
                     Grid.Row="2"
                     Content="{x:Static lang:PastPageResources.LoadMoreText}"
