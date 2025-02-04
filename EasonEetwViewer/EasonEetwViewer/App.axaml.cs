@@ -96,6 +96,7 @@ public partial class App : Application
         Lang.Resources.Culture = language;
         Lang.PastPageResources.Culture = language;
         Lang.SettingPageResources.Culture = language;
+        Lang.RealtimePageResources.Culture = language;
     }
 
     /// <inheritdoc/>
