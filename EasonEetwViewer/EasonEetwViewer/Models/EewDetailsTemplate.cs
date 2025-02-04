@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Reflection.Metadata;
+using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 
 namespace EasonEetwViewer.Models;

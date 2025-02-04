@@ -322,6 +322,24 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #F0F0F0.
+        /// </summary>
+        public static string EarthquakeIntensityZeroColour {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityZeroColour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.
+        /// </summary>
+        public static string EarthquakeIntensityZeroText {
+            get {
+                return ResourceManager.GetString("EarthquakeIntensityZeroText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 8+.
         /// </summary>
         public static string EarthquakeMagnitudeHuge {

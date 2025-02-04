@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EewPlumSpecificText" xml:space="preserve">
-    <value>Hypocentre assumed from PLUM method</value>
+  <data name="EewAssumedSpecificText" xml:space="preserve">
+    <value>Hypocentre assumed from PLUM method or Level Method</value>
   </data>
   <data name="EewCancellingText" xml:space="preserve">
     <value>Cancelled</value>
@@ -129,16 +129,13 @@
   <data name="EewForecastText" xml:space="preserve">
     <value>Forecast</value>
   </data>
-  <data name="EewLevelSpecificText" xml:space="preserve">
-    <value>No hypocentre using level method</value>
-  </data>
   <data name="EewNumberTextAfter" xml:space="preserve">
     <value />
   </data>
   <data name="EewNumberTextBefore" xml:space="preserve">
     <value>Issue No.</value>
   </data>
-  <data name="EewPrecision" xml:space="preserve">
+  <data name="EewPrecisionText" xml:space="preserve">
     <value>Precision</value>
   </data>
   <data name="EewText" xml:space="preserve">

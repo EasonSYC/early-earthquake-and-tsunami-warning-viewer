@@ -186,7 +186,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 Features = [new PointFeature(point)],
             };
 
-            if (eew.Body.Earthquake.Condition is not "仮定震源要素")
+            if (eew.Body.Earthquake.Condition is "仮定震源要素")
             {
                 // TODO: PLUM Hypocentre
                 layer.Style = _resources.HypocentreShapeStyle;
@@ -277,7 +277,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             || eew.Earthquake.Hypocentre.Depth.Value is null
             || eew.Earthquake.Hypocentre.Coordinate.Latitude is null
             || eew.Earthquake.Hypocentre.Coordinate.Longitude is null
-            || eew.Earthquake.OriginTime is null)
+            || eew.Earthquake.OriginTime is null
+            || eew.Earthquake.Condition is "仮定震源要素")
         {
             return;
         }
@@ -491,11 +492,15 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 if (ex is HttpRequestException)
                 {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"HttpRequestException: {ex.Message}");
+                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"HttpRequestException: {ex.Message}, {ae.Source}");
                 }
 
                 return ex is HttpRequestException;
             });
+        }
+        catch (ArgumentException ae)
+        {
+            Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"ArgumentException: {ae.Message}, {ae.Source}");
         }
 
         return null;

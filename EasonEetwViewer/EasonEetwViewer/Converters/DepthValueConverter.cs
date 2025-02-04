@@ -8,15 +8,15 @@ namespace EasonEetwViewer.Converters;
 internal class DepthValueConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        => value is Hypocentre hypocentre
-            ? hypocentre.Depth.Condition is DepthCondition condition
+        => value is Depth depth
+            ? depth.Condition is DepthCondition condition
                 ? condition switch
                 {
                     DepthCondition.Deep => Resources.EarthquakeDepthDeep,
                     DepthCondition.Shallow => Resources.EarthquakeDepthShallow,
                     DepthCondition.Unclear or DepthCondition.Unknown or _ => Resources.UnknownText
                 }
-                : hypocentre.Depth.Value
+                : depth.Value
             : value is null
                 ? Resources.UnknownText
                 : null;

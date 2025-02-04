@@ -228,4 +228,10 @@
   <data name="PageNameSettings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="EarthquakeIntensityZeroColour" xml:space="preserve">
+    <value>#F0F0F0</value>
+  </data>
+  <data name="EarthquakeIntensityZeroText" xml:space="preserve">
+    <value>0</value>
+  </data>
 </root>

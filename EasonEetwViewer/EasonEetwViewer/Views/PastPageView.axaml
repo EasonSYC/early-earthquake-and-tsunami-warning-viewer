@@ -87,9 +87,9 @@
                            FontWeight="SemiBold"
                            Margin="5 0">
                     <Run FontSize="24"
-                         Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
+                         Text="{Binding EarthquakeDetails.Hypocentre.Depth, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
                     <Run FontSize="18"
-                         Text="{Binding EarthquakeDetails.Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
+                         Text="{Binding EarthquakeDetails.Hypocentre.Depth, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
@@ -116,7 +116,7 @@
                            Margin="5 0"/>
                 
                 <TextBlock HorizontalAlignment="Left"
-                           FontSize="15"
+                           FontSize="14"
                            Text="{Binding EarthquakeDetails.InformationalText}"
                            TextWrapping="Wrap"
                            Margin="8"/>

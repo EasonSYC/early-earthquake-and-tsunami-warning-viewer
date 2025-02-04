@@ -19,14 +19,15 @@
 	<UserControl.Resources>
 		<conv:EewTypeConverter x:Key="EewTypeConverter"/>
 		<conv:EewSerialConverter x:Key="EewSerialConverter"/>
-		<conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
-		<conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
+		<conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
+		<conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
 		<conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
 		<conv:DepthValueConverter x:Key="DepthValueConverter"/>
 		<conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
-		<conv:HypocentreConverter x:Key="HypocentreConverter"/>
+		<conv:EewHypocentreConverter x:Key="EewHypocentreConverter"/>
 		<conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
 		<conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
+		<conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
 	</UserControl.Resources>
 
 	<Grid>
@@ -50,6 +51,8 @@
                     Width="320"
                     CornerRadius="0 0 10 0">
 				<StackPanel>
+					<!--Eew Serial Display-->
+
 					<TextBlock FontWeight="SemiBold"
                                Margin="5 5">
 						<Run FontSize="24"
@@ -59,17 +62,23 @@
 						<Run FontSize="18"
                              Text="{Binding CurrentDisplayEew, Converter={StaticResource EewSerialConverter}, Mode=OneWay}"/>
 					</TextBlock>
+
+					<!--Intensity Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:Resources.DetailsMaxIntensityText}"
                                Margin="5 5"/>
 					<TextBlock HorizontalAlignment="Right"
-                               FontSize="32"
+                               FontSize="52"
                                FontWeight="ExtraBold"
-                               Text="{Binding CurrentDisplayEew.IntensityInfo, Converter={StaticResource IntensityTextConverter}}"
-                               Foreground="{Binding CurrentDisplayEew.IntensityInfo, Converter={StaticResource IntensityColourConverter}}"
+                               Text="{Binding CurrentDisplayEew.IntensityInfo.ForecastMaxInt, Converter={StaticResource EewIntensityTextConverter}}"
+                               Foreground="{Binding CurrentDisplayEew.IntensityInfo.ForecastMaxInt, Converter={StaticResource EewIntensityColourConverter}}"
                                Margin="5 0"/>
+
+					<!--Origin time Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -80,6 +89,9 @@
                                FontWeight="SemiBold"
                                Text="{Binding CurrentDisplayEew.Earthquake.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
                                Margin="5 0"/>
+
+					<!--Hypocentre Position Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -88,34 +100,67 @@
 					<TextBlock HorizontalAlignment="Right"
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource HypocentreConverter}}"
-                               Margin="5 0"/>
+                               Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource EewHypocentreConverter}}"
+							   Margin="5 0"/>
+
+					<!--Assumed Hypocentre Text-->
+
+					<TextBlock HorizontalAlignment="Left"
+                               FontSize="18"
+							   FontWeight="SemiBold"
+                               Text="{x:Static lang:RealtimePageResources.EewAssumedSpecificText}"
+                               TextWrapping="Wrap"
+							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=P}"
+                               Margin="5 5"/>
+
+					<!--Depth Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:Resources.DetailsDepthText}"
-                               Margin="5 0"/>
+							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+							   Margin="5 0"/>
 					<TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
-                               Margin="5 0">
+                               Margin="5 0"
+							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
 						<Run FontSize="24"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
 						<Run FontSize="18"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth, Converter={StaticResource DepthUnitConverter}, Mode=OneWay}"/>
 					</TextBlock>
+
+					<!--Magnitude Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:Resources.DetailsMagnitudeText}"
-                               Margin="5 0"/>
+							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+							   Margin="5 0"/>
 					<TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
-                               Margin="5 0">
+                               Margin="5 0"
+							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
 						<Run FontSize="18"
                              Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"/>
 						<Run FontSize="24"
                              Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource MagnitudeValueConverter}, Mode=OneWay}}"/>
 					</TextBlock>
+
+					<!--Precision Display-->
+
+                    <TextBlock HorizontalAlignment="Left"
+		                       FontSize="14"
+		                       FontWeight="SemiBold"
+		                       Text="{x:Static lang:RealtimePageResources.EewPrecisionText}"
+		                       Margin="5 0"/>
+					
+					<!--One Point Warning Text-->
+
+                    <!--Update Time Display-->
+					
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -127,8 +172,10 @@
                                Text="{Binding CurrentDisplayEew.UpdateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
                                Margin="5 0"/>
 
+					<!--Informational Text-->
+					
 					<TextBlock HorizontalAlignment="Left"
-                               FontSize="15"
+                               FontSize="14"
                                Text="{Binding CurrentDisplayEew.InformationalText}"
                                TextWrapping="Wrap"
                                Margin="8"/>

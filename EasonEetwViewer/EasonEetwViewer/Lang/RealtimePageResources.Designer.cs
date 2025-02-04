@@ -61,6 +61,15 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hypocentre assumed from PLUM method or Level Method.
+        /// </summary>
+        public static string EewAssumedSpecificText {
+            get {
+                return ResourceManager.GetString("EewAssumedSpecificText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancelled.
         /// </summary>
         public static string EewCancellingText {
@@ -84,15 +93,6 @@ namespace EasonEetwViewer.Lang {
         public static string EewForecastText {
             get {
                 return ResourceManager.GetString("EewForecastText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No hypocentre using level method.
-        /// </summary>
-        public static string EewLevelSpecificText {
-            get {
-                return ResourceManager.GetString("EewLevelSpecificText", resourceCulture);
             }
         }
         
@@ -124,20 +124,11 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hypocentre assumed from PLUM method.
-        /// </summary>
-        public static string EewPlumSpecificText {
-            get {
-                return ResourceManager.GetString("EewPlumSpecificText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Precision.
         /// </summary>
-        public static string EewPrecision {
+        public static string EewPrecisionText {
             get {
-                return ResourceManager.GetString("EewPrecision", resourceCulture);
+                return ResourceManager.GetString("EewPrecisionText", resourceCulture);
             }
         }
         

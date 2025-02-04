@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EewPlumSpecificText" xml:space="preserve">
-    <value>PLUM法よりの仮定震源要素</value>
+  <data name="EewAssumedSpecificText" xml:space="preserve">
+    <value>PLUMまたはレベル法よりの仮定震源要素</value>
   </data>
   <data name="EewCancellingText" xml:space="preserve">
     <value>最終報</value>
@@ -129,16 +129,13 @@
   <data name="EewForecastText" xml:space="preserve">
     <value>予報</value>
   </data>
-  <data name="EewLevelSpecificText" xml:space="preserve">
-    <value>レベル法ので震源要素はありません</value>
-  </data>
   <data name="EewNumberTextAfter" xml:space="preserve">
     <value>報</value>
   </data>
   <data name="EewNumberTextBefore" xml:space="preserve">
     <value>第</value>
   </data>
-  <data name="EewPrecision" xml:space="preserve">
+  <data name="EewPrecisionText" xml:space="preserve">
     <value>精度</value>
   </data>
   <data name="EewText" xml:space="preserve">
