@@ -35,6 +35,7 @@
 			<mapsui:MapControl x:Name="MapControl"/>
 		</DockPanel>
 		<Canvas>
+			<!--Time Display-->
 			<Border Canvas.Bottom="0"
                     Canvas.Left="0"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
@@ -44,6 +45,7 @@
                            Text="{Binding TimeDisplayText}"/>
 			</Border>
 
+			<!--Eew Info Display-->
 			<Border Canvas.Top="0"
                     Canvas.Left="0"
                     IsVisible="{Binding CurrentDisplayEew, Converter={x:Static ObjectConverters.IsNotNull}}"
@@ -64,7 +66,7 @@
 					</TextBlock>
 
 					<!--Intensity Display-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="16"
                                FontWeight="SemiBold"
@@ -78,7 +80,7 @@
                                Margin="5 0"/>
 
 					<!--Origin time Display-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -91,7 +93,7 @@
                                Margin="5 0"/>
 
 					<!--Hypocentre Position Display-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -101,30 +103,30 @@
                                FontSize="24"
                                FontWeight="SemiBold"
                                Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre, Converter={StaticResource EewHypocentreConverter}}"
-							   Margin="5 0"/>
+                               Margin="5 0"/>
 
 					<!--Assumed Hypocentre Text-->
 
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="18"
-							   FontWeight="SemiBold"
+                               FontWeight="SemiBold"
                                Text="{x:Static lang:RealtimePageResources.EewAssumedSpecificText}"
                                TextWrapping="Wrap"
-							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=P}"
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=P}"
                                Margin="5 5"/>
 
 					<!--Depth Display-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:Resources.DetailsDepthText}"
-							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
-							   Margin="5 0"/>
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+                               Margin="5 0"/>
 					<TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
                                Margin="5 0"
-							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
 						<Run FontSize="24"
                              Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth, Converter={StaticResource DepthValueConverter}, Mode=OneWay}"/>
 						<Run FontSize="18"
@@ -132,17 +134,17 @@
 					</TextBlock>
 
 					<!--Magnitude Display-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
-                               FontSize="14"
+                               FontSize="14"  22="" 2=""
                                FontWeight="SemiBold"
                                Text="{x:Static lang:Resources.DetailsMagnitudeText}"
-							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
-							   Margin="5 0"/>
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+                               Margin="5 0"/>
 					<TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
                                Margin="5 0"
-							   IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
 						<Run FontSize="18"
                              Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource MagnitudeUnitConverter}, Mode=OneWay}"/>
 						<Run FontSize="24"
@@ -151,16 +153,16 @@
 
 					<!--Precision Display-->
 
-                    <TextBlock HorizontalAlignment="Left"
-		                       FontSize="14"
-		                       FontWeight="SemiBold"
-		                       Text="{x:Static lang:RealtimePageResources.EewPrecisionText}"
-		                       Margin="5 0"/>
-					
+					<TextBlock HorizontalAlignment="Left"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Text="{x:Static lang:RealtimePageResources.EewPrecisionText}"
+                               Margin="5 0"/>
+
 					<!--One Point Warning Text-->
 
-                    <!--Update Time Display-->
-					
+					<!--Update Time Display-->
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                FontWeight="SemiBold"
@@ -173,7 +175,7 @@
                                Margin="5 0"/>
 
 					<!--Informational Text-->
-					
+
 					<TextBlock HorizontalAlignment="Left"
                                FontSize="14"
                                Text="{Binding CurrentDisplayEew.InformationalText}"
