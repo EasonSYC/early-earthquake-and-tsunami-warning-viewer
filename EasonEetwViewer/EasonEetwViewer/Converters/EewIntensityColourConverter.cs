@@ -1,9 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using Avalonia.Media;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

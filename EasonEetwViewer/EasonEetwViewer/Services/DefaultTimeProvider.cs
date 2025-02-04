@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.Services;
+﻿namespace EasonEetwViewer.Services;
 internal class DefaultTimeProvider : ITimeProvider
 {
     public DateTimeOffset DateTimeOffsetNow() => DateTimeOffset.Now;

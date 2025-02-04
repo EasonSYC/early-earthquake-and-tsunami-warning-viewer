@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using DynamicData;
 using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
@@ -19,7 +15,6 @@ using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -27,7 +22,6 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
-using Mapsui.Nts;
 using Mapsui.Nts.Extensions;
 using Mapsui.Projections;
 using Mapsui.Providers;
@@ -35,7 +29,6 @@ using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using NetTopologySuite.Geometries;
-using NetTopologySuite.Noding;
 using SkiaSharp;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
@@ -296,7 +289,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
         double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
 
-
         while (!eew.Token.IsCancellationRequested)
         {
             double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).TotalSeconds;
@@ -327,7 +319,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                     DataSource = new MemoryProvider(sCirclePolygon.ToFeature()),
                     Style = sCircleStyle
                 };
-
 
                 _ = Map.Layers.Remove(x => x.Name == sLayerName);
                 Map.Layers.Add(sLayer);

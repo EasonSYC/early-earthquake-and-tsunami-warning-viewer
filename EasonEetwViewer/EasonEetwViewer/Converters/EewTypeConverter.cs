@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Models;
 using EasonEetwViewer.Lang;
+using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Converters;
 internal class EewTypeConverter : IValueConverter

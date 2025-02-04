@@ -56,7 +56,7 @@ internal class Program
     {
         int depth = 10;
         ITimeTableProvider timeTable = TimeTableProvider.FromFile("tjma2001.txt");
-        for(int i = 0; i <= 180; ++i)
+        for (int i = 0; i <= 180; ++i)
         {
             Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(depth, i)}");
         }
