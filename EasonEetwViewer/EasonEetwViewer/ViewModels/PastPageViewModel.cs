@@ -68,7 +68,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
         GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
         IEnumerable<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
-        telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
+        telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53");
         if (telegrams.Count() != 0)
         {
             if (!IsStationsRetrieved)

@@ -2,6 +2,7 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
@@ -91,7 +92,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
     [RelayCommand]
     private async Task WebSocketRefresh()
     {
-        List<WebSocketDetails> wsList = [];
+        IList<WebSocketDetails> wsList = [];
         string currentCursorToken = string.Empty;
 
         // Cursor Token
@@ -114,10 +115,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
         wsList = wsList.Where(x => x.WebSocketStatus == ConnectionStatus.Open).ToList();
 
         ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
-        wsList.ForEach(
-            x =>
-                currentConnections.Add(new(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync))
-        );
+        currentConnections.AddRange(wsList.Select(x => new WebSocketConnectionTemplate(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync)));
 
         int avaliableConnection = await GetAvaliableWebSocketConnections();
         while (currentConnections.Count < avaliableConnection)

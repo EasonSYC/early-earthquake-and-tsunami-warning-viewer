@@ -35,7 +35,8 @@ internal record PositionNode
                     return;
                 }
 
-                foreach (PositionNode node in potentialNode.SubNodes) {
+                foreach (PositionNode node in potentialNode.SubNodes)
+                {
                     potentialNode.AddPositionNode(node);
                 }
             }
