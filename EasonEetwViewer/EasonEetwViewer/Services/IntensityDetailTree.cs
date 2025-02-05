@@ -34,15 +34,7 @@ internal record IntensityDetailTree
     }
 
     internal IEnumerable<DetailIntensityTemplate> ToItemControlDisplay()
-    {
-        ICollection<DetailIntensityTemplate> finalResult = [];
-        foreach (Intensity intensity in Intensities.Keys)
-        {
-            finalResult.Add(new(intensity, GetNodeWithFixedIntensity(intensity)!));
-        }
-
-        return finalResult;
-    }
+        => Intensities.Keys.Select(i => new DetailIntensityTemplate(i, GetNodeWithFixedIntensity(i)!));
     internal IEnumerable<PositionNode>? GetNodeWithFixedIntensity(Intensity intensity)
         => !Intensities.TryGetValue(intensity, out PositionNode? value) ? null : value.SubNodes;
 }
