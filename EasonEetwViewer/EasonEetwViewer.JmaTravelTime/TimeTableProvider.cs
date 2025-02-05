@@ -9,22 +9,20 @@ public partial class TimeTableProvider : ITimeTableProvider
     public static TimeTableProvider FromFile(string fileName)
     {
         string[] rows = File.ReadAllLines(fileName);
-        ICollection<TimeTableEntry> timeTable = [];
-        foreach (string row in rows)
-        {
-            if (!Pattern().IsMatch(row))
-            {
-                throw new FormatException($"{row} does not fit format of time table");
-            }
 
-            double pTime = double.Parse(row[2..10]);
-            double sTime = double.Parse(row[13..21]);
-            int depth = int.Parse(row[22..25]);
-            int radius = int.Parse(row[27..32]);
-            timeTable.Add(new TimeTableEntry() { Depth = depth, Radius = radius, Times = [pTime, sTime] });
+        string? unmatchingRow = rows.FirstOrDefault(r => !Pattern().IsMatch(r));
+        if (unmatchingRow is not null)
+        {
+            throw new FormatException($"{unmatchingRow} does not fit format of time table");
         }
 
-        return new(timeTable);
+        return new(rows.Select(row =>
+            new TimeTableEntry() {
+                Depth = int.Parse(row[22..25]),
+                Radius = int.Parse(row[27..32]),
+                Times = [double.Parse(row[2..10]),
+                    double.Parse(row[13..21])]
+            }));
     }
 
     private const int _rowsPerDepth = 236;

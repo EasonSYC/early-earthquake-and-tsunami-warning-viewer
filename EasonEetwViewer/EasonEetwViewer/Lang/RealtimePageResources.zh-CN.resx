@@ -153,4 +153,79 @@
   <data name="EewOnePointWarningText" xml:space="preserve">
     <value>单观测点精度可能会较低</value>
   </data>
+  <data name="EpicentreDepthAccuracy1" xml:space="preserve">
+    <value>Level/PLUM法或IPF法（1点）</value>
+  </data>
+  <data name="EpicentreDepthAccuracy2" xml:space="preserve">
+    <value>IPF法（2点）</value>
+  </data>
+  <data name="EpicentreDepthAccuracy3" xml:space="preserve">
+    <value>IPF法（3点/4点）</value>
+  </data>
+  <data name="EpicentreDepthAccuracy4" xml:space="preserve">
+    <value>IPF法（5点以上）</value>
+  </data>
+  <data name="EpicentreDepthAccuracy9" xml:space="preserve">
+    <value>最终报相当</value>
+  </data>
+  <data name="MagnitudeAccuracy2" xml:space="preserve">
+    <value>速度震级</value>
+  </data>
+  <data name="MagnitudeAccuracy3" xml:space="preserve">
+    <value>全相P相</value>
+  </data>
+  <data name="MagnitudeAccuracy4" xml:space="preserve">
+    <value>P相/全相混合</value>
+  </data>
+  <data name="MagnitudeAccuracy5" xml:space="preserve">
+    <value>全点全相</value>
+  </data>
+  <data name="MagnitudeAccuracy6" xml:space="preserve">
+    <value>EPOS</value>
+  </data>
+  <data name="MagnitudeAccuracy8" xml:space="preserve">
+    <value>Level或PLUM法</value>
+  </data>
+  <data name="Point1" xml:space="preserve">
+    <value>Level/PLUM法或1点</value>
+  </data>
+  <data name="Point2" xml:space="preserve">
+    <value>2点</value>
+  </data>
+  <data name="Point3" xml:space="preserve">
+    <value>3点</value>
+  </data>
+  <data name="Point4" xml:space="preserve">
+    <value>4点</value>
+  </data>
+  <data name="Point5" xml:space="preserve">
+    <value>5点以上</value>
+  </data>
+  <data name="AccuracyHypocentrePosition" xml:space="preserve">
+    <value>震中位置</value>
+  </data>
+  <data name="AccuracyHypocentreCoordinate" xml:space="preserve">
+    <value>震源位置</value>
+  </data>
+  <data name="AccuracyDepth" xml:space="preserve">
+    <value>深度</value>
+  </data>
+  <data name="AccuracyMagnitude" xml:space="preserve">
+    <value>震级</value>
+  </data>
+  <data name="AccuracyMagnitudePoints" xml:space="preserve">
+    <value>计算使用观测点数</value>
+  </data>
+  <data name="EewColourWarning" xml:space="preserve">
+    <value>#FF2800</value>
+  </data>
+  <data name="EewColourForecast" xml:space="preserve">
+    <value>#FFAA00</value>
+  </data>
+  <data name="EewColourFinal" xml:space="preserve">
+    <value>#C8C8CB</value>
+  </data>
+  <data name="EewColourCancelling" xml:space="preserve">
+    <value>#F2F2FF</value>
+  </data>
 </root>

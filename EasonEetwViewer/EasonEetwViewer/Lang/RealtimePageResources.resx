@@ -153,4 +153,79 @@
   <data name="EewOnePointWarningText" xml:space="preserve">
     <value>Information may have low accuracy due to single-point ovservation</value>
   </data>
+  <data name="EpicentreDepthAccuracy1" xml:space="preserve">
+    <value>PLUM/Level/IPF Method (1 Point)</value>
+  </data>
+  <data name="EpicentreDepthAccuracy2" xml:space="preserve">
+    <value>IPF Method (2 Points)</value>
+  </data>
+  <data name="EpicentreDepthAccuracy3" xml:space="preserve">
+    <value>IPF Method (3 or 4 Points)</value>
+  </data>
+  <data name="EpicentreDepthAccuracy4" xml:space="preserve">
+    <value>IPF Method (&gt;5 Points)</value>
+  </data>
+  <data name="EpicentreDepthAccuracy9" xml:space="preserve">
+    <value>Equivalent to Final Report</value>
+  </data>
+  <data name="MagnitudeAccuracy2" xml:space="preserve">
+    <value>Velocity-Magnitude</value>
+  </data>
+  <data name="MagnitudeAccuracy3" xml:space="preserve">
+    <value>All Phases P Phase</value>
+  </data>
+  <data name="MagnitudeAccuracy4" xml:space="preserve">
+    <value>P Phase/All Phases Mixed</value>
+  </data>
+  <data name="MagnitudeAccuracy5" xml:space="preserve">
+    <value>All Points All Phases</value>
+  </data>
+  <data name="MagnitudeAccuracy6" xml:space="preserve">
+    <value>EPOS</value>
+  </data>
+  <data name="MagnitudeAccuracy8" xml:space="preserve">
+    <value>Level or Plum Method</value>
+  </data>
+  <data name="Point1" xml:space="preserve">
+    <value>Level or Plum Method or 1 Point</value>
+  </data>
+  <data name="Point2" xml:space="preserve">
+    <value>2 Points</value>
+  </data>
+  <data name="Point3" xml:space="preserve">
+    <value>3 Points</value>
+  </data>
+  <data name="Point4" xml:space="preserve">
+    <value>4 Points</value>
+  </data>
+  <data name="Point5" xml:space="preserve">
+    <value>&gt;5 Points</value>
+  </data>
+  <data name="AccuracyHypocentrePosition" xml:space="preserve">
+    <value>Hypo. Pos.</value>
+  </data>
+  <data name="AccuracyHypocentreCoordinate" xml:space="preserve">
+    <value>Hypo. Coord.</value>
+  </data>
+  <data name="AccuracyDepth" xml:space="preserve">
+    <value>Depth</value>
+  </data>
+  <data name="AccuracyMagnitude" xml:space="preserve">
+    <value>Magnitude</value>
+  </data>
+  <data name="AccuracyMagnitudePoints" xml:space="preserve">
+    <value>No. of Points</value>
+  </data>
+  <data name="EewColourWarning" xml:space="preserve">
+    <value>#FF2800</value>
+  </data>
+  <data name="EewColourForecast" xml:space="preserve">
+    <value>#FFAA00</value>
+  </data>
+  <data name="EewColourFinal" xml:space="preserve">
+    <value>#C8C8CB</value>
+  </data>
+  <data name="EewColourCancelling" xml:space="preserve">
+    <value>#F2F2FF</value>
+  </data>
 </root>

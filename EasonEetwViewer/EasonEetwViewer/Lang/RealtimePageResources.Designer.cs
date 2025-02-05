@@ -61,6 +61,51 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depth.
+        /// </summary>
+        public static string AccuracyDepth {
+            get {
+                return ResourceManager.GetString("AccuracyDepth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hypo. Coord..
+        /// </summary>
+        public static string AccuracyHypocentreCoordinate {
+            get {
+                return ResourceManager.GetString("AccuracyHypocentreCoordinate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hypo. Pos..
+        /// </summary>
+        public static string AccuracyHypocentrePosition {
+            get {
+                return ResourceManager.GetString("AccuracyHypocentrePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magnitude.
+        /// </summary>
+        public static string AccuracyMagnitude {
+            get {
+                return ResourceManager.GetString("AccuracyMagnitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No. of Points.
+        /// </summary>
+        public static string AccuracyMagnitudePoints {
+            get {
+                return ResourceManager.GetString("AccuracyMagnitudePoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hypocentre assumed from PLUM method or Level Method.
         /// </summary>
         public static string EewAssumedSpecificText {
@@ -75,6 +120,42 @@ namespace EasonEetwViewer.Lang {
         public static string EewCancellingText {
             get {
                 return ResourceManager.GetString("EewCancellingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F2F2FF.
+        /// </summary>
+        public static string EewColourCancelling {
+            get {
+                return ResourceManager.GetString("EewColourCancelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #C8C8CB.
+        /// </summary>
+        public static string EewColourFinal {
+            get {
+                return ResourceManager.GetString("EewColourFinal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FFAA00.
+        /// </summary>
+        public static string EewColourForecast {
+            get {
+                return ResourceManager.GetString("EewColourForecast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF2800.
+        /// </summary>
+        public static string EewColourWarning {
+            get {
+                return ResourceManager.GetString("EewColourWarning", resourceCulture);
             }
         }
         
@@ -147,6 +228,150 @@ namespace EasonEetwViewer.Lang {
         public static string EewWarningText {
             get {
                 return ResourceManager.GetString("EewWarningText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PLUM/Level/IPF Method (1 Point).
+        /// </summary>
+        public static string EpicentreDepthAccuracy1 {
+            get {
+                return ResourceManager.GetString("EpicentreDepthAccuracy1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPF Method (2 Points).
+        /// </summary>
+        public static string EpicentreDepthAccuracy2 {
+            get {
+                return ResourceManager.GetString("EpicentreDepthAccuracy2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPF Method (3 or 4 Points).
+        /// </summary>
+        public static string EpicentreDepthAccuracy3 {
+            get {
+                return ResourceManager.GetString("EpicentreDepthAccuracy3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPF Method (&gt;5 Points).
+        /// </summary>
+        public static string EpicentreDepthAccuracy4 {
+            get {
+                return ResourceManager.GetString("EpicentreDepthAccuracy4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equivalent to Final Report.
+        /// </summary>
+        public static string EpicentreDepthAccuracy9 {
+            get {
+                return ResourceManager.GetString("EpicentreDepthAccuracy9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velocity-Magnitude.
+        /// </summary>
+        public static string MagnitudeAccuracy2 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Phases P Phase.
+        /// </summary>
+        public static string MagnitudeAccuracy3 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to P Phase/All Phases Mixed.
+        /// </summary>
+        public static string MagnitudeAccuracy4 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Points All Phases.
+        /// </summary>
+        public static string MagnitudeAccuracy5 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPOS.
+        /// </summary>
+        public static string MagnitudeAccuracy6 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level or Plum Method.
+        /// </summary>
+        public static string MagnitudeAccuracy8 {
+            get {
+                return ResourceManager.GetString("MagnitudeAccuracy8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Level or Plum Method or 1 Point.
+        /// </summary>
+        public static string Point1 {
+            get {
+                return ResourceManager.GetString("Point1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 Points.
+        /// </summary>
+        public static string Point2 {
+            get {
+                return ResourceManager.GetString("Point2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 Points.
+        /// </summary>
+        public static string Point3 {
+            get {
+                return ResourceManager.GetString("Point3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 Points.
+        /// </summary>
+        public static string Point4 {
+            get {
+                return ResourceManager.GetString("Point4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;5 Points.
+        /// </summary>
+        public static string Point5 {
+            get {
+                return ResourceManager.GetString("Point5", resourceCulture);
             }
         }
         

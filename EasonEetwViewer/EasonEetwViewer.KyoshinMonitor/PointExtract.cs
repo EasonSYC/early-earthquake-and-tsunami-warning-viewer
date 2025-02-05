@@ -27,7 +27,8 @@ public class PointExtract(string filePath) : IPointExtract
     /// <returns>A list of pairs of observation points and their colours.</returns>
     public IEnumerable<(ObservationPoint point, SKColor colour)> ExtractColours(SKBitmap bitmap, bool kikNetOnly = false)
         => _points
-            .Where(p => !p.IsSuspended && p.Point is not null && (!kikNetOnly || p.Type == PointType.KiK))
+            .Where(p => !p.IsSuspended && p.Point is not null)
+            .Where(p => !(kikNetOnly && p.Type != PointType.KiK))
             .Select(p => (p, colour: bitmap.GetPixel(p.Point.X, p.Point.Y)))
             .ToArray() // deferred execution throws System.ExecutionEngineException
             .Where(pc => pc.colour.Alpha != 0);

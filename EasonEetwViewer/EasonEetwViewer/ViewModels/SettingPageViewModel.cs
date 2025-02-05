@@ -106,7 +106,8 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
         wsList = wsList.Where(x => x.WebSocketStatus == ConnectionStatus.Open).ToList();
 
         ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
-        currentConnections.AddRange(wsList.Select(x => new WebSocketConnectionTemplate(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync)));
+        currentConnections.AddRange(wsList.Select(x
+            => new WebSocketConnectionTemplate(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync)));
 
         int avaliableConnection = await GetAvaliableWebSocketConnections();
         while (currentConnections.Count < avaliableConnection)

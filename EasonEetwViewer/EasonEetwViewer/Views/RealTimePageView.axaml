@@ -18,6 +18,7 @@
 
     <UserControl.Resources>
         <conv:EewTypeConverter x:Key="EewTypeConverter"/>
+        <conv:EewColourConverter x:Key="EewColourConverter"/>
         <conv:EewSerialConverter x:Key="EewSerialConverter"/>
         <conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
         <conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
@@ -28,6 +29,8 @@
         <conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
         <conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
         <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
+        <conv:EewAccuracyConverter x:Key="EewAccuracyConverter"/>
+        <conv:EewOnePointConverter x:Key="EewOnePointConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -51,9 +54,18 @@
                     Canvas.Left="0"
                     IsVisible="{Binding CurrentDisplayEew, Converter={x:Static ObjectConverters.IsNotNull}}"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
-                    Width="320"
+                    Width="350"
                     CornerRadius="0 0 10 0">
                 <StackPanel>
+
+                    <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
+                            Height="10">
+                    </Border>
+
+                    <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
+                            Margin="0 5"
+                            Height="5">
+                    </Border>
 
                     <!--Eew Serial Display-->
 
@@ -160,8 +172,89 @@
                                FontWeight="SemiBold"
                                Text="{x:Static lang:RealtimePageResources.EewPrecisionText}"
                                Margin="5 0"/>
+                    <Grid Margin="5.0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Normal"
+                                   FontSize="14"
+                                   Text="{x:Static lang:RealtimePageResources.AccuracyHypocentrePosition}"/>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Normal"
+                                   FontSize="14"
+                                   Text="{x:Static lang:RealtimePageResources.AccuracyHypocentreCoordinate}"/>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Normal"
+                                   FontSize="14"
+                                   Text="{x:Static lang:RealtimePageResources.AccuracyDepth}"/>
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Normal"
+                                   FontSize="14"
+                                   Text="{x:Static lang:RealtimePageResources.AccuracyMagnitude}"/>
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   FontWeight="Normal"
+                                   FontSize="14"
+                                   Text="{x:Static lang:RealtimePageResources.AccuracyMagnitudePoints}"/>
+                        <TextBlock Grid.Row="0"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="SemiBold"
+                                   FontSize="16"
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[0], Converter={StaticResource EewAccuracyConverter}}"/>
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="SemiBold"
+                                   FontSize="16"
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[1], Converter={StaticResource EewAccuracyConverter}}"/>
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="SemiBold"
+                                   FontSize="16"
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Depth, Converter={StaticResource EewAccuracyConverter}}"/>
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="SemiBold"
+                                   FontSize="16"
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Magnitude, Converter={StaticResource EewAccuracyConverter}}"/>
+                        <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   FontWeight="SemiBold"
+                                   FontSize="16"
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.MagnitudePoint, Converter={StaticResource EewAccuracyConverter}}"/>
+                    </Grid>
 
                     <!--One Point Warning Text-->
+
+                    <TextBlock HorizontalAlignment="Left"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Text="{x:Static lang:RealtimePageResources.EewOnePointWarningText}"
+                               TextWrapping="Wrap"
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy, Converter={StaticResource EewOnePointConverter}}"
+                               Margin="5 5"/>
 
                     <!--Update Time Display-->
 
