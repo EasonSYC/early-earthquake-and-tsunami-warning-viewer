@@ -470,26 +470,20 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             using SKImage image = SKImage.FromEncodedData(imageBytes);
             using SKBitmap bm = SKBitmap.FromImage(image);
-            using SKData data = bm.Encode(SKEncodedImageFormat.Png, 100);
 
-            List<(ObservationPoint point, SKColor colour)> colours = _pointExtract.ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole);
-            List<(ObservationPoint point, double height)> heights = [];
-
-            foreach ((ObservationPoint p, SKColor c) in colours)
-            {
-                heights.Add((p, ColourConversion.ColourToHeight(c)));
-            }
-
-            return heights.Select(pc =>
-            {
-                PointFeature feature = new(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint());
-                feature.Styles.Add(new SymbolStyle()
+            return _pointExtract
+                .ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole)
+                .Select(pc => (pc.point, height: ColourConversion.ColourToHeight(pc.colour)))
+                .Select(pc =>
                 {
-                    SymbolScale = 0.1,
-                    Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
+                    PointFeature feature = new(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint());
+                    feature.Styles.Add(new SymbolStyle()
+                    {
+                        SymbolScale = 0.1,
+                        Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
+                    });
+                    return feature;
                 });
-                return feature;
-            });
         }
         catch (AggregateException ae)
         {
