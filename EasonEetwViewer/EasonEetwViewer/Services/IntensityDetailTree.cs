@@ -4,14 +4,14 @@ using EasonEetwViewer.Models;
 namespace EasonEetwViewer.Services;
 internal record IntensityDetailTree
 {
-    internal Dictionary<Intensity, PositionNode> Intensities { get; private set; } = [];
+    private readonly Dictionary<Intensity, PositionNode> _intensities = [];
 
     internal void AddPositionNode(Intensity intensity, PositionNode node)
     {
-        if (!Intensities.TryGetValue(intensity, out PositionNode? value))
+        if (!_intensities.TryGetValue(intensity, out PositionNode? value))
         {
             value = new PositionNode(string.Empty, string.Empty);
-            Intensities.Add(intensity, value);
+            _intensities.Add(intensity, value);
         }
 
         value.AddPositionNode(node);
@@ -34,7 +34,7 @@ internal record IntensityDetailTree
     }
 
     internal IEnumerable<DetailIntensityTemplate> ToItemControlDisplay()
-        => Intensities.Keys.Select(i => new DetailIntensityTemplate(i, GetNodeWithFixedIntensity(i)!));
+        => _intensities.Keys.Select(i => new DetailIntensityTemplate(i, GetNodeWithFixedIntensity(i)!));
     internal IEnumerable<PositionNode>? GetNodeWithFixedIntensity(Intensity intensity)
-        => !Intensities.TryGetValue(intensity, out PositionNode? value) ? null : value.SubNodes;
+        => !_intensities.TryGetValue(intensity, out PositionNode? value) ? null : value.SubNodes;
 }
