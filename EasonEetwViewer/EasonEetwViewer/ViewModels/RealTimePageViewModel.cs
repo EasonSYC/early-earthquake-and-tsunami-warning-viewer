@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -85,7 +86,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     private readonly ITimeTableProvider _timeTableProvider;
 
-    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromMilliseconds(250);
+    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromSeconds(1d / 60d);
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
@@ -290,6 +291,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
         double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
 
+        MemoryLayer? pLayer = null;
+        MemoryLayer? sLayer = null;
+
         while (!eew.Token.IsCancellationRequested)
         {
             double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).TotalSeconds;
@@ -305,30 +309,44 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 Polygon pCirclePolygon = CreateCircleRing(latitude, longitude, pDistance);
 
-                ILayer pLayer = new Layer
+                if (pLayer is null)
                 {
-                    Name = pLayerName,
-                    DataSource = new MemoryProvider(pCirclePolygon.ToFeature()),
-                    Style = pCircleStyle
-                };
+                    pLayer = new MemoryLayer
+                    {
+                        Name = pLayerName,
+                        Features = [pCirclePolygon.ToFeature()],
+                        Style = pCircleStyle
+                    };
 
-                _ = Map.Layers.Remove(x => x.Name == pLayerName);
-                Map.Layers.Add(pLayer);
+                    Map.Layers.Add(pLayer);
+                }
+                else
+                {
+                    pLayer.Features = [pCirclePolygon.ToFeature()];
+                    pLayer.DataHasChanged();
+                }
             }
 
             if (sDistance != 0)
             {
                 Polygon sCirclePolygon = CreateCircleRing(latitude, longitude, sDistance);
 
-                ILayer sLayer = new Layer
+                if (sLayer is null)
                 {
-                    Name = sLayerName,
-                    DataSource = new MemoryProvider(sCirclePolygon.ToFeature()),
-                    Style = sCircleStyle
-                };
+                    sLayer = new MemoryLayer
+                    {
+                        Name = sLayerName,
+                        Features = [sCirclePolygon.ToFeature()],
+                        Style = sCircleStyle
+                    };
 
-                _ = Map.Layers.Remove(x => x.Name == sLayerName);
-                Map.Layers.Add(sLayer);
+                    Map.Layers.Add(sLayer);
+                }
+                else
+                {
+                    sLayer.Features = [sCirclePolygon.ToFeature()];
+                    sLayer.DataHasChanged();
+                }
             }
 
             await Task.Delay(_refreshCircleInterval);
