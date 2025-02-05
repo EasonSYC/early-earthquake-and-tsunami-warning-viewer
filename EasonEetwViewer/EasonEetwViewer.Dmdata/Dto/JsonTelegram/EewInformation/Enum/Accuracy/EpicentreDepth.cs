@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
-[JsonConverter(typeof(JsonStringEnumConverter<Depth>))]
-public enum Depth
+[JsonConverter(typeof(JsonStringEnumConverter<EpicentreDepth>))]
+public enum EpicentreDepth
 {
     [JsonStringEnumMemberName("0")]
     Unknown = 0,
@@ -25,5 +25,7 @@ public enum Depth
     EposSea = 7,
     [JsonStringEnumMemberName("8")]
     [Obsolete("No longer used after 2023/09/26 14:00 JST.")]
-    EposLand = 8
+    EposLand = 8,
+    [JsonStringEnumMemberName("9")]
+    Final = 9
 }

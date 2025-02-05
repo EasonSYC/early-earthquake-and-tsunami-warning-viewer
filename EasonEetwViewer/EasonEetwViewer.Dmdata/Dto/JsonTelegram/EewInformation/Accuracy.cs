@@ -5,9 +5,9 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 public record Accuracy
 {
     [JsonPropertyName("epicenters")]
-    public required List<Epicentre> Epicentres { get; init; }
+    public required List<EpicentreDepth> Epicentres { get; init; }
     [JsonPropertyName("depth")]
-    public required Depth Depth { get; init; }
+    public required EpicentreDepth Depth { get; init; }
     [JsonPropertyName("magnitudeCalculation")]
     public required Magnitude Magnitude { get; init; }
     [JsonPropertyName("numberOfMagnitudeCalculation")]
