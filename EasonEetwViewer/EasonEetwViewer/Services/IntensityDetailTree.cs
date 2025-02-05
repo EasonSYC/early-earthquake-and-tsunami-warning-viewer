@@ -16,6 +16,23 @@ internal record IntensityDetailTree
 
         value.AddPositionNode(node);
     }
+
+    internal void AddPositionNode(Intensity intensity, IEnumerable<PositionNode> nodes)
+    {
+        foreach (PositionNode node in nodes)
+        {
+            AddPositionNode(intensity, node);
+        }
+    }
+
+    internal void AddPositionNode(IEnumerable<(Intensity, PositionNode)> intensityAndNodes)
+    {
+        foreach ((Intensity i, PositionNode node) in intensityAndNodes)
+        {
+            AddPositionNode(i, node);
+        }
+    }
+
     internal IEnumerable<DetailIntensityTemplate> ToItemControlDisplay()
     {
         ICollection<DetailIntensityTemplate> finalResult = [];

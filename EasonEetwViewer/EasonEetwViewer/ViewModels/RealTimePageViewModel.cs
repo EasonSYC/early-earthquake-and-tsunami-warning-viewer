@@ -386,14 +386,16 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     #region tsunami
     private const string _tsunamiWarningLayerName = "Tsunami";
-    private void OnTsunamiReceived(TsunamiInformationSchema schema)
+    private TsunamiInformationSchema? _currentTsunami = null;
+    private async Task OnTsunamiReceived(TsunamiInformationSchema schema)
     {
-        ;
+        _currentTsunami = schema;
+        await Task.CompletedTask;
     }
     #endregion
 
     #region websocket
-    public void OnDataReceived(string data, FormatType? format)
+    public async void OnDataReceived(string data, FormatType? format)
     {
         if (format == FormatType.Json)
         {
@@ -406,12 +408,12 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             if (headData.Schema.Type == "eew-information" && headData.Schema.Version == "1.0.0")
             {
                 EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(data, _options)!;
-                OnEewReceived(eew);
+                await OnEewReceived(eew);
             }
             else if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.1.0")
             {
                 TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(data, _options)!;
-                OnTsunamiReceived(tsunami);
+                await OnTsunamiReceived(tsunami);
             }
         }
     }

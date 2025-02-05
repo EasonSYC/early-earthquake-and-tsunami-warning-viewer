@@ -74,16 +74,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
     {
         ContractList contractList = await _apiCaller.GetContractListAsync();
         IEnumerable<Contract> contracts = contractList.ItemList;
-        int result = 0;
-        foreach (Contract contract in contracts)
-        {
-            if (contract.IsValid)
-            {
-                result += contract.ConnectionCounts;
-            }
-        }
-
-        return result;
+        return contracts.Sum(c => c.IsValid ? c.ConnectionCounts : 0);
     }
 
     private readonly WebSocketConnectionTemplate _emptyConnection

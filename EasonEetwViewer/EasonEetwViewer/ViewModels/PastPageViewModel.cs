@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using Avalonia.Styling;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -82,47 +83,42 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
 
             if (telegramInfo.Body.Intensity is not null)
             {
-                ICollection<IFeature> stationFeature = [];
-                IEnumerable<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
+                IEnumerable<(Station s, Intensity i)> stationData = telegramInfo.Body.Intensity.Stations
+                    .Where(x => x.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() is not Intensity.Unknown)
+                    .Join(_earthquakeObservationStations!,
+                    si => si.Code,
+                    s => s.XmlCode,
+                    (si, s) => (s, ((IntensityWithUnreceived)si.MaxInt!).ToEarthquakeIntensity()));
 
-                foreach (StationIntensity station in stationData)
-                {
-                    if (station.MaxInt is not IntensityWithUnreceived newInt || newInt.ToEarthquakeIntensity() == Intensity.Unknown)
-                    {
-                        continue;
-                    }
+                IEnumerable<IFeature> stationFeatures = stationData
+                    .Select(x =>
+                        new PointFeature(SphericalMercator.FromLonLat(x.s.Longitude, x.s.Latitude).ToMPoint())
+                        {
+                            Styles = [new SymbolStyle()
+                            {
+                                SymbolScale = 0.25,
+                                Fill = new Brush(Color.FromString(x.i.ToColourString())),
+                                Outline = new Pen { Color = Color.Black }
+                            }]
+                        });
 
-                    Station? potnetialStation = _earthquakeObservationStations!.FirstOrDefault(x => x.XmlCode == station.Code);
-                    if (potnetialStation is null)
-                    {
-                        continue;
-                    }
+                IEnumerable<(Intensity, PositionNode)> intensityAndNodes = stationData
+                    .Join(_resources.Prefectures,
+                        x => x.s.City.Code[0..2],
+                        p => p.Code,
+                        (si, p) => (p, si.s, si.i))
+                    .Select(x =>
+                        (x.i, new PositionNode(x.p.Name, x.p.Code,
+                                new(x.s.Region.KanjiName, x.s.Region.Code,
+                                    new(x.s.City.KanjiName, x.s.City.Code,
+                                        new(x.s.KanjiName, x.s.XmlCode))))));
 
-                    PointFeature feature = new(SphericalMercator.FromLonLat(potnetialStation.Longitude, potnetialStation.Latitude).ToMPoint());
-                    feature.Styles.Add(new SymbolStyle()
-                    {
-                        SymbolScale = 0.25,
-                        Fill = new Brush(Color.FromString(newInt.ToEarthquakeIntensity().ToColourString())),
-                        Outline = new Pen { Color = Color.Black }
-                    });
-                    stationFeature.Add(feature);
-
-                    string prefectureCode = potnetialStation.City.Code[0..2];
-                    PrefectureData? prefecture = _resources.Prefectures.FirstOrDefault(x => x.Code == prefectureCode);
-                    if (prefecture is not null)
-                    {
-                        tree.AddPositionNode(newInt.ToEarthquakeIntensity(),
-                            new(prefecture.Name, prefecture.Code,
-                                new(potnetialStation.Region.KanjiName, potnetialStation.Region.Code,
-                                    new(potnetialStation.City.KanjiName, potnetialStation.City.Code,
-                                        new(station.Name, potnetialStation.XmlCode)))));
-                    }
-                }
+                tree.AddPositionNode(intensityAndNodes);
 
                 ILayer layer = new MemoryLayer()
                 {
                     Name = _obsPointLayerName,
-                    Features = stationFeature,
+                    Features = stationFeatures,
                     Style = null
                 };
 
@@ -132,15 +128,15 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     Map.Layers.Add(new RasterizingLayer(layer));
                 }
 
-                IEnumerable<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetLimitsOfJapan(), 1))));
-                IEnumerable<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
-                foreach (RegionIntensity region in regionData)
+                IEnumerable<MRect?> regions = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetLimitsOfJapan(), 1))))
+                    .Join(telegramInfo.Body.Intensity.Regions,
+                    f => f["code"]?.ToString()?.ToLower(),
+                    r => r.Code,
+                    (f, r) => (f.Extent));
+
+                foreach (MRect? region in regions)
                 {
-                    IFeature? potentialFeature = features.FirstOrDefault(f => (f["code"]?.ToString()?.ToLower() == region.Code));
-                    if (potentialFeature is not null)
-                    {
-                        regionLimits = regionLimits is null ? potentialFeature.Extent : regionLimits.Join(potentialFeature.Extent);
-                    }
+                    regionLimits = regionLimits is null ? region : regionLimits.Join(region);
                 }
             }
 
