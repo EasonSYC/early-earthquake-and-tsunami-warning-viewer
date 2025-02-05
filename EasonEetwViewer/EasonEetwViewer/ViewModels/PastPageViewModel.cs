@@ -131,7 +131,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
                     Map.Layers.Add(new RasterizingLayer(layer));
                 }
 
-                IEnumerable<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetMainLimitsOfJapan(), 1))));
+                IEnumerable<IFeature> features = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetLimitsOfJapan(), 1))));
                 IEnumerable<RegionIntensity> regionData = telegramInfo.Body.Intensity.Regions;
                 foreach (RegionIntensity region in regionData)
                 {
@@ -234,20 +234,13 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private static ThemeStyle CreateRegionThemeStyle(List<RegionIntensity> regions)
         => new(f =>
             {
-                foreach (RegionIntensity region in regions)
-                {
-                    if (f["code"]?.ToString()?.ToLower() == region.Code)
+                RegionIntensity? region = regions.FirstOrDefault(r => r.Code == f["code"]?.ToString()?.ToLower());
+                return region is null || region.MaxInt is null
+                    ? null
+                    : new VectorStyle()
                     {
-                        return region.MaxInt is not null
-                            ? new VectorStyle()
-                            {
-                                Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.MaxInt).ToColourString()), 0.60f))
-                            }
-                            : null;
-                    }
-                }
-
-                return null;
+                        Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.MaxInt).ToColourString()), 0.60f))
+                    };
             });
 
     [RelayCommand]

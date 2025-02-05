@@ -35,12 +35,12 @@ internal partial class MapViewModelBase : PageViewModelBase
         Map.Navigator.ZoomToBox(view);
     }
 
-    //private protected static MRect GetLimitsOfJapan()
-    //{
-    //    (double minX, double minY) = SphericalMercator.FromLonLat(122, 20);
-    //    (double maxX, double maxY) = SphericalMercator.FromLonLat(154, 46);
-    //    return new MRect(minX, minY, maxX, maxY);
-    //}
+    private protected static MRect GetLimitsOfJapan()
+    {
+        (double minX, double minY) = SphericalMercator.FromLonLat(122, 20);
+        (double maxX, double maxY) = SphericalMercator.FromLonLat(154, 46);
+        return new MRect(minX, minY, maxX, maxY);
+    }
 
     private protected static MRect GetMainLimitsOfJapan()
     {

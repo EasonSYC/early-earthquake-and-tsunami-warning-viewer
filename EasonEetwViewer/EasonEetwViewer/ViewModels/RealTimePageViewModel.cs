@@ -202,18 +202,13 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private static ThemeStyle CreateRegionThemeStyle(List<Region> regions)
         => new(f =>
             {
-                foreach (Region region in regions)
-                {
-                    if (f["code"]?.ToString()?.ToLower() == region.Code)
+                Region? region = regions.FirstOrDefault(r => r.Code == f["code"]?.ToString()?.ToLower());
+                return region is null
+                    ? null
+                    : new VectorStyle()
                     {
-                        return new VectorStyle()
-                        {
-                            Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.ForecastMaxInt.From).ToColourString()), 0.60f))
-                        };
-                    }
-                }
-
-                return null;
+                        Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.ForecastMaxInt.From).ToColourString()), 0.60f))
+                    };
             });
 
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2.5);
