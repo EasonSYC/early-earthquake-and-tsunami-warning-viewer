@@ -17,7 +17,11 @@ internal partial class StaticResources : ObservableObject
 
     internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
     {
-        ImageSource = "embedded://EasonEetwViewer.Resources.hypo.svg"
+        ImageSource = "embedded://EasonEetwViewer.Resources.cross.svg"
+    };
+    internal IStyle PlumShapeStyle { get; private init; } = new SymbolStyle
+    {
+        ImageSource = "embedded://EasonEetwViewer.Resources.circle.svg"
     };
 
     internal IEnumerable<PrefectureData> Prefectures { get; private init; } = [

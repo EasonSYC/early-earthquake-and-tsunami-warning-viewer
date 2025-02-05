@@ -82,13 +82,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #region eew
     private const string _eewHypocentreLayerPrefix = "Hypocentre";
     private const string _eewRegionLayerPrefix = "Regions";
-    private const string _eewWavefrontLayerPrefix = "Wavefront";
 
     private readonly ITimeTableProvider _timeTableProvider;
-
-    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromSeconds(1d / 60d);
-    private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2);
-    private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
     private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
 
     [ObservableProperty]
@@ -183,8 +178,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             if (eew.Body.Earthquake.Condition is "仮定震源要素")
             {
-                // TODO: PLUM Hypocentre
-                layer.Style = _resources.HypocentreShapeStyle;
+                layer.Style = _resources.PlumShapeStyle;
             }
             else
             {
@@ -232,6 +226,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
                 return null;
             });
+
+    private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2.5);
     private async Task SwitchEew()
     {
         while (!_token.IsCancellationRequested)
@@ -246,6 +242,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             await Task.Delay(_switchEewInterval);
         }
     }
+
     private readonly IStyle pCircleStyle
         = new VectorStyle
         {
@@ -266,6 +263,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             },
             Fill = null
         };
+    private const string _eewWavefrontLayerPrefix = "Wavefront";
+    private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromSeconds(1d / 60d);
     private async Task DrawEewCircles(EewDetailsTemplate eew)
     {
         if (eew.Earthquake is null
@@ -373,6 +372,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         return new Polygon(new LinearRing([.. outerRing]));
     }
+
+    private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
     private async Task ClearExpiredEew()
     {
         while (!_token.IsCancellationRequested)
@@ -388,6 +389,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             await Task.Delay(_removeExpiredEewInterval);
         }
     }
+
     private void RemoveEewAt(int i)
     {
         EewDetailsTemplate eew = LiveEewList[i];

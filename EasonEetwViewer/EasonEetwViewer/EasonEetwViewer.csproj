@@ -17,10 +17,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AvaloniaResource Remove="Assets\hypo.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<AvaloniaXaml Remove="Assets\Icons.axaml" />
 	</ItemGroup>
 
@@ -51,7 +47,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\hypo.svg">
+        <EmbeddedResource Include="Resources\cross.svg">
+          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\circle.svg">
 	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 	  </EmbeddedResource>
 	</ItemGroup>
