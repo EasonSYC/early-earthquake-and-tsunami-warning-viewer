@@ -14,7 +14,6 @@ using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
-using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -474,16 +473,16 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return _pointExtract
                 .ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole)
                 .Select(pc => (pc.point, height: ColourConversion.ColourToHeight(pc.colour)))
-                .Select(pc =>
-                {
-                    PointFeature feature = new(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint());
-                    feature.Styles.Add(new SymbolStyle()
+                .Select(pc
+                    => new PointFeature(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint())
                     {
-                        SymbolScale = 0.1,
-                        Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
+                        Styles = [
+                            new SymbolStyle()
+                            {
+                                SymbolScale = 0.1,
+                                Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
+                            }]
                     });
-                    return feature;
-                });
         }
         catch (AggregateException ae)
         {

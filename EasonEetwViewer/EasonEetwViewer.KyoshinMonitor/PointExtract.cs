@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.Text.Json;
+﻿using System.Text.Json;
 using EasonEetwViewer.KyoshinMonitor.Dto;
 using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using SkiaSharp;
