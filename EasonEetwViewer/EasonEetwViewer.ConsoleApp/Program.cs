@@ -117,7 +117,7 @@ internal class Program
         Console.WriteLine(earthquakeParameter.ResponseTime);
         Console.WriteLine(earthquakeParameter.Version);
         Console.WriteLine(earthquakeParameter.ChangeTime);
-        Console.WriteLine(earthquakeParameter.ItemList[0]);
+        Console.WriteLine(earthquakeParameter.ItemList.ToList()[0]);
 
         GdEarthquakeList pastEarthquakeList = await apiCaller.GetPastEarthquakeListAsync();
         Console.WriteLine(pastEarthquakeList.ResponseId);
@@ -126,7 +126,7 @@ internal class Program
         Console.WriteLine(pastEarthquakeList.NextToken);
         Console.WriteLine(pastEarthquakeList.NextPooling);
         Console.WriteLine(pastEarthquakeList.NextPoolingInterval);
-        Console.WriteLine(pastEarthquakeList.ItemList[0]);
+        Console.WriteLine(pastEarthquakeList.ItemList.ToList()[0]);
 
         GdEarthquakeEvent pastEarthquakeEvent = await apiCaller.GetPathEarthquakeEventAsync("20250112232728");
         Console.WriteLine(pastEarthquakeEvent);
@@ -173,7 +173,7 @@ internal class Program
 
         PointExtract pointExtract = new("ObservationPoints.json");
         pointExtract.WritePoints("OutputObservationPoints.json");
-        List<(ObservationPoint point, SKColor colour)> colours = pointExtract.ExtractColours(bm);
+        List<(ObservationPoint point, SKColor colour)> colours = pointExtract.ExtractColours(bm).ToList();
         List<(ObservationPoint point, double intensity)> intensities = [];
 
         foreach ((ObservationPoint p, SKColor c) in colours)
