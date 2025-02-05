@@ -6,5 +6,5 @@ public record AdditionalComment
     [JsonPropertyName("text")]
     public required string Text { get; init; }
     [JsonPropertyName("codes")]
-    public required List<string> Codes { get; init; }
+    public required IEnumerable<string> Codes { get; init; }
 }

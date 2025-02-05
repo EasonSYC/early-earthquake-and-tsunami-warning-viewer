@@ -16,7 +16,7 @@ public record StationIntensity
     [JsonPropertyName("sva")]
     public Sva? Sva { get; init; }
     [JsonPropertyName("prePeriods")]
-    public List<PrePeriod>? PrePreiods { get; init; }
+    public IEnumerable<PrePeriod>? PrePreiods { get; init; }
     [JsonPropertyName("revise")]
     public ReviseStatus? Revise { get; init; }
     [JsonPropertyName("condition")]

@@ -2,9 +2,9 @@
 public record Tsunami
 {
     //[JsonPropertyName("forecasts")]
-    //public List<Forecast>? Forecasts { get; init; }
+    //public IEnumerable<Forecast>? Forecasts { get; init; }
     //[JsonPropertyName("observations")]
-    //public List<Observation>? Observations { get; init; }
+    //public IEnumerable<Observation>? Observations { get; init; }
     //[JsonPropertyName("estimations")]
-    //public List<Estimation>? Estimations { get; init; }
+    //public IEnumerable<Estimation>? Estimations { get; init; }
 }

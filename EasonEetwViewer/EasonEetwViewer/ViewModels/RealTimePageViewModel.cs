@@ -181,7 +181,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         if (eew.Body.Intensity is not null)
         {
-            List<Region> regions = eew.Body.Intensity.Regions;
+            IEnumerable<Region> regions = eew.Body.Intensity.Regions;
 
             ILayer layer = new Layer()
             {
@@ -198,7 +198,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
-    private static ThemeStyle CreateRegionThemeStyle(List<Region> regions)
+    private static ThemeStyle CreateRegionThemeStyle(IEnumerable<Region> regions)
         => new(f =>
             {
                 Region? region = regions.FirstOrDefault(r => r.Code == f["code"]?.ToString()?.ToLower());
@@ -343,7 +343,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         radius *= 1000;
         radius *= 1.23;
 
-        List<Coordinate> outerRing = [];
+        ICollection<Coordinate> outerRing = [];
         double increment = 360d / (quality < 3 ? 3 : (quality > 360 ? 360 : quality));
         for (double angle = 0; angle < 360; angle += increment)
         {
@@ -351,7 +351,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             outerRing.Add(new Coordinate(x + (Math.Sin(angleInRadians) * radius), y + (Math.Cos(angleInRadians) * radius)));
         }
 
-        outerRing.Add(outerRing[0]);
+        outerRing.Add(outerRing.ElementAt(0));
 
         return new Polygon(new LinearRing([.. outerRing]));
     }

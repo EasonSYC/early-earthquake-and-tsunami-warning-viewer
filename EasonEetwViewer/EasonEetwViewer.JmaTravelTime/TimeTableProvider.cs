@@ -9,7 +9,7 @@ public partial class TimeTableProvider : ITimeTableProvider
     public static TimeTableProvider FromFile(string fileName)
     {
         string[] rows = File.ReadAllLines(fileName);
-        IList<TimeTableEntry> timeTable = [];
+        ICollection<TimeTableEntry> timeTable = [];
         foreach (string row in rows)
         {
             if (!Pattern().IsMatch(row))

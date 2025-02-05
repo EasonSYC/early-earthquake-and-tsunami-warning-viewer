@@ -20,7 +20,7 @@ public record Head
     [JsonPropertyName("editorialOffice")]
     public required string EditorialOffice { get; init; }
     [JsonPropertyName("publishingOffice")]
-    public required List<string> PublishingOffice { get; init; }
+    public required IEnumerable<string> PublishingOffice { get; init; }
     [JsonPropertyName("pressDateTime")]
     public required DateTimeOffset PressDateTime { get; init; }
     [JsonPropertyName("reportDateTime")]

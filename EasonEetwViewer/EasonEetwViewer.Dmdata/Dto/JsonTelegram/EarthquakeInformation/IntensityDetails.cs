@@ -11,11 +11,11 @@ public record IntensityDetails
     [JsonPropertyName("lgCategory")]
     public LgCategory? LgCategory { get; init; }
     [JsonPropertyName("prefectures")]
-    public required List<RegionIntensity> Prefectures { get; init; }
+    public required IEnumerable<RegionIntensity> Prefectures { get; init; }
     [JsonPropertyName("regions")]
-    public required List<RegionIntensity> Regions { get; init; }
+    public required IEnumerable<RegionIntensity> Regions { get; init; }
     [JsonPropertyName("cities")]
-    public required List<CityIntensity> Cities { get; init; }
+    public required IEnumerable<CityIntensity> Cities { get; init; }
     [JsonPropertyName("stations")]
-    public required List<StationIntensity> Stations { get; init; }
+    public required IEnumerable<StationIntensity> Stations { get; init; }
 }

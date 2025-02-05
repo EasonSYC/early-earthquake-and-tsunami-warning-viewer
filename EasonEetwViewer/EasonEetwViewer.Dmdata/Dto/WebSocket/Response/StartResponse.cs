@@ -19,11 +19,11 @@ internal record StartResponse : ResponseBase
 
     [JsonInclude]
     [JsonPropertyName("classifications")]
-    internal required List<Classification> Classifications { get; init; }
+    internal required IEnumerable<Classification> Classifications { get; init; }
 
     [JsonInclude]
     [JsonPropertyName("types")]
-    internal required List<string>? Types { get; init; }
+    internal required IEnumerable<string>? Types { get; init; }
 
     [JsonInclude]
     [JsonPropertyName("test")]
@@ -34,5 +34,5 @@ internal record StartResponse : ResponseBase
     internal required string? AppName { get; init; }
     [JsonInclude]
     [JsonPropertyName("formats")]
-    internal required List<FormatType> Formats { get; init; }
+    internal required IEnumerable<FormatType> Formats { get; init; }
 }

@@ -13,5 +13,5 @@ public abstract record ListBase<T> : SuccessBase
     /// The <c>items</c> property. The list of items returned by the API call.
     /// </summary>
     [JsonPropertyName("items")]
-    public required List<T> ItemList { get; init; }
+    public required IEnumerable<T> ItemList { get; init; }
 }

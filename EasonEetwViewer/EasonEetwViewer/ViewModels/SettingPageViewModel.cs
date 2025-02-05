@@ -72,7 +72,7 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
     private async Task<int> GetAvaliableWebSocketConnections()
     {
         ContractList contractList = await _apiCaller.GetContractListAsync();
-        List<Contract> contracts = contractList.ItemList;
+        IEnumerable<Contract> contracts = contractList.ItemList;
         int result = 0;
         foreach (Contract contract in contracts)
         {

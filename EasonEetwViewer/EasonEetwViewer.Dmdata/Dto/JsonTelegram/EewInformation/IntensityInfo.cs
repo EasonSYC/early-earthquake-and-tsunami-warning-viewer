@@ -11,7 +11,7 @@ public record IntensityInfo
     [JsonPropertyName("appendix")]
     public Appendix? Appendix { get; init; }
     [JsonPropertyName("regions")]
-    public required List<Region> Regions { get; init; }
+    public required IEnumerable<Region> Regions { get; init; }
     [JsonPropertyName("stations")]
-    public List<Station>? Stations { get; init; }
+    public IEnumerable<Station>? Stations { get; init; }
 }

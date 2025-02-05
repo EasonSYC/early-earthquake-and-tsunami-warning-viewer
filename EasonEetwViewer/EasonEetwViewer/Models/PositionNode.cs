@@ -1,7 +1,7 @@
 ﻿namespace EasonEetwViewer.Models;
 internal record PositionNode
 {
-    internal List<PositionNode>? SubNodes { get; private set; }
+    internal ICollection<PositionNode>? SubNodes { get; private set; }
     internal string Title { get; init; }
     internal string Code { get; init; }
     internal PositionNode(string title, string code)
@@ -23,14 +23,21 @@ internal record PositionNode
         }
         else
         {
-            List<PositionNode> potentialNodes = SubNodes.Where(x => x.Code == newNode.Code).ToList();
-            if (potentialNodes.Count == 0)
+            PositionNode? potentialNode = SubNodes.FirstOrDefault(x => x.Code == newNode.Code);
+            if (potentialNode is null)
             {
                 SubNodes.Add(newNode);
             }
             else
             {
-                newNode.SubNodes?.ForEach(x => potentialNodes[0].AddPositionNode(x));
+                if (potentialNode.SubNodes is null)
+                {
+                    return;
+                }
+
+                foreach (PositionNode node in potentialNode.SubNodes) {
+                    potentialNode.AddPositionNode(node);
+                }
             }
         }
     }

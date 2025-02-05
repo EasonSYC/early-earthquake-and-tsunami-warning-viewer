@@ -24,7 +24,7 @@ internal record DataResponse : ResponseBase
 
     [JsonInclude]
     [JsonPropertyName("passing")]
-    internal required List<PassingDetail> PassingRoute { get; init; }
+    internal required IEnumerable<PassingDetail> PassingRoute { get; init; }
 
     [JsonInclude]
     [JsonPropertyName("head")]

@@ -4,7 +4,7 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 namespace EasonEetwViewer.Models;
 internal record EarthquakeDetailsTemplate
 {
-    internal EarthquakeDetailsTemplate(string eventId, Intensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, List<DetailIntensityTemplate> detailDisplay)
+    internal EarthquakeDetailsTemplate(string eventId, Intensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, IEnumerable<DetailIntensityTemplate> detailDisplay)
     {
         EventId = eventId;
         Intensity = intensity;
@@ -22,5 +22,5 @@ internal record EarthquakeDetailsTemplate
     internal Hypocentre? Hypocentre { get; private init; }
     internal Magnitude? Magnitude { get; private init; }
     internal string? InformationalText { get; private init; }
-    internal List<DetailIntensityTemplate> DetailDisplay { get; private init; }
+    internal IEnumerable<DetailIntensityTemplate> DetailDisplay { get; private init; }
 }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using DynamicData;
 using EasonEetwViewer.Authentication;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
@@ -66,9 +67,9 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         MRect? regionLimits = null;
 
         GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
-        List<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
+        IEnumerable<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
         telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53").ToList();
-        if (telegrams.Count != 0)
+        if (telegrams.Count() != 0)
         {
             if (!IsStationsRetrieved)
             {
@@ -82,7 +83,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
             if (telegramInfo.Body.Intensity is not null)
             {
                 ICollection<IFeature> stationFeature = [];
-                List<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
+                IEnumerable<StationIntensity> stationData = telegramInfo.Body.Intensity.Stations;
 
                 foreach (StationIntensity station in stationData)
                 {
@@ -222,7 +223,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         return sb.ToString();
     }
 
-    private Layer CreateRegionLayer(List<RegionIntensity> regions)
+    private Layer CreateRegionLayer(IEnumerable<RegionIntensity> regions)
         => new()
         {
             Name = _regionLayerName,
@@ -231,7 +232,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         };
 
     // Adapted from https://mapsui.com/v5/samples/ - Styles - ThemeStyle on ShapeFile
-    private static ThemeStyle CreateRegionThemeStyle(List<RegionIntensity> regions)
+    private static ThemeStyle CreateRegionThemeStyle(IEnumerable<RegionIntensity> regions)
         => new(f =>
             {
                 RegionIntensity? region = regions.FirstOrDefault(r => r.Code == f["code"]?.ToString()?.ToLower());
@@ -252,7 +253,7 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         });
 
     #region earthquakeObservationStations
-    private List<Station>? _earthquakeObservationStations = null;
+    private IEnumerable<Station>? _earthquakeObservationStations = null;
     private bool IsStationsRetrieved => _earthquakeObservationStations is not null;
     private async Task UpdateEarthquakeObservationStations()
     {
@@ -271,11 +272,12 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
     private async Task RefreshEarthquakeList()
     {
         GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
-        List<EarthquakeInfo> eqList = rsp.ItemList;
+        IEnumerable<EarthquakeInfo> eqList = rsp.ItemList;
         CursorToken = rsp.NextToken ?? string.Empty;
 
         ObservableCollection<EarthquakeItemTemplate> currentEarthquake = [];
-        eqList.ForEach(x => currentEarthquake.Add(new(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
+
+        currentEarthquake.AddRange(eqList.Select(x => new EarthquakeItemTemplate(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
 
         SelectedEarthquake = null;
         EarthquakeList = currentEarthquake;
@@ -287,10 +289,10 @@ internal partial class PastPageViewModel(StaticResources resources, Authenticato
         if (CursorToken != string.Empty)
         {
             GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
-            List<EarthquakeInfo> eqList = rsp.ItemList;
+            IEnumerable<EarthquakeInfo> eqList = rsp.ItemList;
             CursorToken = rsp.NextToken ?? string.Empty;
 
-            eqList.ForEach(x => EarthquakeList.Add(new(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
+            EarthquakeList.AddRange(eqList.Select(x => new EarthquakeItemTemplate(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
         }
     }
     #endregion

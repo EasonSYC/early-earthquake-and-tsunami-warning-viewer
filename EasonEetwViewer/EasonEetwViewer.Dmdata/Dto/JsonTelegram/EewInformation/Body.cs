@@ -10,11 +10,11 @@ public record Body
     [JsonPropertyName("isWarning")]
     public bool? IsWarning { get; init; }
     [JsonPropertyName("zones")]
-    public List<Area>? Zones { get; init; }
+    public IEnumerable<Area>? Zones { get; init; }
     [JsonPropertyName("prefectures")]
-    public List<Area>? Prefectures { get; init; }
+    public IEnumerable<Area>? Prefectures { get; init; }
     [JsonPropertyName("regions")]
-    public List<Area>? Regions { get; init; }
+    public IEnumerable<Area>? Regions { get; init; }
     [JsonPropertyName("earthquake")]
     public Earthquake? Earthquake { get; init; }
     [JsonPropertyName("intensity")]
