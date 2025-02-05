@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -26,7 +24,6 @@ using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts.Extensions;
 using Mapsui.Projections;
-using Mapsui.Providers;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
@@ -174,16 +171,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 Name = _eewHypocentreLayerPrefix + eew.EventId,
                 Features = [new PointFeature(point)],
+                Style = eew.Body.Earthquake.Condition is "仮定震源要素" ? _resources.PlumShapeStyle : _resources.HypocentreShapeStyle
             };
-
-            if (eew.Body.Earthquake.Condition is "仮定震源要素")
-            {
-                layer.Style = _resources.PlumShapeStyle;
-            }
-            else
-            {
-                layer.Style = _resources.HypocentreShapeStyle;
-            }
 
             if (!eewTemplate.Token.IsCancellationRequested)
             {
@@ -446,7 +435,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly IImageFetch _imageFetch;
     private readonly IPointExtract _pointExtract;
     private MemoryLayer? _kmoniLayer;
-
 
     // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
