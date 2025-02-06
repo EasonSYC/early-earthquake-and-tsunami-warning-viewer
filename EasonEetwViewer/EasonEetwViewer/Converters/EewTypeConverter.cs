@@ -10,12 +10,12 @@ internal class EewTypeConverter : IValueConverter
         => value is EewDetailsTemplate eew
             ? (RealtimePageResources.RoundBracketsStart
                 + (eew.IsCancelled
-                    ? RealtimePageResources.EewCancellingText
+                    ? RealtimePageResources.EewTextCancelling
                     : eew.IsLastInfo
-                        ? RealtimePageResources.EewFinalText
+                        ? RealtimePageResources.EewTextFinal
                         : eew.IsWarning
-                            ? RealtimePageResources.EewWarningText
-                            : RealtimePageResources.EewForecastText)
+                            ? RealtimePageResources.EewTextWarning
+                            : RealtimePageResources.EewTextForecast)
                 + RealtimePageResources.RoundBracketsEnd)
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

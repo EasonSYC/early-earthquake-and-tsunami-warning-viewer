@@ -7,5 +7,5 @@ public record Comments
     [JsonPropertyName("free")]
     public string? FreeText { get; init; }
     [JsonPropertyName("warning")]
-    public AdditionalComment? Forecast { get; init; }
+    public AdditionalComment? Warning { get; init; }
 }

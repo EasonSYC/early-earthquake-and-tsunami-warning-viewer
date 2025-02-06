@@ -120,13 +120,13 @@
   <data name="EewAssumedSpecificText" xml:space="preserve">
     <value>Hypocentre assumed from PLUM method or Level Method</value>
   </data>
-  <data name="EewCancellingText" xml:space="preserve">
+  <data name="EewTextCancelling" xml:space="preserve">
     <value>Cancelled</value>
   </data>
-  <data name="EewFinalText" xml:space="preserve">
+  <data name="EewTextFinal" xml:space="preserve">
     <value>Final</value>
   </data>
-  <data name="EewForecastText" xml:space="preserve">
+  <data name="EewTextForecast" xml:space="preserve">
     <value>Forecast</value>
   </data>
   <data name="EewNumberTextAfter" xml:space="preserve">
@@ -141,7 +141,7 @@
   <data name="EewText" xml:space="preserve">
     <value>EEW</value>
   </data>
-  <data name="EewWarningText" xml:space="preserve">
+  <data name="EewTextWarning" xml:space="preserve">
     <value>Warning</value>
   </data>
   <data name="RoundBracketsEnd" xml:space="preserve">
@@ -227,5 +227,35 @@
   </data>
   <data name="EewColourCancelling" xml:space="preserve">
     <value>#F2F2FF</value>
+  </data>
+  <data name="TsunamiColourInformation" xml:space="preserve">
+    <value>#80FFFF</value>
+  </data>
+  <data name="TsunamiColourCaution" xml:space="preserve">
+    <value>#FAF500</value>
+  </data>
+  <data name="TsunamiColourWarning" xml:space="preserve">
+    <value>#FF2800</value>
+  </data>
+  <data name="TsunamiColourSpecialWarning" xml:space="preserve">
+    <value>#C800FF</value>
+  </data>
+  <data name="TsunamiColourNone" xml:space="preserve">
+    <value>#F2F2FF</value>
+  </data>
+  <data name="TsunamiTextNone" xml:space="preserve">
+    <value>Tsunami Information Lifted</value>
+  </data>
+  <data name="TsunamiTextInformation" xml:space="preserve">
+    <value>Tsunami Information</value>
+  </data>
+  <data name="TsunamiTextCaution" xml:space="preserve">
+    <value>Tsunami Caution</value>
+  </data>
+  <data name="TsunamiTextSpecialWarning" xml:space="preserve">
+    <value>Tsunami Special Warning</value>
+  </data>
+  <data name="TsunamiTextWarning" xml:space="preserve">
+    <value>Tsunami Warning</value>
   </data>
 </root>

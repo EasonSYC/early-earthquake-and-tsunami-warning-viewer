@@ -2,7 +2,7 @@
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 
 namespace EasonEetwViewer.Models;
-internal class EewDetailsTemplate : ObservableObject
+internal record EewDetailsTemplate
 {
     internal DateTimeOffset ExpiryTime { get; private init; }
     internal DateTimeOffset UpdateTime { get; private init; }

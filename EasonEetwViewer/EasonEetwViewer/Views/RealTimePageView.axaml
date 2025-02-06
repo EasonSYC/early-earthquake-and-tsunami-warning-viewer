@@ -17,12 +17,12 @@
     </Design.DataContext>
 
     <UserControl.Resources>
+        <conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
         <conv:EewTypeConverter x:Key="EewTypeConverter"/>
         <conv:EewColourConverter x:Key="EewColourConverter"/>
         <conv:EewSerialConverter x:Key="EewSerialConverter"/>
         <conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
         <conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
-        <conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
         <conv:DepthValueConverter x:Key="DepthValueConverter"/>
         <conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
         <conv:EewHypocentreConverter x:Key="EewHypocentreConverter"/>
@@ -31,6 +31,8 @@
         <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
         <conv:EewAccuracyConverter x:Key="EewAccuracyConverter"/>
         <conv:EewOnePointConverter x:Key="EewOnePointConverter"/>
+        <conv:TsunamiColourConverter x:Key="TsunamiColourConverter"/>
+        <conv:TsunamiTextConverter x:Key="TsunamiTextConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -45,7 +47,7 @@
                     CornerRadius="0 5 0 0">
                 <TextBlock FontSize="20"
                            FontWeight="Bold"
-                           Text="{Binding TimeDisplayText}"/>
+                           Text="{Binding TimeDisplay, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"/>
             </Border>
 
             <!--Eew Info Display-->
@@ -58,6 +60,8 @@
                     CornerRadius="0 0 10 0">
                 <StackPanel>
 
+                    <!--Eew Colour Display-->
+                    
                     <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
                             Height="10">
                     </Border>
@@ -276,6 +280,62 @@
                                Text="{Binding CurrentDisplayEew.InformationalText}"
                                TextWrapping="Wrap"
                                Margin="8"/>
+                </StackPanel>
+            </Border>
+
+
+
+            <!--Tsunami Info Display-->
+
+            <Border Canvas.Bottom="0"
+                    Canvas.Right="0"
+                    IsVisible="{Binding CurrentTsunami, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    Background="{StaticResource SystemChromeBlackMediumColor}"
+                    Width="350"
+                    CornerRadius="10 0 0 0">
+                <StackPanel>
+
+                    <!--Tsunami Colour Display-->
+                    
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiColourConverter}}"
+                            Height="10"
+                            CornerRadius="10 0 0 0">
+                    </Border>
+
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiColourConverter}}"
+                            Margin="0 5"
+                            Height="5">
+                    </Border>
+
+                    <!--Tsunami Text Display-->
+
+                    <TextBlock FontWeight="SemiBold"
+                               Margin="5 5"
+                               FontSize="24"
+                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiTextConverter}}"/>
+
+                    <!--Update Time Display-->
+
+                    <TextBlock HorizontalAlignment="Left"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Text="{x:Static lang:Resources.DetailsLastUpdatedText}"
+                               Margin="5 0"/>
+                    <TextBlock HorizontalAlignment="Right"
+                               FontSize="18"
+                               FontWeight="SemiBold"
+                               Text="{Binding CurrentTsunami.UpdateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
+                               Margin="5 0"/>
+
+                    <!--Informational Text-->
+
+                    <ScrollViewer Margin="8"
+                                  Height="300">
+                        <TextBlock HorizontalAlignment="Left"
+                                   FontSize="14"
+                                   Text="{Binding CurrentTsunami.InformationalText}"
+                                   TextWrapping="Wrap"/>
+                    </ScrollViewer>
                 </StackPanel>
             </Border>
         </Canvas>

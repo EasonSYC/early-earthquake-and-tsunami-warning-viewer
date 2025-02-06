@@ -115,15 +115,6 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancelled.
-        /// </summary>
-        public static string EewCancellingText {
-            get {
-                return ResourceManager.GetString("EewCancellingText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to #F2F2FF.
         /// </summary>
         public static string EewColourCancelling {
@@ -156,24 +147,6 @@ namespace EasonEetwViewer.Lang {
         public static string EewColourWarning {
             get {
                 return ResourceManager.GetString("EewColourWarning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Final.
-        /// </summary>
-        public static string EewFinalText {
-            get {
-                return ResourceManager.GetString("EewFinalText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forecast.
-        /// </summary>
-        public static string EewForecastText {
-            get {
-                return ResourceManager.GetString("EewForecastText", resourceCulture);
             }
         }
         
@@ -223,11 +196,38 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelled.
+        /// </summary>
+        public static string EewTextCancelling {
+            get {
+                return ResourceManager.GetString("EewTextCancelling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Final.
+        /// </summary>
+        public static string EewTextFinal {
+            get {
+                return ResourceManager.GetString("EewTextFinal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forecast.
+        /// </summary>
+        public static string EewTextForecast {
+            get {
+                return ResourceManager.GetString("EewTextForecast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning.
         /// </summary>
-        public static string EewWarningText {
+        public static string EewTextWarning {
             get {
-                return ResourceManager.GetString("EewWarningText", resourceCulture);
+                return ResourceManager.GetString("EewTextWarning", resourceCulture);
             }
         }
         
@@ -390,6 +390,96 @@ namespace EasonEetwViewer.Lang {
         public static string RoundBracketsStart {
             get {
                 return ResourceManager.GetString("RoundBracketsStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FAF500.
+        /// </summary>
+        public static string TsunamiColourCaution {
+            get {
+                return ResourceManager.GetString("TsunamiColourCaution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #80FFFF.
+        /// </summary>
+        public static string TsunamiColourInformation {
+            get {
+                return ResourceManager.GetString("TsunamiColourInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F2F2FF.
+        /// </summary>
+        public static string TsunamiColourNone {
+            get {
+                return ResourceManager.GetString("TsunamiColourNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #C800FF.
+        /// </summary>
+        public static string TsunamiColourSpecialWarning {
+            get {
+                return ResourceManager.GetString("TsunamiColourSpecialWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF2800.
+        /// </summary>
+        public static string TsunamiColourWarning {
+            get {
+                return ResourceManager.GetString("TsunamiColourWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsunami Caution.
+        /// </summary>
+        public static string TsunamiTextCaution {
+            get {
+                return ResourceManager.GetString("TsunamiTextCaution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsunami Information.
+        /// </summary>
+        public static string TsunamiTextInformation {
+            get {
+                return ResourceManager.GetString("TsunamiTextInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsunami Information Lifted.
+        /// </summary>
+        public static string TsunamiTextNone {
+            get {
+                return ResourceManager.GetString("TsunamiTextNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsunami Special Warning.
+        /// </summary>
+        public static string TsunamiTextSpecialWarning {
+            get {
+                return ResourceManager.GetString("TsunamiTextSpecialWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsunami Warning.
+        /// </summary>
+        public static string TsunamiTextWarning {
+            get {
+                return ResourceManager.GetString("TsunamiTextWarning", resourceCulture);
             }
         }
     }

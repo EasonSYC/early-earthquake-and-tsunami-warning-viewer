@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,6 +14,7 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.Models;
@@ -31,6 +34,7 @@ using SkiaSharp;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
+using Type = EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase.Type;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -69,6 +73,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         _ = await Task.Factory.StartNew(SwitchEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
         _ = await Task.Factory.StartNew(ClearExpiredEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+        _ = await Task.Factory.StartNew(ClearExpiredTsunami, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
 
     private readonly IWebSocketClient _webSocketClient;
@@ -386,11 +391,87 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     #region tsunami
     private const string _tsunamiWarningLayerName = "Tsunami";
-    private TsunamiInformationSchema? _currentTsunami = null;
-    private async Task OnTsunamiReceived(TsunamiInformationSchema schema)
+    [ObservableProperty]
+    private TsunamiDetailsTemplate? _currentTsunami = null;
+    private static string ToInformationString(TsunamiInformationSchema tsunami)
     {
-        _currentTsunami = schema;
-        await Task.CompletedTask;
+        StringBuilder sb = new();
+        if (tsunami.Headline is not null)
+        {
+            _ = sb.AppendLine(tsunami.Headline);
+        }
+
+        if (tsunami.Body.Text is not null)
+        {
+            _ = sb.AppendLine(tsunami.Body.Text);
+        }
+
+        if (tsunami.Body.Comments is not null)
+        {
+            if (tsunami.Body.Comments.FreeText is not null)
+            {
+                _ = sb.AppendLine(tsunami.Body.Comments.FreeText);
+            }
+
+            if (tsunami.Body.Comments.Warning is not null)
+            {
+                _ = sb.AppendLine(tsunami.Body.Comments.Warning.Text);
+            }
+        }
+
+        return sb.ToString();
+    }
+    private readonly TimeSpan _tsunamiLifeTime = TimeSpan.FromDays(2);
+    private void OnTsunamiReceived(TsunamiInformationSchema schema)
+    {
+        DateTimeOffset validDateTime = schema.ValidDateTime ?? schema.PressDateTime + _tsunamiLifeTime;
+        if (validDateTime < _timeProvider.DateTimeOffsetNow())
+        {
+            return;
+        }
+
+        TsunamiWarningType maxType = TsunamiWarningType.None;
+
+        if (schema.Body.Tsunami is not null && schema.Body.Tsunami.Forecasts is not null)
+        {
+            maxType = schema.Body.Tsunami.Forecasts.Max(f => f.Kind.Code.ToTsunamiWarningType());
+
+            _ = Map.Layers.Remove(l => l.Name == _tsunamiWarningLayerName);
+            ILayer layer = new Layer()
+            {
+                Name = _tsunamiWarningLayerName,
+                DataSource = _resources.Tsunami,
+                Style = CreateForecastThemeStyle(schema.Body.Tsunami.Forecasts)
+            };
+            Map.Layers.Add(new RasterizingLayer(layer));
+        }
+
+        CurrentTsunami = new(ToInformationString(schema), validDateTime, schema.PressDateTime, maxType);
+    }
+    private static ThemeStyle CreateForecastThemeStyle(IEnumerable<Forecast> forecasts)
+        => new(f =>
+        {
+            Forecast? forecast = forecasts.FirstOrDefault(fr => fr.Code == f["code"]?.ToString()?.ToLower());
+            return forecast is null
+                ? null
+                : new VectorStyle()
+                {
+                    Line = new Pen(Color.Opacity(Color.FromString(forecast.Kind.Code.ToTsunamiWarningType().ToColourString()), 0.80f), 2.5)
+                };
+        });
+    private readonly TimeSpan _removeExpiredTsunamiInterval = TimeSpan.FromMinutes(1);
+    private async Task ClearExpiredTsunami()
+    {
+        while (!_token.IsCancellationRequested)
+        {
+            if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.DateTimeOffsetNow())
+            {
+                CurrentTsunami = null;
+                _ = Map.Layers.Remove(l => l.Name == _tsunamiWarningLayerName);
+            }
+
+            await Task.Delay(_removeExpiredTsunamiInterval);
+        }
     }
     #endregion
 
@@ -410,10 +491,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                 EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(data, _options)!;
                 await OnEewReceived(eew);
             }
-            else if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.1.0")
+            else if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.0.0")
             {
                 TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(data, _options)!;
-                await OnTsunamiReceived(tsunami);
+                OnTsunamiReceived(tsunami);
             }
         }
     }
@@ -423,7 +504,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     internal KmoniOptions KmoniOptions { get; init; }
 
     private const int _jstAheadUtcHours = 9;
-    internal string TimeDisplayText => _timeProvider.DateTimeOffsetNow().ToOffset(new(_jstAheadUtcHours, 0, 0)).ToString("yyyy/MM/dd HH:mm:ss");
+    internal DateTimeOffset TimeDisplay => _timeProvider.DateTimeOffsetNow().ToOffset(new(_jstAheadUtcHours, 0, 0));
     private readonly System.Timers.Timer _timer;
 
     private const string _realTimeLayerName = "KmoniLayer";
@@ -435,7 +516,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
     private void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
-        OnPropertyChanged(nameof(TimeDisplayText));
+        OnPropertyChanged(nameof(TimeDisplay));
 
         IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints();
         if (kmoniObservationPoints is null)
