@@ -1,9 +1,10 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Extensions;
+using EasonEetwViewer.KyoshinMonitor.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Services;
 
 /// <summary>
 /// Default implementation of <see cref="IImageFetch"/>.

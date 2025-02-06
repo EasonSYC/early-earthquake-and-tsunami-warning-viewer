@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
 
-namespace EasonEetwViewer.KyoshinMonitor.Dto;
+namespace EasonEetwViewer.KyoshinMonitor.Extensions;
 /// <summary>
 /// Provides extension methods to write a collection of observation points to a specified file path.
 /// </summary>

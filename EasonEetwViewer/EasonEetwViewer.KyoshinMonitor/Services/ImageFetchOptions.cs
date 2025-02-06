@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.KyoshinMonitor.Dto;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Services;
 /// <summary>
 /// The options to create an instance of <see cref="ImageFetch"/>.
 /// </summary>

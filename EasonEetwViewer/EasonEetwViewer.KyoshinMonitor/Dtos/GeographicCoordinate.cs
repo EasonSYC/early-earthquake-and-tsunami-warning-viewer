@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.KyoshinMonitor.Dto;
+namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// Represents a physical position.
 /// </summary>
-public record GeoCoordinate
+public record GeographicCoordinate
 {
     /// <summary>
     /// The property <c>latitude</c>, the latitude of the position.

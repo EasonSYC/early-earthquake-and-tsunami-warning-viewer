@@ -1,7 +1,7 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dto;
+﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
 using SkiaSharp;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Interfaces;
 
 /// <summary>
 /// Represents the functionality to extract the colour of points from a <see cref="SKBitmap"/>.

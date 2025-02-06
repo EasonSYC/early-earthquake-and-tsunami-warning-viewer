@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Services;
 /// <summary>
 /// Represents the data type for the data map in kmoni.
 /// </summary>

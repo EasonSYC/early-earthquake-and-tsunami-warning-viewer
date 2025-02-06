@@ -1,6 +1,7 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Services;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Interfaces;
 
 /// <summary>
 /// Represents the functionality to fetch a kmoni image.

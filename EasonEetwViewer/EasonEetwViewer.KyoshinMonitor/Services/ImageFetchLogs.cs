@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EasonEetwViewer.KyoshinMonitor.Services;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.KyoshinMonitor;
 /// <summary>

@@ -1,11 +1,11 @@
 ﻿using SkiaSharp;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Extensions;
 
 /// <summary>
 /// Provides methods to convert between different values.
 /// </summary>
-public static class ColourConversion
+public static class ColourConversionExtensions
 {
     /// <summary>
     /// Converts intensity to normalised height.
@@ -99,7 +99,7 @@ public static class ColourConversion
     /// </summary>
     /// <param name="height">The normalised height.</param>
     /// <returns>The colour.</returns>
-    public static SKColor HeightToColour(this double height) => SKColor.FromHsv((float)HeightToHue(height), (float)HeightToSaturation(height) * 100, (float)HeightToValue(height) * 100);
+    public static SKColor HeightToColour(this double height) => SKColor.FromHsv((float)height.HeightToHue(), (float)height.HeightToSaturation() * 100, (float)height.HeightToValue() * 100);
     /// <summary>
     /// Converts the <see cref="SKColor"/> to the normalised height.
     /// </summary>
@@ -136,7 +136,7 @@ public static class ColourConversion
             while (right - left >= heightEpsilon)
             {
                 double mid = (right + left) / 2;
-                double calculatedHue = HeightToHue(mid);
+                double calculatedHue = mid.HeightToHue();
                 if (Math.Abs(calculatedHue - h) <= hueEpsilon)
                 {
                     return mid;

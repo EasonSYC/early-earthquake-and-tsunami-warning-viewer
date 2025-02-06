@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Services;
 
 namespace EasonEetwViewer.Services;
 internal class KmoniDefaultOptions : IKmoniDto

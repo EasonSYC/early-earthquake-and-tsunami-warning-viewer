@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
 
-namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+namespace EasonEetwViewer.KyoshinMonitor.Extensions;
 /// <summary>
 /// Provides extension methods for <c>SensorType</c>.
 /// </summary>

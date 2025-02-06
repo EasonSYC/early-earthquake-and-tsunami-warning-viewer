@@ -1,10 +1,9 @@
 ﻿using System.Text.Json;
-using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
-using Microsoft.Extensions.Logging;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Interfaces;
 using SkiaSharp;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Services;
 /// <summary>
 /// Default implementation of <see cref="IPointExtract"/>
 /// </summary>
@@ -14,10 +13,7 @@ public sealed class PointExtract : IPointExtract
     /// Creates an instance of <see cref="PointExtract"/> by specifying the collection of observation points.
     /// </summary>
     /// <param name="points">The collection of observation points.</param>
-    private PointExtract(IEnumerable<ObservationPoint> points)
-    {
-        _points = points;
-    }
+    private PointExtract(IEnumerable<ObservationPoint> points) => _points = points;
     /// <summary>
     /// Creates an instance of <see cref="PointExtract"/> by reading from a JSON text file.
     /// </summary>

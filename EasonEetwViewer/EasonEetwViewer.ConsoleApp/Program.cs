@@ -9,9 +9,9 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.JmaTravelTime;
-using EasonEetwViewer.KyoshinMonitor;
-using EasonEetwViewer.KyoshinMonitor.Dto;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Extensions;
+using EasonEetwViewer.KyoshinMonitor.Services;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -178,7 +178,7 @@ internal class Program
 
         foreach ((ObservationPoint p, SKColor c) in colours)
         {
-            intensities.Add((p, ColourConversion.HeightToIntensity(ColourConversion.ColourToHeight(c))));
+            intensities.Add((p, ColourConversionExtensions.HeightToIntensity(ColourConversionExtensions.ColourToHeight(c))));
         }
 
         for (int i = 0; i < 100; ++i)
@@ -190,10 +190,10 @@ internal class Program
 
         foreach ((ObservationPoint p, double i) in intensities)
         {
-            double height = ColourConversion.IntensityToHeight(i);
-            double hue = ColourConversion.HeightToHue(height);
-            double saturation = ColourConversion.HeightToSaturation(height) * 100;
-            double value = ColourConversion.HeightToValue(height) * 100;
+            double height = ColourConversionExtensions.IntensityToHeight(i);
+            double hue = ColourConversionExtensions.HeightToHue(height);
+            double saturation = ColourConversionExtensions.HeightToSaturation(height) * 100;
+            double value = ColourConversionExtensions.HeightToValue(height) * 100;
             Console.WriteLine($"{hue}, {saturation}, {value}");
             SKColor colour = SKColor.FromHsv((float)hue, (float)saturation, (float)value);
 

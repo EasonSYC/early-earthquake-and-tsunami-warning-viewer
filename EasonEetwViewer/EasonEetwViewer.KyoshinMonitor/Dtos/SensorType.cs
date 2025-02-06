@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// Represents the sensor type for the data map in kmoni.
 /// </summary>

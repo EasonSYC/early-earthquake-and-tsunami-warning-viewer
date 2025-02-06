@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+using EasonEetwViewer.KyoshinMonitor.Services;
 
-namespace EasonEetwViewer.KyoshinMonitor.Dto;
+namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// Represents an observation point.
 /// </summary>
@@ -36,7 +36,7 @@ public record ObservationPoint
     /// The property <c>location</c>, the geographic location of the observation point.
     /// </summary>
     [JsonPropertyName("location")]
-    public required GeoCoordinate Location { get; init; }
+    public required GeographicCoordinate Location { get; init; }
     /// <summary>
     /// The property <c>point</c>, the pixel position of the observation point.
     /// </summary>

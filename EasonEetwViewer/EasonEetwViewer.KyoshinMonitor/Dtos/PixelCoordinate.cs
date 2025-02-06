@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.KyoshinMonitor.Dto;
+namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// Represents the position of a pixel.
 /// </summary>

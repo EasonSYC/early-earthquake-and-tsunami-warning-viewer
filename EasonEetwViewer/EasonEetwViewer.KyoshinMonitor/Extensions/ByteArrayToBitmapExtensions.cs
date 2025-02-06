@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EasonEetwViewer.KyoshinMonitor.Interfaces;
 using SkiaSharp;
 
-namespace EasonEetwViewer.KyoshinMonitor;
+namespace EasonEetwViewer.KyoshinMonitor.Extensions;
 /// <summary>
 /// Provides extension method to bridge between <see cref="IImageFetch"/> and <see cref="IPointExtract"/>.
 /// </summary>
