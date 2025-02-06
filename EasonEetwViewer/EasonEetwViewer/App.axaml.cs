@@ -12,6 +12,8 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
+using EasonEetwViewer.KyoshinMonitor.Dto;
+using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
@@ -85,8 +87,8 @@ public partial class App : Application
         => new()
         {
             AppName = appName,
-            Classifications = webSocketConfig.GetSection("Classifications").Get<List<Classification>>()!,
-            Types = webSocketConfig.GetSection("Types").Get<List<string>>(),
+            Classifications = webSocketConfig.GetSection("Classifications").Get<IEnumerable<Classification>>()!,
+            Types = webSocketConfig.GetSection("Types").Get<IEnumerable<string>>(),
             FormatMode = webSocketConfig.GetSection("FormatMode").Get<FormatMode>(),
             TestStatus = webSocketConfig.GetSection("TestStatus").Get<TestStatus>()
         };
@@ -129,21 +131,31 @@ public partial class App : Application
 
         LanguageChange(GetLanguage(languagePath));
 
-        IServiceCollection collection = new ServiceCollection();
-
-        _ = collection.AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"));
-        _ = collection.AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath));
-        _ = collection.AddSingleton(sp => GetAuthenticatorDto(authenticatorPath));
-
-        _ = collection.AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)));
-        _ = collection.AddSingleton<OnLanguageChanged>(sp => s
+        IServiceCollection collection = new ServiceCollection()
+            .Configure<ImageFetchOptions>(config.GetSection("ImageFetchOptions"))
+            .AddLogging(loggingBuilder => loggingBuilder.AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log")))
+            .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
+            .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
+            .AddSingleton(sp => GetAuthenticatorDto(authenticatorPath))
+            .AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)))
+            .AddSingleton<OnLanguageChanged>(sp => s
             =>
                 {
                     LanguageChange(s);
                     File.WriteAllText(languagePath, s.Name);
-                });
-
-        _ = collection.AddSingleton<ITimeProvider, DefaultTimeProvider>();
+                })
+            .AddSingleton<ITimeProvider, DefaultTimeProvider>()
+            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()))
+            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()))
+            .AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile("tjma2001.txt"))
+            .AddSingleton<IWebSocketClient, WebSocketClient>()
+            .AddSingleton<IImageFetch, ImageFetch>()
+            .AddSingleton<IPointExtract>(sp => PointExtract.FromFile(pointExtractPath))
+            .AddSingleton<StaticResources>()
+            .AddSingleton<MainWindowViewModel>()
+            .AddSingleton<RealtimePageViewModel>()
+            .AddSingleton<PastPageViewModel>()
+            .AddSingleton<SettingPageViewModel>();
 
         _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
         _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));

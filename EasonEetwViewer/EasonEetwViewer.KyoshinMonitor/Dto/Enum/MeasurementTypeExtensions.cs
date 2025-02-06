@@ -1,8 +1,10 @@
-﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using System.Diagnostics;
+
+namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 /// <summary>
 /// Provides extension methods for <c>KmoniDataType</c>.
 /// </summary>
-public static class MeasurementTypeExtensions
+internal static class MeasurementTypeExtensions
 {
     /// <summary>
     /// Represents the enum in a string that is used in the URI of the kmoni.
@@ -21,6 +23,6 @@ public static class MeasurementTypeExtensions
         MeasurementType.Response1000 => "rsp1000",
         MeasurementType.Response2000 => "rsp2000",
         MeasurementType.Response4000 => "rsp4000",
-        _ => "unknown",
+        _ => throw new UnreachableException(),
     };
 }

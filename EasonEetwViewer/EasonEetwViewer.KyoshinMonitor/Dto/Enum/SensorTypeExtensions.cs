@@ -1,8 +1,10 @@
-﻿namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
+﻿using System.Diagnostics;
+
+namespace EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 /// <summary>
 /// Provides extension methods for <c>SensorType</c>.
 /// </summary>
-public static class SensorTypeExtensions
+internal static class SensorTypeExtensions
 {
     /// <summary>
     /// Represents the enum in a string that is used in the URI of the kmoni.
@@ -13,6 +15,6 @@ public static class SensorTypeExtensions
     {
         SensorType.Surface => "s",
         SensorType.Borehole => "b",
-        _ => "unknown",
+        _ => throw new UnreachableException(),
     };
 }

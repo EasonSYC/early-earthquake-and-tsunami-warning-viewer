@@ -15,6 +15,7 @@ using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
 using EasonEetwViewer.JmaTravelTime;
 using EasonEetwViewer.KyoshinMonitor;
+using EasonEetwViewer.KyoshinMonitor.Dto.Enum;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -500,8 +501,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #region kmoni
     internal KmoniOptions KmoniOptions { get; init; }
 
-    private const int _jstAheadUtcHours = 9;
-    internal DateTimeOffset TimeDisplay => _timeProvider.DateTimeOffsetNow().ToOffset(new(_jstAheadUtcHours, 0, 0));
+    private readonly TimeSpan _jstOffset = TimeSpan.FromHours(9);
+    internal DateTimeOffset TimeDisplay => _timeProvider.DateTimeOffsetNow().ToOffset(_jstOffset);
     private readonly System.Timers.Timer _timer;
 
     private const string _realTimeLayerName = "KmoniLayer";
@@ -515,7 +516,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         OnPropertyChanged(nameof(TimeDisplay));
 
-        IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints();
+        IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints().Result;
         if (kmoniObservationPoints is null)
         {
             return;
@@ -538,21 +539,23 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         }
     }
 
-    private IEnumerable<IFeature>? GetKmoniObservationPoints()
+    private async Task<IEnumerable<IFeature>?> GetKmoniObservationPoints()
     {
         try
         {
-            byte[] imageBytes = Task.Run(async () => await _imageFetch.GetByteArrayAsync(
+            byte[]? imageBytes = await _imageFetch.GetByteArrayAsync(
                 KmoniOptions.DataChoice,
                 KmoniOptions.SensorChoice,
-                _timeProvider.DateTimeOffsetNow().AddSeconds(-_kmoniDelaySeconds))).Result;
+                _timeProvider.DateTimeOffsetNow()
+                .AddSeconds(-_kmoniDelaySeconds)
+                .ToOffset(_jstOffset)
+                .DateTime);
 
-            using SKImage image = SKImage.FromEncodedData(imageBytes);
-            using SKBitmap bm = SKBitmap.FromImage(image);
-
-            return _pointExtract
-                .ExtractColours(bm, KmoniOptions.SensorChoice == KyoshinMonitor.Dto.Enum.SensorType.Borehole)
-                .Select(pc => (pc.point, height: ColourConversion.ColourToHeight(pc.colour)))
+            return imageBytes is null
+                ? null
+                : _pointExtract
+                .ExtractColours(imageBytes.ToBitmap(), KmoniOptions.SensorChoice is SensorType.Borehole)
+                .Select(pc => (pc.point, height: pc.colour.ColourToHeight()))
                 .Select(pc
                     => new PointFeature(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint())
                     {
@@ -560,21 +563,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                             new SymbolStyle()
                             {
                                 SymbolScale = 0.1,
-                                Fill = new Brush(ColourConversion.HeightToColour(pc.height).ToMapsui())
+                                Fill = new Brush(pc.height.HeightToColour().ToMapsui())
                             }]
                     });
-        }
-        catch (AggregateException ae)
-        {
-            ae.Handle(ex =>
-            {
-                if (ex is HttpRequestException)
-                {
-                    Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"HttpRequestException: {ex.Message}, {ae.Source}");
-                }
-
-                return ex is HttpRequestException;
-            });
         }
         catch (ArgumentException ae)
         {

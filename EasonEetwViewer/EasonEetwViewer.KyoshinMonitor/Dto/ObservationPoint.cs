@@ -8,7 +8,7 @@ namespace EasonEetwViewer.KyoshinMonitor.Dto;
 public record ObservationPoint
 {
     /// <summary>
-    /// The property <c>type</c>, whether it is in K-NET or KiK-net.
+    /// The property <c>type</c>, whether it is in <c>K-NET</c> or <c>KiK-net</c>.
     /// </summary>
     [JsonPropertyName("type")]
     public required PointType Type { get; init; }
