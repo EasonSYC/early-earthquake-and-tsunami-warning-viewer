@@ -11,13 +11,11 @@ public partial class TimeTableProvider : ITimeTableProvider
         string[] rows = File.ReadAllLines(fileName);
 
         string? unmatchingRow = rows.FirstOrDefault(r => !Pattern().IsMatch(r));
-        if (unmatchingRow is not null)
-        {
-            throw new FormatException($"{unmatchingRow} does not fit format of time table");
-        }
-
-        return new(rows.Select(row =>
-            new TimeTableEntry() {
+        return unmatchingRow is not null
+            ? throw new FormatException($"{unmatchingRow} does not fit format of time table")
+            : new(rows.Select(row =>
+            new TimeTableEntry()
+            {
                 Depth = int.Parse(row[22..25]),
                 Radius = int.Parse(row[27..32]),
                 Times = [double.Parse(row[2..10]),

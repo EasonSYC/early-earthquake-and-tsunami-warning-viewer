@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -34,7 +32,6 @@ using SkiaSharp;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
-using Type = EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase.Type;
 
 namespace EasonEetwViewer.ViewModels;
 

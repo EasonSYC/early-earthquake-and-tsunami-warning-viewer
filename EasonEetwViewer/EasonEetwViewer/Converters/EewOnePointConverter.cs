@@ -2,7 +2,6 @@
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
-using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;
 internal class EewOnePointConverter : IValueConverter

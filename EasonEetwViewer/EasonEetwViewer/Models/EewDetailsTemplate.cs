@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+﻿using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 
 namespace EasonEetwViewer.Models;
 internal record EewDetailsTemplate
