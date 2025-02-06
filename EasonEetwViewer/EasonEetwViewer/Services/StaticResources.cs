@@ -13,8 +13,8 @@ internal partial class StaticResources : ObservableObject
     internal IProvider Tsunami { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaTsunami_GIS/Tsunamis.shp", true, true);
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
-    private static IProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
-        => new ProjectingProvider(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
+    private static ProjectingProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
+        => new(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
 
     internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
     {
