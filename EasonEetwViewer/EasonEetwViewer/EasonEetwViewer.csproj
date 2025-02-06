@@ -122,6 +122,18 @@
 		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shx">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.dbf">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.prj">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shp">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shx">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
 		<None Update="ObservationPoints.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

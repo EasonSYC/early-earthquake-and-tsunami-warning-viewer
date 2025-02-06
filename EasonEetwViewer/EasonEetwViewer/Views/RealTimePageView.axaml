@@ -61,7 +61,7 @@
                 <StackPanel>
 
                     <!--Eew Colour Display-->
-                    
+
                     <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
                             Height="10">
                     </Border>
@@ -296,7 +296,7 @@
                 <StackPanel>
 
                     <!--Tsunami Colour Display-->
-                    
+
                     <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiColourConverter}}"
                             Height="10"
                             CornerRadius="10 0 0 0">
