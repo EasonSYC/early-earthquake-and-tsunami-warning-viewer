@@ -20,6 +20,7 @@ using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer;
 public partial class App : Application
@@ -122,6 +123,8 @@ public partial class App : Application
 
         IConfigurationSection webSocketConfig = config.GetSection("WebSocketParams");
 
+        string timeTablePath = config["TimeTablePath"]!;
+
         //IConfigurationSection oAuthConfig = config.GetSection("oAuth");
         //string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
         //string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
@@ -133,10 +136,14 @@ public partial class App : Application
 
         IServiceCollection collection = new ServiceCollection()
             .Configure<ImageFetchOptions>(config.GetSection("ImageFetchOptions"))
-            .AddLogging(loggingBuilder => loggingBuilder.AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log")))
+            .AddLogging(loggingBuilder => loggingBuilder.AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information))
+#if DEBUG
+            .AddLogging(loggingBuilder => loggingBuilder.AddDebugLogger(LogLevel.Trace))
+#endif
             .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
             .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
             .AddSingleton(sp => GetAuthenticatorDto(authenticatorPath))
+
             .AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)))
             .AddSingleton<OnLanguageChanged>(sp => s
             =>
@@ -145,13 +152,18 @@ public partial class App : Application
                     File.WriteAllText(languagePath, s.Name);
                 })
             .AddSingleton<ITimeProvider, DefaultTimeProvider>()
+
             .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()))
             .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()))
-            .AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile("tjma2001.txt"))
+
+            .AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile(timeTablePath, sp.GetRequiredService<ILogger<TimeTableProvider>>()))
             .AddSingleton<IWebSocketClient, WebSocketClient>()
+
             .AddSingleton<IImageFetch, ImageFetch>()
             .AddSingleton<IPointExtract>(sp => PointExtract.FromFile(pointExtractPath))
+
             .AddSingleton<StaticResources>()
+
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<RealtimePageViewModel>()
             .AddSingleton<PastPageViewModel>()

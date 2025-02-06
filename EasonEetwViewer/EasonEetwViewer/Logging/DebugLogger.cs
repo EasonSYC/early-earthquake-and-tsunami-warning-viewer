@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Logging;
-internal class FileLogger(string name, StreamWriter logFileWriter, LogLevel mininumLogLevel) : ILogger
+internal class DebugLogger(string name, LogLevel mininumLogLevel) : ILogger
 {
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
     public bool IsEnabled(LogLevel logLevel) => logLevel >= mininumLogLevel;
@@ -10,8 +11,7 @@ internal class FileLogger(string name, StreamWriter logFileWriter, LogLevel mini
         if (IsEnabled(logLevel))
         {
             string message = formatter(state, exception);
-            logFileWriter.WriteLine($"[{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}] [{name}] [{logLevel}] : {message}");
-            logFileWriter.Flush();
+            Debug.WriteLine($"[{DateTime.UtcNow:yyyy-MM-dd HH:mm:ss}] [{name}] [{logLevel}] : {message}");
         }
     }
 }
