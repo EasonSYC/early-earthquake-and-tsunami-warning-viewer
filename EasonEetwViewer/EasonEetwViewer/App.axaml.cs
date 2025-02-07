@@ -11,8 +11,7 @@ using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.JmaTravelTime;
-using EasonEetwViewer.KyoshinMonitor.Interfaces;
-using EasonEetwViewer.KyoshinMonitor.Services;
+using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -21,7 +20,6 @@ using EasonEetwViewer.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Debug;
 
 namespace EasonEetwViewer;
 public partial class App : Application
@@ -119,7 +117,6 @@ public partial class App : Application
         IConfigurationSection configPaths = config.GetSection("ConfigPaths");
         string kmoniOptionsPath = configPaths["KmoniOptions"]!;
         string authenticatorPath = configPaths["Authenticator"]!;
-        string pointExtractPath = configPaths["PointExtract"]!;
         string languagePath = configPaths["Language"]!;
 
         IConfigurationSection webSocketConfig = config.GetSection("WebSocketParams");
@@ -136,11 +133,10 @@ public partial class App : Application
         LanguageChange(GetLanguage(languagePath));
 
         IServiceCollection collection = new ServiceCollection()
-            .Configure<ImageFetchOptions>(config.GetSection("ImageFetchOptions"))
             .AddLogging(loggingBuilder => loggingBuilder
                 .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information)
                 .AddDebug()
-                .SetMinimumLevel(LogLevel.Debug))
+                .SetMinimumLevel(LogLevel.Information))
             .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
             .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
             .AddSingleton(sp => GetAuthenticatorDto(authenticatorPath))
@@ -157,11 +153,17 @@ public partial class App : Application
             .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()))
             .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()))
 
-            .AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile(timeTablePath, sp.GetRequiredService<ILogger<TimeTableProvider>>()))
             .AddSingleton<IWebSocketClient, WebSocketClient>()
 
-            .AddSingleton<IImageFetch, ImageFetch>()
-            .AddSingleton<IPointExtract>(sp => PointExtract.FromFile(pointExtractPath))
+            .AddKmoniHelpers()
+            .AddOptions<KmoniHelperOptions>()
+            .Bind(config.GetSection("KmoniHelperOptions"))
+            .Services
+
+            .AddJmaTimeTable()
+            .AddOptions<JmaTimeTableOptions>()
+            .Bind(config.GetSection("TimeTableOptions"))
+            .Services
 
             .AddSingleton<StaticResources>()
 
@@ -170,22 +172,9 @@ public partial class App : Application
             .AddSingleton<PastPageViewModel>()
             .AddSingleton<SettingPageViewModel>();
 
-        _ = collection.AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()));
-        _ = collection.AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()));
-        _ = collection.AddSingleton<ITimeTableProvider>(sp => TimeTableProvider.FromFile("tjma2001.txt"));
-        _ = collection.AddSingleton<IWebSocketClient, WebSocketClient>();
-
-        _ = collection.AddSingleton<IImageFetch, ImageFetch>();
-        _ = collection.AddSingleton<IPointExtract>(sp => new PointExtract(pointExtractPath));
-
-        _ = collection.AddSingleton<StaticResources>();
-
-        _ = collection.AddSingleton<MainWindowViewModel>();
-        _ = collection.AddSingleton<RealtimePageViewModel>();
-        _ = collection.AddSingleton<PastPageViewModel>();
-        _ = collection.AddSingleton<SettingPageViewModel>();
-
-        Service = collection.BuildServiceProvider();
+        Service = collection
+            .BuildServiceProvider()
+            .AttachMapsuiLogging();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

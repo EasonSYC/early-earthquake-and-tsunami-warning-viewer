@@ -29,6 +29,7 @@ using Mapsui.Projections;
 using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
@@ -42,9 +43,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
-    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTableProvider timeTableProvider, KmoniOptions kmoniOptions, IWebSocketClient webSocketClient,
-        StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
-    : base(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
+    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTable timeTableProvider, KmoniOptions kmoniOptions, IWebSocketClient webSocketClient,
+        StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<RealtimePageViewModel> logger, OnAuthenticatorChanged onChange)
+    : base(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
     {
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;
@@ -82,7 +83,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private const string _eewHypocentreLayerPrefix = "Hypocentre";
     private const string _eewRegionLayerPrefix = "Regions";
 
-    private readonly ITimeTableProvider _timeTableProvider;
+    private readonly ITimeTable _timeTableProvider;
     private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
 
     [ObservableProperty]

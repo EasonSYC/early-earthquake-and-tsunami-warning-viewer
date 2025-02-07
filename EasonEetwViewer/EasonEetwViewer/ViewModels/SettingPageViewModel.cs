@@ -11,18 +11,18 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.Contract;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
-using EasonEetwViewer.KyoshinMonitor.Services;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocketStartPost startPost, IWebSocketClient webSocketClient, OnLanguageChanged onLangChange,
+internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocketStartPost startPost, IWebSocketClient webSocketClient, ILogger<SettingPageViewModel> logger, OnLanguageChanged onLangChange,
     AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
-    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
+    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
 {
     #region languageSettings
     private readonly OnLanguageChanged LanguageChanged = onLangChange;

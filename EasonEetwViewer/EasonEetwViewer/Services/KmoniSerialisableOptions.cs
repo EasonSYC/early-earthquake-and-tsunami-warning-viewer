@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
-using EasonEetwViewer.KyoshinMonitor.Services;
 
 namespace EasonEetwViewer.Services;
 internal class KmoniSerialisableOptions : IKmoniDto

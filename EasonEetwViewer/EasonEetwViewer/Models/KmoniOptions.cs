@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
-using EasonEetwViewer.KyoshinMonitor.Services;
 
 namespace EasonEetwViewer.Services.KmoniOptions;
 internal partial class KmoniOptions : ObservableObject

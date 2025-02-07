@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -16,7 +17,10 @@ internal partial class MainWindowViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(CurrentPage))]
     private ListItemTemplate _selectedListItem;
 
-    public MainWindowViewModel(RealtimePageViewModel rtvm, PastPageViewModel ppvm, SettingPageViewModel spvm)
+    private new readonly ILogger<MainWindowViewModel> _logger;
+
+    public MainWindowViewModel(RealtimePageViewModel rtvm, PastPageViewModel ppvm, SettingPageViewModel spvm, ILogger<MainWindowViewModel> logger)
+        : base(logger)
     {
         Items = [
             new ListItemTemplate(typeof(RealtimePageViewModel), rtvm, "LiveRegular", () => Resources.PageNameRealtime),
@@ -24,6 +28,7 @@ internal partial class MainWindowViewModel : ViewModelBase
             new ListItemTemplate(typeof(SettingPageViewModel), spvm, "SettingsRegular", () => Resources.PageNameSettings),
         ];
         SelectedListItem = Items.ElementAt(0);
+        _logger = logger;
     }
 
     internal IEnumerable<ListItemTemplate> Items { get; init; }

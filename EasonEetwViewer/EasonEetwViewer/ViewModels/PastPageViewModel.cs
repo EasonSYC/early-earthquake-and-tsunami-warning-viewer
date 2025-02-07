@@ -22,10 +22,11 @@ using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
-    : MapViewModelBase(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
+internal partial class PastPageViewModel(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<PastPageViewModel> logger, OnAuthenticatorChanged onChange)
+    : MapViewModelBase(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
 {
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];

@@ -5,6 +5,7 @@ using EasonEetwViewer.Services;
 using Mapsui;
 using Mapsui.Limiting;
 using Mapsui.Projections;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class MapViewModelBase : PageViewModelBase
@@ -15,24 +16,19 @@ internal partial class MapViewModelBase : PageViewModelBase
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
-        : base(authenticatorDto, apiCaller, telegramRetriever, timeProvider, onChange)
+    internal MapViewModelBase(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<MapViewModelBase> logger, OnAuthenticatorChanged onChange)
+        : base(authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
     {
         _resources = resources;
         InitMapView();
     }
-
     private void InitMapView()
     {
         Map.Layers.Add(Mapsui.Tiling.OpenStreetMap.CreateTileLayer());
         Map.Navigator.RotationLock = true;
-
         Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
-        //MRect bounds = GetLimitsOfJapan();
         Map.Navigator.OverridePanBounds = GetMapBounds();
-
-        MRect view = GetMainLimitsOfJapan();
-        Map.Navigator.ZoomToBox(view);
+        Map.Navigator.ZoomToBox(GetMainLimitsOfJapan());
     }
 
     private protected static MRect GetLimitsOfJapan()
