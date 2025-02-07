@@ -20,41 +20,16 @@ internal sealed partial class JmaTimeTable : ITimeTable
     /// </summary>
     /// <param name="timeTable">The collection of <see cref="TimeTableEntry"/> for the timetable.</param>
     /// <param name="logger">The logger to be used.</param>
-    private JmaTimeTable(IEnumerable<TimeTableEntry> timeTable, ILogger<JmaTimeTable> logger)
+    public JmaTimeTable(IEnumerable<TimeTableEntry> timeTable, ILogger<JmaTimeTable> logger)
     {
         _timeTable = timeTable;
         _logger = logger;
         logger.Instantiated();
     }
     /// <summary>
-    /// Create a new instance of <see cref="JmaTimeTable"/> from a file.
-    /// </summary>
-    /// <param name="fileName">The file that the time table is stored in.</param>
-    /// <param name="logger">The logger to be used.</param>
-    /// <returns>The instance of <see cref="JmaTimeTable"/> created.</returns>
-    /// <exception cref="FormatException">When a line does not have the correct format.</exception>
-    /// <remarks>See <see href="https://www.data.jma.go.jp/eqev/data/bulletin/catalog/appendix/trtime/tttfmt_j.html">JMA Webpage</see> for format definition.</remarks>
-    public static JmaTimeTable FromFile(string fileName, ILogger<JmaTimeTable> logger)
-    {
-        string[] rows = File.ReadAllLines(fileName);
-
-        string? unmatchingRow = rows.FirstOrDefault(r => !Pattern().IsMatch(r));
-        return unmatchingRow is not null
-            ? throw new FormatException($"{unmatchingRow} does not fit format of time table")
-            : new(rows.Select(row =>
-            new TimeTableEntry()
-            {
-                Depth = int.Parse(row[22..25]),
-                Radius = int.Parse(row[27..32]),
-                Times = [double.Parse(row[2..10]),
-                    double.Parse(row[13..21])]
-            }), logger);
-    }
-    /// <summary>
     /// The number of rows for each depth in the time table.
     /// </summary>
     private const int _rowsPerDepth = 236;
-
     /// <inheritdoc/>
     /// <exception cref="ArgumentOutOfRangeException">When the depth is not between the range of 0 to 700, or when the time second is negative.</exception>
     public (double pDistance, double sDistance) DistanceFromDepthTime(int depth, double timeSecond)
@@ -111,7 +86,4 @@ internal sealed partial class JmaTimeTable : ITimeTable
 
         return y1 + ((timeSecond - x1) * (y2 - y1) / (x2 - x1));
     }
-
-    [GeneratedRegex(@"^P [\d\s]{4}.\d{3} S [\d\s]{4}.\d{3} [\d\s]{3}  [\d\s]{5}$")]
-    private static partial Regex Pattern();
 }
