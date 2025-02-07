@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.JmaTravelTime;
 /// <summary>
-/// Default implementation for <see cref="ITimeTableProvider"/> for JMA 2001 Time Table.
+/// Default implementation for <see cref="ITimeTable"/> for JMA Time Tables. See <see href="https://www.data.jma.go.jp/eqev/data/bulletin/catalog/appendix/trtime/trt_j.html">JMA Webpage Files</see>.
 /// </summary>
-public sealed partial class TimeTableProvider : ITimeTableProvider
+internal sealed partial class JmaTimeTable : ITimeTable
 {
     /// <summary>
     /// The collection of <see cref="TimeTableEntry"/> for the timetable.
@@ -14,25 +14,27 @@ public sealed partial class TimeTableProvider : ITimeTableProvider
     /// <summary>
     /// The logger to be used.
     /// </summary>
-    private readonly ILogger<TimeTableProvider> _logger;
+    private readonly ILogger<JmaTimeTable> _logger;
     /// <summary>
     /// Creates the instance of the class with the specified timetable.
     /// </summary>
     /// <param name="timeTable">The collection of <see cref="TimeTableEntry"/> for the timetable.</param>
     /// <param name="logger">The logger to be used.</param>
-    private TimeTableProvider(IEnumerable<TimeTableEntry> timeTable, ILogger<TimeTableProvider> logger)
+    private JmaTimeTable(IEnumerable<TimeTableEntry> timeTable, ILogger<JmaTimeTable> logger)
     {
         _timeTable = timeTable;
         _logger = logger;
+        logger.Instantiated();
     }
     /// <summary>
-    /// Create a new instance of <see cref="TimeTableProvider"/> from a file.
+    /// Create a new instance of <see cref="JmaTimeTable"/> from a file.
     /// </summary>
     /// <param name="fileName">The file that the time table is stored in.</param>
     /// <param name="logger">The logger to be used.</param>
-    /// <returns>The instance of <see cref="TimeTableProvider"/> created.</returns>
-    /// <exception cref="FormatException"></exception>
-    public static TimeTableProvider FromFile(string fileName, ILogger<TimeTableProvider> logger)
+    /// <returns>The instance of <see cref="JmaTimeTable"/> created.</returns>
+    /// <exception cref="FormatException">When a line does not have the correct format.</exception>
+    /// <remarks>See <see href="https://www.data.jma.go.jp/eqev/data/bulletin/catalog/appendix/trtime/tttfmt_j.html">JMA Webpage</see> for format definition.</remarks>
+    public static JmaTimeTable FromFile(string fileName, ILogger<JmaTimeTable> logger)
     {
         string[] rows = File.ReadAllLines(fileName);
 
@@ -77,7 +79,7 @@ public sealed partial class TimeTableProvider : ITimeTableProvider
     /// <param name="endIndex">The end index to look at.</param>
     /// <param name="timeSecond">The time elapsed.</param>
     /// <param name="index">The element to use to refer to for the distance.</param>
-    /// <returns></returns>
+    /// <returns>The distance that the specified wave has travelled.</returns>
     private double SearchForDistance(int startIndex, int endIndex, double timeSecond, int index)
     {
         int leftPoint;

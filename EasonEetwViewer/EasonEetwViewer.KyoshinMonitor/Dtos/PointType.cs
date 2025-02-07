@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.KyoshinMonitor.Services;
+namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// Represents the type of an observation point.
 /// </summary>

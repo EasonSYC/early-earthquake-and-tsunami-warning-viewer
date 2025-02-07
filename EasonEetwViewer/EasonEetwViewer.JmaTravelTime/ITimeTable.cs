@@ -1,8 +1,8 @@
 ﻿namespace EasonEetwViewer.JmaTravelTime;
 /// <summary>
-/// Represents a time table provider for seismic waves travel time.
+/// Represents a time table for seismic waves travel time.
 /// </summary>
-public interface ITimeTableProvider
+public interface ITimeTable
 {
     /// <summary>
     /// Gives the distance that seismic waves travel from the depth of the hypocentre and the time elapsed.

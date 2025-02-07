@@ -7,20 +7,13 @@ namespace EasonEetwViewer.KyoshinMonitor.Services;
 /// <summary>
 /// Default implementation of <see cref="IPointExtract"/>
 /// </summary>
-public sealed class PointExtract : IPointExtract
+internal sealed class PointExtract : IPointExtract
 {
     /// <summary>
     /// Creates an instance of <see cref="PointExtract"/> by specifying the collection of observation points.
     /// </summary>
     /// <param name="points">The collection of observation points.</param>
-    private PointExtract(IEnumerable<ObservationPoint> points) => _points = points;
-    /// <summary>
-    /// Creates an instance of <see cref="PointExtract"/> by reading from a JSON text file.
-    /// </summary>
-    /// <param name="filePath">The path to the file that stores the collection of observation points.</param>
-    /// <returns>The new instance of <see cref="PointExtract"/></returns>
-    public static PointExtract FromFile(string filePath)
-        => new(JsonSerializer.Deserialize<IEnumerable<ObservationPoint>>(File.ReadAllText(filePath)) ?? []);
+    internal PointExtract(IEnumerable<ObservationPoint> points) => _points = points;
     /// <summary>
     /// The collection of observation points.
     /// </summary>

@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.KyoshinMonitor.Services;
 
 namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
@@ -40,6 +39,7 @@ public record ObservationPoint
     /// <summary>
     /// The property <c>point</c>, the pixel position of the observation point.
     /// </summary>
+    [JsonInclude]
     [JsonPropertyName("point")]
     public required PixelCoordinate Point { get; init; }
 }

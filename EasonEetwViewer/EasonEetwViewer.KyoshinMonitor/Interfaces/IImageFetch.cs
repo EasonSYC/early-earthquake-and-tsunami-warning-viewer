@@ -1,5 +1,4 @@
 ﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
-using EasonEetwViewer.KyoshinMonitor.Services;
 
 namespace EasonEetwViewer.KyoshinMonitor.Interfaces;
 
