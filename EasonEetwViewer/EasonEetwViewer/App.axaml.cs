@@ -21,6 +21,7 @@ using EasonEetwViewer.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 
 namespace EasonEetwViewer;
 public partial class App : Application
@@ -136,10 +137,10 @@ public partial class App : Application
 
         IServiceCollection collection = new ServiceCollection()
             .Configure<ImageFetchOptions>(config.GetSection("ImageFetchOptions"))
-            .AddLogging(loggingBuilder => loggingBuilder.AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information))
-#if DEBUG
-            .AddLogging(loggingBuilder => loggingBuilder.AddDebugLogger(LogLevel.Trace))
-#endif
+            .AddLogging(loggingBuilder => loggingBuilder
+                .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information)
+                .AddDebug()
+                .SetMinimumLevel(LogLevel.Debug))
             .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
             .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
             .AddSingleton(sp => GetAuthenticatorDto(authenticatorPath))
