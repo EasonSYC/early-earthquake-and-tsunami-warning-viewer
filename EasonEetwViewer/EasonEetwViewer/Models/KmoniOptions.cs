@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 
 namespace EasonEetwViewer.Services.KmoniOptions;

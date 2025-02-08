@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.Lang;
 

@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Converters;
@@ -12,7 +13,7 @@ internal class AuthenticationStatusConverter : IValueConverter
             {
                 AuthenticationStatus.ApiKey => Lang.SettingPageResources.AuthStatusApiKeyText,
                 AuthenticationStatus.OAuth => Lang.SettingPageResources.AuthStatusOAuthText,
-                AuthenticationStatus.None => Lang.SettingPageResources.AuthStatusNoneText,
+                AuthenticationStatus.Null => Lang.SettingPageResources.AuthStatusNoneText,
                 _ => null
             }
             : null;

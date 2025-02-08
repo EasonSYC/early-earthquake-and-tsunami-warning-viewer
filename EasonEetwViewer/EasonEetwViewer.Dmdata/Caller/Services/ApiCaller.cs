@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Helpers;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
@@ -11,12 +11,12 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 
-namespace EasonEetwViewer.Dmdata.Caller;
+namespace EasonEetwViewer.Dmdata.Caller.Services;
 
 public class ApiCaller : IApiCaller
 {
     private readonly HttpClient _client;
-    private readonly AuthenticatorDto _authenticatorDto;
+    private readonly AuthenticationWrapper _authenticatorDto;
     private readonly JsonSerializerOptions _options = new()
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString
@@ -24,7 +24,7 @@ public class ApiCaller : IApiCaller
 
     private IAuthenticator Authenticator => _authenticatorDto.Authenticator;
 
-    public ApiCaller(string baseApi, AuthenticatorDto authenticator)
+    public ApiCaller(string baseApi, AuthenticationWrapper authenticator)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
 

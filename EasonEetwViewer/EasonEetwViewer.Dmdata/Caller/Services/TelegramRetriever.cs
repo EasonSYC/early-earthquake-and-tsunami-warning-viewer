@@ -1,14 +1,14 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.Dmdata.Caller;
+namespace EasonEetwViewer.Dmdata.Caller.Services;
 public class TelegramRetriever : ITelegramRetriever
 {
     private readonly HttpClient _client;
-    private readonly AuthenticatorDto _authenticatorDto;
+    private readonly AuthenticationWrapper _authenticatorDto;
     private readonly JsonSerializerOptions _options = new()
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString
@@ -16,7 +16,7 @@ public class TelegramRetriever : ITelegramRetriever
 
     private IAuthenticator Authenticator => _authenticatorDto.Authenticator;
 
-    public TelegramRetriever(string baseApi, AuthenticatorDto authenticator)
+    public TelegramRetriever(string baseApi, AuthenticationWrapper authenticator)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
 

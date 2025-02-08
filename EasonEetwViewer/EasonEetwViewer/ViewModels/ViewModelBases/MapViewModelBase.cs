@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Services;
 using Mapsui;
@@ -16,8 +16,21 @@ internal partial class MapViewModelBase : PageViewModelBase
     private Map _map = new();
 
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
-    internal MapViewModelBase(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<MapViewModelBase> logger, OnAuthenticatorChanged onChange)
-        : base(authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
+    public MapViewModelBase(
+        StaticResources resources,
+        AuthenticationWrapper authenticatorWrapper,
+        IApiCaller apiCaller,
+        ITelegramRetriever telegramRetriever,
+        ITimeProvider timeProvider,
+        ILogger<MapViewModelBase> logger,
+        EventHandler<AuthenticationStatusChangedEventArgs> eventHandler)
+        : base(
+            authenticatorWrapper,
+            apiCaller,
+            telegramRetriever,
+            timeProvider,
+            logger,
+            eventHandler)
     {
         _resources = resources;
         InitMapView();

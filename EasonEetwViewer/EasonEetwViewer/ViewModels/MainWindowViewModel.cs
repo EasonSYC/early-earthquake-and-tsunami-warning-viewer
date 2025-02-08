@@ -9,7 +9,7 @@ namespace EasonEetwViewer.ViewModels;
 
 // Adapted from https://github.com/MammaMiaDev/avaloniaui-the-series Episode 3 with edits
 
-internal partial class MainWindowViewModel : ViewModelBase
+internal sealed partial class MainWindowViewModel : ViewModelBase
 {
     public ViewModelBase CurrentPage => SelectedListItem.Model;
 
@@ -31,7 +31,7 @@ internal partial class MainWindowViewModel : ViewModelBase
         _logger = logger;
     }
 
-    internal IEnumerable<ListItemTemplate> Items { get; init; }
+    public IEnumerable<ListItemTemplate> Items { get; init; }
 
     [ObservableProperty]
     private bool _isPaneOpen = true;

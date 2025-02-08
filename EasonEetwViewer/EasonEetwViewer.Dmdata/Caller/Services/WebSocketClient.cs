@@ -10,7 +10,7 @@ using EasonEetwViewer.Dmdata.Dto.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.WebSocket.Request;
 using EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
 
-namespace EasonEetwViewer.Dmdata.Caller;
+namespace EasonEetwViewer.Dmdata.Caller.Services;
 
 /// <summary>
 /// Represents a WebSocket connection in the program.

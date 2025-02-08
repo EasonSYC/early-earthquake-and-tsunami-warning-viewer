@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
@@ -13,10 +13,9 @@ using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
-using EasonEetwViewer.JmaTravelTime;
-using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.JmaTravelTime.Abstractions;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
-using EasonEetwViewer.KyoshinMonitor.Interfaces;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
@@ -43,9 +42,26 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         NumberHandling = JsonNumberHandling.AllowReadingFromString,
     };
-    public RealtimePageViewModel(IImageFetch imageFetch, IPointExtract pointExtract, ITimeTable timeTableProvider, KmoniOptions kmoniOptions, IWebSocketClient webSocketClient,
-        StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<RealtimePageViewModel> logger, OnAuthenticatorChanged onChange)
-    : base(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
+    public RealtimePageViewModel(
+        IImageFetch imageFetch,
+        IPointExtract pointExtract,
+        ITimeTable timeTableProvider,
+        KmoniOptions kmoniOptions,
+        IWebSocketClient webSocketClient,
+        StaticResources resources,
+        AuthenticationWrapper authenticatorWrapper,
+        IApiCaller apiCaller,
+        ITelegramRetriever telegramRetriever,
+        ITimeProvider timeProvider,
+        ILogger<RealtimePageViewModel> logger,
+        EventHandler<AuthenticationStatusChangedEventArgs> authEventHandler)
+    : base(resources,
+        authenticatorWrapper,
+        apiCaller,
+        telegramRetriever,
+        timeProvider,
+        logger,
+        authEventHandler)
     {
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;

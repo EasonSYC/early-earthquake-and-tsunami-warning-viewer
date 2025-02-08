@@ -3,13 +3,14 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.Contract;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
@@ -20,12 +21,35 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
 
-internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocketStartPost startPost, IWebSocketClient webSocketClient, ILogger<SettingPageViewModel> logger, OnLanguageChanged onLangChange,
-    AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, OnAuthenticatorChanged onChange)
-    : PageViewModelBase(authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
+internal sealed partial class SettingPageViewModel : PageViewModelBase
 {
+    public SettingPageViewModel(
+        KmoniOptions kmoniOptions,
+        WebSocketStartPost startPost,
+        IWebSocketClient webSocketClient,
+        ILogger<SettingPageViewModel> logger,
+        OnLanguageChanged onLangChange,
+        AuthenticationWrapper authenticatorDto,
+        IApiCaller apiCaller,
+        ITelegramRetriever telegramRetriever,
+        ITimeProvider timeProvider,
+        EventHandler<AuthenticationStatusChangedEventArgs> eventHandler)
+        : base(authenticatorDto,
+            apiCaller,
+            telegramRetriever,
+            timeProvider,
+            logger,
+            eventHandler)
+    {
+        LanguageChanged = onLangChange;
+        KmoniOptions = kmoniOptions;
+        _webSocketClient = webSocketClient;
+        _startPost = startPost;
+        AuthenticationStatusChanged += SettingPageViewModel_AuthenticationStatusChanged;
+    }
+
     #region languageSettings
-    private readonly OnLanguageChanged LanguageChanged = onLangChange;
+    private readonly OnLanguageChanged LanguageChanged;
 
     [ObservableProperty]
     private CultureInfo _languageChoice = Resources.Culture;
@@ -39,14 +63,14 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
     #endregion
 
     #region kmoniSettings
-    internal KmoniOptions KmoniOptions { get; init; } = kmoniOptions;
+    internal KmoniOptions KmoniOptions { get; init; }
     internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
     internal IEnumerable<MeasurementType> DataTypeChoices { get; init; } = Enum.GetValues<MeasurementType>();
     #endregion
 
     #region webSocketSettings
-    private readonly IWebSocketClient _webSocketClient = webSocketClient;
-    private readonly WebSocketStartPost _startPost = startPost;
+    private readonly IWebSocketClient _webSocketClient;
+    private readonly WebSocketStartPost _startPost;
 
     internal bool WebSocketConnected => _webSocketClient.IsWebSocketConnected;
 
@@ -121,22 +145,20 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
     #endregion
 
     #region authSettings
-    private protected override void OnAuthenticatorChanged()
-    {
-        base.OnAuthenticatorChanged();
-        OnPropertyChanged(nameof(OAuthConnected));
-        OnPropertyChanged(nameof(ApiKeyConfirmed));
-        OnPropertyChanged(nameof(ApiKeyButtonEnabled));
-    }
-
-    internal bool OAuthConnected => AuthenticationStatus == AuthenticationStatus.OAuth;
-    internal bool ApiKeyConfirmed => AuthenticationStatus == AuthenticationStatus.ApiKey;
-    internal bool ApiKeyButtonEnabled => AuthenticationStatus == AuthenticationStatus.None;
+    public bool OAuthConnected
+        => AuthenticationStatus is AuthenticationStatus.OAuth;
+    public bool ApiKeyConfirmed
+        => AuthenticationStatus is AuthenticationStatus.ApiKey;
+    public bool ApiKeyButtonEnabled
+        => AuthenticationStatus is AuthenticationStatus.Null && ApiKeyText.StartsWith("AKe.");
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ApiKeyButtonEnabled))]
+    private string _apiKeyText = string.Empty;
 
     [RelayCommand]
     private async Task OAuthButton()
     {
-        if (AuthenticationStatus == AuthenticationStatus.OAuth)
+        if (AuthenticationStatus is AuthenticationStatus.OAuth)
         {
             await UnsetAuthenticatorAsync();
         }
@@ -146,47 +168,27 @@ internal partial class SettingPageViewModel(KmoniOptions kmoniOptions, WebSocket
         }
     }
 
-    [ObservableProperty]
-    private string _apiKeyText = string.Empty;
-
+    private void SettingPageViewModel_AuthenticationStatusChanged(object? sender, AuthenticationStatusChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(OAuthConnected));
+        OnPropertyChanged(nameof(ApiKeyConfirmed));
+        OnPropertyChanged(nameof(ApiKeyButtonEnabled));
+    }
     [RelayCommand]
-    private void ApiKeyButton() => SetAuthenticatorToApiKey(ApiKeyText);
+    private async Task ApiKeyButton()
+        => await SetAuthenticatorToApiKeyAsync(ApiKeyText);
     async partial void OnApiKeyTextChanged(string value)
     {
-        if (AuthenticationStatus == AuthenticationStatus.ApiKey)
+        if (AuthenticationStatus is AuthenticationStatus.ApiKey)
         {
             await UnsetAuthenticatorAsync();
         }
     }
-
-    private void SetAuthenticatorToApiKey(string apiKey) => Authenticator = new ApiKey(apiKey);
+    private async Task SetAuthenticatorToApiKeyAsync(string apiKey)
+        => await _authenticatorWrapper.SetApiKeyAsync(apiKey);
     private async Task SetAuthenticatorToOAuthAsync()
-    {
-        Authenticator = new OAuth("CId.RRV95iuUV9FrYzeIN_BYM9Z35MJwwQen5DIwJ8JQXaTm",
-            "https://manager.dmdata.jp/account/oauth2/v1/",
-            "manager.dmdata.jp",
-            [
-            "contract.list",
-            "eew.get.forecast",
-            "gd.earthquake",
-            "parameter.earthquake",
-            "socket.close",
-            "socket.list",
-            "socket.start",
-            "telegram.data",
-            "telegram.get.earthquake",
-            "telegram.list"
-        ]);
-        await ((OAuth)Authenticator).CheckAccessTokenAsync();
-    }
+        => await _authenticatorWrapper.SetOAuthAsync();
     private async Task UnsetAuthenticatorAsync()
-    {
-        if (Authenticator is OAuth auth)
-        {
-            await auth.RevokeTokens();
-        }
-
-        Authenticator = new EmptyAuthenticator();
-    }
+        => await _authenticatorWrapper.UnsetAuthenticatorAsync();
     #endregion
 }

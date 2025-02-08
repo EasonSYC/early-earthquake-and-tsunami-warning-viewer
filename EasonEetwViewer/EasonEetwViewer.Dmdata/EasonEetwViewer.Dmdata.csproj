@@ -20,6 +20,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="../EasonEetwViewer.Authentication/EasonEetwViewer.Authentication.csproj" />
 	</ItemGroup>
 

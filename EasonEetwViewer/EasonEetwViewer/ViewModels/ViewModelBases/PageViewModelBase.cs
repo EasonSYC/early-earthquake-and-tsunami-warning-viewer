@@ -1,40 +1,51 @@
-﻿using EasonEetwViewer.Authentication;
+﻿using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
-internal partial class PageViewModelBase(AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<PageViewModelBase> logger, OnAuthenticatorChanged onChange) : ViewModelBase(logger)
+internal partial class PageViewModelBase : ViewModelBase
 {
-    private protected AuthenticatorDto _authenticatorDto = authenticatorDto;
-    private protected IApiCaller _apiCaller = apiCaller;
-    private protected ITelegramRetriever _telegramRetriever = telegramRetriever;
-    private protected ITimeProvider _timeProvider = timeProvider;
-    private protected new ILogger<PageViewModelBase> _logger = logger;
-
-    private readonly OnAuthenticatorChanged OnChange = onChange;
-
-    #region authentication
-    private protected IAuthenticator Authenticator
+    public PageViewModelBase(
+        AuthenticationWrapper authenticatorWrapper,
+        IApiCaller apiCaller,
+        ITelegramRetriever telegramRetriever,
+        ITimeProvider timeProvider,
+        ILogger<PageViewModelBase> logger,
+        EventHandler<AuthenticationStatusChangedEventArgs> eventHandler)
+        : base(logger)
     {
-        get => _authenticatorDto.Authenticator;
-        set
-        {
-            _authenticatorDto.Authenticator = value;
-            OnAuthenticatorChanged();
-        }
+        _authenticatorWrapper = authenticatorWrapper;
+        _apiCaller = apiCaller;
+        _telegramRetriever = telegramRetriever;
+        _timeProvider = timeProvider;
+        _logger = logger;
+
+        authenticatorWrapper.AuthenticationStatusChanged += AuthenticatorDto_AuthenticationStatusChanged;
+        AuthenticationStatusChanged += eventHandler;
     }
 
-    private protected virtual void OnAuthenticatorChanged()
+    private protected AuthenticationWrapper _authenticatorWrapper;
+    private protected IApiCaller _apiCaller;
+    private protected ITelegramRetriever _telegramRetriever;
+    private protected ITimeProvider _timeProvider;
+    private protected new ILogger<PageViewModelBase> _logger;
+    #region authentication
+    private protected virtual void AuthenticatorDto_AuthenticationStatusChanged(object? sender, EventArgs e)
     {
-        OnChange(_authenticatorDto);
+        AuthenticationStatusChanged.Invoke(this,
+            new()
+            {
+                NewAuthenticatorString = _authenticatorWrapper.ToString()
+            });
+
         OnPropertyChanged(nameof(AuthenticationStatus));
         _logger.AuthenticatorChanged(AuthenticationStatus);
     }
-
-    internal AuthenticationStatus AuthenticationStatus =>
-        Authenticator is EmptyAuthenticator ? AuthenticationStatus.None :
-        Authenticator is ApiKey ? AuthenticationStatus.ApiKey : AuthenticationStatus.OAuth;
+    public event EventHandler<AuthenticationStatusChangedEventArgs> AuthenticationStatusChanged;
+    private protected IAuthenticator Authenticator => _authenticatorWrapper.Authenticator;
+    public AuthenticationStatus AuthenticationStatus => _authenticatorWrapper.AuthenticationStatus;
     #endregion
 }

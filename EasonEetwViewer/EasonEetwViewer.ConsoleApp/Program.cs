@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
@@ -8,10 +8,10 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
-using EasonEetwViewer.JmaTravelTime;
+using EasonEetwViewer.JmaTravelTime.Abstractions;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
-using EasonEetwViewer.KyoshinMonitor.Services;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -55,7 +55,7 @@ internal class Program
     private static void TestTimeTableProvider()
     {
         int depth = 10;
-        ITimeTableProvider timeTable = TimeTableProvider.FromFile("tjma2001.txt");
+        ITimeTable timeTable = TimeTableProvider.FromFile("tjma2001.txt");
         for (int i = 0; i <= 180; ++i)
         {
             Console.WriteLine($"{i}: {timeTable.DistanceFromDepthTime(depth, i)}");

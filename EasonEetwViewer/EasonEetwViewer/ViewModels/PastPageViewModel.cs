@@ -4,7 +4,7 @@ using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
-using EasonEetwViewer.Authentication;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.EarthquakeParameter;
@@ -25,8 +25,22 @@ using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(StaticResources resources, AuthenticatorDto authenticatorDto, IApiCaller apiCaller, ITelegramRetriever telegramRetriever, ITimeProvider timeProvider, ILogger<PastPageViewModel> logger, OnAuthenticatorChanged onChange)
-    : MapViewModelBase(resources, authenticatorDto, apiCaller, telegramRetriever, timeProvider, logger, onChange)
+internal partial class PastPageViewModel(
+    StaticResources resources,
+    AuthenticationWrapper authenticatorWrapper,
+    IApiCaller apiCaller, ITelegramRetriever
+    telegramRetriever,
+    ITimeProvider timeProvider,
+    ILogger<PastPageViewModel> logger,
+    EventHandler<AuthenticationStatusChangedEventArgs> authEventHandler)
+    : MapViewModelBase(
+        resources,
+        authenticatorWrapper,
+        apiCaller,
+        telegramRetriever,
+        timeProvider,
+        logger,
+        authEventHandler)
 {
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];

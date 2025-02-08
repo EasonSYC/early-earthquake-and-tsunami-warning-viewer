@@ -4,13 +4,15 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using EasonEetwViewer.Authentication;
-using EasonEetwViewer.Dmdata.Caller;
+using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Authentication.Extensions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dmdata.Caller.Services;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.JmaTravelTime;
+using EasonEetwViewer.JmaTravelTime.Extensions;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
@@ -50,23 +52,6 @@ public partial class App : Application
         return kmoniOptions;
     }
 
-    private static AuthenticatorDto GetAuthenticatorDto(string authenticatorPath)
-    {
-        AuthenticatorDto authenticatorDto;
-
-        try
-        {
-            AuthenticatorDto? serialisedDto = JsonSerializer.Deserialize<AuthenticatorDto>(File.ReadAllText(authenticatorPath));
-            authenticatorDto = serialisedDto is not null ? serialisedDto : new AuthenticatorDto();
-        }
-        catch
-        {
-            authenticatorDto = new AuthenticatorDto();
-        }
-
-        return authenticatorDto;
-    }
-
     private static CultureInfo GetLanguage(string languagePath)
     {
         CultureInfo culture;
@@ -102,7 +87,7 @@ public partial class App : Application
     }
 
     /// <inheritdoc/>
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -123,13 +108,6 @@ public partial class App : Application
 
         string timeTablePath = config["TimeTablePath"]!;
 
-        //IConfigurationSection oAuthConfig = config.GetSection("oAuth");
-        //string oAuthClientId = oAuthConfig["clientId"] ?? string.Empty;
-        //string oAuthBaseUri = oAuthConfig["baseUri"] ?? string.Empty;
-        //string oAuthHost = oAuthConfig["host"] ?? string.Empty;
-        //HashSet<string> oAuthScopes = oAuthConfig.GetSection("scopes").Get<HashSet<string>>() ?? [];
-        //IAuthenticator oAuth = new OAuth(oAuthClientId, oAuthBaseUri, oAuthHost, oAuthScopes);
-
         LanguageChange(GetLanguage(languagePath));
 
         IServiceCollection collection = new ServiceCollection()
@@ -139,9 +117,7 @@ public partial class App : Application
                 .SetMinimumLevel(LogLevel.Information))
             .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
             .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
-            .AddSingleton(sp => GetAuthenticatorDto(authenticatorPath))
 
-            .AddSingleton<OnAuthenticatorChanged>(sp => v => File.WriteAllText(authenticatorPath, JsonSerializer.Serialize(v)))
             .AddSingleton<OnLanguageChanged>(sp => s
             =>
                 {
@@ -150,10 +126,18 @@ public partial class App : Application
                 })
             .AddSingleton<ITimeProvider, DefaultTimeProvider>()
 
-            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticatorDto>()))
-            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticatorDto>()))
+            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticationWrapper>()))
+            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticationWrapper>()))
 
             .AddSingleton<IWebSocketClient, WebSocketClient>()
+
+            .AddAuthenticationWrapper(authenticatorPath)
+            .AddOptions<OAuth2Options>()
+            .Bind(config.GetSection("OAuth2Options"))
+            .Services
+            .AddSingleton<EventHandler<AuthenticationStatusChangedEventArgs>>(sp
+                => (o, e)
+                => File.WriteAllText(authenticatorPath, e.NewAuthenticatorString))
 
             .AddKmoniHelpers()
             .AddOptions<KmoniHelperOptions>()

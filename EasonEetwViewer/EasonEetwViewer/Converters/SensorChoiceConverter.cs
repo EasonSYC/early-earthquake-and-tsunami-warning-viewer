@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

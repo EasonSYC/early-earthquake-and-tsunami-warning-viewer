@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
+﻿using EasonEetwViewer.KyoshinMonitor.Abstractions;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
 
 namespace EasonEetwViewer.Services;
 internal class KmoniDefaultOptions : IKmoniDto
