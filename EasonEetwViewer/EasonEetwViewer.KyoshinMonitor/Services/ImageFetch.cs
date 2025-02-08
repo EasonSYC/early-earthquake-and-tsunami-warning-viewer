@@ -1,6 +1,5 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Dtos;
+﻿using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
-using EasonEetwViewer.KyoshinMonitor.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.KyoshinMonitor.Services;

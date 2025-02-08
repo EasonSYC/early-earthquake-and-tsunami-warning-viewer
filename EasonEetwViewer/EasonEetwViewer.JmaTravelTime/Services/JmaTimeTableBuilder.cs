@@ -1,4 +1,6 @@
 ﻿using System.Text.RegularExpressions;
+using EasonEetwViewer.JmaTravelTime.Dtos;
+using EasonEetwViewer.JmaTravelTime.Services;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.JmaTravelTime;

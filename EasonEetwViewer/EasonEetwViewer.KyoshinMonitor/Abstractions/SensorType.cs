@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.KyoshinMonitor.Dtos;
+﻿namespace EasonEetwViewer.KyoshinMonitor.Abstractions;
 /// <summary>
 /// Represents the sensor type for the data map in kmoni.
 /// </summary>

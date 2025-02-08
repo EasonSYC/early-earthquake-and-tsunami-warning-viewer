@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.KyoshinMonitor.Interfaces;
+﻿using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using SkiaSharp;
 
 namespace EasonEetwViewer.KyoshinMonitor.Extensions;

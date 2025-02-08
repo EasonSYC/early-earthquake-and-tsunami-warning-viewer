@@ -1,4 +1,6 @@
-﻿namespace EasonEetwViewer.JmaTravelTime;
+﻿using EasonEetwViewer.JmaTravelTime.Services;
+
+namespace EasonEetwViewer.JmaTravelTime.Extensions;
 /// <summary>
 /// The options to create an instance of <see cref="JmaTimeTable"/>.
 /// </summary>

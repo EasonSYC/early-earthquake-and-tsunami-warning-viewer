@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EasonEetwViewer.JmaTravelTime.Abstractions;
+using EasonEetwViewer.JmaTravelTime.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace EasonEetwViewer.JmaTravelTime;
+namespace EasonEetwViewer.JmaTravelTime.Extensions;
 /// <summary>
 /// Provides extensions to inject service of <see cref="ITimeTable"/> with JMA implementation to the service collection.
 /// </summary>

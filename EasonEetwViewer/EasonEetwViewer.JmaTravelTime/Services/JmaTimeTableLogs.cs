@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EasonEetwViewer.JmaTravelTime.Services;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.JmaTravelTime;
 internal static partial class TimetableProviderLogs

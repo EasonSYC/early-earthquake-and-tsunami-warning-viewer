@@ -1,7 +1,8 @@
-﻿using System.Text.RegularExpressions;
+﻿using EasonEetwViewer.JmaTravelTime.Abstractions;
+using EasonEetwViewer.JmaTravelTime.Dtos;
 using Microsoft.Extensions.Logging;
 
-namespace EasonEetwViewer.JmaTravelTime;
+namespace EasonEetwViewer.JmaTravelTime.Services;
 /// <summary>
 /// Default implementation for <see cref="ITimeTable"/> for JMA Time Tables. See <see href="https://www.data.jma.go.jp/eqev/data/bulletin/catalog/appendix/trtime/trt_j.html">JMA Webpage Files</see>.
 /// </summary>

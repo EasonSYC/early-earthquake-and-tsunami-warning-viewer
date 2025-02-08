@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.KyoshinMonitor.Services;
 
-namespace EasonEetwViewer.KyoshinMonitor.Extensions;
+namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 /// <summary>
 /// The options to create an instance of <see cref="ImageFetch"/> and an instance of <see cref="PointExtract"/>.
 /// </summary>

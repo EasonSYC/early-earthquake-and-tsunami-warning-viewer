@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.JmaTravelTime;
+﻿namespace EasonEetwViewer.JmaTravelTime.Abstractions;
 /// <summary>
 /// Represents a time table for seismic waves travel time.
 /// </summary>

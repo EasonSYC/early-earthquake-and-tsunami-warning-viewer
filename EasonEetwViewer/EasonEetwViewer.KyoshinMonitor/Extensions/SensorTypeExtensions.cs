@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Abstractions;
 
 namespace EasonEetwViewer.KyoshinMonitor.Extensions;
 /// <summary>

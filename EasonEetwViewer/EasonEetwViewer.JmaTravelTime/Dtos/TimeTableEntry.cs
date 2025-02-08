@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.JmaTravelTime;
+﻿namespace EasonEetwViewer.JmaTravelTime.Dtos;
 
 /// <summary>
 /// Represents a row in the time table.
