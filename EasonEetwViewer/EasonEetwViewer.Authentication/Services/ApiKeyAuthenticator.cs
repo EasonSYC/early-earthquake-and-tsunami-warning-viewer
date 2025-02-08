@@ -40,6 +40,7 @@ internal sealed class ApiKeyAuthenticator : IAuthenticator
         {
             throw new ArgumentException($"API Key does not have valid format: {apiKey}", nameof(apiKey));
         }
+
         _apiKey = apiKey;
         byte[] plainTextBytes = Encoding.UTF8.GetBytes($"{apiKey}:");
         string val = Convert.ToBase64String(plainTextBytes);

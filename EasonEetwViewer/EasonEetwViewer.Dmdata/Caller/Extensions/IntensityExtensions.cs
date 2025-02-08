@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.Dmdata.Caller.Helpers;
+namespace EasonEetwViewer.Dmdata.Caller.Extensions;
 internal static class IntensityExtensions
 {
     public static string ToUriString(this Intensity intensity) => intensity switch

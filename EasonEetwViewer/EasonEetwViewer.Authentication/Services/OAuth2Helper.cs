@@ -1,14 +1,14 @@
-﻿using System.Net.Sockets;
-using System.Net;
-using System.Text;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Web;
-using EasonEetwViewer.Authentication.OAuth2;
-using Microsoft.Extensions.Logging;
+using EasonEetwViewer.Authentication.Dtos;
 using EasonEetwViewer.Authentication.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Services;
 /// <summary>

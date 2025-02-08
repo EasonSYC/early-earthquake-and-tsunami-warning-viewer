@@ -1,9 +1,7 @@
 ﻿using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase

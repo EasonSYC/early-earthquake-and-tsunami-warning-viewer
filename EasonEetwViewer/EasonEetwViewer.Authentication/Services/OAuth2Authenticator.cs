@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Authentication.OAuth2;
+using EasonEetwViewer.Authentication.Dtos;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Services;

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Authentication.OAuth2;
+namespace EasonEetwViewer.Authentication.Dtos;
 /// <summary>
 /// Represents an error in the response from an OAuth HTTP Request.
 /// </summary>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.Authentication.Abstractions;
+﻿namespace EasonEetwViewer.Authentication.Abstractions;
 /// <summary>
 /// Represents options for OAuth2.
 /// </summary>

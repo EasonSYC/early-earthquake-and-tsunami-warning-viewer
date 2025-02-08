@@ -11,7 +11,6 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.Contract;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
-using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;

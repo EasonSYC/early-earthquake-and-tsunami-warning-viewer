@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EasonEetwViewer.Authentication.Exceptions;
+﻿namespace EasonEetwViewer.Authentication.Exceptions;
 /// <summary>
 /// Represents security errors that occurs during OAuth2 key change.
 /// </summary>

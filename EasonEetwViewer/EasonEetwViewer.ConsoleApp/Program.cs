@@ -1,7 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;

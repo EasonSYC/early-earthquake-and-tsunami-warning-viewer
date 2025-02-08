@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Web;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller.Helpers;
+using EasonEetwViewer.Dmdata.Caller.Extensions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiPost;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;

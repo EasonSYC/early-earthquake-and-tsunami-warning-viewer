@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Authentication.OAuth2;
+namespace EasonEetwViewer.Authentication.Dtos;
 
 /// <summary>
 /// Represents a reponse from OAuth2 server to request a pair of token.
