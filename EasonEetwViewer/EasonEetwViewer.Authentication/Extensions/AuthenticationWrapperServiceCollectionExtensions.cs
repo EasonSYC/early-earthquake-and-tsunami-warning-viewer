@@ -1,0 +1,27 @@
+﻿using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Authentication.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
+namespace EasonEetwViewer.Authentication.Extensions;
+/// <summary>
+/// Provides extension methods for <see cref="IServiceCollection"/> to add authentication wrapper.
+/// </summary>
+public static class AuthenticationWrapperServiceCollectionExtensions
+{
+    /// <summary>
+    /// Injects a <see cref="AuthenticationWrapper"/> with setup from provided filepath.
+    /// </summary>
+    /// <param name="services">The instance of <see cref="IServiceCollection"/> for the service to be injected.</param>
+    /// <param name="filePath">The file path to where the string is stored.</param>
+    /// <returns>The <see cref="IServiceCollection"/> where the service is injected, for chained calls.</returns>
+    public static IServiceCollection AddAuthenticationWrapper(this IServiceCollection services, string filePath)
+        => services.AddSingleton(sp
+            => AuthenticationWrapper.FromString(
+                File.ReadAllText(filePath),
+                sp.GetRequiredService<ILogger<AuthenticationWrapper>>(),
+                sp.GetRequiredService<ILogger<OAuth2Helper>>(),
+                sp.GetRequiredService<ILogger<OAuth2Authenticator>>(),
+                sp.GetRequiredService<IOptions<OAuth2Options>>().Value));
+}
