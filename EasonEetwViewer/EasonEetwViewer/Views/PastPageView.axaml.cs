@@ -8,12 +8,9 @@ namespace EasonEetwViewer.Views;
 
 public partial class PastPageView : UserControl
 {
-    private readonly PastPageViewModel vm;
     public PastPageView()
     {
         InitializeComponent();
-        vm = App.Service.GetRequiredService<PastPageViewModel>();
-        DataContext = vm;
-        MapControl.Map = ((PastPageViewModel)DataContext).Map;
+        MapControl.Map = App.Service.GetRequiredService<PastPageViewModel>().Map;
     }
 }
