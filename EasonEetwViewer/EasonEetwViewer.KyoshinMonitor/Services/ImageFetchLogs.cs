@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.KyoshinMonitor;
 /// <summary>
-/// Represents the log messages used in <c>ImageFetch</c>.
+/// Represents the log messages used in <see cref="ImageFetch"/>.
 /// </summary>
 internal static partial class ImageFetchLogs
 {

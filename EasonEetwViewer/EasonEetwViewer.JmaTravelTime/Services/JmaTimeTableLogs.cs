@@ -2,7 +2,10 @@
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.JmaTravelTime;
-internal static partial class TimetableProviderLogs
+/// <summary>
+/// Represents logs used in <see cref="JmaTimeTable"/>.
+/// </summary>
+internal static partial class JmaTimeTableLogs
 {
     /// <summary>
     /// Log when instantiated.
