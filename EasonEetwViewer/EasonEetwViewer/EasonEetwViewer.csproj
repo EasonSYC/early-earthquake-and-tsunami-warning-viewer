@@ -34,12 +34,12 @@
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Mapsui.Avalonia" Version="5.0.0-beta.7" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2" />
 		<PackageReference Include="SkiaSharp" Version="3.116.1" />
 	</ItemGroup>
 
@@ -48,6 +48,7 @@
 		<ProjectReference Include="..\EasonEetwViewer.Dmdata\EasonEetwViewer.Dmdata.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

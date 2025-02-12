@@ -19,6 +19,8 @@ using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
+using EasonEetwViewer.WebSocket.Abstractions;
+using EasonEetwViewer.WebSocket.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

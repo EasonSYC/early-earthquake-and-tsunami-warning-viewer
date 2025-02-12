@@ -20,6 +20,8 @@ using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using EasonEetwViewer.WebSocket.Abstractions;
+using EasonEetwViewer.WebSocket.Dtos;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -30,6 +32,7 @@ using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
@@ -74,7 +77,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _timer.Elapsed += OnTimedEvent;
 
         _webSocketClient = webSocketClient;
-        _webSocketClient.DataReceivedAction += OnDataReceived;
+        _webSocketClient.DataReceived += WebSocketClient_DataReceived;
 
         _timeTableProvider = timeTableProvider;
 
@@ -491,26 +494,17 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region websocket
-    public async void OnDataReceived(string data, FormatType? format)
-    {
-        if (format == FormatType.Json)
-        {
-            Head headData = JsonSerializer.Deserialize<Head>(data) ?? throw new ArgumentNullException(nameof(data));
-            if (headData.Status != Status.Normal)
-            {
-                return;
-            }
 
-            if (headData.Schema.Type == "eew-information" && headData.Schema.Version == "1.0.0")
-            {
-                EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(data, _options)!;
-                await OnEewReceived(eew);
-            }
-            else if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.0.0")
-            {
-                TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(data, _options)!;
-                OnTsunamiReceived(tsunami);
-            }
+    private async void WebSocketClient_DataReceived(object? sender, DataEventArgs e)
+    {
+        Head telegram = e.Telegram;
+        if (telegram is EewInformationSchema eew)
+        {
+            await OnEewReceived(eew);
+        }
+        if (telegram is TsunamiInformationSchema tsunami)
+        {
+            OnTsunamiReceived(tsunami);
         }
     }
     #endregion

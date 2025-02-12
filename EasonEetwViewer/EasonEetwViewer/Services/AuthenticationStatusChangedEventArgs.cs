@@ -1,5 +1,5 @@
 ﻿namespace EasonEetwViewer.Services;
-internal class AuthenticationStatusChangedEventArgs : EventArgs
+internal sealed class AuthenticationStatusChangedEventArgs : EventArgs
 {
-    public string? NewAuthenticatorString { get; init; }
+    public required string? NewAuthenticatorString { get; init; }
 }

@@ -16,6 +16,7 @@ using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
+using EasonEetwViewer.WebSocket.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
