@@ -51,15 +51,23 @@ internal sealed class ImageFetch : IImageFetch
 
         _logger.SendingReqeust(_baseUri, relativeUri);
         using HttpRequestMessage request = new(HttpMethod.Get, relativeUri);
-        using HttpResponseMessage response = await _client.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            _logger.RequestSuccessful();
-            byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
-            return imageBytes;
+            using HttpResponseMessage response = await _client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                _logger.RequestSuccessful();
+                byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
+                return imageBytes;
+            }
+            else
+            {
+                _logger.RequestUnsuccessful(_baseUri, relativeUri);
+                return null;
+            }
         }
-        else
+        catch (HttpRequestException)
         {
             _logger.RequestUnsuccessful(_baseUri, relativeUri);
             return null;

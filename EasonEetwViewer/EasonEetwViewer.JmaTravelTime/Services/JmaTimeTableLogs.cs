@@ -10,6 +10,7 @@ internal static partial class JmaTimeTableLogs
     /// <summary>
     /// Log when instantiated.
     /// </summary>
+    /// <param name="logger">The logger to be used.</param>
     [LoggerMessage(
         EventId = 0,
         EventName = nameof(Instantiated),
@@ -20,9 +21,9 @@ internal static partial class JmaTimeTableLogs
     /// <summary>
     /// Log when iterating between two indices.
     /// </summary>
-    /// <param name="logger">The logger that was called.</param>
-    /// <param name="startIndex"></param>
-    /// <param name="endIndex"></param>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="startIndex">The start index.</param>
+    /// <param name="endIndex">The end index.</param>
     [LoggerMessage(
         EventId = 1,
         EventName = nameof(LookingLines),
@@ -33,7 +34,7 @@ internal static partial class JmaTimeTableLogs
     /// <summary>
     /// Log when the time was shorter than the data.
     /// </summary>
-    /// <param name="logger">The logger that was called.</param>
+    /// <param name="logger">The logger to be used.</param>
     /// <param name="time">The time elapsed.</param>
     [LoggerMessage(
         EventId = 2,
@@ -45,7 +46,7 @@ internal static partial class JmaTimeTableLogs
     /// <summary>
     /// Log when the time was longer than the data.
     /// </summary>
-    /// <param name="logger">The logger that was called.</param>
+    /// <param name="logger">The logger to be used.</param>
     /// <param name="time">The time elapsed.</param>
     [LoggerMessage(
         EventId = 3,
@@ -57,7 +58,7 @@ internal static partial class JmaTimeTableLogs
     /// <summary>
     /// Log the linear polation points.
     /// </summary>
-    /// <param name="logger">The logger that was called.</param>
+    /// <param name="logger">The logger to be used.</param>
     /// <param name="x1">The <c>x</c>-coordinate of the first point used.</param>
     /// <param name="y1">The <c>y</c>-coordinate of the first point used.</param>
     /// <param name="x2">The <c>x</c>-coordinate of the second point used.</param>
