@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Authentication.Dtos;
 /// <summary>
 /// Represents a reponse from OAuth2 server to request a pair of token.
 /// </summary>
-internal record TokenRequest : TokenRefresh
+internal sealed record TokenRequest : TokenRefresh
 {
     /// <summary>
     /// The property <c>refresh_token</c>, the refresh token acquired.

@@ -4,7 +4,7 @@ namespace EasonEetwViewer.Authentication.Exceptions;
 /// <summary>
 /// Represents error by attempting to get authentication from a <see cref="NullAuthenticator"/>.
 /// </summary>
-public class NullAuthenticationException : Exception
+public sealed class NullAuthenticationException : Exception
 {
     /// <summary>
     /// Instantiates a new instance of the <see cref="NullAuthenticationException"/> class.

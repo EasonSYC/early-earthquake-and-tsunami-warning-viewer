@@ -2,7 +2,7 @@
 /// <summary>
 /// Represents security errors that occurs during OAuth2 key change.
 /// </summary>
-public class OAuthSecurityException : OAuthException
+public sealed class OAuthSecurityException : OAuthException
 {
     /// <summary>
     /// Instantiates a new instance of the <see cref="OAuthSecurityException"/> class.

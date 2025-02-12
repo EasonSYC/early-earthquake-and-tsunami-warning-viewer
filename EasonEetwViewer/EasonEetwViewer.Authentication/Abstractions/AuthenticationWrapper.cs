@@ -135,6 +135,7 @@ public sealed class AuthenticationWrapper
         {
             _logger.OtherExceptionIgnored(ex.ToString());
         }
+
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>

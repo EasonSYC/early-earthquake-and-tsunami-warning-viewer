@@ -2,7 +2,7 @@
 /// <summary>
 /// Represents errors thrown by online authenticators that occurs during OAuth2 key change.
 /// </summary>
-public class OAuthErrorException : OAuthException
+public sealed class OAuthErrorException : OAuthException
 {
     /// <summary>
     /// Instantiates a new instance of the <see cref="OAuthErrorException"/> class.

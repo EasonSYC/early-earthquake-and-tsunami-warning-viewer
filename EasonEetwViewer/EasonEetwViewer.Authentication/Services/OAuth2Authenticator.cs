@@ -80,8 +80,8 @@ internal sealed class OAuth2Authenticator : IAuthenticator
             BaseAddress = _base
         };
         _refreshToken = refreshToken;
-        _accessToken = accessToken ?? Task.Run(RenewAccessTokenAsync).Result;
         _logger = logger;
+        _accessToken = accessToken ?? Task.Run(RenewAccessTokenAsync).Result;
         _accessTokenExpiry = DateTimeOffset.Now;
         _logger.Instantiated();
     }

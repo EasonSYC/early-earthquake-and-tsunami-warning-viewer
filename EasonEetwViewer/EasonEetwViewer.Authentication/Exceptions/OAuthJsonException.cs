@@ -2,7 +2,7 @@
 /// <summary>
 /// Represents errors that occurs during OAuth2 JSON Parsing.
 /// </summary>
-public class OAuthJsonException : OAuthException
+public sealed class OAuthJsonException : OAuthException
 {
     /// <summary>
     /// Instantiates a new instance of the <see cref="OAuthJsonException"/> class.

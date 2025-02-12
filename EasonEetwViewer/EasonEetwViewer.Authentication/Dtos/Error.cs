@@ -4,7 +4,7 @@ namespace EasonEetwViewer.Authentication.Dtos;
 /// <summary>
 /// Represents an error in the response from an OAuth HTTP Request.
 /// </summary>
-internal record Error
+internal sealed record Error
 {
     /// <summary>
     /// The property <c>error</c>, the error message.
