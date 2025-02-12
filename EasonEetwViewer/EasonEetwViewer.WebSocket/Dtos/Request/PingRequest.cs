@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
+using EasonEetwViewer.WebSocket.Dtos.Response;
 
-namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Request;
+namespace EasonEetwViewer.WebSocket.Dtos.Request;
 
 /// <summary>
 /// Represents a ping request from the client.

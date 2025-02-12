@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
+namespace EasonEetwViewer.WebSocket.Dtos.Response;
 
 /// <summary>
 /// Represents an error response from the WebSocket.

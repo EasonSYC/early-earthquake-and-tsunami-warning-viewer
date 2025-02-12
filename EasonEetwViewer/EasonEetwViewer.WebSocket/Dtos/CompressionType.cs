@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dtos;
 
 [JsonConverter(typeof(JsonStringEnumConverter<CompressionType>))]
 internal enum CompressionType

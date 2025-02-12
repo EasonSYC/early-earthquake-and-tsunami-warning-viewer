@@ -2,7 +2,7 @@
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
-namespace EasonEetwViewer.Dmdata.Dto.WebSocket.Response;
+namespace EasonEetwViewer.WebSocket.Dtos.Response;
 internal record StartResponse : ResponseBase
 {
     [JsonInclude]

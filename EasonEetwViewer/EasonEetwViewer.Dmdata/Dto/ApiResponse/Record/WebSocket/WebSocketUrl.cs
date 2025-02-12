@@ -16,7 +16,7 @@ public record WebSocketUrl
     /// The property <c>url</c>. The url to the WebSocket connection, with the ticket.
     /// </summary>
     [JsonPropertyName("url")]
-    public required string Url { get; init; }
+    public required Uri Url { get; init; }
     /// <summary>
     /// The property <c>protocol</c>. The protocol used by the WebSocket, a constant with value <c>dmdata.v2</c>.
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.WebSocket;
+namespace EasonEetwViewer.WebSocket.Dtos;
 internal record HeadInfo
 {
     [JsonInclude]
