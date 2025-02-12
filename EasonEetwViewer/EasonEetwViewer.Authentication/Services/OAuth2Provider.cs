@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Authentication.Services;
 /// <summary>
 /// Provides <see cref="OAuth2Authenticator"/> as <see cref="IAuthenticator"/>.
 /// </summary>
-internal static class OAuth2Provides
+internal static class OAuth2Provider
 {
     /// <summary>
     /// Creates a new instance of <see cref="OAuth2Authenticator"/> by requesting a new refresh token and a new access token.

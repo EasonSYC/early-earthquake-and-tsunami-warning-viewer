@@ -14,14 +14,37 @@ namespace EasonEetwViewer.Authentication.Services;
 /// <summary>
 /// A helper which gets the refresh token and access token for OAuth 2.0.
 /// </summary>
-/// <param name="clientId">The client ID for OAuth.</param>
-/// <param name="scopeString">The string containing the scopes to be requested.</param>
-/// <param name="baseUri">The base URI of requests.</param>
-/// <param name="host">The host specified in the requests.</param>
-/// <param name="redirectPath">The relative path used to communicate grant codes.</param>
-/// <param name="webPageString">The webpage contents to display after a successful authentication.</param>
-internal sealed class OAuth2Helper(string clientId, string scopeString, string baseUri, string host, string redirectPath, string webPageString, ILogger<OAuth2Helper> logger)
+internal sealed class OAuth2Helper
 {
+    /// <summary>
+    /// Create a new instance of the class <see cref="OAuth2Helper"/> using the given parameters.
+    /// </summary>
+    /// <param name="clientId">The client ID for OAuth.</param>
+    /// <param name="scopeString">The string containing the scopes to be requested.</param>
+    /// <param name="baseUri">The base URI of requests.</param>
+    /// <param name="host">The host specified in the requests.</param>
+    /// <param name="redirectPath">The relative path used to communicate grant codes.</param>
+    /// <param name="webPageString">The webpage contents to display after a successful authentication.</param>
+    /// <param name="logger">The logger to be used for logging.</param>
+    public OAuth2Helper(
+        string clientId,
+        string scopeString,
+        string baseUri,
+        string host,
+        string redirectPath,
+        string webPageString,
+        ILogger<OAuth2Helper> logger)
+    {
+        _client = new() { BaseAddress = new(baseUri) };
+        _clientId = clientId;
+        _scopeString = scopeString;
+        _baseUri = baseUri;
+        _host = host;
+        _redirectPath = redirectPath;
+        _webPageString = webPageString;
+        _logger = logger;
+        _logger.Instantiated();
+    }
     /// <summary>
     /// The length of a code verifier.
     /// </summary>
@@ -37,7 +60,35 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
     /// <summary>
     /// The HTTP Client to be used.
     /// </summary>
-    private readonly HttpClient _client = new() { BaseAddress = new Uri(baseUri) };
+    private readonly HttpClient _client;
+    /// <summary>
+    /// The client ID for OAuth.
+    /// </summary>
+    private readonly string _clientId;
+    /// <summary>
+    /// The string containing the scopes to be requested.
+    /// </summary>
+    private readonly string _scopeString;
+    /// <summary>
+    /// The base URI of requests.
+    /// </summary>
+    private readonly string _baseUri;
+    /// <summary>
+    /// The host specified in the requests.
+    /// </summary>
+    private readonly string _host;
+    /// <summary>
+    /// The relative path used to communicate grant codes.
+    /// </summary>
+    private readonly string _redirectPath;
+    /// <summary>
+    /// The webpage contents to display after a successful authentication.
+    /// </summary>
+    private readonly string _webPageString;
+    /// <summary>
+    /// The logger to be used for logging.
+    /// </summary>
+    private readonly ILogger<OAuth2Helper> _logger;
 
     // Modified from https://nicolaiarocci.com/how-to-implement-pkce-code-challenge-in-csharp/
     /// <summary>
@@ -75,11 +126,11 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
     private NameValueCollection GenerateGrantCodeQueryParameters(Uri redirectUri, string state, string codeVerifier)
     {
         NameValueCollection queryParams = HttpUtility.ParseQueryString(string.Empty);
-        queryParams["client_id"] = clientId;
+        queryParams["client_id"] = _clientId;
         queryParams["response_type"] = "code";
         queryParams["redirect_uri"] = redirectUri.ToString();
         queryParams["response_mode"] = "query";
-        queryParams["scope"] = scopeString;
+        queryParams["scope"] = _scopeString;
         queryParams["state"] = state;
         queryParams["code_challenge"] = VerifierToChallenge(codeVerifier);
         queryParams["code_challenge_method"] = "S256";
@@ -92,12 +143,14 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
     /// <param name="redirectUri">The <see cref="Uri"/> to listen from.</param>
     /// <param name="browserUri">The <see cref="Uri"/> to redirect the user to.</param>
     /// <returns>A pair of grant code and the request state obtained.</returns>
+    /// <exception cref="OAuthErrorException">When there is an error in the response.</exception>
     private async Task<(string grantCode, string requestState)> GetGrantCodeAsync(Uri redirectUri, Uri browserUri)
     {
         using HttpListener listener = new();
         listener.Prefixes.Add(redirectUri.ToString());
         listener.Start();
 
+        _logger.StartingBrowser(browserUri);
         // https://stackoverflow.com/a/61035650/
         _ = Process.Start(new ProcessStartInfo
         {
@@ -108,16 +161,23 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
         HttpListenerContext context = await listener.GetContextAsync();
         Uri responseUri = context.Request.Url!;
         NameValueCollection query = HttpUtility.ParseQueryString(responseUri.Query);
-        string grantCode = query["code"]!;
-        string requestState = query["state"]!;
+        _logger.ResponseReceived(responseUri);
 
-        byte[] buffer = Encoding.UTF8.GetBytes(webPageString);
+        byte[] buffer = Encoding.UTF8.GetBytes(_webPageString);
         context.Response.ContentLength64 = buffer.Length;
         await context.Response.OutputStream.WriteAsync(buffer.AsMemory(0, buffer.Length));
         context.Response.OutputStream.Close();
         listener.Stop();
 
-        return (grantCode, requestState);
+        if (query["error"] is not null)
+        {
+            _logger.ErrorMessageReceived(query["error"]!);
+            throw new OAuthErrorException(query["error"]!);
+        }
+        else
+        {
+            return (query["code"]!, query["state"]!);
+        }
     }
     /// <summary>
     /// Generates a refresh token request parameter with the given parameters.
@@ -128,7 +188,7 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
     /// <returns>A dictionary which represents the parameters to be used.</returns>
     private Dictionary<string, string> GenerateRefreshTokenRequestParameter(string grantCode, Uri redirectUri, string codeVerifier)
         => new(){
-            { "client_id", clientId },
+            { "client_id", _clientId },
             { "grant_type", "authorization_code" },
             { "code", grantCode },
             { "redirect_uri", redirectUri.ToString() },
@@ -139,19 +199,24 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
     /// </summary>
     /// <returns>A pair of tokens, the refresh token and the access token.</returns>
     /// <exception cref="OAuthSecurityException">When the state returned by the state is not in acoordance with the one sent.</exception>
-    /// <exception cref="FormatException">When the returned data cannot be parsed to JSON successfully.</exception>
+    /// <exception cref="OAuthJsonException">When the returned data cannot be parsed to JSON successfully.</exception>
+    /// <exception cref="OAuthErrorException">When there is an error in the response.</exception>
     public async Task<(string refreshToken, string accessToken)> GetRefreshTokenAsync()
     {
         string state = RandomNumberGenerator.GetString(_allowedChars, _stateLength);
         string codeVerifier = RandomNumberGenerator.GetString(_allowedChars, _codeLength);
+
+        _logger.FindingUnusedPort();
         int port = GetUnusedPort();
+        _logger.FoundUnusedPort(port);
+
         Uri redirectUri = new UriBuilder(IPAddress.Loopback.ToString())
         {
             Port = port,
-            Path = redirectPath
+            Path = _redirectPath
         }.Uri;
 
-        Uri browserUri = new UriBuilder(new Uri(new Uri(baseUri), "auth"))
+        Uri browserUri = new UriBuilder(new Uri(new Uri(_baseUri), "auth"))
         {
             Query = GenerateGrantCodeQueryParameters(redirectUri, state, codeVerifier).ToString()
         }
@@ -161,16 +226,40 @@ internal sealed class OAuth2Helper(string clientId, string scopeString, string b
 
         if (requestState != state)
         {
+            _logger.StateDoesNotMatch();
             throw new OAuthSecurityException("The states do not match.");
         }
 
         Dictionary<string, string> requestParams = GenerateRefreshTokenRequestParameter(grantCode, redirectUri, codeVerifier);
-        HttpRequestMessage request = OAuth2SharedMethod.GeneratePostRequest("token", requestParams, host);
+        HttpRequestMessage request = OAuth2SharedMethod.GeneratePostRequest("token", requestParams, _host);
         HttpResponseMessage response = await _client.SendAsync(request);
-        _ = response.EnsureSuccessStatusCode();
 
         string responseBody = await response.Content.ReadAsStringAsync();
-        TokenRequest token = JsonSerializer.Deserialize<TokenRequest>(responseBody) ?? throw new FormatException("The aquired data cannot be parsed to JSON successfully.");
-        return (token.RefreshToken, token.AccessToken);
+
+        if (response.IsSuccessStatusCode)
+        {
+            TokenRequest? token = JsonSerializer.Deserialize<TokenRequest>(responseBody);
+            if (token is null)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
+            }
+
+            return (token.RefreshToken, token.AccessToken);
+        }
+        else
+        {
+            Error? error = JsonSerializer.Deserialize<Error>(responseBody);
+            if (error is null)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
+            }
+            else
+            {
+                _logger.ErrorMessageReceived(error.Description);
+                throw new OAuthErrorException($"{error.Short} {error.Description}");
+            }
+        }
     }
 }

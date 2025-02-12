@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Dtos;
+using EasonEetwViewer.Authentication.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Services;
@@ -82,6 +83,7 @@ internal sealed class OAuth2Authenticator : IAuthenticator
         _accessToken = accessToken ?? Task.Run(RenewAccessTokenAsync).Result;
         _logger = logger;
         _accessTokenExpiry = DateTimeOffset.Now;
+        _logger.Instantiated();
     }
 
     /// <inheritdoc/>
@@ -108,15 +110,25 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     /// Gets a new access token.
     /// </summary>
     /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
-    /// <exception cref="FormatException">Throws exception when the JSON returned by the program cannot be parsed into an object.</exception>
+    /// <exception cref="OAuthJsonException">When the returned data cannot be parsed to JSON successfully.</exception>
+    /// <exception cref="OAuthErrorException">When there is an error in the response.</exception>
     private async Task<string> RenewAccessTokenAsync()
     {
         if (_accessToken is not null)
         {
-            await RevokeTokenAsync(_accessToken);
+            try
+            {
+                await RevokeTokenAsync(_accessToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.IgnoredException(ex.ToString());
+            }
+
             _accessTokenExpiry = DateTimeOffset.MinValue;
         }
 
+        _logger.RequestingNewAccessToken();
         Dictionary<string, string> requestParams = new(){
             { "client_id", _clientId },
             { "grant_type", "refresh_token" },
@@ -125,13 +137,54 @@ internal sealed class OAuth2Authenticator : IAuthenticator
         HttpRequestMessage request = OAuth2SharedMethod.GeneratePostRequest("token", requestParams, _host);
 
         HttpResponseMessage response = await _httpClient.SendAsync(request);
-        _ = response.EnsureSuccessStatusCode();
-        string responseBody = await response.Content.ReadAsStringAsync();
-        TokenRefresh token = JsonSerializer.Deserialize<TokenRefresh>(responseBody) ?? throw new FormatException();
 
-        _accessTokenExpiry = DateTimeOffset.Now + _accessTokenValidity;
-        _accessToken = token.AccessToken;
-        return _accessToken;
+        if (response.IsSuccessStatusCode)
+        {
+            string responseBody = await response.Content.ReadAsStringAsync();
+            try
+            {
+                TokenRefresh? token = JsonSerializer.Deserialize<TokenRefresh>(responseBody);
+
+                if (token is null)
+                {
+                    _logger.IncorrectJsonFormat(responseBody);
+                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
+                }
+
+                _accessTokenExpiry = DateTimeOffset.Now + _accessTokenValidity;
+                _accessToken = token.AccessToken;
+                _logger.NewAccessTokenAcquired();
+                return _accessToken;
+            }
+            catch (JsonException ex)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw new OAuthJsonException($"Cannot deserialise: {responseBody}", ex);
+            }
+        }
+        else
+        {
+            string responseBody = await response.Content.ReadAsStringAsync();
+            try
+            {
+                Error? error = JsonSerializer.Deserialize<Error>(responseBody);
+                if (error is null)
+                {
+                    _logger.IncorrectJsonFormat(responseBody);
+                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
+                }
+                else
+                {
+                    _logger.TokenRevokeFailed(error.Description);
+                    throw new OAuthErrorException($"{error.Short} {error.Description}");
+                }
+            }
+            catch (JsonException ex)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw new OAuthJsonException($"Cannot deserialise: {responseBody}", ex);
+            }
+        }
     }
 
     /// <summary>
@@ -139,16 +192,45 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     /// </summary>
     /// <param name="token">The token to be revoked.</param>
     /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    /// <exception cref="OAuthJsonException">When the returned data cannot be parsed to JSON successfully.</exception>
+    /// <exception cref="OAuthErrorException">When there is an error in the response.</exception>
     private async Task RevokeTokenAsync(string token)
     {
         Dictionary<string, string> requestParams = new(){
             { "client_id", _clientId },
             { "token", token }
         };
+        _logger.RevokingToken(token);
         HttpRequestMessage request = OAuth2SharedMethod.GeneratePostRequest("revoke", requestParams, _host);
         HttpResponseMessage response = await _httpClient.SendAsync(request);
-        _ = response.EnsureSuccessStatusCode();
-        _ = await response.Content.ReadAsStringAsync();
+        if (response.IsSuccessStatusCode)
+        {
+            _logger.TokenRevoked();
+        }
+        else
+        {
+            string responseBody = await response.Content.ReadAsStringAsync();
+            try
+            {
+
+                Error? error = JsonSerializer.Deserialize<Error>(responseBody);
+                if (error is null)
+                {
+                    _logger.IncorrectJsonFormat(responseBody);
+                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
+                }
+                else
+                {
+                    _logger.TokenRevokeFailed(error.Description);
+                    throw new OAuthErrorException($"{error.Short} {error.Description}");
+                }
+            }
+            catch (JsonException ex)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw new OAuthJsonException($"Cannot deserialise: {responseBody}", ex);
+            }
+        }
     }
 
     /// <summary>

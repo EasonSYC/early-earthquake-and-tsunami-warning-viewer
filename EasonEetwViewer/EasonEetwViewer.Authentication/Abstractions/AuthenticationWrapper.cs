@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Authentication.Services;
+﻿using EasonEetwViewer.Authentication.Exceptions;
+using EasonEetwViewer.Authentication.Services;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Abstractions;
@@ -46,14 +47,37 @@ public sealed class AuthenticationWrapper
         ILogger<OAuth2Authenticator> oAuthLogger,
         OAuth2Options oAuth2Options)
     {
-        IAuthenticator authenticator
-            = str is null
-                ? NullAuthenticator.Instance
-                : str.StartsWith("AKe.")
-                    ? new ApiKeyAuthenticator(str)
-                    : str.StartsWith("ARh.")
-                        ? OAuth2Provides.GetOAuth2Authenticator(oAuth2Options, str, oAuthLogger)
-                        : NullAuthenticator.Instance;
+        IAuthenticator authenticator;
+        if (str is null)
+        {
+            authenticator = NullAuthenticator.Instance;
+        }
+        else if (str.StartsWith("AKe."))
+        {
+            authenticator = new ApiKeyAuthenticator(str);
+        }
+        else if (str.StartsWith("ARh."))
+        {
+            try
+            {
+                authenticator = OAuth2Provider.GetOAuth2Authenticator(oAuth2Options, str, oAuthLogger);
+            }
+            catch (OAuthException ex)
+            {
+                logger.OAuthExceptionIgnored(ex.ToString());
+                authenticator = NullAuthenticator.Instance;
+            }
+            catch (Exception ex)
+            {
+                logger.OtherExceptionIgnored(ex.ToString());
+                authenticator = NullAuthenticator.Instance;
+            }
+        }
+        else
+        {
+            authenticator = NullAuthenticator.Instance;
+        }
+
         return new AuthenticationWrapper(
             authenticator,
             logger,
@@ -90,6 +114,7 @@ public sealed class AuthenticationWrapper
         _helperLogger = helperLogger;
         _oAuthLogger = oAuthLogger;
         _oAuth2Options = oAuth2Options;
+        _logger.Instantiated();
     }
     /// <summary>
     /// Set the authenticator to <see cref="OAuth2Authenticator"/> which requires input from the browser.
@@ -98,7 +123,18 @@ public sealed class AuthenticationWrapper
     public async Task SetOAuthAsync()
     {
         await UnsetAuthenticatorAsync();
-        Authenticator = await OAuth2Provides.GetOAuth2Authenticator(_oAuth2Options, _helperLogger, _oAuthLogger);
+        try
+        {
+            Authenticator = await OAuth2Provider.GetOAuth2Authenticator(_oAuth2Options, _helperLogger, _oAuthLogger);
+        }
+        catch (OAuthException ex)
+        {
+            _logger.OAuthExceptionIgnored(ex.ToString());
+        }
+        catch (Exception ex)
+        {
+            _logger.OtherExceptionIgnored(ex.ToString());
+        }
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>
@@ -110,6 +146,7 @@ public sealed class AuthenticationWrapper
     {
         await UnsetAuthenticatorAsync();
         Authenticator = new ApiKeyAuthenticator(apiKey);
+        _logger.ChangedToApiKey();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>
@@ -118,12 +155,26 @@ public sealed class AuthenticationWrapper
     /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
     public async Task UnsetAuthenticatorAsync()
     {
+        _logger.Unsetting();
         if (Authenticator is OAuth2Authenticator oAuth)
         {
-            await oAuth.RevokeTokens();
+            try
+            {
+                _logger.RevokingOAuth2Token();
+                await oAuth.RevokeTokens();
+            }
+            catch (OAuthException ex)
+            {
+                _logger.OAuthExceptionIgnored(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                _logger.OtherExceptionIgnored(ex.ToString());
+            }
         }
 
         Authenticator = NullAuthenticator.Instance;
+        _logger.Unset();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>
