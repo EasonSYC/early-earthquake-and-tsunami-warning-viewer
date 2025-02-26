@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.ConsoleApp", "EasonEetwViewer.ConsoleApp\EasonEetwViewer.ConsoleApp.csproj", "{C0C7A1B9-99DA-4E7C-8351-F1784D511431}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.Dmdata", "EasonEetwViewer.Dmdata\EasonEetwViewer.Dmdata.csproj", "{B63D2F64-4130-47CB-BB29-91AB54B91BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.Dtos", "EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj", "{B63D2F64-4130-47CB-BB29-91AB54B91BF4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Authentication", "EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj", "{FE8DF445-A973-4871-97D8-828D95518FA3}"
 EndProject

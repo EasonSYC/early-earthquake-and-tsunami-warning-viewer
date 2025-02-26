@@ -45,7 +45,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.Dmdata\EasonEetwViewer.Dmdata.csproj" />
+	<ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj" />
 		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
         <ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />

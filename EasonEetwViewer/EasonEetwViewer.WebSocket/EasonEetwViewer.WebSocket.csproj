@@ -25,7 +25,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasonEetwViewer.Dmdata\EasonEetwViewer.Dmdata.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
     </ItemGroup>
 
 </Project>
