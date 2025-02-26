@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.IO;
 using System.IO.Compression;
 using System.Net.WebSockets;
 using System.Security.Cryptography;
@@ -339,11 +338,6 @@ public sealed class WebSocketClient : IWebSocketClient
         {
             Head headData = JsonSerializer.Deserialize<Head>(finalString)
                 ?? throw new WebSocketClientFormatException();
-
-            if (headData.Status is not Status.Normal)
-            {
-                return;
-            }
 
             if (headData.Schema.Type == "eew-information" && headData.Schema.Version == "1.0.0")
             {

@@ -8,7 +8,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Caller.Interfaces;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
@@ -31,7 +30,6 @@ using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
@@ -501,6 +499,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             await OnEewReceived(eew);
         }
+
         if (telegram is TsunamiInformationSchema tsunami)
         {
             OnTsunamiReceived(tsunami);
