@@ -18,7 +18,7 @@ public record Region
     [JsonPropertyName("forecastMaxLgInt")]
     public FromTo<LgIntensityLower, LgIntensityUpper>? ForecastMaxLgInt { get; init; }
     [JsonPropertyName("kind")]
-    public SimpleKind Kind { get; init; }
+    public required SimpleKind Kind { get; init; }
     [JsonPropertyName("condition")]
     public string? Condition { get; init; }
     [JsonPropertyName("arrivalTime")]

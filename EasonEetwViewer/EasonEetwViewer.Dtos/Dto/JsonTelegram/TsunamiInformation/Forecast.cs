@@ -4,9 +4,9 @@ namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation;
 public record Forecast
 {
     [JsonPropertyName("code")]
-    public string Code { get; init; }
+    public required string Code { get; init; }
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; init; }
     [JsonPropertyName("kind")]
     public required Kind Kind { get; init; }
     [JsonPropertyName("firstHeight")]

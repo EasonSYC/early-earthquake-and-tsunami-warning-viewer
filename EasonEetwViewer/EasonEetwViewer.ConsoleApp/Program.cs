@@ -17,7 +17,7 @@ namespace EasonEetwViewer.ConsoleApp;
 
 internal class Program
 {
-    private static async Task Main() =>
+    private static void Main() =>
         //IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
 
         //string apiKey = config["ApiKey"] ?? string.Empty;

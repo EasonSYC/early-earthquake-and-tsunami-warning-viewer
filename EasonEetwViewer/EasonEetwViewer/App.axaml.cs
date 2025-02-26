@@ -6,11 +6,9 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Api.Abstractions;
+using EasonEetwViewer.Api.Services;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Extensions;
-using EasonEetwViewer.Api.Services;
-using EasonEetwViewer.Telegram.Abstractions;
-using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.Dtos.Dto.ApiPost;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
@@ -20,6 +18,8 @@ using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using EasonEetwViewer.WebSocket.Abstractions;
@@ -34,7 +34,7 @@ public partial class App : Application
     /// <inheritdoc/> 
     public override void Initialize() => AvaloniaXamlLoader.Load(this);
 
-    public static IServiceProvider Service { get; private set; }
+    public static IServiceProvider? Service { get; private set; }
 
     private static KmoniOptions GetKmoniOptions(string kmoniOptionsPath)
     {
@@ -92,7 +92,7 @@ public partial class App : Application
     }
 
     /// <inheritdoc/>
-    public override async void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
