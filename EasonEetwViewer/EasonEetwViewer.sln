@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.JmaTravelTi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.WebSocket", "EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj", "{6BE3A699-9A60-4CED-9618-09422714C9DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Telegram", "EasonEetwViewer.Telegram\EasonEetwViewer.Telegram.csproj", "{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Api", "EasonEetwViewer.Api\EasonEetwViewer.Api.csproj", "{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{6BE3A699-9A60-4CED-9618-09422714C9DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE3A699-9A60-4CED-9618-09422714C9DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE3A699-9A60-4CED-9618-09422714C9DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
