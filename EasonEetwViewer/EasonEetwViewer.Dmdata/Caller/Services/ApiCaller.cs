@@ -17,14 +17,11 @@ public class ApiCaller : IApiCaller
 {
     private readonly HttpClient _client;
     private readonly AuthenticationWrapper _authenticatorDto;
-    private readonly JsonSerializerOptions _options = new()
-    {
-        NumberHandling = JsonNumberHandling.AllowReadingFromString
-    };
+    private readonly JsonSerializerOptions _options;
 
     private IAuthenticator Authenticator => _authenticatorDto.Authenticator;
 
-    public ApiCaller(string baseApi, AuthenticationWrapper authenticator)
+    public ApiCaller(string baseApi, AuthenticationWrapper authenticator, JsonSerializerOptions jsonSerializerOptions)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
 
@@ -33,6 +30,7 @@ public class ApiCaller : IApiCaller
             BaseAddress = new(baseApi)
         };
         _authenticatorDto = authenticator;
+        _options = jsonSerializerOptions;
     }
 
     public async Task<ContractList> GetContractListAsync()
@@ -47,25 +45,25 @@ public class ApiCaller : IApiCaller
         return contractList;
     }
 
-    public async Task<WebSocketList> GetWebSocketListAsync(int id = -1, ConnectionStatus connectionStatus = ConnectionStatus.Unknown, string cursorToken = "", int limit = -1)
+    public async Task<WebSocketList> GetWebSocketListAsync(int? id = null, ConnectionStatus? connectionStatus = null, string? cursorToken = null, int? limit = null)
     {
         NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
-        if (id != -1)
+        if (id is not null)
         {
             queryString.Add("id", id.ToString());
         }
 
-        if (connectionStatus != ConnectionStatus.Unknown)
+        if (connectionStatus is not null)
         {
-            queryString.Add("status", connectionStatus.ToUriString());
+            queryString.Add("status", ((ConnectionStatus)connectionStatus).ToUriString());
         }
 
-        if (cursorToken != string.Empty)
+        if (cursorToken is not null)
         {
             queryString.Add("cursorToken", cursorToken);
         }
 
-        if (limit != -1)
+        if (limit is not null)
         {
             queryString.Add("limit", limit.ToString());
         }
@@ -119,30 +117,30 @@ public class ApiCaller : IApiCaller
         return earthquakeParameter;
     }
 
-    public async Task<GdEarthquakeList> GetPastEarthquakeListAsync(string hypocentreCode = "", Intensity maxInt = Intensity.Unknown, DateOnly date = new(), int limit = -1, string cursorToken = "")
+    public async Task<GdEarthquakeList> GetPastEarthquakeListAsync(string? hypocentreCode = null, Intensity? maxInt = null, DateOnly? date = null, int? limit = null, string? cursorToken = null)
     {
         NameValueCollection queryString = HttpUtility.ParseQueryString(string.Empty);
-        if (hypocentreCode != string.Empty)
+        if (hypocentreCode is not null)
         {
             queryString.Add("hypocenter", hypocentreCode);
         }
 
-        if (maxInt != Intensity.Unknown)
+        if (maxInt is not null)
         {
-            queryString.Add("maxInt", maxInt.ToUriString());
+            queryString.Add("maxInt", ((Intensity)maxInt).ToUriString());
         }
 
-        if (date != new DateOnly())
+        if (date is not null)
         {
-            queryString.Add("date", date.ToString("yyyy-MM-dd"));
+            queryString.Add("date", ((DateOnly)date).ToString("yyyy-MM-dd"));
         }
 
-        if (limit != -1)
+        if (limit is not null)
         {
             queryString.Add("limit", limit.ToString());
         }
 
-        if (cursorToken != string.Empty)
+        if (cursorToken is not null)
         {
             queryString.Add("cursorToken", cursorToken);
         }

@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Services;
@@ -15,6 +16,6 @@ public static class EarthquakeIntensityExtensions
         Intensity.SixWeak => Resources.EarthquakeIntensitySixWeakColour,
         Intensity.SixStrong => Resources.EarthquakeIntensitySixStrongColour,
         Intensity.Seven => Resources.EarthquakeIntensitySevenColour,
-        Intensity.Unknown or _ => Resources.EarthquakeIntensityUnknownColour
+        _ => throw new UnreachableException()
     };
 }

@@ -12,5 +12,5 @@ internal record ResponseBase
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("type")]
-    internal virtual ResponseType Type { get; init; }
+    public virtual MessageType Type { get; init; }
 }

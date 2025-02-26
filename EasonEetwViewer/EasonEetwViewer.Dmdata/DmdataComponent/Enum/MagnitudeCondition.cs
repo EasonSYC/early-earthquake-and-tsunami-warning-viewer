@@ -9,17 +9,13 @@ namespace EasonEetwViewer.Dmdata.DmdataComponent.Enum;
 public enum MagnitudeCondition
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>Ｍ不明</c>, representing unclear.
     /// </summary>
     [JsonStringEnumMemberName("Ｍ不明")]
-    Unclear = 1,
+    Unclear,
     /// <summary>
     /// The value <c>Ｍ８を超える巨大地震</c>, representing too big an earthquake.
     /// </summary>
     [JsonStringEnumMemberName("Ｍ８を超える巨大地震")]
-    Huge = 2
+    Huge
 }

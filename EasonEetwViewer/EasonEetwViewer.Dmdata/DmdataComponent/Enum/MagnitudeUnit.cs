@@ -9,17 +9,13 @@ namespace EasonEetwViewer.Dmdata.DmdataComponent.Enum;
 public enum MagnitudeUnit
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>Mj</c>, representing JMA magnitude.
     /// </summary>
     [JsonStringEnumMemberName("Mj")]
-    JmaMagnitude = 1,
+    JmaMagnitude,
     /// <summary>
     /// The value <c>M</c>, representing normal magnitude.
     /// </summary>
     [JsonStringEnumMemberName("M")]
-    NormalMagnitude = 2
+    NormalMagnitude
 }

@@ -1,33 +1,52 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace EasonEetwViewer.WebSocket.Dtos;
+/// <summary>
+/// The head information of the telegram.
+/// </summary>
 internal record HeadInfo
 {
+    /// <summary>
+    /// The property <c>type</c>, the type code of the telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("type")]
-    internal required string Type { get; init; }
-
+    public required string Type { get; init; }
+    /// <summary>
+    /// The property <c>author</c>, the author of the telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("author")]
-    internal required string Author { get; init; }
-
+    public required string Author { get; init; }
+    /// <summary>
+    /// The property <c>target</c>, the target code of the telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("target")]
-    internal string? Target { get; init; }
-
+    public string? Target { get; init; }
+    /// <summary>
+    /// The property <c>time</c>, the time base of the telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("time")]
-    internal required DateTimeOffset Time { get; init; }
-
+    public required DateTimeOffset Time { get; init; }
+    /// <summary>
+    /// The property <c>designation</c>, the designation of the telegram.
+    /// <see langword="null"/> when normal.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("designation")]
-    internal required string? Designation { get; init; }
-
+    public required string? Designation { get; init; }
+    /// <summary>
+    /// The property <c>test</c>, whether the telegram is a test telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("test")]
-    internal required bool IsTest { get; init; }
-
+    public required bool IsTest { get; init; }
+    /// <summary>
+    /// The property <c>xml</c>, whether the telegram is an XML telegram.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("xml")]
-    internal bool? IsXml { get; init; }
+    public bool? IsXml { get; init; }
 }

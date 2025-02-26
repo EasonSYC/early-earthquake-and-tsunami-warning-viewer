@@ -5,13 +5,12 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
 [JsonConverter(typeof(JsonStringEnumConverter<Type>))]
 public enum Type
 {
-    Unknown = 0,
     [JsonStringEnumMemberName("発表")]
-    Release = 1,
+    Release,
     [JsonStringEnumMemberName("訂正")]
-    Correction = 2,
+    Correction,
     [JsonStringEnumMemberName("遅延")]
-    Delay = 3,
+    Delay,
     [JsonStringEnumMemberName("取消")]
-    Cancel = 4
+    Cancel
 }

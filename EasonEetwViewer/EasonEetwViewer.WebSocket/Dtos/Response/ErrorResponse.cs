@@ -8,27 +8,27 @@ namespace EasonEetwViewer.WebSocket.Dtos.Response;
 internal record ErrorResponse : ResponseBase
 {
     /// <summary>
-    /// The property <c>type</c>, a constant <c>WebSocketResponseType.Error</c>.
+    /// The property <c>type</c>, a constant <see cref="MessageType.Error"/>.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("type")]
-    internal override ResponseType Type { get; init; } = ResponseType.Error;
+    public override MessageType Type { get; init; } = MessageType.Error;
     /// <summary>
     /// The property <c>error</c>, the error message.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("error")]
-    internal required string Error { get; init; }
+    public required string Error { get; init; }
     /// <summary>
     /// The property <c>code</c>, the error code.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("code")]
-    internal required int Code { get; init; }
+    public required int Code { get; init; }
     /// <summary>
-    /// The property <c>close</c>, whether the error was fatal and the WebSocket connectikon is closed.
+    /// The property <c>close</c>, whether the error was fatal and the WebSocket connection is closed.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("close")]
-    internal required bool Close { get; init; }
+    public required bool Close { get; init; }
 }

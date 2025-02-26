@@ -9,14 +9,11 @@ public class TelegramRetriever : ITelegramRetriever
 {
     private readonly HttpClient _client;
     private readonly AuthenticationWrapper _authenticatorDto;
-    private readonly JsonSerializerOptions _options = new()
-    {
-        NumberHandling = JsonNumberHandling.AllowReadingFromString
-    };
+    private readonly JsonSerializerOptions _options;
 
     private IAuthenticator Authenticator => _authenticatorDto.Authenticator;
 
-    public TelegramRetriever(string baseApi, AuthenticationWrapper authenticator)
+    public TelegramRetriever(string baseApi, AuthenticationWrapper authenticator, JsonSerializerOptions jsonSerializerOptions)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
 
@@ -25,6 +22,7 @@ public class TelegramRetriever : ITelegramRetriever
             BaseAddress = new(baseApi)
         };
         _authenticatorDto = authenticator;
+        _options = jsonSerializerOptions;
     }
 
     public async Task<T> GetTelegramJsonAsync<T>(string id) where T : Head

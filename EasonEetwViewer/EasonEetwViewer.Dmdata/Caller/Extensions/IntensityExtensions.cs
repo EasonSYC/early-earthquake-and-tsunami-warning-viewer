@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 
 namespace EasonEetwViewer.Dmdata.Caller.Extensions;
 internal static class IntensityExtensions
@@ -14,6 +15,6 @@ internal static class IntensityExtensions
         Intensity.SixWeak => "6-",
         Intensity.SixStrong => "6+",
         Intensity.Seven => "7",
-        Intensity.Unknown or _ => "Unknown"
+        _ => throw new UnreachableException()
     };
 }

@@ -4,9 +4,8 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation.Enum;
 [JsonConverter(typeof(JsonStringEnumConverter<HeightCondition>))]
 public enum HeightCondition
 {
-    Unknown = 0,
     [JsonStringEnumMemberName("高い")]
-    High = 1,
+    High,
     [JsonStringEnumMemberName("巨大")]
-    Huge = 2
+    Huge
 }

@@ -4,17 +4,16 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Change;
 [JsonConverter(typeof(JsonStringEnumConverter<Reason>))]
 public enum Reason
 {
-    Unknown = 0,
     [JsonStringEnumMemberName("0")]
-    None = 1,
+    None = 0,
     [JsonStringEnumMemberName("1")]
-    Magnitude = 2,
+    Magnitude = 1,
     [JsonStringEnumMemberName("2")]
-    Position = 3,
+    Position = 2,
     [JsonStringEnumMemberName("3")]
-    MagnitudeAndPosition = 4,
+    MagnitudeAndPosition = 3,
     [JsonStringEnumMemberName("4")]
-    Depth = 5,
+    Depth = 4,
     [JsonStringEnumMemberName("9")]
-    Plum = 6
+    Plum = 9
 }

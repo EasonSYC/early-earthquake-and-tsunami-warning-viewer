@@ -9,17 +9,13 @@ namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 public enum TestStatus
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>including</c>, representing receiving test telegrams.
     /// </summary>
     [JsonStringEnumMemberName("including")]
-    Include = 1,
+    Include,
     /// <summary>
     /// The value <c>no</c>, representing not receiving test telegrams.
     /// </summary>
     [JsonStringEnumMemberName("no")]
-    Exclude = 2
+    Exclude
 }

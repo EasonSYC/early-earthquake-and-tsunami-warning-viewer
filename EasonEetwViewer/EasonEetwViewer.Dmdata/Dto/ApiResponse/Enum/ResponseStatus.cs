@@ -9,17 +9,13 @@ namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 public enum ResponseStatus
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>ok</c>, representing a success.
     /// </summary>
     [JsonStringEnumMemberName("ok")]
-    Success = 1,
+    Success,
     /// <summary>
     /// The value <c>error</c>, representing an error.
     /// </summary>
     [JsonStringEnumMemberName("error")]
-    Error = 2
+    Error
 }

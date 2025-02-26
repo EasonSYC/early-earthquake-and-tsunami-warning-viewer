@@ -9,22 +9,18 @@ namespace EasonEetwViewer.Dmdata.DmdataComponent.Enum;
 public enum DepthCondition
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>ごく浅い</c>, representing too shallow.
     /// </summary>
     [JsonStringEnumMemberName("ごく浅い")]
-    Shallow = 1,
+    Shallow,
     /// <summary>
     /// The value <c>７００ｋｍ以上</c>, representing too deep.
     /// </summary>
     [JsonStringEnumMemberName("７００ｋｍ以上")]
-    Deep = 2,
+    Deep,
     /// <summary>
     /// The value <c>不明</c>, representing unclear.
     /// </summary>
     [JsonStringEnumMemberName("不明")]
-    Unclear = 3
+    Unclear
 }

@@ -189,9 +189,6 @@
   <data name="EarthquakeDepthShallow" xml:space="preserve">
     <value>Shallow</value>
   </data>
-  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
-    <value>M</value>
-  </data>
   <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
     <value>Mw</value>
   </data>
@@ -233,5 +230,8 @@
   </data>
   <data name="EarthquakeIntensityZeroText" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
+    <value>M</value>
   </data>
 </root>

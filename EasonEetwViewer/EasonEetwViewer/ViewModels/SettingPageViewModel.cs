@@ -46,7 +46,11 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         _webSocketClient = webSocketClient;
         _startPost = startPost;
         AuthenticationStatusChanged += SettingPageViewModel_AuthenticationStatusChanged;
+        _webSocketClient.StatusChanged += WebSocketClient_DataReceived;
     }
+
+    private void WebSocketClient_DataReceived(object? sender, EventArgs e)
+        => OnPropertyChanged(nameof(WebSocketConnected));
 
     #region languageSettings
     private readonly OnLanguageChanged LanguageChanged;
@@ -77,8 +81,6 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     [RelayCommand]
     private async Task WebSocketButton()
     {
-        OnPropertyChanged(nameof(WebSocketConnected));
-
         if (!WebSocketConnected)
         {
             WebSocketStart webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
@@ -88,8 +90,6 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         {
             await _webSocketClient.DisconnectAsync();
         }
-
-        OnPropertyChanged(nameof(WebSocketConnected));
     }
 
     [ObservableProperty]

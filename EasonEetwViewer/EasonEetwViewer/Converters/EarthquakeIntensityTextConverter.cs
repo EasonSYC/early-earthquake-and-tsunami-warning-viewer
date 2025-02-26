@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
@@ -19,7 +20,8 @@ internal class EarthquakeIntensityTextConverter : IValueConverter
                 Intensity.SixWeak => Resources.EarthquakeIntensitySixWeakText,
                 Intensity.SixStrong => Resources.EarthquakeIntensitySixStrongText,
                 Intensity.Seven => Resources.EarthquakeIntensitySevenText,
-                Intensity.Unknown or null or _ => Resources.EarthquakeIntensityUnknownText
+                null => Resources.EarthquakeIntensityUnknownText,
+                _ => throw new UnreachableException()
             }
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

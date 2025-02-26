@@ -9,27 +9,23 @@ namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 public enum FormatType
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>xml</c>, representing XML format.
     /// </summary>
     [JsonStringEnumMemberName("xml")]
-    Xml = 1,
+    Xml,
     /// <summary>
     /// The value <c>json</c>, representing JSON format.
     /// </summary>
     [JsonStringEnumMemberName("json")]
-    Json = 2,
+    Json,
     /// <summary>
     /// The value <c>a/n</c>, representing alphanumeric format.
     /// </summary>
     [JsonStringEnumMemberName("a/n")]
-    AlphaNumeric = 3,
+    AlphaNumeric,
     /// <summary>
     /// The value <c>binary</c>, representing binary format.
     /// </summary>
     [JsonStringEnumMemberName("binary")]
-    Binary = 4
+    Binary
 }

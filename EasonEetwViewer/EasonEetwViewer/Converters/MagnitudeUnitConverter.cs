@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
@@ -15,7 +16,7 @@ internal class MagnitudeUnitConverter : IValueConverter
                 {
                     MagnitudeUnit.JmaMagnitude => Resources.EarthquakeMagnitudeUnitJma,
                     MagnitudeUnit.NormalMagnitude => Resources.EarthquakeMagnitudeUnitMoment,
-                    MagnitudeUnit.Unknown or _ => Resources.EarthquakeMagnitudeUnitDefault
+                    _ => throw new UnreachableException()
                 }
             : value is null
                 ? Resources.EarthquakeMagnitudeUnitDefault

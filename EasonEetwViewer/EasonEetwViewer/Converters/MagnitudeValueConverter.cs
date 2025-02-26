@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
@@ -13,7 +14,8 @@ internal class MagnitudeValueConverter : IValueConverter
                 ? condition switch
                 {
                     MagnitudeCondition.Huge => Resources.EarthquakeMagnitudeHuge,
-                    MagnitudeCondition.Unclear or MagnitudeCondition.Unknown or _ => Resources.UnknownText
+                    MagnitudeCondition.Unclear => Resources.UnknownText,
+                    _ => throw new UnreachableException()
                 }
                 : magnitude.Value
             : value is null

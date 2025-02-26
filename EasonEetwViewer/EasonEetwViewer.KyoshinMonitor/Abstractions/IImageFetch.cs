@@ -12,5 +12,5 @@ public interface IImageFetch
     /// <param name="sensorType">The sensor type included on the image.</param>
     /// <param name="dateTime">The date and time to be fetched, in JST.</param>
     /// <returns>The byte array obtained, <see langword="null"/> if attempt is unsuccessful.</returns>
-    public Task<byte[]?> GetByteArrayAsync(MeasurementType measurementType, SensorType sensorType, DateTime dateTime);
+    Task<byte[]?> GetByteArrayAsync(MeasurementType measurementType, SensorType sensorType, DateTime dateTime);
 }

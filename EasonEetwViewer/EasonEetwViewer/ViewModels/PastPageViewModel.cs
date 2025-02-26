@@ -98,11 +98,11 @@ internal partial class PastPageViewModel(
             if (telegramInfo.Body.Intensity is not null)
             {
                 IEnumerable<(Station s, Intensity i)> stationData = telegramInfo.Body.Intensity.Stations
-                    .Where(x => x.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() is not Intensity.Unknown)
+                    .Where(x => (x.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() is Intensity))
                     .Join(_earthquakeObservationStations!,
                     si => si.Code,
                     s => s.XmlCode,
-                    (si, s) => (s, ((IntensityWithUnreceived)si.MaxInt!).ToEarthquakeIntensity()));
+                    (si, s) => (s, (Intensity)((IntensityWithUnreceived)si.MaxInt!).ToEarthquakeIntensity()!));
 
                 IEnumerable<IFeature> stationFeatures = stationData
                     .Select(x =>

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
@@ -127,9 +128,13 @@ public partial class App : Application
                     File.WriteAllText(languagePath, s.Name);
                 })
             .AddSingleton<ITimeProvider, DefaultTimeProvider>()
+            .AddSingleton(sp => new JsonSerializerOptions()
+            {
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            })
 
-            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticationWrapper>()))
-            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticationWrapper>()))
+            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticationWrapper>(), sp.GetRequiredService<JsonSerializerOptions>()))
+            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticationWrapper>(), sp.GetRequiredService<JsonSerializerOptions>()))
 
             .AddSingleton<IWebSocketClient, WebSocketClient>()
 

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
@@ -20,7 +21,8 @@ internal class EarthquakeIntensityColourConverter : IValueConverter
                 Intensity.SixWeak => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixWeakColour)),
                 Intensity.SixStrong => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySixStrongColour)),
                 Intensity.Seven => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensitySevenColour)),
-                Intensity.Unknown or null or _ => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityUnknownColour)),
+                null => new SolidColorBrush(Color.Parse(Resources.EarthquakeIntensityUnknownColour)),
+                _ => throw new UnreachableException()
             }
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

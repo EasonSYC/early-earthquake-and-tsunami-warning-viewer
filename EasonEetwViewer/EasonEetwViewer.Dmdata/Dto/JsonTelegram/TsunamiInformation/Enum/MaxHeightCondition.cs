@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation.Enum;
 [JsonConverter(typeof(JsonStringEnumConverter<MaxHeightCondition>))]
 public enum MaxHeightCondition
 {
-    Unknown = 0,
+    Unknown,
     [JsonStringEnumMemberName("重要")]
-    Important = 1
+    Important
 }

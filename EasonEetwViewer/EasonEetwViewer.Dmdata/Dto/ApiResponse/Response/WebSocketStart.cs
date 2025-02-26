@@ -25,7 +25,7 @@ public record WebSocketStart : SuccessBase
     /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
     /// </summary>
     [JsonPropertyName("test")]
-    public required TestStatus Test { get; init; }
+    public required TestStatus TestStatus { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the program receives.
     /// <c>null</c> when receiving all types from the classifications.

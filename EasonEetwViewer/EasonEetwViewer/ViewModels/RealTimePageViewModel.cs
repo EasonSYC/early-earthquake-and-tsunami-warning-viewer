@@ -21,7 +21,6 @@ using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
-using EasonEetwViewer.WebSocket.Dtos;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;

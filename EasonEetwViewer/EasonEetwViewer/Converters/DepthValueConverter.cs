@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.DmdataComponent;
 using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
@@ -14,7 +15,8 @@ internal class DepthValueConverter : IValueConverter
                 {
                     DepthCondition.Deep => Resources.EarthquakeDepthDeep,
                     DepthCondition.Shallow => Resources.EarthquakeDepthShallow,
-                    DepthCondition.Unclear or DepthCondition.Unknown or _ => Resources.UnknownText
+                    DepthCondition.Unclear => Resources.UnknownText,
+                    _ => throw new UnreachableException()
                 }
                 : depth.Value
             : value is null

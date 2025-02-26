@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.Security.Principal;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
@@ -9,7 +11,7 @@ internal class EewIntensityTextConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is FromTo<IntensityLower, IntensityUpper> lu
-            ? lu.To is IntensityUpper.Unknown or IntensityUpper.Unclear or IntensityUpper.Above
+            ? lu.To is IntensityUpper.Unclear or IntensityUpper.Above
                 ? lu.From switch
                 {
                     IntensityLower.Zero => Resources.EarthquakeIntensityZeroText,
@@ -22,10 +24,12 @@ internal class EewIntensityTextConverter : IValueConverter
                     IntensityLower.SixWeak => Resources.EarthquakeIntensitySixWeakText,
                     IntensityLower.SixStrong => Resources.EarthquakeIntensitySixStrongText,
                     IntensityLower.Seven => Resources.EarthquakeIntensitySevenText,
-                    IntensityLower.Unknown or IntensityLower.Unclear or IntensityLower or _ => Resources.EarthquakeIntensityUnknownText
+                    IntensityLower.Unclear => Resources.EarthquakeIntensityUnknownText,
+                    _ => throw new UnreachableException()
                 }
                 : lu.To switch
                 {
+                    IntensityUpper.Zero => Resources.EarthquakeIntensityZeroText,
                     IntensityUpper.One => Resources.EarthquakeIntensityOneText,
                     IntensityUpper.Two => Resources.EarthquakeIntensityTwoText,
                     IntensityUpper.Three => Resources.EarthquakeIntensityThreeText,
@@ -35,7 +39,7 @@ internal class EewIntensityTextConverter : IValueConverter
                     IntensityUpper.SixWeak => Resources.EarthquakeIntensitySixWeakText,
                     IntensityUpper.SixStrong => Resources.EarthquakeIntensitySixStrongText,
                     IntensityUpper.Seven => Resources.EarthquakeIntensitySevenText,
-                    IntensityUpper.Unknown or IntensityUpper.Zero or IntensityUpper.Unclear or IntensityUpper.Above or _ => null
+                    IntensityUpper.Unclear or IntensityUpper.Above or _ => throw new UnreachableException()
                 }
             : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();

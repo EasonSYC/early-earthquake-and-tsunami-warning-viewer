@@ -9,17 +9,13 @@ namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 public enum FormatMode
 {
     /// <summary>
-    /// Unknown. The default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>raw</c>, representing raw formatting.
     /// </summary>
     [JsonStringEnumMemberName("raw")]
-    Raw = 1,
+    Raw,
     /// <summary>
     /// The value <c>json</c>, representing formatting in JSON.
     /// </summary>
     [JsonStringEnumMemberName("json")]
-    Json = 2
+    Json
 }

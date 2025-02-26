@@ -9,10 +9,6 @@ namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 public enum LgCategory
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>1</c>, representing a maximum LPGM intensity 2 or less, and all areas observing LPGM intensity 1 or above has maximum intensity 5 weak or above.
     /// </summary>
     [JsonStringEnumMemberName("1")]

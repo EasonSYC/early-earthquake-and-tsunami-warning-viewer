@@ -8,17 +8,13 @@ namespace EasonEetwViewer.KyoshinMonitor.Dtos;
 public enum PointType
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// KiK-net. The value <c>KiK_net</c>.
     /// </summary>
     [JsonStringEnumMemberName("KiK_net")]
-    KiK = 1,
+    KiK,
     /// <summary>
     /// K-NET. The value <c>K_NET</c>.
     /// </summary>
     [JsonStringEnumMemberName("K_NET")]
-    K = 2
+    K
 }

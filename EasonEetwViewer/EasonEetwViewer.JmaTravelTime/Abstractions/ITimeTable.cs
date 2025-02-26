@@ -10,5 +10,5 @@ public interface ITimeTable
     /// <param name="depth">The depth of the hypocentre</param>
     /// <param name="timeSecond">The time elapsed.</param>
     /// <returns>A pair of <see cref="double"/>, representing the distance travelled by the P-wave and S-wave respectively.</returns>
-    public (double pDistance, double sDistance) DistanceFromDepthTime(int depth, double timeSecond);
+    (double pDistance, double sDistance) DistanceFromDepthTime(int depth, double timeSecond);
 }

@@ -3,36 +3,60 @@ using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
 namespace EasonEetwViewer.WebSocket.Dtos.Response;
+/// <summary>
+/// Represents a start response.
+/// </summary>
 internal record StartResponse : ResponseBase
 {
+    /// <summary>
+    /// The property <c>type</c>, a constant <see cref="MessageType.Start"/>.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("type")]
-    internal override ResponseType Type { get; init; } = ResponseType.Start;
-
+    public override MessageType Type { get; init; } = MessageType.Start;
+    /// <summary>
+    /// The property <c>time</c>, representing the time the WebSocket was started.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("time")]
-    internal required DateTimeOffset Time { get; init; }
-
+    public required DateTimeOffset Time { get; init; }
+    /// <summary>
+    /// The property <c>socketId</c>, representing the ID of the socket.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("socketId")]
-    internal required int SocketId { get; init; }
-
+    public required int SocketId { get; init; }
+    /// <summary>
+    /// The property <c>classifications</c>. The classifications of telegrams that the WebSocket receives.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("classifications")]
-    internal required IEnumerable<Classification> Classifications { get; init; }
-
+    public required IEnumerable<Classification> Classifications { get; init; }
+    /// <summary>
+    /// The property <c>types</c>. The types of telegrams the program receives.
+    /// <c>null</c> when receiving all types from the classifications.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("types")]
-    internal required IEnumerable<string>? Types { get; init; }
-
+    public required IEnumerable<string>? Types { get; init; }
+    /// <summary>
+    /// The property <c>test</c>. Whether the WebSocket receives test telegrams.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("test")]
-    internal required TestStatus TestStatus { get; init; }
+    public required TestStatus TestStatus { get; init; }
 
+    /// <summary>
+    /// The property <c>appName</c>. The application name of the WebSocket connection.
+    /// <c>null</c> when not indicated.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("appName")]
-    internal required string? AppName { get; init; }
+    public required string? ApplicationName { get; init; }
+    /// <summary>
+    /// The property <c>formats</c>. A list of formats of telegrams the WebSocket receives.
+    /// </summary>
     [JsonInclude]
     [JsonPropertyName("formats")]
-    internal required IEnumerable<FormatType> Formats { get; init; }
+    public required IEnumerable<FormatType> Formats { get; init; }
 }

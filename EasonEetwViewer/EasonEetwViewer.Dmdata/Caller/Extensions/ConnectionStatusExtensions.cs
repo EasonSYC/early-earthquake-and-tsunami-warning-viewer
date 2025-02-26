@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
 
 namespace EasonEetwViewer.Dmdata.Caller.Extensions;
 internal static class ConnectionStatusExtensions
@@ -8,6 +9,6 @@ internal static class ConnectionStatusExtensions
         ConnectionStatus.Waiting => "waiting",
         ConnectionStatus.Open => "open",
         ConnectionStatus.Closed => "closed",
-        ConnectionStatus.Unknown or _ => "unknown"
+        _ => throw new UnreachableException()
     };
 }

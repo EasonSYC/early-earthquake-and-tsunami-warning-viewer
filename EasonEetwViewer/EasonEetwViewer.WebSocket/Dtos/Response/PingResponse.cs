@@ -8,15 +8,15 @@ namespace EasonEetwViewer.WebSocket.Dtos.Response;
 internal record PingResponse : ResponseBase
 {
     /// <summary>
-    /// The property <c>type</c>, a constant <c>WebSocketResponseType.Ping</c>.
+    /// The property <c>type</c>, a constant <see cref="MessageType.Ping"/>.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("type")]
-    internal override ResponseType Type { get; init; } = ResponseType.Ping;
+    public override MessageType Type { get; init; } = MessageType.Ping;
     /// <summary>
     /// The property <c>pingId</c>, the Ping ID that should be included when returning a corresponding Pong.
     /// </summary>
     [JsonInclude]
     [JsonPropertyName("pingId")]
-    internal required string PingId { get; init; }
+    public required string PingId { get; init; }
 }

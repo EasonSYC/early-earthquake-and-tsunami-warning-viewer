@@ -4,11 +4,10 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Change;
 [JsonConverter(typeof(JsonStringEnumConverter<MaxInt>))]
 public enum MaxInt
 {
-    Unknown = 0,
     [JsonStringEnumMemberName("0")]
-    NoChange = 1,
+    NoChange = 0,
     [JsonStringEnumMemberName("1")]
-    Increase = 2,
+    Increase = 1,
     [JsonStringEnumMemberName("2")]
-    Decrease = 3
+    Decrease = 2
 }

@@ -6,10 +6,6 @@ namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
 public enum IntensityWithUnreceived
 {
     /// <summary>
-    /// Unknown. Default value.
-    /// </summary>
-    Unknown = 0,
-    /// <summary>
     /// The value <c>1</c>, representing intensity 1.
     /// </summary>
     [JsonStringEnumMemberName("1")]
@@ -33,28 +29,28 @@ public enum IntensityWithUnreceived
     /// The value <c>5-</c>, representing intensity 5 weak.
     /// </summary>
     [JsonStringEnumMemberName("5-")]
-    FiveWeak = 5,
+    FiveWeak = -5,
     /// <summary>
     /// The value <c>5+</c>, representing intensity 5 strong.
     /// </summary>
     [JsonStringEnumMemberName("5+")]
-    FiveStrong = 6,
+    FiveStrong = +5,
     /// <summary>
     /// The value <c>6-</c>, representing intensity 6 weak.
     /// </summary>
     [JsonStringEnumMemberName("6-")]
-    SixWeak = 7,
+    SixWeak = -6,
     /// <summary>
     /// The value <c>6+</c>, representing intensity 6 strong.
     /// </summary>
     [JsonStringEnumMemberName("6+")]
-    SixStrong = 8,
+    SixStrong = +6,
     /// <summary>
     /// The value <c>7</c>, representing intensity 7.
     /// </summary>
     [JsonStringEnumMemberName("7")]
-    Seven = 9,
+    Seven = 7,
     [JsonStringEnumMemberName("!5-")]
-    Unreceived = 10,
+    Unreceived = 8,
 
 }
