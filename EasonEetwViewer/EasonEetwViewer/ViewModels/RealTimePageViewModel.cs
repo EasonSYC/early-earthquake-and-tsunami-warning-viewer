@@ -39,10 +39,6 @@ namespace EasonEetwViewer.ViewModels;
 
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
-    private readonly JsonSerializerOptions _options = new()
-    {
-        NumberHandling = JsonNumberHandling.AllowReadingFromString,
-    };
     public RealtimePageViewModel(
         IImageFetch imageFetch,
         IPointExtract pointExtract,
