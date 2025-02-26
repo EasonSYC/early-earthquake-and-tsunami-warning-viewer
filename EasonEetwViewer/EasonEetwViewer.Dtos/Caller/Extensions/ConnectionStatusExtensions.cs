@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
 
-namespace EasonEetwViewer.Dmdata.Caller.Extensions;
+namespace EasonEetwViewer.Dtos.Caller.Extensions;
 internal static class ConnectionStatusExtensions
 {
     public static string ToUriString(this ConnectionStatus connectionStatus) => connectionStatus switch

@@ -1,5 +1,5 @@
 ﻿using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dtos.Caller.Interfaces;
 using EasonEetwViewer.Services;
 using Microsoft.Extensions.Logging;
 

@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+﻿using EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 
 namespace EasonEetwViewer.Models;
 internal record EewDetailsTemplate

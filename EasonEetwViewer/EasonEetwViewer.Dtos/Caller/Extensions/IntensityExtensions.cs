@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.Dmdata.Caller.Extensions;
+namespace EasonEetwViewer.Dtos.Caller.Extensions;
 internal static class IntensityExtensions
 {
     public static string ToUriString(this Intensity intensity) => intensity switch

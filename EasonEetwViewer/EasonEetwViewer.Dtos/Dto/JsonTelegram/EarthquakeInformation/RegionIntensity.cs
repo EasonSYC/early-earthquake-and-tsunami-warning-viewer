@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation.Enum;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation;
 
 public record RegionIntensity
 {

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.Schema;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.Schema;
 public record EewInformationSchema : Head
 {
     [JsonPropertyName("body")]

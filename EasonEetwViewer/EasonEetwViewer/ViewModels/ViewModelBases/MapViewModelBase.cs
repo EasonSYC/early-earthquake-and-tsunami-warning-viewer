@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller.Interfaces;
+using EasonEetwViewer.Dtos.Caller.Interfaces;
 using EasonEetwViewer.Services;
 using Mapsui;
 using Mapsui.Limiting;

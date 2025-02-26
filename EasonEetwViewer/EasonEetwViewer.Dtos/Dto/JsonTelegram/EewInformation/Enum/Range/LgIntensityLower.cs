@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation.Enum.Range;
 [JsonConverter(typeof(JsonStringEnumConverter<LgIntensityLower>))]
 public enum LgIntensityLower
 {

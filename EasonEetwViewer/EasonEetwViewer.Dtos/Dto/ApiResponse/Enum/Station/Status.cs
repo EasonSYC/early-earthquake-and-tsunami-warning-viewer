@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.Station;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.Station;
 
 /// <summary>
 /// The status of a station.

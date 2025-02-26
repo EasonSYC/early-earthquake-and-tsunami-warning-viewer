@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.DmdataComponent;
+namespace EasonEetwViewer.Dtos.DmdataComponent;
 
 /// <summary>
 /// Represents the height of a position.

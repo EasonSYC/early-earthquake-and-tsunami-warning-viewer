@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Dmdata.DmdataComponent;
-using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
+using EasonEetwViewer.Dtos.DmdataComponent;
+using EasonEetwViewer.Dtos.DmdataComponent.Enum;
 
 namespace EasonEetwViewer.Converters;
 internal class DepthUnitConverter : IValueConverter

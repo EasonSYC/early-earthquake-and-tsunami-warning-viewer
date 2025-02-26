@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

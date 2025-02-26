@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.Station;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.Station;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.EarthquakeParameter;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.Record.EarthquakeParameter;
 
 /// <summary>
 /// Represents an earthquake observation station.

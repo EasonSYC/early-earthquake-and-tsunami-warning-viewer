@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
 
 /// <summary>
 /// Represents the format of a telegram.

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.DmdataComponent.Enum;
+namespace EasonEetwViewer.Dtos.DmdataComponent.Enum;
 
 /// <summary>
 /// Represents the geodetic system used by a pair of coordinates.

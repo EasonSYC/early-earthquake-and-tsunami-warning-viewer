@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.DmdataComponent;
+using EasonEetwViewer.Dtos.DmdataComponent;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation;
 public record Body
 {
     [JsonPropertyName("tsunami")]

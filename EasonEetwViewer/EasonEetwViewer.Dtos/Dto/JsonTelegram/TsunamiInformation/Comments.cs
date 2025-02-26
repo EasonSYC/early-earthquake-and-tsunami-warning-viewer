@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation;
 public record Comments
 {
     [JsonPropertyName("free")]

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
 public record Head
 {

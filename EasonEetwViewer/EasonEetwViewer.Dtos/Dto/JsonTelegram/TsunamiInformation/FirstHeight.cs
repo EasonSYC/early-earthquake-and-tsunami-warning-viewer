@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation.Enum;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation.Enum;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation;
 public record FirstHeight
 {
     [JsonPropertyName("arrivalTime")]

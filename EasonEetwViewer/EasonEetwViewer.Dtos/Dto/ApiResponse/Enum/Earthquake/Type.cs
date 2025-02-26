@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.Earthquake;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.Earthquake;
 
 /// <summary>
 /// Describes the type of earthquake.

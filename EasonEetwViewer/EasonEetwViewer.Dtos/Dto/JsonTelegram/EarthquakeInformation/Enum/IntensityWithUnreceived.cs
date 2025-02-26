@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation.Enum;
 
 [JsonConverter(typeof(JsonStringEnumConverter<IntensityWithUnreceived>))]
 public enum IntensityWithUnreceived

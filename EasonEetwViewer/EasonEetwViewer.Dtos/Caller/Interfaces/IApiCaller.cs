@@ -1,9 +1,9 @@
-﻿using EasonEetwViewer.Dmdata.Dto.ApiPost;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
+﻿using EasonEetwViewer.Dtos.Dto.ApiPost;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
 
-namespace EasonEetwViewer.Dmdata.Caller.Interfaces;
+namespace EasonEetwViewer.Dtos.Caller.Interfaces;
 public interface IApiCaller
 {
     public Task<ContractList> GetContractListAsync();

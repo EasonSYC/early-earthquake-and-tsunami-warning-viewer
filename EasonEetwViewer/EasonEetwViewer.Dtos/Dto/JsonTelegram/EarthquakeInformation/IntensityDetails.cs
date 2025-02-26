@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation;
 public record IntensityDetails
 {
     [JsonPropertyName("maxInt")]

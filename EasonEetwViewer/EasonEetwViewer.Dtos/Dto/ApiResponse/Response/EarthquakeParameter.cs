@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Record.EarthquakeParameter;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Record.EarthquakeParameter;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
 
 /// <summary>
 /// Represents a response of an API call <c>parameter.earthquake</c>.

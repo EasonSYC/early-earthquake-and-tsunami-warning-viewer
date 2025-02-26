@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation.Enum;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation.Enum;
 public static class IntensityWithUnreceivedExtensions
 {
     public static Intensity? ToEarthquakeIntensity(this IntensityWithUnreceived intensity) => intensity switch

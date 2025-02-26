@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.ResponseBase;
 
 /// <summary>
 /// Outlines the model of a list response with next token options.

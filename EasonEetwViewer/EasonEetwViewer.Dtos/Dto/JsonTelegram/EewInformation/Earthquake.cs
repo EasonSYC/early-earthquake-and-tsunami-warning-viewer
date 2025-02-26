@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.DmdataComponent;
+using EasonEetwViewer.Dtos.DmdataComponent;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 public record Earthquake
 {
     [JsonPropertyName("originTime")]

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Range;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation.Enum.Range;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 public record Region
 {
     [JsonPropertyName("code")]

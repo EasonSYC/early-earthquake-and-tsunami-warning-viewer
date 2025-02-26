@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
+using EasonEetwViewer.Dtos.DmdataComponent.Enum;
 
-namespace EasonEetwViewer.Dmdata.DmdataComponent;
+namespace EasonEetwViewer.Dtos.DmdataComponent;
 
 /// <summary>
 /// Represents a pair of coordinates describing a position.

@@ -3,14 +3,14 @@ using System.Text;
 using System.Text.Json;
 using System.Web;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller.Extensions;
-using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.Dmdata.Dto.ApiPost;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Response;
+using EasonEetwViewer.Dtos.Caller.Extensions;
+using EasonEetwViewer.Dtos.Caller.Interfaces;
+using EasonEetwViewer.Dtos.Dto.ApiPost;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
 
-namespace EasonEetwViewer.Dmdata.Caller.Services;
+namespace EasonEetwViewer.Dtos.Caller.Services;
 
 public class ApiCaller : IApiCaller
 {

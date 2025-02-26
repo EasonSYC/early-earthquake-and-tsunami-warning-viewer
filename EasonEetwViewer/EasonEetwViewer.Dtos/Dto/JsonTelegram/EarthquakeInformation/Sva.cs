@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EarthquakeInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation;
 public record Sva
 {
     [JsonPropertyName("unit")]

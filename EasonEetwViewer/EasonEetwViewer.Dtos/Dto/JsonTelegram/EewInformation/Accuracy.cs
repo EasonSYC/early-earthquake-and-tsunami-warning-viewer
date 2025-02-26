@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 public record Accuracy
 {
     [JsonPropertyName("epicenters")]

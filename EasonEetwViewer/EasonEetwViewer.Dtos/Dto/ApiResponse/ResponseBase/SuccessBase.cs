@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using EasonEetwViewer.Dmdata.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 
-namespace EasonEetwViewer.Dmdata.Dto.ApiResponse.ResponseBase;
+namespace EasonEetwViewer.Dtos.Dto.ApiResponse.ResponseBase;
 
 /// <summary>
 /// Outlines the model of an Error HTTP response.

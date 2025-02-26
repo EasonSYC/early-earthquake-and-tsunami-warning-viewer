@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.TsunamiInformation.Enum;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.TsunamiInformation.Enum;
 [JsonConverter(typeof(JsonStringEnumConverter<Revise>))]
 public enum Revise
 {

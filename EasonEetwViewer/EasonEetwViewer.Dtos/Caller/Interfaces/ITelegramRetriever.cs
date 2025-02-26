@@ -1,6 +1,6 @@
-﻿using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+﻿using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.Dmdata.Caller.Interfaces;
+namespace EasonEetwViewer.Dtos.Caller.Interfaces;
 public interface ITelegramRetriever
 {
     public Task<T> GetTelegramJsonAsync<T>(string id) where T : Head;

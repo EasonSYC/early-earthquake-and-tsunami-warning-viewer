@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Caller.Interfaces;
-using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Dtos.Caller.Interfaces;
+using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
-namespace EasonEetwViewer.Dmdata.Caller.Services;
+namespace EasonEetwViewer.Dtos.Caller.Services;
 public class TelegramRetriever : ITelegramRetriever
 {
     private readonly HttpClient _client;

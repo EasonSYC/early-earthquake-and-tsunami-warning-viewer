@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation.Enum.Accuracy;
 [JsonConverter(typeof(JsonStringEnumConverter<EpicentreDepth>))]
 public enum EpicentreDepth
 {

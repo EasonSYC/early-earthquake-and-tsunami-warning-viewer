@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Dmdata.DmdataComponent;
-using EasonEetwViewer.Dmdata.DmdataComponent.Enum;
+using EasonEetwViewer.Dtos.DmdataComponent;
+using EasonEetwViewer.Dtos.DmdataComponent.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

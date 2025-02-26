@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dmdata.Dto.JsonTelegram.TelegramBase;
+﻿using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 
 namespace EasonEetwViewer.WebSocket.Abstractions;
 /// <summary>

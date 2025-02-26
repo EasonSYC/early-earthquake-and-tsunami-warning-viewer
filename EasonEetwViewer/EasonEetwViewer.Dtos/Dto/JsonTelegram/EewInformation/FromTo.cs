@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dmdata.Dto.JsonTelegram.EewInformation;
+namespace EasonEetwViewer.Dtos.Dto.JsonTelegram.EewInformation;
 public record FromTo<TFrom, TTo>
     where TFrom : struct, System.Enum
     where TTo : struct, System.Enum
