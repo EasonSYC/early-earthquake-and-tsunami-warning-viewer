@@ -1,6 +1,7 @@
-﻿using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Caller.Interfaces;
+﻿using EasonEetwViewer.Api.Abstractions;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Telegram.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;

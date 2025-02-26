@@ -4,8 +4,8 @@ using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
+using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Caller.Interfaces;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Record.EarthquakeParameter;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Record.GdEarthquake;
@@ -15,6 +15,7 @@ using EasonEetwViewer.Dtos.Dto.JsonTelegram.EarthquakeInformation.Enum;
 using EasonEetwViewer.Dtos.Dto.JsonTelegram.Schema;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
 using Mapsui.Extensions;
@@ -82,7 +83,7 @@ internal partial class PastPageViewModel(
         MRect? regionLimits = null;
 
         GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
-        IEnumerable<Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
+        IEnumerable<Dtos.Dto.ApiResponse.Record.GdEarthquake.Telegram> telegrams = rsp.EarthquakeEvent.Telegrams;
         telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53");
         if (telegrams.Count() != 0)
         {
@@ -91,7 +92,7 @@ internal partial class PastPageViewModel(
                 await UpdateEarthquakeObservationStations();
             }
 
-            Telegram telegram = telegrams.MaxBy(x => x.Serial)!;
+            Dtos.Dto.ApiResponse.Record.GdEarthquake.Telegram telegram = telegrams.MaxBy(x => x.Serial)!;
             EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
             IntensityDetailTree tree = new();
 

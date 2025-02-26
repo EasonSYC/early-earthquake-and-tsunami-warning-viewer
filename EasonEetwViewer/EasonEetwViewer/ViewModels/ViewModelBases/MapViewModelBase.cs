@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Caller.Interfaces;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Telegram.Abstractions;
 using Mapsui;
 using Mapsui.Limiting;
 using Mapsui.Projections;

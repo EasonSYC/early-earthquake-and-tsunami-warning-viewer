@@ -3,7 +3,7 @@ using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
 
-namespace EasonEetwViewer.Dtos.Caller.Interfaces;
+namespace EasonEetwViewer.Api.Abstractions;
 public interface IApiCaller
 {
     public Task<ContractList> GetContractListAsync();
