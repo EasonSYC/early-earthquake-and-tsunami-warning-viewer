@@ -26,6 +26,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Telegram\EasonEetwViewer.Telegram.csproj" />
     </ItemGroup>
 
 </Project>
