@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 
 namespace EasonEetwViewer.Telegram.Dtos.Schema;
 public record EewInformationSchema : Head

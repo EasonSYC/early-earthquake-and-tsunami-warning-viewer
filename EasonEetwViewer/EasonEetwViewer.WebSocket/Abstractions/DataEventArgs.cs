@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
+﻿using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 namespace EasonEetwViewer.WebSocket.Abstractions;
 /// <summary>
 /// Represents the event arguments for a data being received.

@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Services;

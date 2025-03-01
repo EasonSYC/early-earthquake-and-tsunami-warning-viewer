@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 
 namespace EasonEetwViewer.Telegram.Dtos.EewInformation;
 public record Comments

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.ApiResponse.Enum;
 
 namespace EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;
 public record PrePeriod

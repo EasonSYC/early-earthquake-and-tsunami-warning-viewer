@@ -2,7 +2,7 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.ApiResponse.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

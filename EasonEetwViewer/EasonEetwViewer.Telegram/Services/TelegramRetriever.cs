@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
 using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 
 namespace EasonEetwViewer.Telegram.Services;
 public class TelegramRetriever : ITelegramRetriever

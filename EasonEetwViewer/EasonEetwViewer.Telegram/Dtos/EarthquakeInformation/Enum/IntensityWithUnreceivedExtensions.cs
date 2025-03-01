@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.ApiResponse.Enum;
 
 namespace EasonEetwViewer.Telegram.Dtos.EarthquakeInformation.Enum;
 public static class IntensityWithUnreceivedExtensions

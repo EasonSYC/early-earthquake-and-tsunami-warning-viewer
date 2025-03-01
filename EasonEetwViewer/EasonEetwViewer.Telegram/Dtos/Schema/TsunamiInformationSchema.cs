@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
 
 namespace EasonEetwViewer.Telegram.Dtos.Schema;

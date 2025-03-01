@@ -5,10 +5,10 @@ using System.Web;
 using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Api.Extensions;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Dto.ApiPost;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
-using EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
+using EasonEetwViewer.Dtos.ApiPost;
+using EasonEetwViewer.Dtos.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.ApiResponse.Response;
 
 namespace EasonEetwViewer.Api.Services;
 

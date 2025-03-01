@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
+﻿using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 
 namespace EasonEetwViewer.Telegram.Abstractions;
 public interface ITelegramRetriever
