@@ -3,5 +3,5 @@
 namespace EasonEetwViewer.Telegram.Abstractions;
 public interface ITelegramRetriever
 {
-    public Task<T> GetTelegramJsonAsync<T>(string id) where T : Head;
+    public Task<T> GetJsonTelegramAsync<T>(string id) where T : Head;
 }

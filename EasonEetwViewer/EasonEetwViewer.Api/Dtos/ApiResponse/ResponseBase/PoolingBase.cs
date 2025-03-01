@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
 namespace EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 

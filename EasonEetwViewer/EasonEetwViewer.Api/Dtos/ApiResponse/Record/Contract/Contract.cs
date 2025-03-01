@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Api.Dtos.ApiResponse.Record.Contract;
 using EasonEetwViewer.Dtos.Enum;
 
 namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.Contract;

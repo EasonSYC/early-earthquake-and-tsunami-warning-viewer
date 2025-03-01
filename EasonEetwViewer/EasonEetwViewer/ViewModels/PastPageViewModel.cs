@@ -5,10 +5,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Record.EarthquakeParameter;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Response;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
@@ -93,7 +93,7 @@ internal partial class PastPageViewModel(
             }
 
             TelegramItem telegram = telegrams.MaxBy(x => x.Serial)!;
-            EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetTelegramJsonAsync<EarthquakeInformationSchema>(telegram.Id);
+            EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetJsonTelegramAsync<EarthquakeInformationSchema>(telegram.Id);
             IntensityDetailTree tree = new();
 
             if (telegramInfo.Body.Intensity is not null)

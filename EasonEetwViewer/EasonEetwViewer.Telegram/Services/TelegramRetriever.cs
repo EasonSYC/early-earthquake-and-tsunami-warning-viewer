@@ -24,7 +24,7 @@ public class TelegramRetriever : ITelegramRetriever
         _options = jsonSerializerOptions;
     }
 
-    public async Task<T> GetTelegramJsonAsync<T>(string id) where T : Head
+    public async Task<T> GetJsonTelegramAsync<T>(string id) where T: Head
     {
         using HttpRequestMessage request = new(HttpMethod.Get, $"{id}");
         request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();

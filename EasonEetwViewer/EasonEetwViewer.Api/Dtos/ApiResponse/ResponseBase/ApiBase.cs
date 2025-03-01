@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.Enum;
 
 namespace EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 

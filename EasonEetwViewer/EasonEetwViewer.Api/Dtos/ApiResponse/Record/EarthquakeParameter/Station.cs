@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.Station;
-using EasonEetwViewer.Api.Dtos.ApiResponse.Record.EarthquakeParameter;
 
 namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.EarthquakeParameter;
 

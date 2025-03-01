@@ -4,12 +4,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
 using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Api.Dtos.ApiPost;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Record.Contract;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Record.WebSocket;
 using EasonEetwViewer.Api.Dtos.ApiResponse.Response;
-using EasonEetwViewer.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
@@ -19,7 +19,6 @@ using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
 using Microsoft.Extensions.Logging;
-using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.WebSocket;
 
 namespace EasonEetwViewer.ViewModels;
 
