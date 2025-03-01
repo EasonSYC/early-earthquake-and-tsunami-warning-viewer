@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Dtos.JsonTelegram;
 using EasonEetwViewer.WebSocket.Dtos.Data;
 
 namespace EasonEetwViewer.WebSocket.Dtos.Response;

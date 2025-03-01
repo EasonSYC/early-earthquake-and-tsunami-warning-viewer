@@ -1,10 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dtos.JsonTelegram;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
-public record Telegram
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
+public record TelegramItem
 {
     [JsonPropertyName("serial")]
     public required int Serial { get; init; }

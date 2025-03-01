@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
 public record TelegramHead
 {
     [JsonPropertyName("type")]

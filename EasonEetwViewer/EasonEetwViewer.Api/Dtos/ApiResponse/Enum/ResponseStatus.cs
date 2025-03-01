@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.Enum;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Enum;
 
 /// <summary>
 /// Represents the status of the API response.

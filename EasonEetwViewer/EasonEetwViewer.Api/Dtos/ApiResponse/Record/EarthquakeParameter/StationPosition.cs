@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.EarthquakeParameter;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.EarthquakeParameter;
 
 /// <summary>
 /// Represents a position (city or region).

@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
+using EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.ResponseBase;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
 /// <summary>
 /// Outlines the model of a list response with next pooling options.

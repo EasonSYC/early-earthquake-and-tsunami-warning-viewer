@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Dtos.JsonTelegram;
 public class XmlReport
 {
     [JsonPropertyName("head")]

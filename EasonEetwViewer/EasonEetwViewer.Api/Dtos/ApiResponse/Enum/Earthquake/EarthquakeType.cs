@@ -1,12 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.Enum.Earthquake;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Enum.Earthquake;
 
 /// <summary>
 /// Describes the type of earthquake.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter<Type>))]
-public enum Type
+[JsonConverter(typeof(JsonStringEnumConverter<EarthquakeType>))]
+public enum EarthquakeType
 {
     /// <summary>
     /// The value <c>normal</c>, representing an earthquake within close vicinity of Japan.

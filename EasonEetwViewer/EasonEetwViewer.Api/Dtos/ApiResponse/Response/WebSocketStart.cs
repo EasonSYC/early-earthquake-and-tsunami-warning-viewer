@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Record.WebSocket;
-using EasonEetwViewer.Dtos.ApiResponse.ResponseBase;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Record.WebSocket;
+using EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Response;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Response;
 
 /// <summary>
 /// Represents the result of a POST request to start WebSocket.

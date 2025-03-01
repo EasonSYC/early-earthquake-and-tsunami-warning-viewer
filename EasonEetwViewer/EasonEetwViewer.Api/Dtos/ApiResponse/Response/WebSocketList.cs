@@ -1,7 +1,7 @@
-using EasonEetwViewer.Dtos.ApiResponse.Record.WebSocket;
-using EasonEetwViewer.Dtos.ApiResponse.ResponseBase;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Record.WebSocket;
+using EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Response;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Response;
 /// <summary>
 /// Represents the result of an API call on <c>socket.list</c> API.
 /// </summary>

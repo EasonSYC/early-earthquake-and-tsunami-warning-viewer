@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Record.Contract;
 using EasonEetwViewer.Dtos.Enum;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.Contract;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.Contract;
 
 /// <summary>
 /// Represents a contract.

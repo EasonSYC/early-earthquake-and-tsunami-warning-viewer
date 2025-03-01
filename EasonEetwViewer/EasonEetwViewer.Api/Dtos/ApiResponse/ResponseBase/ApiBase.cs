@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Enum;
 using EasonEetwViewer.Dtos.Enum;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.ResponseBase;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
 /// <summary>
 /// Outlines the model of a HTTP response in JSON format from an API Call.

@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.JsonTelegram;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Dtos.JsonTelegram;
 public record XmlControl
 {
     [JsonPropertyName("title")]

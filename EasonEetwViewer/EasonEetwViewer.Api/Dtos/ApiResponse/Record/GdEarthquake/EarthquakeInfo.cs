@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.Earthquake;
 using EasonEetwViewer.Dtos.DmdataComponent;
 using EasonEetwViewer.Dtos.Enum;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
 
 /// <summary>
 /// Represents an earthquake in the API call <c>gd.earthquake.list</c>.
@@ -18,7 +19,7 @@ public record EarthquakeInfo
     /// The property <c>type</c>. The type of the earthquake.
     /// </summary>
     [JsonPropertyName("type")]
-    public required Dtos.Enum.Earthquake.Type Type { get; init; }
+    public required EarthquakeType Type { get; init; }
     /// <summary>
     /// The property <c>eventId</c>. The Event ID of the earthquake.
     /// </summary>

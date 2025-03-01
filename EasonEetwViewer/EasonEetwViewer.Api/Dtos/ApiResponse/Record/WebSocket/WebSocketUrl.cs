@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record.WebSocket;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record.WebSocket;
 
 /// <summary>
 /// Represents the URL of a WebSocket.

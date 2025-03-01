@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Record;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Record;
 
 /// <summary>
 /// Represents an error thrown by the API call.

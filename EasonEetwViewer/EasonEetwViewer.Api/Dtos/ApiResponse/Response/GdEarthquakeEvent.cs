@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Record.GdEarthquake;
-using EasonEetwViewer.Dtos.ApiResponse.ResponseBase;
+using EasonEetwViewer.Api.Dtos.ApiResponse.Record.GdEarthquake;
+using EasonEetwViewer.Api.Dtos.ApiResponse.ResponseBase;
 
-namespace EasonEetwViewer.Dtos.ApiResponse.Response;
+namespace EasonEetwViewer.Api.Dtos.ApiResponse.Response;
 public record GdEarthquakeEvent : SuccessBase
 {
     [JsonPropertyName("event")]
