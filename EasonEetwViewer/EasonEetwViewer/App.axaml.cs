@@ -20,6 +20,7 @@ using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Telegram.Extensions;
 using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
@@ -117,28 +118,39 @@ public partial class App : Application
         LanguageChange(GetLanguage(languagePath));
 
         IServiceCollection collection = new ServiceCollection()
-            .AddLogging(loggingBuilder => loggingBuilder
+            .AddLogging(loggingBuilder
+                => loggingBuilder
                 .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information)
                 .AddDebug()
                 .SetMinimumLevel(LogLevel.Information))
-            .AddSingleton(sp => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
-            .AddSingleton(sp => GetKmoniOptions(kmoniOptionsPath))
+            .AddSingleton(sp
+                => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
+            .AddSingleton(sp
+                => GetKmoniOptions(kmoniOptionsPath))
 
-            .AddSingleton<OnLanguageChanged>(sp => s
+            .AddSingleton<OnLanguageChanged>(sp
+                => s
             =>
                 {
                     LanguageChange(s);
                     File.WriteAllText(languagePath, s.Name);
                 })
             .AddSingleton<ITimeProvider, DefaultTimeProvider>()
-            .AddSingleton(sp => new JsonSerializerOptions()
+            .AddSingleton(sp
+                => new JsonSerializerOptions()
             {
-                NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    NumberHandling = JsonNumberHandling.AllowReadingFromString,
+                    RespectNullableAnnotations = true,
+                    RespectRequiredConstructorParameters = true
             })
 
-            .AddSingleton<IApiCaller>(sp => new ApiCaller(baseApi, sp.GetRequiredService<AuthenticationWrapper>(), sp.GetRequiredService<JsonSerializerOptions>()))
-            .AddSingleton<ITelegramRetriever>(sp => new TelegramRetriever(baseTelegram, sp.GetRequiredService<AuthenticationWrapper>(), sp.GetRequiredService<JsonSerializerOptions>()))
-
+            .AddSingleton<ITelegramParser, TelegramParser>()
+            .AddSingleton<IApiCaller>(sp
+                => new ApiCaller(
+                    baseApi,
+                    sp.GetRequiredService<AuthenticationWrapper>(),
+                    sp.GetRequiredService<JsonSerializerOptions>()))
+            .AddTelegramRetriever(baseTelegram)
             .AddSingleton<IWebSocketClient, WebSocketClient>()
 
             .AddAuthenticationWrapper(authenticatorPath)

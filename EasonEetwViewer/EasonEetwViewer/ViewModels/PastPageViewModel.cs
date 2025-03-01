@@ -93,10 +93,10 @@ internal partial class PastPageViewModel(
             }
 
             TelegramItem telegram = telegrams.MaxBy(x => x.Serial)!;
-            EarthquakeInformationSchema telegramInfo = await _telegramRetriever.GetJsonTelegramAsync<EarthquakeInformationSchema>(telegram.Id);
+            EarthquakeInformationSchema? telegramInfo = await _telegramRetriever.GetJsonTelegramAsync(telegram.Id) as EarthquakeInformationSchema;
             IntensityDetailTree tree = new();
 
-            if (telegramInfo.Body.Intensity is not null)
+            if (telegramInfo is not null && telegramInfo.Body.Intensity is not null)
             {
                 IEnumerable<(Station s, Intensity i)> stationData = telegramInfo.Body.Intensity.Stations
                     .Where(x => (x.MaxInt is IntensityWithUnreceived newInt && newInt.ToEarthquakeIntensity() is Intensity))

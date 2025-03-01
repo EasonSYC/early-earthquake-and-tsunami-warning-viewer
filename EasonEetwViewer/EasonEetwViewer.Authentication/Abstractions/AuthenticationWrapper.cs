@@ -1,4 +1,5 @@
-﻿using EasonEetwViewer.Authentication.Exceptions;
+﻿using System.Net.Http.Headers;
+using EasonEetwViewer.Authentication.Exceptions;
 using EasonEetwViewer.Authentication.Services;
 using Microsoft.Extensions.Logging;
 
@@ -27,10 +28,35 @@ public sealed class AuthenticationWrapper
     /// <summary>
     /// The <see cref="IAuthenticator"/> to be used for the authentication.
     /// </summary>
-    public IAuthenticator Authenticator { get; private set; }
+    private IAuthenticator _authenticator;
+    /// <summary>
+    /// Gets an authenticator header value to be used for authentication.
+    /// </summary>
+    /// <returns>The authenticator header value to be used, or <see langword="null"/> if failed.</returns>
+    public async Task<AuthenticationHeaderValue?> GetAuthenticationHeaderAsync()
+    {
+        if (AuthenticationStatus is AuthenticationStatus.Null)
+        {
+            return null;
+        }
+        else
+        {
+            try
+            {
+                return await _authenticator.GetAuthenticationHeaderAsync();
+            }
+            catch (OAuthException ex)
+            {
+                _logger.OAuthExceptionIgnored(ex.ToString());
+                await UnsetAuthenticatorAsync();
+                return null;
+            }
+        }
+    }
+
     /// <inheritdoc/>
     public override string? ToString()
-        => Authenticator.ToString();
+        => _authenticator.ToString();
     /// <summary>
     /// Creates a new instance of <see cref="AuthenticationWrapper"/> from a string.
     /// </summary>
@@ -89,9 +115,9 @@ public sealed class AuthenticationWrapper
     /// The current authentication status.
     /// </summary>
     public AuthenticationStatus AuthenticationStatus
-        => Authenticator is NullAuthenticator
+        => _authenticator is NullAuthenticator
             ? AuthenticationStatus.Null
-            : Authenticator is ApiKeyAuthenticator
+            : _authenticator is ApiKeyAuthenticator
                 ? AuthenticationStatus.ApiKey
                 : AuthenticationStatus.OAuth;
     /// <summary>
@@ -109,7 +135,7 @@ public sealed class AuthenticationWrapper
         ILogger<OAuth2Authenticator> oAuthLogger,
         OAuth2Options oAuth2Options)
     {
-        Authenticator = currentAuthenticator;
+        _authenticator = currentAuthenticator;
         _logger = logger;
         _helperLogger = helperLogger;
         _oAuthLogger = oAuthLogger;
@@ -125,7 +151,7 @@ public sealed class AuthenticationWrapper
         await UnsetAuthenticatorAsync();
         try
         {
-            Authenticator = await OAuth2Provider.GetOAuth2Authenticator(_oAuth2Options, _helperLogger, _oAuthLogger);
+            _authenticator = await OAuth2Provider.GetOAuth2Authenticator(_oAuth2Options, _helperLogger, _oAuthLogger);
         }
         catch (OAuthException ex)
         {
@@ -146,9 +172,18 @@ public sealed class AuthenticationWrapper
     public async Task SetApiKeyAsync(string apiKey)
     {
         await UnsetAuthenticatorAsync();
-        Authenticator = new ApiKeyAuthenticator(apiKey);
+        _authenticator = new ApiKeyAuthenticator(apiKey);
         _logger.ChangedToApiKey();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
+    }
+    /// <summary>
+    /// Acts when the authenticator is invalid.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    public async Task InvalidAuthenticatorAsync(string message)
+    {
+        _logger.InvalidAuthentication(message);
+        await UnsetAuthenticatorAsync();
     }
     /// <summary>
     /// Unset the authenticator to <see cref="NullAuthenticator"/>.
@@ -157,7 +192,7 @@ public sealed class AuthenticationWrapper
     public async Task UnsetAuthenticatorAsync()
     {
         _logger.Unsetting();
-        if (Authenticator is OAuth2Authenticator oAuth)
+        if (_authenticator is OAuth2Authenticator oAuth)
         {
             try
             {
@@ -174,7 +209,7 @@ public sealed class AuthenticationWrapper
             }
         }
 
-        Authenticator = NullAuthenticator.Instance;
+        _authenticator = NullAuthenticator.Instance;
         _logger.Unset();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }

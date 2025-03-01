@@ -9,13 +9,9 @@ namespace EasonEetwViewer.Authentication.Services;
 internal sealed class NullAuthenticator : IAuthenticator
 {
     /// <inheritdoc/>
-    /// <exception cref="NullAuthenticationException">This class does not support this operation.</exception>
-    public Task<AuthenticationHeaderValue> GetAuthenticationHeader()
-        => throw new NullAuthenticationException();
-    /// <inheritdoc/>
-    /// <exception cref="NullAuthenticationException">This class does not support this operation.</exception>
-    public Task<AuthenticationHeaderValue> GetNewAuthenticationHeader()
-        => throw new NullAuthenticationException();
+    /// <exception cref="NullAuthenticatiorException">This class does not support this operation.</exception>
+    public Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync()
+        => throw new NullAuthenticatiorException();
     /// <inheritdoc/>
     public override string? ToString()
         => null;

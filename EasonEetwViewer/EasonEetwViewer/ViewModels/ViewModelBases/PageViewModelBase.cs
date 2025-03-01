@@ -44,7 +44,7 @@ internal partial class PageViewModelBase : ViewModelBase
         _logger.AuthenticatorChanged(AuthenticationStatus);
     }
     public event EventHandler<AuthenticationStatusChangedEventArgs> AuthenticationStatusChanged;
-    private protected IAuthenticator Authenticator => _authenticatorWrapper.Authenticator;
-    public AuthenticationStatus AuthenticationStatus => _authenticatorWrapper.AuthenticationStatus;
+    public AuthenticationStatus AuthenticationStatus
+        => _authenticatorWrapper.AuthenticationStatus;
     #endregion
 }

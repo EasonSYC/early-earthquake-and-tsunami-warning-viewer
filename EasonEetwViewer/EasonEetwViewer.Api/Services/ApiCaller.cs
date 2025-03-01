@@ -15,11 +15,8 @@ namespace EasonEetwViewer.Api.Services;
 public class ApiCaller : IApiCaller
 {
     private readonly HttpClient _client;
-    private readonly AuthenticationWrapper _authenticatorDto;
+    private readonly AuthenticationWrapper _authenticator;
     private readonly JsonSerializerOptions _options;
-
-    private IAuthenticator Authenticator => _authenticatorDto.Authenticator;
-
     public ApiCaller(string baseApi, AuthenticationWrapper authenticator, JsonSerializerOptions jsonSerializerOptions)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
@@ -28,14 +25,14 @@ public class ApiCaller : IApiCaller
         {
             BaseAddress = new(baseApi)
         };
-        _authenticatorDto = authenticator;
+        _authenticator = authenticator;
         _options = jsonSerializerOptions;
     }
 
     public async Task<ContractList> GetContractListAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "contract");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
@@ -68,7 +65,7 @@ public class ApiCaller : IApiCaller
         }
 
         using HttpRequestMessage request = new(HttpMethod.Get, $"socket?{queryString}");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
@@ -82,7 +79,7 @@ public class ApiCaller : IApiCaller
         string postDataJson = JsonSerializer.Serialize(postData);
         StringContent content = new(postDataJson, Encoding.UTF8, "application/json");
         using HttpRequestMessage request = new(HttpMethod.Post, "socket");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         request.Content = content;
         using HttpResponseMessage response = await _client.SendAsync(request);
 
@@ -97,7 +94,7 @@ public class ApiCaller : IApiCaller
         ArgumentOutOfRangeException.ThrowIfNegative(id, nameof(id));
 
         using HttpRequestMessage request = new(HttpMethod.Delete, $"socket/{id}");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
@@ -107,7 +104,7 @@ public class ApiCaller : IApiCaller
     public async Task<EarthquakeParameter> GetEarthquakeParameterAsync()
     {
         using HttpRequestMessage request = new(HttpMethod.Get, "parameter/earthquake/station");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
@@ -145,7 +142,7 @@ public class ApiCaller : IApiCaller
         }
 
         using HttpRequestMessage request = new(HttpMethod.Get, $"gd/earthquake?{queryString}");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();
@@ -157,7 +154,7 @@ public class ApiCaller : IApiCaller
     public async Task<GdEarthquakeEvent> GetPathEarthquakeEventAsync(string eventId)
     {
         using HttpRequestMessage request = new(HttpMethod.Get, $"gd/earthquake/{eventId}");
-        request.Headers.Authorization = await Authenticator.GetAuthenticationHeader();
+        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
         using HttpResponseMessage response = await _client.SendAsync(request);
 
         _ = response.EnsureSuccessStatusCode();

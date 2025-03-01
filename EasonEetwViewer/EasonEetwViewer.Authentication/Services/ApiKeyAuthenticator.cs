@@ -18,15 +18,7 @@ internal sealed class ApiKeyAuthenticator : IAuthenticator
     /// </summary>
     private readonly string _apiKey;
     /// <inheritdoc/>
-    /// <remarks>
-    /// This behaviour is identical to <see cref="GetNewAuthenticationHeader"/> since it is impossible to refresh an API Key.
-    /// </remarks>
-    public Task<AuthenticationHeaderValue> GetAuthenticationHeader() => Task.FromResult(_header);
-    /// <inheritdoc/>
-    /// <remarks>
-    /// This behaviour is identical to <see cref="GetAuthenticationHeader"/> since it is impossible to refresh an API Key.
-    /// </remarks>
-    public Task<AuthenticationHeaderValue> GetNewAuthenticationHeader() => Task.FromResult(_header);
+    public Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync() => Task.FromResult(_header);
     /// <inheritdoc/>
     public override string ToString()
         => _apiKey;

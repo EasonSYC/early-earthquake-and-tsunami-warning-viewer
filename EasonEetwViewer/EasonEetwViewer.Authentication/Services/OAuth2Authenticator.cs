@@ -28,7 +28,6 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     /// The refresh token to be used.
     /// </summary>
     private readonly string _refreshToken;
-
     /// <summary>
     /// The Client ID for OAuth 2.0
     /// </summary>
@@ -45,12 +44,10 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     /// The HttpClient used for requests.
     /// </summary>
     private readonly HttpClient _httpClient;
-
     /// <summary>
     /// The logger to be used for logging.
     /// </summary>
     private readonly ILogger<OAuth2Authenticator> _logger;
-
     /// <summary>
     /// Creates a new instance of the class with a set of given parameters.
     /// </summary>
@@ -87,11 +84,8 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     }
 
     /// <inheritdoc/>
-    public async Task<AuthenticationHeaderValue> GetAuthenticationHeader()
+    public async Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync()
         => new("Bearer", await CheckAccessTokenAsync());
-    /// <inheritdoc/>
-    public async Task<AuthenticationHeaderValue> GetNewAuthenticationHeader()
-        => new("Bearer", await RenewAccessTokenAsync());
 
     /// <inheritdoc/>
     public override string ToString()
@@ -143,18 +137,17 @@ internal sealed class OAuth2Authenticator : IAuthenticator
             string responseBody = await response.Content.ReadAsStringAsync();
             try
             {
-                TokenRefresh? token = JsonSerializer.Deserialize<TokenRefresh>(responseBody);
-
-                if (token is null)
-                {
-                    _logger.IncorrectJsonFormat(responseBody);
-                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
-                }
-
+                TokenRefresh token = JsonSerializer.Deserialize<TokenRefresh>(responseBody)
+                    ?? throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
                 _accessTokenExpiry = DateTimeOffset.Now + _accessTokenValidity;
                 _accessToken = token.AccessToken;
                 _logger.NewAccessTokenAcquired();
                 return _accessToken;
+            }
+            catch (OAuthJsonException)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw;
             }
             catch (JsonException ex)
             {
@@ -167,17 +160,15 @@ internal sealed class OAuth2Authenticator : IAuthenticator
             string responseBody = await response.Content.ReadAsStringAsync();
             try
             {
-                Error? error = JsonSerializer.Deserialize<Error>(responseBody);
-                if (error is null)
-                {
-                    _logger.IncorrectJsonFormat(responseBody);
-                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
-                }
-                else
-                {
-                    _logger.TokenRevokeFailed(error.Description);
-                    throw new OAuthErrorException($"{error.Short} {error.Description}");
-                }
+                Error error = JsonSerializer.Deserialize<Error>(responseBody)
+                    ?? throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
+                _logger.TokenRevokeFailed(error.Description);
+                throw new OAuthErrorException($"{error.Short} {error.Description}");
+            }
+            catch (OAuthJsonException)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw;
             }
             catch (JsonException ex)
             {
@@ -213,17 +204,15 @@ internal sealed class OAuth2Authenticator : IAuthenticator
             try
             {
 
-                Error? error = JsonSerializer.Deserialize<Error>(responseBody);
-                if (error is null)
-                {
-                    _logger.IncorrectJsonFormat(responseBody);
-                    throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
-                }
-                else
-                {
-                    _logger.TokenRevokeFailed(error.Description);
-                    throw new OAuthErrorException($"{error.Short} {error.Description}");
-                }
+                Error error = JsonSerializer.Deserialize<Error>(responseBody)
+                    ?? throw new OAuthJsonException($"Cannot deserialise: {responseBody}");
+                _logger.TokenRevokeFailed(error.Description);
+                throw new OAuthErrorException($"{error.Short} {error.Description}");
+            }
+            catch (OAuthJsonException)
+            {
+                _logger.IncorrectJsonFormat(responseBody);
+                throw;
             }
             catch (JsonException ex)
             {

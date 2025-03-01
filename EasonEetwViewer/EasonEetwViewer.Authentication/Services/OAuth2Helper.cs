@@ -236,30 +236,32 @@ internal sealed class OAuth2Helper
 
         string responseBody = await response.Content.ReadAsStringAsync();
 
-        if (response.IsSuccessStatusCode)
+        try
         {
-            TokenRequest? token = JsonSerializer.Deserialize<TokenRequest>(responseBody);
-            if (token is null)
+            if (response.IsSuccessStatusCode)
             {
-                _logger.IncorrectJsonFormat(responseBody);
-                throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
-            }
+                TokenRequest token = JsonSerializer.Deserialize<TokenRequest>(responseBody)
+                    ?? throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
 
-            return (token.RefreshToken, token.AccessToken);
-        }
-        else
-        {
-            Error? error = JsonSerializer.Deserialize<Error>(responseBody);
-            if (error is null)
-            {
-                _logger.IncorrectJsonFormat(responseBody);
-                throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
+                return (token.RefreshToken, token.AccessToken);
             }
             else
             {
+                Error error = JsonSerializer.Deserialize<Error>(responseBody)
+                    ?? throw new OAuthJsonException($"Cannot deserialise: {responseBody}.");
                 _logger.ErrorMessageReceived(error.Description);
                 throw new OAuthErrorException($"{error.Short} {error.Description}");
             }
+        }
+        catch (OAuthJsonException)
+        {
+            _logger.IncorrectJsonFormat(responseBody);
+            throw;
+        }
+        catch (JsonException ex)
+        {
+            _logger.IncorrectJsonFormat(responseBody);
+            throw new OAuthJsonException($"Cannot deserialise: {responseBody}", ex);
         }
     }
 }

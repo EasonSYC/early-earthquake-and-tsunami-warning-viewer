@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
-using EasonEetwViewer.Telegram.Dtos.Schema;
+using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.WebSocket.Abstractions;
 using EasonEetwViewer.WebSocket.Dtos;
@@ -26,6 +26,10 @@ public sealed class WebSocketClient : IWebSocketClient
     /// The JSON Serializer Options to be used.
     /// </summary>
     private readonly JsonSerializerOptions _options;
+    /// <summary>
+    /// The parser used to parse telegrams.
+    /// </summary>
+    private readonly ITelegramParser _parser;
     /// <summary>
     /// The WebSocket client used for the connections.
     /// </summary>
@@ -284,7 +288,7 @@ public sealed class WebSocketClient : IWebSocketClient
     private void HandleDataResponse(DataResponse dataResponse)
     {
         string bodyString = dataResponse.Body;
-        MemoryStream decodedStringStream = dataResponse.Encoding switch
+        using MemoryStream decodedStringStream = dataResponse.Encoding switch
         {
             EncodingType.Base64
                 => ConvertBase64Response(bodyString),
@@ -336,32 +340,16 @@ public sealed class WebSocketClient : IWebSocketClient
     {
         try
         {
-            Head headData = JsonSerializer.Deserialize<Head>(finalString)
-                ?? throw new WebSocketClientFormatException();
-
-            if (headData.Schema.Type == "eew-information" && headData.Schema.Version == "1.0.0")
-            {
-                EewInformationSchema eew = JsonSerializer.Deserialize<EewInformationSchema>(finalString, _options)
-                    ?? throw new WebSocketClientFormatException();
-                DataReceived?.Invoke(this, new() { Telegram = eew });
-                return;
-            }
-
-            if (headData.Schema.Type == "tsunami-information" && headData.Schema.Version == "1.0.0")
-            {
-                TsunamiInformationSchema tsunami = JsonSerializer.Deserialize<TsunamiInformationSchema>(finalString, _options)
-                    ?? throw new WebSocketClientFormatException();
-                DataReceived?.Invoke(this, new() { Telegram = tsunami });
-                return;
-            }
+            Head data = _parser.ParseJsonTelegram(finalString);
+            DataReceived?.Invoke(this, new DataEventArgs() { Telegram = data });
         }
-        catch (JsonException)
+        catch (TelegramParserFormatException)
         {
             _logger.IncorrectFormat(finalString);
         }
-        catch (WebSocketClientFormatException)
+        catch (TelegramParserUnsupportedException)
         {
-            _logger.IncorrectFormat(finalString);
+            _logger.UnsupportedFormat();
         }
     }
 
@@ -396,11 +384,13 @@ public sealed class WebSocketClient : IWebSocketClient
 
     /// <summary>
     /// Creates a new instance of the class with the given parameters.
-    /// </summary>>
+    /// </summary>
+    /// <param name="parser">The parser to be used to parse JSON telegrams.</param>>
     /// <param name="logger">The logger to be used.</param>
     /// <param name="jsonSerializerOptions">The JSON Serialisation options to be used.</param>
-    public WebSocketClient(ILogger<WebSocketClient> logger, JsonSerializerOptions jsonSerializerOptions)
+    public WebSocketClient(ITelegramParser parser, ILogger<WebSocketClient> logger, JsonSerializerOptions jsonSerializerOptions)
     {
+        _parser = parser;
         _client = new();
         _pingStrings = [];
         _tokenSource = new();

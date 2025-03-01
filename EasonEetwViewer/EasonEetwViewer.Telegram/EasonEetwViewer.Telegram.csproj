@@ -1,14 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+        <AnalysisLevel>preview-all</AnalysisLevel>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-    <ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.2" />
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <WarningLevel>9999</WarningLevel>
+        <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <WarningLevel>9999</WarningLevel>
+        <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
+    </ItemGroup>
 
 </Project>
