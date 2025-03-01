@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Lang;
+using EasonEetwViewer.Telegram.Dtos.EewInformation;
 
 namespace EasonEetwViewer.Converters;
 internal class EewHypocentreConverter : IValueConverter

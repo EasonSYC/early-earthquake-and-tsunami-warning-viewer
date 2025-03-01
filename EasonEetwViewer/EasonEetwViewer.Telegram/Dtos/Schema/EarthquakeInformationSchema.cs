@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;
 using EasonEetwViewer.Dtos.Dto.JsonTelegram.TelegramBase;
+using EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;
 
 namespace EasonEetwViewer.Telegram.Dtos.Schema;
 public record EarthquakeInformationSchema : Head

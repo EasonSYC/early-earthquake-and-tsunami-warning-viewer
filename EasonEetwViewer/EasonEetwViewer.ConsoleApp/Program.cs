@@ -6,12 +6,12 @@ using EasonEetwViewer.Dtos.Dto.ApiPost;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dtos.Dto.ApiResponse.Response;
-using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Telegram.Dtos.Schema;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 

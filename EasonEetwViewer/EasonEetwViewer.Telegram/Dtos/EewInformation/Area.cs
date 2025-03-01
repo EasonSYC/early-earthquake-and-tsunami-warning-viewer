@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
 
 namespace EasonEetwViewer.Telegram.Dtos.EewInformation;
 public record Area

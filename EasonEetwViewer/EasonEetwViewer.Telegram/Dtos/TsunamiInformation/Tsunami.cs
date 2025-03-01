@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
 
 namespace EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
 public record Tsunami

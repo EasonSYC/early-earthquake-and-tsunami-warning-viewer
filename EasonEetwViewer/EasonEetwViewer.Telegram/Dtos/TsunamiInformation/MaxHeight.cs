@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
 using EasonEetwViewer.Telegram.Dtos.TsunamiInformation.Enum;
 
 namespace EasonEetwViewer.Telegram.Dtos.TsunamiInformation;

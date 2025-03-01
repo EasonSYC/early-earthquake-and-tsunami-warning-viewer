@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Dtos.DmdataComponent;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
 
 namespace EasonEetwViewer.Telegram.Dtos.EewInformation;
 public record Earthquake

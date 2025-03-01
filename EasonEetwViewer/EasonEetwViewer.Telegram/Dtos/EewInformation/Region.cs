@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Telegram.Dtos.EewInformation.Enum.Range;
 
 namespace EasonEetwViewer.Telegram.Dtos.EewInformation;
