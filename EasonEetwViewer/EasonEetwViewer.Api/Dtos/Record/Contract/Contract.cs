@@ -4,14 +4,16 @@ using EasonEetwViewer.Dtos.Enum;
 namespace EasonEetwViewer.Api.Dtos.Record.Contract;
 
 /// <summary>
-/// Represents a contract.
+/// Represents a contract of subscription to <see href="dmdata.jp"/>.
 /// </summary>
 public record Contract
 {
     /// <summary>
     /// The property <c>id</c>. The subscription ID.
-    /// <see langword="null"/> if not subscribed to the contract.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> if not subscribed to the contract.
+    /// </remarks>
     [JsonPropertyName("id")]
     public required int? SubscriptionId { get; init; }
     /// <summary>
@@ -36,8 +38,10 @@ public record Contract
     public required UnitPrice Price { get; init; }
     /// <summary>
     /// The property <c>start</c>. The start time of the subscription.
-    /// <see langword="null"/> if not subscribed to the contract.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> if not subscribed to the contract.
+    /// </remarks>
     [JsonPropertyName("start")]
     public required DateTimeOffset? StartTime { get; init; }
     /// <summary>

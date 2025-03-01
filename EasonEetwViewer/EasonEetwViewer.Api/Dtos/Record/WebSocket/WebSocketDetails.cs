@@ -12,8 +12,10 @@ public record WebSocketDetails
 {
     /// <summary>
     /// The property <c>ticket</c>. The ticket for the WebSocket connection.
-    /// <see langword="null"/> when status is not waiting.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when status is not waiting.
+    /// </remarks>
     [JsonPropertyName("ticket")]
     public required string? Ticket { get; init; }
     /// <summary>
@@ -28,14 +30,18 @@ public record WebSocketDetails
     public required TestStatus Test { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the WebSocket receives.
-    /// <see langword="null"/> when receiving all types from the classifications.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when receiving all types from the classifications.
+    /// </remarks>
     [JsonPropertyName("types")]
     public required IEnumerable<string>? Types { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
-    /// <see langword="null"/> when not indicated.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not indicated.
+    /// </remarks>
     [JsonPropertyName("appName")]
     public required string? ApplicationName { get; init; }
     /// <summary>
@@ -50,20 +56,26 @@ public record WebSocketDetails
     public required DateTimeOffset StartTime { get; init; }
     /// <summary>
     /// The property <c>end</c>. The end time of the connection.
-    /// <see langword="null"/> when the connection is still open.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when the connection is still open.
+    /// </remarks>
     [JsonPropertyName("end")]
     public required DateTimeOffset? EndTime { get; init; }
     /// <summary>
     /// The property <c>ping</c>. The previous ping-pong time of the connection.
-    /// <see langword="null"/> when no ping-pong has been initiated/
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when no ping-pong has been initiated.
+    /// </remarks>
     [JsonPropertyName("ping")]
     public required DateTimeOffset? PingTime { get; init; }
     /// <summary>
     /// The property <c>ipAddress</c>. The IP Address of the connection.
-    /// <see langword="null"/> when the connection has never started.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when the connection has never started.
+    /// </remarks>
     [JsonPropertyName("ipAddress")]
     public required string? IpAddress { get; init; }
     /// <summary>

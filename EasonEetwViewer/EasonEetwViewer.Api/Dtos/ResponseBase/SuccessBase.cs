@@ -10,7 +10,7 @@ namespace EasonEetwViewer.Api.Dtos.ResponseBase;
 public abstract record SuccessBase : ApiBase
 {
     /// <summary>
-    /// The <c>status</c> property. Always set to <c>Status.Success</c>.
+    /// The <c>status</c> property. Always set to <see cref="ResponseStatus.Success"/>.
     /// </summary>
     [JsonPropertyName("status")]
     public override ResponseStatus ResponseStatus { get; } = ResponseStatus.Success;

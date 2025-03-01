@@ -27,8 +27,10 @@ public record EarthquakeInfo
     public required string EventId { get; init; }
     /// <summary>
     /// The property <c>originTime</c>. The time at which the earthquake happened.
-    /// <see langword="null"/> when there is only observation report of the earthquake.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when there is only observation report of the earthquake.
+    /// </remarks>
     [JsonPropertyName("originTime")]
     public DateTimeOffset? OriginTime { get; init; }
     /// <summary>
@@ -38,32 +40,42 @@ public record EarthquakeInfo
     public required DateTimeOffset ArrivalTime { get; init; }
     /// <summary>
     /// The property <c>hypocenter</c>. The hypocentre of the earthquake.
-    /// <see langword="null"/> when there is only observation report of the earthquake.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when there is only observation report of the earthquake.
+    /// </remarks>
     [JsonPropertyName("hypocenter")]
     public Hypocentre? Hypocentre { get; init; }
     /// <summary>
     /// The property <c>magnitude</c>. The magnitude of the earthquake.
-    /// <see langword="null"/> when there is only observation report of the earthquake.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when there is only observation report of the earthquake.
+    /// </remarks>
     [JsonPropertyName("magnitude")]
     public Magnitude? Magnitude { get; init; }
     /// <summary>
     /// The property <c>maxInt</c>. The maximum intensity observed for the earthquake.
-    /// <see langword="null"/> when this is a distant earthquake.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when this is a distant earthquake.
+    /// </remarks>
     [JsonPropertyName("maxInt")]
     public Intensity? MaxIntensity { get; init; }
     /// <summary>
     /// The property <c>maxLgInt</c>. The maximum LPGM intensity observed for the earthquake.
-    /// <see langword="null"/> when no LPGM observation report is issued.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when no LPGM observation report is issued.
+    /// </remarks>
     [JsonPropertyName("maxLgInt")]
     public LgIntensity? MaxLgIntensity { get; init; }
     /// <summary>
     /// The property <c>lgCategory</c>. The LPGM intensity category of the earthquake.
-    /// <see langword="null"/> when no LPGM observation report is issued.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when no LPGM observation report is issued.
+    /// </remarks>
     [JsonPropertyName("lgCategory")]
     public LgCategory? LgCategory { get; init; }
 }

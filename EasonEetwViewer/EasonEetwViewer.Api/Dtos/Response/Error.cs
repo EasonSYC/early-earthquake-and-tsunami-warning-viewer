@@ -11,7 +11,7 @@ namespace EasonEetwViewer.Api.Dtos.Response;
 public record Error : ApiBase
 {
     /// <summary>
-    /// The <c>status</c> property. Always set to <c>Status.Error</c>.
+    /// The <c>status</c> property. Always set to <see cref="ResponseStatus.Error"/>.
     /// </summary>
     [JsonPropertyName("status")]
     public override ResponseStatus ResponseStatus { get; } = ResponseStatus.Error;

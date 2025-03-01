@@ -17,8 +17,10 @@ public record WebSocketStartPost
     public required IEnumerable<Classification> Classifications { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the program receives.
-    /// <see langword="null"/> when receiving all types from the classifications.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when receiving all types from the classifications.
+    /// </remarks>
     [JsonPropertyName("types")]
     public IEnumerable<string>? Types { get; init; }
     /// <summary>
@@ -28,8 +30,10 @@ public record WebSocketStartPost
     public TestStatus? TestStatus { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
-    /// <see langword="null"/> when not indicated.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not indicated.
+    /// </remarks>
     [JsonPropertyName("appName")]
     public string? AppName { get; init; }
     /// <summary>

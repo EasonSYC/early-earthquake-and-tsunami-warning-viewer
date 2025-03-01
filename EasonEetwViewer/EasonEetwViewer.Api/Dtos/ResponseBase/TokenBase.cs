@@ -11,8 +11,10 @@ public abstract record TokenBase<T> : ListBase<T>
 {
     /// <summary>
     /// The <c>nextToken</c> property. The token that should be specified in the next API call.
-    /// <see langword="null"/> when the current call is the final call.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when the current call is the final call.
+    /// </remarks>
     [JsonPropertyName("nextToken")]
     public string? NextToken { get; init; }
 }
