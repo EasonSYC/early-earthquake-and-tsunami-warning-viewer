@@ -24,5 +24,5 @@ public static class TelegramRetrieverServiceCollectionExtensions
                     baseUri,
                     sp.GetRequiredService<ITelegramParser>(),
                     sp.GetRequiredService<ILogger<TelegramRetriever>>(),
-                    sp.GetRequiredService<AuthenticationWrapper>()));
+                    sp.GetRequiredService<IAuthenticationHelper>()));
 }

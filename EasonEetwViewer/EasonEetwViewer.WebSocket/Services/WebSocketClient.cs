@@ -12,6 +12,7 @@ using EasonEetwViewer.WebSocket.Dtos;
 using EasonEetwViewer.WebSocket.Dtos.Data;
 using EasonEetwViewer.WebSocket.Dtos.Request;
 using EasonEetwViewer.WebSocket.Dtos.Response;
+using EasonEetwViewer.WebSocket.Events;
 using EasonEetwViewer.WebSocket.Exceptions;
 using Microsoft.Extensions.Logging;
 

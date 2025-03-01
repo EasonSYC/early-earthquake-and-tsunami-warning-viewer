@@ -19,6 +19,7 @@ using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
+using EasonEetwViewer.WebSocket.Events;
 using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
@@ -44,7 +45,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         KmoniOptions kmoniOptions,
         IWebSocketClient webSocketClient,
         StaticResources resources,
-        AuthenticationWrapper authenticatorWrapper,
+        IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider,

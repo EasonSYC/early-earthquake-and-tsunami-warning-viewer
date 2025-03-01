@@ -1,5 +1,5 @@
 ﻿using EasonEetwViewer.Telegram.Dtos.TelegramBase;
-namespace EasonEetwViewer.WebSocket.Abstractions;
+namespace EasonEetwViewer.WebSocket.Events;
 /// <summary>
 /// Represents the event arguments for a data being received.
 /// </summary>

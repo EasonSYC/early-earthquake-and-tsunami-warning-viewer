@@ -8,7 +8,7 @@ namespace EasonEetwViewer.ViewModels.ViewModelBases;
 internal partial class PageViewModelBase : ViewModelBase
 {
     public PageViewModelBase(
-        AuthenticationWrapper authenticatorWrapper,
+        IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider,
@@ -26,7 +26,7 @@ internal partial class PageViewModelBase : ViewModelBase
         AuthenticationStatusChanged += eventHandler;
     }
 
-    private protected AuthenticationWrapper _authenticatorWrapper;
+    private protected IAuthenticationHelper _authenticatorWrapper;
     private protected IApiCaller _apiCaller;
     private protected ITelegramRetriever _telegramRetriever;
     private protected ITimeProvider _timeProvider;

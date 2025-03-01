@@ -13,6 +13,7 @@ using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Extensions;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
+using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.JmaTravelTime.Extensions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
@@ -148,12 +149,12 @@ public partial class App : Application
             .AddSingleton<IApiCaller>(sp
                 => new ApiCaller(
                     baseApi,
-                    sp.GetRequiredService<AuthenticationWrapper>(),
+                    sp.GetRequiredService<IAuthenticationHelper>(),
                     sp.GetRequiredService<JsonSerializerOptions>()))
             .AddTelegramRetriever(baseTelegram)
             .AddSingleton<IWebSocketClient, WebSocketClient>()
 
-            .AddAuthenticationWrapper(authenticatorPath)
+            .AddAuthenticator(authenticatorPath)
             .AddOptions<OAuth2Options>()
             .Bind(config.GetSection("OAuth2Options"))
             .Services

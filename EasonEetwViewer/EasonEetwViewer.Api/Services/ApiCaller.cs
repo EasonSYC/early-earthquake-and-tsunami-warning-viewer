@@ -15,9 +15,9 @@ namespace EasonEetwViewer.Api.Services;
 public class ApiCaller : IApiCaller
 {
     private readonly HttpClient _client;
-    private readonly AuthenticationWrapper _authenticator;
+    private readonly IAuthenticationHelper _authenticator;
     private readonly JsonSerializerOptions _options;
-    public ApiCaller(string baseApi, AuthenticationWrapper authenticator, JsonSerializerOptions jsonSerializerOptions)
+    public ApiCaller(string baseApi, IAuthenticationHelper authenticator, JsonSerializerOptions jsonSerializerOptions)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(baseApi, nameof(baseApi));
 

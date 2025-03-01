@@ -19,7 +19,7 @@ internal partial class MapViewModelBase : PageViewModelBase
     // Adapted from https://mapsui.com/samples/ - Navigation - Keep within Extent
     public MapViewModelBase(
         StaticResources resources,
-        AuthenticationWrapper authenticatorWrapper,
+        IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider,

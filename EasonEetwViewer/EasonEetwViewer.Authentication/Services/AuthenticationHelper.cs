@@ -5,14 +5,14 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Abstractions;
 /// <summary>
-/// Wraps around an <see cref="IAuthenticator"/> to provide authentication functionalities.
+/// Default implmentation of <see cref="IAuthenticationHelper"/>.
 /// </summary>
-public sealed class AuthenticationWrapper
+internal sealed class AuthenticationHelper : IAuthenticationHelper
 {
     /// <summary>
     /// The logger used for the current instance.
     /// </summary>
-    private readonly ILogger<AuthenticationWrapper> _logger;
+    private readonly ILogger<AuthenticationHelper> _logger;
     /// <summary>
     /// The logger used for the <see cref="OAuth2Authenticator"/>.
     /// </summary>
@@ -29,10 +29,7 @@ public sealed class AuthenticationWrapper
     /// The <see cref="IAuthenticator"/> to be used for the authentication.
     /// </summary>
     private IAuthenticator _authenticator;
-    /// <summary>
-    /// Gets an authenticator header value to be used for authentication.
-    /// </summary>
-    /// <returns>The authenticator header value to be used, or <see langword="null"/> if failed.</returns>
+    /// <inheritdoc/>
     public async Task<AuthenticationHeaderValue?> GetAuthenticationHeaderAsync()
     {
         if (AuthenticationStatus is AuthenticationStatus.Null)
@@ -53,22 +50,21 @@ public sealed class AuthenticationWrapper
             }
         }
     }
-
     /// <inheritdoc/>
     public override string? ToString()
         => _authenticator.ToString();
     /// <summary>
-    /// Creates a new instance of <see cref="AuthenticationWrapper"/> from a string.
+    /// Creates a new instance of <see cref="AuthenticationHelper"/> from a string.
     /// </summary>
     /// <param name="str">The string to be used to create the instance from.</param>
     /// <param name="logger">The logger to be used for the instance</param>
     /// <param name="helperLogger">The logger to be used for the <see cref="OAuth2Helper"/>.</param>
     /// <param name="oAuthLogger">The logger to be used for the <see cref="OAuth2Authenticator"/>.</param>
     /// <param name="oAuth2Options">The options for OAuth 2.</param>
-    /// <returns>The new instance of <see cref="AuthenticationWrapper"/>.</returns>
-    internal static AuthenticationWrapper FromString(
+    /// <returns>The new instance of <see cref="AuthenticationHelper"/>.</returns>
+    internal static AuthenticationHelper FromString(
         string? str,
-        ILogger<AuthenticationWrapper> logger,
+        ILogger<AuthenticationHelper> logger,
         ILogger<OAuth2Helper> helperLogger,
         ILogger<OAuth2Authenticator> oAuthLogger,
         OAuth2Options oAuth2Options)
@@ -104,16 +100,14 @@ public sealed class AuthenticationWrapper
             authenticator = NullAuthenticator.Instance;
         }
 
-        return new AuthenticationWrapper(
+        return new AuthenticationHelper(
             authenticator,
             logger,
             helperLogger,
             oAuthLogger,
             oAuth2Options);
     }
-    /// <summary>
-    /// The current authentication status.
-    /// </summary>
+    /// <inheritdoc/>
     public AuthenticationStatus AuthenticationStatus
         => _authenticator is NullAuthenticator
             ? AuthenticationStatus.Null
@@ -121,16 +115,16 @@ public sealed class AuthenticationWrapper
                 ? AuthenticationStatus.ApiKey
                 : AuthenticationStatus.OAuth;
     /// <summary>
-    /// Creates a new instance of <see cref="AuthenticationWrapper"/> with the options provided..
+    /// Creates a new instance of <see cref="AuthenticationHelper"/> with the options provided..
     /// </summary>
     /// <param name="currentAuthenticator">The current <see cref="IAuthenticator"/> to be used.</param>
     /// <param name="logger">The logger to be used for the instance</param>
     /// <param name="helperLogger">The logger to be used for the <see cref="OAuth2Helper"/>.</param>
     /// <param name="oAuthLogger">The logger to be used for the <see cref="OAuth2Authenticator"/>.</param>
     /// <param name="oAuth2Options">The options for OAuth 2.</param>
-    private AuthenticationWrapper(
+    private AuthenticationHelper(
         IAuthenticator currentAuthenticator,
-        ILogger<AuthenticationWrapper> logger,
+        ILogger<AuthenticationHelper> logger,
         ILogger<OAuth2Helper> helperLogger,
         ILogger<OAuth2Authenticator> oAuthLogger,
         OAuth2Options oAuth2Options)
@@ -142,10 +136,7 @@ public sealed class AuthenticationWrapper
         _oAuth2Options = oAuth2Options;
         _logger.Instantiated();
     }
-    /// <summary>
-    /// Set the authenticator to <see cref="OAuth2Authenticator"/> which requires input from the browser.
-    /// </summary>
-    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    /// <inheritdoc/>
     public async Task SetOAuthAsync()
     {
         await UnsetAuthenticatorAsync();
@@ -164,11 +155,7 @@ public sealed class AuthenticationWrapper
 
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
-    /// <summary>
-    /// Set the authenticator to <see cref="ApiKeyAuthenticator"/> with the specified API Key.
-    /// </summary>
-    /// <param name="apiKey">The API Key.</param>
-    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    /// <inheritdoc/>
     public async Task SetApiKeyAsync(string apiKey)
     {
         await UnsetAuthenticatorAsync();
@@ -176,19 +163,13 @@ public sealed class AuthenticationWrapper
         _logger.ChangedToApiKey();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
-    /// <summary>
-    /// Acts when the authenticator is invalid.
-    /// </summary>
-    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    /// <inheritdoc/>
     public async Task InvalidAuthenticatorAsync(string message)
     {
         _logger.InvalidAuthentication(message);
         await UnsetAuthenticatorAsync();
     }
-    /// <summary>
-    /// Unset the authenticator to <see cref="NullAuthenticator"/>.
-    /// </summary>
-    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
+    /// <inheritdoc/>
     public async Task UnsetAuthenticatorAsync()
     {
         _logger.Unsetting();
@@ -213,8 +194,6 @@ public sealed class AuthenticationWrapper
         _logger.Unset();
         AuthenticationStatusChanged?.Invoke(this, EventArgs.Empty);
     }
-    /// <summary>
-    /// When the status of the authentication has changed.
-    /// </summary>
+    /// <inheritdoc/>
     public event EventHandler? AuthenticationStatusChanged;
 }

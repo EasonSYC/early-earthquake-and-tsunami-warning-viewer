@@ -28,7 +28,7 @@ using Microsoft.Extensions.Logging;
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(
     StaticResources resources,
-    AuthenticationWrapper authenticatorWrapper,
+    IAuthenticationHelper authenticatorWrapper,
     IApiCaller apiCaller, ITelegramRetriever
     telegramRetriever,
     ITimeProvider timeProvider,

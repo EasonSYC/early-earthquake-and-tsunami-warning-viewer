@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Services;
 /// <summary>
-/// Represents the log messages used in <see cref="AuthenticationWrapper"/>.
+/// Represents the log messages used in <see cref="AuthenticationHelper"/>.
 /// </summary>
 internal static partial class AuthenticationWrapperLogs
 {
@@ -17,7 +17,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Information,
         Message = "Instantiated.")]
     public static partial void Instantiated(
-        this ILogger<AuthenticationWrapper> logger);
+        this ILogger<AuthenticationHelper> logger);
 
     /// <summary>
     /// Log when changed to API Key.
@@ -29,7 +29,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Information,
         Message = "Authenticator changed to API Key.")]
     public static partial void ChangedToApiKey(
-        this ILogger<AuthenticationWrapper> logger);
+        this ILogger<AuthenticationHelper> logger);
 
     /// <summary>
     /// Log when unsetting authenticator.
@@ -41,7 +41,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Debug,
         Message = "Unsetting authenticator.")]
     public static partial void Unsetting(
-        this ILogger<AuthenticationWrapper> logger);
+        this ILogger<AuthenticationHelper> logger);
 
     /// <summary>
     /// Log when authenticator unset.
@@ -53,7 +53,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Information,
         Message = "Authenticator unset.")]
     public static partial void Unset(
-        this ILogger<AuthenticationWrapper> logger);
+        this ILogger<AuthenticationHelper> logger);
 
     /// <summary>
     /// Log when OAuth exception ignored.
@@ -66,7 +66,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Warning,
         Message = "OAuth Exception: `{Exception}`.")]
     public static partial void OAuthExceptionIgnored(
-        this ILogger<AuthenticationWrapper> logger, string exception);
+        this ILogger<AuthenticationHelper> logger, string exception);
 
     /// <summary>
     /// Log when other exceptions ignored.
@@ -79,7 +79,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Error,
         Message = "Exception: `{Exception}`.")]
     public static partial void OtherExceptionIgnored(
-        this ILogger<AuthenticationWrapper> logger, string exception);
+        this ILogger<AuthenticationHelper> logger, string exception);
 
     /// <summary>
     /// Log when revoking OAuth 2 tokens.
@@ -91,7 +91,7 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Information,
         Message = "Revoking OAuth 2 tokens.")]
     public static partial void RevokingOAuth2Token(
-        this ILogger<AuthenticationWrapper> logger);
+        this ILogger<AuthenticationHelper> logger);
 
 
     /// <summary>
@@ -105,5 +105,5 @@ internal static partial class AuthenticationWrapperLogs
         Level = LogLevel.Error,
         Message = "Invalid authentication message: `{Message}`.")]
     public static partial void InvalidAuthentication(
-        this ILogger<AuthenticationWrapper> logger, string message);
+        this ILogger<AuthenticationHelper> logger, string message);
 }

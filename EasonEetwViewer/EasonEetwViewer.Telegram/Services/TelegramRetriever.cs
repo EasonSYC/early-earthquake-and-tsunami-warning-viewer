@@ -23,7 +23,7 @@ public sealed class TelegramRetriever : ITelegramRetriever
     /// <summary>
     /// The authenticator to be used.
     /// </summary>
-    private readonly AuthenticationWrapper _authenticator;
+    private readonly IAuthenticationHelper _authenticator;
     /// <summary>
     /// The logger to be used.
     /// </summary>
@@ -34,7 +34,7 @@ public sealed class TelegramRetriever : ITelegramRetriever
     /// <param name="baseApi">The base API of the telegram to be retrieved.</param>
     /// <param name="parser">The parser to be used to parse JSON telegrams.</param>
     /// <param name="authenticator">The authenticator to be used.</param>
-    public TelegramRetriever(string baseApi, ITelegramParser parser, ILogger<TelegramRetriever> logger, AuthenticationWrapper authenticator)
+    public TelegramRetriever(string baseApi, ITelegramParser parser, ILogger<TelegramRetriever> logger, IAuthenticationHelper authenticator)
     {
         _client = new()
         {

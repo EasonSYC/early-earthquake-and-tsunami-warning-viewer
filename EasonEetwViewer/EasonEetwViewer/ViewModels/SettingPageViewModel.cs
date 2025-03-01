@@ -30,7 +30,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         IWebSocketClient webSocketClient,
         ILogger<SettingPageViewModel> logger,
         OnLanguageChanged onLangChange,
-        AuthenticationWrapper authenticatorDto,
+        IAuthenticationHelper authenticatorDto,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider,
