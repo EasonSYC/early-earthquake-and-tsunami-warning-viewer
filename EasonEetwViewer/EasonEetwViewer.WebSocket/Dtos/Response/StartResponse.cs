@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dtos.Enum.WebSocket;
 
 namespace EasonEetwViewer.WebSocket.Dtos.Response;
 /// <summary>

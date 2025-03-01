@@ -1,5 +1,5 @@
-﻿using EasonEetwViewer.Dtos.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.DmdataComponent;
+﻿using EasonEetwViewer.Dtos.DmdataComponent;
+using EasonEetwViewer.Dtos.Enum;
 
 namespace EasonEetwViewer.Models;
 internal record EarthquakeItemTemplate

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Telegram.Dtos.EarthquakeInformation.Enum;
 
 namespace EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;

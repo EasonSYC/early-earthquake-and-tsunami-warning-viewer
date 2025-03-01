@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dtos.ApiResponse.Enum;
+﻿using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Models;
 
 namespace EasonEetwViewer.Services;

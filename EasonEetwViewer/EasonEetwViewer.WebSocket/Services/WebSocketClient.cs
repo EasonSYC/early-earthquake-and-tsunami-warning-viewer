@@ -4,7 +4,7 @@ using System.Net.WebSockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using EasonEetwViewer.Dtos.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.WebSocket.Abstractions;

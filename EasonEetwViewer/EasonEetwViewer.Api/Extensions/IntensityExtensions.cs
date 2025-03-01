@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Enum;
 
 namespace EasonEetwViewer.Api.Extensions;
 internal static class IntensityExtensions

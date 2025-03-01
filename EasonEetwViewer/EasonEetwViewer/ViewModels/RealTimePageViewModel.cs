@@ -5,7 +5,7 @@ using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;

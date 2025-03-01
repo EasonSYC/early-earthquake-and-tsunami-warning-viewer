@@ -1,7 +1,7 @@
 ﻿using EasonEetwViewer.Dtos.ApiPost;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dtos.ApiResponse.Response;
+using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dtos.Enum.WebSocket;
 
 namespace EasonEetwViewer.Api.Abstractions;
 public interface IApiCaller

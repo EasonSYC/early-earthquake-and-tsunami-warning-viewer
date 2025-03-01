@@ -6,9 +6,9 @@ using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Api.Extensions;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dtos.ApiPost;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
-using EasonEetwViewer.Dtos.ApiResponse.Enum.WebSocket;
 using EasonEetwViewer.Dtos.ApiResponse.Response;
+using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dtos.Enum.WebSocket;
 
 namespace EasonEetwViewer.Api.Services;
 

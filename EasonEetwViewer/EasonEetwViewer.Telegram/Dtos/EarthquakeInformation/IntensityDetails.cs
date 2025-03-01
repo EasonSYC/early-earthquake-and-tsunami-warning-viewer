@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using EasonEetwViewer.Dtos.ApiResponse.Enum;
+using EasonEetwViewer.Dtos.Enum;
 
 namespace EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;
 public record IntensityDetails
