@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using EasonEetwViewer.Dtos.JsonTelegram;
+using EasonEetwViewer.Dtos.Telegram;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.JsonTelegram;
+namespace EasonEetwViewer.Dtos.Telegram;
 /// <summary>
 /// Represents the head information of a XML telegram.
 /// </summary>

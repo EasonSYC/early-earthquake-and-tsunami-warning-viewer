@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
-using EasonEetwViewer.Dtos.JsonTelegram;
+using EasonEetwViewer.Dtos.Telegram;
 using EasonEetwViewer.WebSocket.Dtos.Data;
 
 namespace EasonEetwViewer.WebSocket.Dtos.Response;

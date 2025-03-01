@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.Dtos.JsonTelegram;
+namespace EasonEetwViewer.Dtos.Telegram;
 /// <summary>
 /// Represents the version of a JSON Telegram Schema.
 /// </summary>
