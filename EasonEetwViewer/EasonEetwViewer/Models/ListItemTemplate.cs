@@ -6,7 +6,7 @@ using EasonEetwViewer.ViewModels.ViewModelBases;
 namespace EasonEetwViewer.Models;
 internal record ListItemTemplate
 {
-    internal ListItemTemplate(Type type, ViewModelBase instance, string iconKey, OnLoadString displayLabel)
+    internal ListItemTemplate(Type type, ViewModelBase instance, string iconKey, Func<string> displayLabel)
     {
         ModelType = type;
         Label = displayLabel;
@@ -16,7 +16,7 @@ internal record ListItemTemplate
         ListItemIcon = (StreamGeometry)res!;
     }
 
-    internal OnLoadString Label { get; init; }
+    internal Func<string> Label { get; init; }
     internal Type ModelType { get; init; }
     internal ViewModelBase Model { get; init; }
     internal StreamGeometry ListItemIcon { get; init; }

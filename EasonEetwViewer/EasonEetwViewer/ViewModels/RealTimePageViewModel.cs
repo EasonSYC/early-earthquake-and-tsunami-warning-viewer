@@ -487,9 +487,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region websocket
-
-    private async void WebSocketClient_DataReceived(object? sender, DataEventArgs e)
+    public event EventHandler? WebSocketDataReceived;
+    public async void WebSocketClient_DataReceived(object? sender, DataEventArgs e)
     {
+        WebSocketDataReceived?.Invoke(this, new());
+
         Head telegram = e.Telegram;
         if (telegram is EewInformationSchema eew)
         {

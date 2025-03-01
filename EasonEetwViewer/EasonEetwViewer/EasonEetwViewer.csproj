@@ -1,38 +1,38 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
+    <PropertyGroup>
         <NeutralLanguage>en</NeutralLanguage>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-		<AnalysisLevel>preview-all</AnalysisLevel>
-		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-	</PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>True</GenerateDocumentationFile>
+        <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+        <AnalysisLevel>preview-all</AnalysisLevel>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<AvaloniaResource Include="Assets\**" />
-	</ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<AvaloniaXaml Remove="Assets\Icons.axaml" />
-	</ItemGroup>
+    <ItemGroup>
+        <AvaloniaXaml Remove="Assets\Icons.axaml" />
+    </ItemGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.2.4" />
         <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.2.4" />
         <PackageReference Include="Avalonia.Desktop" Version="11.2.4" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.4" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.4" />
-		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="Avalonia.Diagnostics" Version="11.2.4">
-			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
         <PackageReference Include="Mapsui.Avalonia" Version="5.0.0-beta.8" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.2" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.2" />
@@ -40,95 +40,95 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.2" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2" />
-		<PackageReference Include="SkiaSharp" Version="3.116.1" />
-	</ItemGroup>
+        <PackageReference Include="SkiaSharp" Version="3.116.1" />
+    </ItemGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\EasonEetwViewer.Api\EasonEetwViewer.Api.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
 	<ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj" />
-		<ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
         <ProjectReference Include="..\EasonEetwViewer.Telegram\EasonEetwViewer.Telegram.csproj" />
         <ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
-	</ItemGroup>
+    </ItemGroup>
 
-	<ItemGroup>
+    <ItemGroup>
         <EmbeddedResource Include="Resources\cross.svg">
           <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="Resources\circle.svg">
-	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-	  </EmbeddedResource>
-	</ItemGroup>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <AvaloniaResource Update="Assets\Icons.axaml">
-	    <SubType>Designer</SubType>
-	  </AvaloniaResource>
-	</ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Update="Assets\Icons.axaml">
+            <SubType>Designer</SubType>
+        </AvaloniaResource>
+    </ItemGroup>
 
-	<ItemGroup>
-		<EmbeddedResource Update="Lang\PastPageResources.resx">
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		  <LastGenOutput>PastPageResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Lang\RealtimePageResources.resx">
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		  <LastGenOutput>RealtimePageResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Lang\Resources.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Lang\SettingPageResources.resx">
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		  <LastGenOutput>SettingPageResources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Lang\PastPageResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>PastPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Lang\RealtimePageResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>RealtimePageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Lang\Resources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Lang\SettingPageResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>SettingPageResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 
-	<ItemGroup>
-		<Compile Update="Lang\PastPageResources.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>PastPageResources.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Lang\RealtimePageResources.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>RealtimePageResources.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Lang\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Lang\SettingPageResources.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>SettingPageResources.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Views\RealtimePageView.axaml.cs">
-		  <DependentUpon>RealtimePageView.axaml</DependentUpon>
-		</Compile>
-	</ItemGroup>
+    <ItemGroup>
+        <Compile Update="Lang\PastPageResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PastPageResources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Lang\RealtimePageResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>RealtimePageResources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Lang\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Lang\SettingPageResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>SettingPageResources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Views\RealtimePageView.axaml.cs">
+            <DependentUpon>RealtimePageView.axaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-	<ItemGroup>
-		<None Update="appsettings.json">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.dbf">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.prj">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shp">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shx">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+    <ItemGroup>
+        <None Update="appsettings.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.dbf">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.prj">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shp">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Content\GisFiles\Simp_20240520_AreaForecastLocalE_GIS\Regions.shx">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.dbf">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -141,5 +141,11 @@
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shx">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-	</ItemGroup>
+        <None Update="TestEew.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestTsunami.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
 </Project>
