@@ -15,6 +15,12 @@
 		<PackageReference Include="SkiaSharp" Version="3.116.1" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="ObservationPoints.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<WarningLevel>9999</WarningLevel>
 		<CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>

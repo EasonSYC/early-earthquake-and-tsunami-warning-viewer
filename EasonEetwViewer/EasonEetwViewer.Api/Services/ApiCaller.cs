@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -26,7 +27,7 @@ internal sealed class ApiCaller : IApiCaller
     private readonly ILogger<ApiCaller> _logger;
     private readonly IAuthenticationHelper _authenticator;
     private readonly JsonSerializerOptions _options;
-    private NameValueCollection EmptyQuery
+    private static NameValueCollection EmptyQuery
         => HttpUtility.ParseQueryString(string.Empty);
     public ApiCaller(string baseApi, ILogger<ApiCaller> logger, IAuthenticationHelper authenticator, JsonSerializerOptions jsonSerializerOptions)
     {
@@ -226,7 +227,13 @@ internal sealed class ApiCaller : IApiCaller
     /// <returns>The <see cref="HttpResponseMessage"/> obtained. <see langword="null"/> when unsuccessful.</returns>
     private async Task<HttpResponseMessage?> SendRequestAsync(HttpRequestMessage request)
     {
-        request.Headers.Authorization = await _authenticator.GetAuthenticationHeaderAsync();
+        AuthenticationHeaderValue? header = await _authenticator.GetAuthenticationHeaderAsync();
+        if (header is null)
+        {
+            return null;
+        }
+
+        request.Headers.Authorization = header;
         try
         {
             return await _client.SendAsync(request);

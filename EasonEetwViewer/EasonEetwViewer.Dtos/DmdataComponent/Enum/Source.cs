@@ -8,6 +8,7 @@ namespace EasonEetwViewer.Dtos.DmdataComponent.Enum;
 [JsonConverter(typeof(JsonStringEnumConverter<Source>))]
 public enum Source
 {
+    /// <summary>
     /// The value <c>ＵＳＧＳ</c>, representing the United States Geological Survey.
     /// </summary>
     [JsonStringEnumMemberName("ＵＳＧＳ")]

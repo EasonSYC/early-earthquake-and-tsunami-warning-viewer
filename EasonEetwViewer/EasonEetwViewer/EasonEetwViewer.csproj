@@ -141,11 +141,5 @@
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shx">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-		<None Update="ObservationPoints.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Update="tjma2001.txt">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 </Project>
