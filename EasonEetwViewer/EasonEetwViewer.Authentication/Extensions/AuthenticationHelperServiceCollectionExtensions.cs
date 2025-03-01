@@ -35,6 +35,6 @@ public static class AuthenticationHelperServiceCollectionExtensions
                 sp.GetRequiredService<ILogger<AuthenticationHelper>>(),
                 sp.GetRequiredService<ILogger<OAuth2Helper>>(),
                 sp.GetRequiredService<ILogger<OAuth2Authenticator>>(),
-                sp.GetRequiredService<IOptions<OAuth2Options>>().Value)
+                sp.GetRequiredService<IOptions<OAuth2Options>>().Value);
         });
 }

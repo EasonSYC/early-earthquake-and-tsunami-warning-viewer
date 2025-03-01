@@ -19,14 +19,18 @@ public record Depth
     public string Unit { get; } = "km";
     /// <summary>
     /// The property <c>value</c>. The depth of the earthquake.
-    /// <c>null</c> when unclear.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when unclear.
+    /// </remarks>
     [JsonPropertyName("value")]
     public required int? Value { get; init; }
     /// <summary>
     /// The property <c>condition</c>. Describes abnormal behaviours of the depth.
-    /// <c>null</c> when the value is not <c>null</c> and not 0 or 700.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when <see cref="Value"/> is not <see langword="null"/> and not 0 or 700.
+    /// </remarks>
     [JsonPropertyName("condition")]
     public DepthCondition? Condition { get; init; }
 }

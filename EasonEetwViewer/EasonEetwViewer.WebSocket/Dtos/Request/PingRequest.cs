@@ -16,8 +16,10 @@ internal record PingRequest : ResponseBase
     public override MessageType Type { get; init; } = MessageType.Ping;
     /// <summary>
     /// The property <c>pingId</c>, the Ping ID that is to be included when the WebSocket returns the Pong.
-    /// <see langword="null"/> when not specified by the user-initiated ping.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not specified by the user-initiated ping.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("pingId")]
     public string? PingId { get; init; }

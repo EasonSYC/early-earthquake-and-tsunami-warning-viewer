@@ -15,8 +15,10 @@ internal record PongResponse : ResponseBase
     public override MessageType Type { get; init; } = MessageType.Pong;
     /// <summary>
     /// The property <c>pingId</c>, the Ping ID that was included when the user initiated the Ping.
-    /// <see langword="null"/> when not specified by the user-initiated ping.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not specified by the user-initiated ping.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("pingId")]
     public string? PingId { get; init; }

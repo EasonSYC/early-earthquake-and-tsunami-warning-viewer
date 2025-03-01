@@ -29,20 +29,26 @@ public record Hypocentre
     public required Depth Depth { get; init; }
     /// <summary>
     /// The property <c>detailed</c>. The extra details of the hypocentre.
-    /// <c>null</c> when the earthquake happens within Japan.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when the earthquake happens within Japan.
+    /// </remarks>
     [JsonPropertyName("detailed")]
     public HypocentreDetail? Detail { get; init; }
     /// <summary>
     /// The property <c>auxiliary</c>. The auxiliary information of the hypocentre.
-    /// <c>null</c> depending on situation.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> depending on situation.
+    /// </remarks>
     [JsonPropertyName("auxiliary")]
     public Auxiliary? Auxiliary { get; init; }
     /// <summary>
     /// The property <c>source</c>. The source of the hypocentre information.
-    /// <c>null</c> when the earthquake happens within Japan.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when the earthquake happens within Japan.
+    /// </remarks>
     [JsonPropertyName("source")]
     public Source? Source { get; init; }
 }

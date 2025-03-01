@@ -48,27 +48,37 @@ internal record DataResponse : ResponseBase
     public required HeadInfo DataInfo { get; init; }
     /// <summary>
     /// The property <c>xmlReport</c>, representing the head and control information of the data.
-    /// <see langword="null"/> when not an XML report or a JSON converted format.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not an XML report or a JSON converted format.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("xmlReport")]
     public XmlReport? XmlInfo { get; init; }
     /// <summary>
     /// The property <c>format</c>, representing the format of the data.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when unknown.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("format")]
     public required FormatType? Format { get; init; }
     /// <summary>
     /// The property <c>compression</c>, representing the compression format of the data.
-    /// <see langword="null"/> when data is uncompressed.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when data is uncompressed.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("compression")]
     public required CompressionType? Compression { get; init; }
     /// <summary>
     /// The property <c>encoding</c>, representing the encoding format of the data.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not encoded.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("encoding")]
     public required EncodingType? Encoding { get; init; }

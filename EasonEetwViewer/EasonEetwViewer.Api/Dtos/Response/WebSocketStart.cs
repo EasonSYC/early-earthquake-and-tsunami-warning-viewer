@@ -28,7 +28,7 @@ public record WebSocketStart : SuccessBase
     public required TestStatus TestStatus { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the program receives.
-    /// <c>null</c> when receiving all types from the classifications.
+    /// <see langword="null"/> when receiving all types from the classifications.
     /// </summary>
     [JsonPropertyName("types")]
     public required IEnumerable<string>? Types { get; init; }
@@ -39,7 +39,7 @@ public record WebSocketStart : SuccessBase
     public required IEnumerable<FormatType> Formats { get; init; }
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
-    /// <c>null</c> when not indicated.
+    /// <see langword="null"/> when not indicated.
     /// </summary>
     [JsonPropertyName("appName")]
     public required string? ApplicationName { get; init; }

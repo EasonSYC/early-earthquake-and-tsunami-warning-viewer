@@ -21,6 +21,9 @@ internal record HeadInfo
     /// <summary>
     /// The property <c>target</c>, the target code of the telegram.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when no such target.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("target")]
     public string? Target { get; init; }
@@ -32,8 +35,10 @@ internal record HeadInfo
     public required DateTimeOffset Time { get; init; }
     /// <summary>
     /// The property <c>designation</c>, the designation of the telegram.
-    /// <see langword="null"/> when normal.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when normal.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("designation")]
     public required string? Designation { get; init; }
@@ -46,6 +51,9 @@ internal record HeadInfo
     /// <summary>
     /// The property <c>xml</c>, whether the telegram is an XML telegram.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when unknown.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("xml")]
     public bool? IsXml { get; init; }

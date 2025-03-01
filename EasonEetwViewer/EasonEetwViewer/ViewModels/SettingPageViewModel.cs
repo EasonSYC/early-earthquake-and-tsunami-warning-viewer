@@ -7,6 +7,7 @@ using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Api.Dtos.Record.Contract;
 using EasonEetwViewer.Api.Dtos.Record.WebSocket;
+using EasonEetwViewer.Api.Dtos.Request;
 using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;

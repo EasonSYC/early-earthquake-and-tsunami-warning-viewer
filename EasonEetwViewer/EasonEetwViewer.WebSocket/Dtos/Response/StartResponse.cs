@@ -34,8 +34,10 @@ internal record StartResponse : ResponseBase
     public required IEnumerable<Classification> Classifications { get; init; }
     /// <summary>
     /// The property <c>types</c>. The types of telegrams the program receives.
-    /// <c>null</c> when receiving all types from the classifications.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when receiving all types from the classifications.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("types")]
     public required IEnumerable<string>? Types { get; init; }
@@ -45,11 +47,12 @@ internal record StartResponse : ResponseBase
     [JsonInclude]
     [JsonPropertyName("test")]
     public required TestStatus TestStatus { get; init; }
-
     /// <summary>
     /// The property <c>appName</c>. The application name of the WebSocket connection.
-    /// <c>null</c> when not indicated.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when not indicated.
+    /// </remarks>
     [JsonInclude]
     [JsonPropertyName("appName")]
     public required string? ApplicationName { get; init; }

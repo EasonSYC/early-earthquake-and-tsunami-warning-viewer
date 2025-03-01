@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Web;
 using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Api.Dtos.Request;
 using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Api.Extensions;
 using EasonEetwViewer.Api.Logging;

@@ -19,14 +19,18 @@ public record Magnitude
     public required MagnitudeUnit Unit { get; init; }
     /// <summary>
     /// The property <c>value</c>. The magnitude of the earthquake.
-    /// <c>null</c> when unclear or greater than M8.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when unclear or greater than M8.
+    /// </remarks>
     [JsonPropertyName("value")]
     public required float? Value { get; init; }
     /// <summary>
     /// The property <c>condition</c>. Abnormal behaviours of the magnitude.
-    /// <c>null</c> when the value is not <c>null</c>.
     /// </summary>
+    /// <remarks>
+    /// <see langword="null"/> when <see cref="Value"/> is not <see langword="null"/>.
+    /// </remarks>
     [JsonPropertyName("condition")]
     public MagnitudeCondition? Condition { get; init; }
 }

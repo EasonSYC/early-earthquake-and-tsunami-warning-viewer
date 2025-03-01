@@ -10,7 +10,7 @@ public record Contract
 {
     /// <summary>
     /// The property <c>id</c>. The subscription ID.
-    /// <c>null</c> if not subscribed to the contract.
+    /// <see langword="null"/> if not subscribed to the contract.
     /// </summary>
     [JsonPropertyName("id")]
     public required int? SubscriptionId { get; init; }
@@ -36,7 +36,7 @@ public record Contract
     public required UnitPrice Price { get; init; }
     /// <summary>
     /// The property <c>start</c>. The start time of the subscription.
-    /// <c>null</c> if not subscribed to the contract.
+    /// <see langword="null"/> if not subscribed to the contract.
     /// </summary>
     [JsonPropertyName("start")]
     public required DateTimeOffset? StartTime { get; init; }
