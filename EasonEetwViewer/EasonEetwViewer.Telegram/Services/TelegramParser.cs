@@ -3,7 +3,7 @@ using EasonEetwViewer.Dtos.JsonTelegram;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;
-using EasonEetwViewer.WebSocket.Exceptions;
+using EasonEetwViewer.Telegram.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Telegram.Services;

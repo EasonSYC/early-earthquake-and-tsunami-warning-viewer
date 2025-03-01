@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.Telegram.Services;
 
-namespace EasonEetwViewer.WebSocket.Exceptions;
+namespace EasonEetwViewer.Telegram.Exceptions;
 /// <summary>
 /// Represents unsupported errors that occurs in <see cref="TelegramParser"/>.
 /// </summary>

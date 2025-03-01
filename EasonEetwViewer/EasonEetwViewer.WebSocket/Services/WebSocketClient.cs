@@ -7,6 +7,7 @@ using System.Text.Json;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;
+using EasonEetwViewer.Telegram.Exceptions;
 using EasonEetwViewer.WebSocket.Abstractions;
 using EasonEetwViewer.WebSocket.Dtos;
 using EasonEetwViewer.WebSocket.Dtos.Data;
@@ -21,7 +22,7 @@ namespace EasonEetwViewer.WebSocket.Services;
 /// <summary>
 /// The default implementation of <see cref="IWebSocketClient"/>.
 /// </summary>
-public sealed class WebSocketClient : IWebSocketClient
+internal sealed class WebSocketClient : IWebSocketClient
 {
     /// <summary>
     /// The JSON Serializer Options to be used.

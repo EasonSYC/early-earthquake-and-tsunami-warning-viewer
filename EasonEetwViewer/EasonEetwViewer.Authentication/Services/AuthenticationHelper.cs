@@ -1,9 +1,9 @@
 ﻿using System.Net.Http.Headers;
+using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Exceptions;
-using EasonEetwViewer.Authentication.Services;
 using Microsoft.Extensions.Logging;
 
-namespace EasonEetwViewer.Authentication.Abstractions;
+namespace EasonEetwViewer.Authentication.Services;
 /// <summary>
 /// Default implmentation of <see cref="IAuthenticationHelper"/>.
 /// </summary>

@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
 
 namespace EasonEetwViewer.Api.Extensions;
 internal static class ConnectionStatusExtensions

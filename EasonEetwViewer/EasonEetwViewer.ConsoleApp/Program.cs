@@ -1,7 +1,9 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Api.Dtos;
+using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
@@ -10,6 +12,8 @@ using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.Schema;
+using EasonEetwViewer.WebSocket.Abstractions;
+using EasonEetwViewer.WebSocket.Services;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 

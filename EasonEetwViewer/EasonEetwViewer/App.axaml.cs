@@ -6,8 +6,9 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Api.Dtos.ApiPost;
-using EasonEetwViewer.Api.Dtos.ApiResponse.Enum.WebSocket;
+using EasonEetwViewer.Api.Dtos;
+using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Api.Extensions;
 using EasonEetwViewer.Api.Services;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Extensions;
@@ -26,6 +27,7 @@ using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using EasonEetwViewer.WebSocket.Abstractions;
+using EasonEetwViewer.WebSocket.Extensions;
 using EasonEetwViewer.WebSocket.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -145,14 +147,9 @@ public partial class App : Application
                     RespectRequiredConstructorParameters = true
             })
 
-            .AddSingleton<ITelegramParser, TelegramParser>()
-            .AddSingleton<IApiCaller>(sp
-                => new ApiCaller(
-                    baseApi,
-                    sp.GetRequiredService<IAuthenticationHelper>(),
-                    sp.GetRequiredService<JsonSerializerOptions>()))
+            .AddApiCaller(baseApi)
             .AddTelegramRetriever(baseTelegram)
-            .AddSingleton<IWebSocketClient, WebSocketClient>()
+            .AddWebSocket()
 
             .AddAuthenticator(authenticatorPath)
             .AddOptions<OAuth2Options>()

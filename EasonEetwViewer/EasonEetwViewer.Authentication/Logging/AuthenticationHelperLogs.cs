@@ -1,5 +1,4 @@
-﻿using EasonEetwViewer.Authentication.Abstractions;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Authentication.Services;
 /// <summary>
@@ -92,7 +91,6 @@ internal static partial class AuthenticationWrapperLogs
         Message = "Revoking OAuth 2 tokens.")]
     public static partial void RevokingOAuth2Token(
         this ILogger<AuthenticationHelper> logger);
-
 
     /// <summary>
     /// Log when invalid authentication message.

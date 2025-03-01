@@ -1,16 +1,16 @@
-﻿using System.Net.Http.Headers;
-using System.Net;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.TelegramBase;
-using EasonEetwViewer.WebSocket.Exceptions;
+using EasonEetwViewer.Telegram.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Telegram.Services;
 /// <summary>
 /// The default implementation of <see cref="ITelegramRetriever"/>.
 /// </summary>
-public sealed class TelegramRetriever : ITelegramRetriever
+internal sealed class TelegramRetriever : ITelegramRetriever
 {
     /// <summary>
     /// The <see cref="HttpClient"/> to be used.
@@ -33,6 +33,7 @@ public sealed class TelegramRetriever : ITelegramRetriever
     /// </summary>
     /// <param name="baseApi">The base API of the telegram to be retrieved.</param>
     /// <param name="parser">The parser to be used to parse JSON telegrams.</param>
+    /// <param name="logger">The logger to be used.</param>
     /// <param name="authenticator">The authenticator to be used.</param>
     public TelegramRetriever(string baseApi, ITelegramParser parser, ILogger<TelegramRetriever> logger, IAuthenticationHelper authenticator)
     {

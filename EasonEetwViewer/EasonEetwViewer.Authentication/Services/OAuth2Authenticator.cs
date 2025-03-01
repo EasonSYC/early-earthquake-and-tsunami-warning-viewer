@@ -79,7 +79,7 @@ internal sealed class OAuth2Authenticator : IAuthenticator
         _refreshToken = refreshToken;
         _logger = logger;
         _accessToken = accessToken ?? Task.Run(RenewAccessTokenAsync).Result;
-        _accessTokenExpiry = DateTimeOffset.Now;
+        _accessTokenExpiry = DateTimeOffset.Now + _accessTokenValidity;
         _logger.Instantiated();
     }
 
