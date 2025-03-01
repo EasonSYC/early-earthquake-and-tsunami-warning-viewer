@@ -1,10 +1,8 @@
-﻿using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Telegram.Abstractions;
+﻿using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.WebSocket.Abstractions;
 using EasonEetwViewer.WebSocket.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.WebSocket.Extensions;
 /// <summary>

@@ -1,5 +1,4 @@
-﻿using EasonEetwViewer.Api.Dtos;
-using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
+﻿using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Dtos.Enum;
 

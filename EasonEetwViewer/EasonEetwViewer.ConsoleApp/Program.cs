@@ -1,7 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Text;
 using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Api.Dtos;
 using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Dtos.Enum;
@@ -13,7 +12,6 @@ using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.WebSocket.Abstractions;
-using EasonEetwViewer.WebSocket.Services;
 using SkiaSharp;
 namespace EasonEetwViewer.ConsoleApp;
 
@@ -110,7 +108,7 @@ internal class Program
         WebSocketStart response = await apiCaller.PostWebSocketStartAsync(start);
         Console.WriteLine(response);
 
-        await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
+        _ = await apiCaller.DeleteWebSocketAsync(int.Parse(Console.ReadLine() ?? string.Empty));
         Console.WriteLine("Successfully closed WebSocket connection.");
 
         EarthquakeParameter earthquakeParameter = await apiCaller.GetEarthquakeParameterAsync();

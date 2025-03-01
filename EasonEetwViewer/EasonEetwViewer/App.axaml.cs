@@ -5,11 +5,9 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Api.Dtos;
 using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Api.Dtos.Request;
 using EasonEetwViewer.Api.Extensions;
-using EasonEetwViewer.Api.Services;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Extensions;
 using EasonEetwViewer.Dtos.Enum;
@@ -21,14 +19,10 @@ using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
-using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Extensions;
-using EasonEetwViewer.Telegram.Services;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
-using EasonEetwViewer.WebSocket.Abstractions;
 using EasonEetwViewer.WebSocket.Extensions;
-using EasonEetwViewer.WebSocket.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -37,8 +31,11 @@ namespace EasonEetwViewer;
 public partial class App : Application
 {
     /// <inheritdoc/> 
-    public override void Initialize() => AvaloniaXamlLoader.Load(this);
-
+    public override void Initialize()
+        => AvaloniaXamlLoader.Load(this);
+    /// <summary>
+    /// The service provider for the application.
+    /// </summary>
     public static IServiceProvider? Service { get; private set; }
 
     private static KmoniOptions GetKmoniOptions(string kmoniOptionsPath)
@@ -182,8 +179,6 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             DisableAvaloniaDataAnnotationValidation();
             desktop.MainWindow = new MainWindow
             {
@@ -193,12 +188,17 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
-
+    /// <summary>
+    /// Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
+    /// </summary>
+    /// <remarks>
+    /// <see href="https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins">More Info</see>
+    /// </remarks>
     private static void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
         DataAnnotationsValidationPlugin[] dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
+            [.. BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>()];
 
         // remove each entry found
         foreach (DataAnnotationsValidationPlugin plugin in dataValidationPluginsToRemove)

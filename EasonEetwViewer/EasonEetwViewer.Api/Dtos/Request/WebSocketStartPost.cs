@@ -3,7 +3,7 @@ using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
 
-namespace EasonEetwViewer.Api.Dtos;
+namespace EasonEetwViewer.Api.Dtos.Request;
 
 /// <summary>
 /// Outlines the necessary information provided in the JSON in the header in <c>socket.start</c> API call.
