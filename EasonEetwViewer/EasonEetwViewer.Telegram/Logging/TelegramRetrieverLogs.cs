@@ -42,4 +42,28 @@ internal static partial class TelegramRetrieverLogs
         Message = "Error Message from API Ignored: `{Error}`.")]
     public static partial void ApiErrorIgnored(
         this ILogger<TelegramRetriever> logger, string error);
+    /// <summary>
+    /// Log when sending request.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="id">The telegram ID.</param>
+    [LoggerMessage(
+        EventId = 3,
+        EventName = nameof(Requesting),
+        Level = LogLevel.Debug,
+        Message = "Requesting telegram `{Id}`.")]
+    public static partial void Requesting(
+        this ILogger<TelegramRetriever> logger, string id);
+    /// <summary>
+    /// Log when request successfully sent.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="id">The telegram ID.</param>
+    [LoggerMessage(
+        EventId = 4,
+        EventName = nameof(Requested),
+        Level = LogLevel.Information,
+        Message = "Requested telegram `{Id}`.")]
+    public static partial void Requested(
+        this ILogger<TelegramRetriever> logger, string id);
 }

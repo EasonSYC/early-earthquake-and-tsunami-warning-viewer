@@ -37,8 +37,8 @@ public interface IApiCaller
     /// Deletes a WebSocket connection. <c>socket.close</c> API.
     /// </summary>
     /// <param name="id">The ID of the WebSocket.</param>
-    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
-    Task DeleteWebSocketAsync(int id);
+    /// <returns><see langword="true"/> if it was successful, <see langword="false"/> otherwise.</returns>
+    Task<bool> DeleteWebSocketAsync(int id);
     /// <summary>
     /// Gets the list of earthquake observation points. <c>parameter.earthquake</c> API.
     /// </summary>

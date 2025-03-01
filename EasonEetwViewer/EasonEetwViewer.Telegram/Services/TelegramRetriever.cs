@@ -58,21 +58,21 @@ internal sealed class TelegramRetriever : ITelegramRetriever
         request.Headers.Authorization = authenticationHeaderValue;
         try
         {
+            _logger.Requesting(id);
             using HttpResponseMessage response = await _client.SendAsync(request);
+            _logger.Requested(id);
+            string responseBody = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
             {
-                string responseBody = await response.Content.ReadAsStringAsync();
                 return _parser.ParseJsonTelegram(responseBody);
             }
             else
             {
-                string error = await response.Content.ReadAsStringAsync();
-                _logger.ApiErrorIgnored(error);
+                _logger.ApiErrorIgnored(responseBody);
 
                 if (response.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden)
                 {
-                    await _authenticator.InvalidAuthenticatorAsync(error);
-                    return null;
+                    await _authenticator.InvalidAuthenticatorAsync(responseBody);
                 }
 
                 return null;
