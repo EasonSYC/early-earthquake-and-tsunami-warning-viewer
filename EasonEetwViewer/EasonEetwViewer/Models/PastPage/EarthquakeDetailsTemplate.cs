@@ -1,5 +1,6 @@
 ﻿using EasonEetwViewer.Dtos.DmdataComponent;
 using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Models.PastPage;
 
 namespace EasonEetwViewer.Models;
 internal record EarthquakeDetailsTemplate

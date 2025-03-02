@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Models;
+﻿namespace EasonEetwViewer.Models.RealTimePage;
 internal record PrefectureData
 {
     internal required string Code { get; init; }

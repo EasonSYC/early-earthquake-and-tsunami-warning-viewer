@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Models;
+﻿namespace EasonEetwViewer.Models.RealTimePage;
 internal enum TsunamiWarningType
 {
     None = 0,

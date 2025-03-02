@@ -1,6 +1,7 @@
 ﻿using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Models.RealTimePage;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.PastPage;
 internal record DetailIntensityTemplate
 {
     internal Intensity Intensity { get; init; }

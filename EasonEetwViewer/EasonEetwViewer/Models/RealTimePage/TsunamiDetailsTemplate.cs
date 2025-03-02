@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Models;
+﻿namespace EasonEetwViewer.Models.RealTimePage;
 internal record TsunamiDetailsTemplate
 {
     internal string? InformationalText { get; private init; }

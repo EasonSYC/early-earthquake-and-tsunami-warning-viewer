@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.Telegram.Dtos.EewInformation;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.RealTimePage;
 internal record EewDetailsTemplate
 {
     internal DateTimeOffset ExpiryTime { get; private init; }
