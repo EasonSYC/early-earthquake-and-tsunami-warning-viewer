@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Extensions;
-using EasonEetwViewer.KyoshinMonitor.Abstractions;
 
 namespace EasonEetwViewer.Converters;
 
-internal class EnumDisplayStringConverter : IValueConverter
+internal class EnumDisplayTextConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => typeof(EnumDisplayTextExtensions)

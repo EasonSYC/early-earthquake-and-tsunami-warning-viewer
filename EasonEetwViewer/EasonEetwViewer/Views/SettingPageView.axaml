@@ -17,7 +17,7 @@
     </Design.DataContext>
 
     <UserControl.Resources>
-        <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
+        <conv:EnumDisplayTextConverter x:Key="EnumDisplayTextConverter"/>
         <conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
         <conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
         <conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
@@ -74,7 +74,7 @@
                            FontSize="15"
                            VerticalAlignment="Center">
                     <Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
-                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource EnumDisplayStringConverter}}"/>
+                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource EnumDisplayTextConverter}}"/>
                 </TextBlock>
             </StackPanel>
 
@@ -180,7 +180,7 @@
                           SelectedItem="{Binding KmoniSettingsHelper.SensorChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayStringConverter}}"/>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayTextConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -196,7 +196,7 @@
                           SelectedItem="{Binding KmoniSettingsHelper.MeasurementChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayStringConverter}}"/>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayTextConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

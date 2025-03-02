@@ -19,7 +19,7 @@
 
     <UserControl.Resources>
         <conv:EnumDisplayColourConverter x:Key="EnumDisplayColourConverter"/>
-        <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
+        <conv:EnumDisplayTextConverter x:Key="EnumDisplayTextConverter"/>
         <conv:EewTypeConverter x:Key="EewTypeConverter"/>
         <conv:EewColourConverter x:Key="EewColourConverter"/>
         <conv:EewSerialConverter x:Key="EewSerialConverter"/>
@@ -312,7 +312,7 @@
                     <TextBlock FontWeight="SemiBold"
                                Margin="5 5"
                                FontSize="24"
-                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayStringConverter}}"/>
+                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayTextConverter}}"/>
 
                     <!--Update Time Display-->
 
