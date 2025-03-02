@@ -6,7 +6,7 @@ namespace EasonEetwViewer;
 /// <summary>
 /// The view locator for the application.
 /// </summary>
-public class ViewLocator : IDataTemplate
+internal class ViewLocator : IDataTemplate
 {
     /// <inheritdoc/>
     public Control? Build(object? param)
