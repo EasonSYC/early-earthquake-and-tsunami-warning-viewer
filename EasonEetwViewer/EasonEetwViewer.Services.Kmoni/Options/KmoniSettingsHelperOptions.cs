@@ -9,7 +9,7 @@ namespace EasonEetwViewer.Services.Kmoni.Options;
 /// <summary>
 /// Represents the options for the <see cref="KmoniSettingsHelper"/>.
 /// </summary>
-public sealed class KmoniSettingsHelperOptions
+public sealed record KmoniSettingsHelperOptions
 {
     /// <summary>
     /// The filepath to which the setting is stored.

@@ -12,12 +12,24 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Services.Kmoni;
 
+/// <summary>
+/// The default implementation of <see cref="IKmoniSettingsHelper"/>.
+/// </summary>
 internal sealed class KmoniSettingsHelper : IKmoniSettingsHelper
 {
+    /// <summary>
+    /// The logger to be used.
+    /// </summary>
     private readonly ILogger<KmoniSettingsHelper> _logger;
+    /// <summary>
+    /// The settings for kmoni.
+    /// </summary>
     private readonly KmoniSettings _settings;
+
+    /// <inheritdoc/>
     public event EventHandler<KmoniSettingsChangedEventArgs>? KmoniSettingsChanged;
 
+    /// <inheritdoc/>
     public SensorType SensorChoice
     {
         get
@@ -33,6 +45,7 @@ internal sealed class KmoniSettingsHelper : IKmoniSettingsHelper
         }
     }
 
+    /// <inheritdoc/>
     public MeasurementType MeasurementChoice
     {
         get
@@ -48,6 +61,11 @@ internal sealed class KmoniSettingsHelper : IKmoniSettingsHelper
         }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="KmoniSettingsHelper"/>.
+    /// </summary>
+    /// <param name="settings">The initial settings.</param>
+    /// <param name="logger">The logger to be used.</param>
     public KmoniSettingsHelper(KmoniSettings settings, ILogger<KmoniSettingsHelper> logger)
     {
         _settings = settings;

@@ -1,32 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.SettingPage;
 
-internal partial class WebSocketConnectionTemplate : ObservableObject
+internal partial class WebSocketConnectionTemplate : ObservableObject, IWebSocketConnectionTemplate
 {
-    internal WebSocketConnectionTemplate(int connectionId, Func<string> appName, DateTimeOffset startTime, Func<int, Task> disconnectTask, bool isEnabled = true)
-    {
-        ConnectionId = connectionId;
-        AppName = appName;
-        StartTime = startTime;
-        IsEnabled = isEnabled;
-        _disconnectTask = disconnectTask;
-    }
-
-    internal int ConnectionId { get; private init; }
-    internal Func<string> AppName { get; private init; }
-    internal DateTimeOffset StartTime { get; private init; }
-
+    public required int WebSocketId { get; init; }
+    public required string ApplicationName { get; init; }
+    public required DateTimeOffset StartTime { get; init; }
     [ObservableProperty]
-    private bool _isEnabled;
-
-    private readonly Func<int, Task> _disconnectTask;
+    private bool _isEnabled = true;
+    public required Func<Task<bool>> DisconnectTask { get; init; }
 
     [RelayCommand]
-    internal async Task Disconnect()
+    private async Task Disconnect()
     {
-        IsEnabled = false;
-        await _disconnectTask(ConnectionId);
+        bool isSuccessful = await DisconnectTask();
+        if (isSuccessful)
+        {
+            IsEnabled = false;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace EasonEetwViewer.Services.Kmoni.Dtos;
 /// <summary>
 /// Represents the settings for the kmoni.
 /// </summary>
-public partial class KmoniSettings
+public record KmoniSettings
 {
     /// <summary>
     /// The sensor choice.

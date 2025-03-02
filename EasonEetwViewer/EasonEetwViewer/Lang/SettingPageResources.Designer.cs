@@ -403,15 +403,6 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection ID.
-        /// </summary>
-        public static string WebSocketConnectionIdText {
-            get {
-                return ResourceManager.GetString("WebSocketConnectionIdText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection Time.
         /// </summary>
         public static string WebSocketConnectionTimeText {
@@ -462,6 +453,15 @@ namespace EasonEetwViewer.Lang {
         public static string WebSocketText {
             get {
                 return ResourceManager.GetString("WebSocketText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection ID.
+        /// </summary>
+        public static string WebSocketWebSocketIdText {
+            get {
+                return ResourceManager.GetString("WebSocketWebSocketIdText", resourceCulture);
             }
         }
     }

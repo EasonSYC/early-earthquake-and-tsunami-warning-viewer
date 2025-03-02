@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Media;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.MainWindow;
 /// <summary>
 /// Represents a sidebar item.
 /// </summary>

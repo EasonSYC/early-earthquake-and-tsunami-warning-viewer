@@ -171,7 +171,7 @@
   <data name="WebSocketConnectedButtonText" xml:space="preserve">
     <value>WebSocket を切断する</value>
   </data>
-  <data name="WebSocketConnectionIdText" xml:space="preserve">
+  <data name="WebSocketWebSocketIdText" xml:space="preserve">
     <value>接続ID</value>
   </data>
   <data name="WebSocketConnectionTimeText" xml:space="preserve">

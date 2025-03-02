@@ -171,7 +171,7 @@
   <data name="WebSocketConnectedButtonText" xml:space="preserve">
     <value>Disconnect from WebSocket</value>
   </data>
-  <data name="WebSocketConnectionIdText" xml:space="preserve">
+  <data name="WebSocketWebSocketIdText" xml:space="preserve">
     <value>Connection ID</value>
   </data>
   <data name="WebSocketConnectionTimeText" xml:space="preserve">

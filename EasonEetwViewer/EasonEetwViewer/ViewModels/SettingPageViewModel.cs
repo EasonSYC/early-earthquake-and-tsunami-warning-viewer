@@ -15,12 +15,14 @@ using EasonEetwViewer.Events;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.SettingPage;
 using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
 using Microsoft.Extensions.Logging;
 using EasonEetwViewer.Services.Kmoni.Abstraction;
+using Tmds.DBus.Protocol;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -49,8 +51,6 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         _webSocketClient.StatusChanged += WebSocketStatusChangedEventHandler;
     }
     private readonly ILogger<SettingPageViewModel> _logger;
-    private void WebSocketStatusChangedEventHandler(object? sender, EventArgs e)
-        => OnPropertyChanged(nameof(WebSocketConnected));
 
     #region languageSettings
     public event EventHandler<LanguagedChangedEventArgs>? LanguageChanged;
@@ -70,17 +70,20 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     #endregion
 
     #region kmoniSettings
-    internal IKmoniSettingsHelper KmoniSettingsHelper { get; init; }
-    internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
-    internal IEnumerable<MeasurementType> DataTypeChoices { get; init; } = Enum.GetValues<MeasurementType>();
+    public IKmoniSettingsHelper KmoniSettingsHelper { get; init; }
+    public IEnumerable<SensorType> SensorTypeChoices { get; init; }
+        = Enum.GetValues<SensorType>();
+    public IEnumerable<MeasurementType> DataTypeChoices { get; init; }
+        = Enum.GetValues<MeasurementType>();
     #endregion
 
     #region webSocketSettings
     private readonly IWebSocketClient _webSocketClient;
     private readonly WebSocketStartPost _startPost;
-
-    internal bool WebSocketConnected => _webSocketClient.IsWebSocketConnected;
-
+    public bool WebSocketConnected
+        => _webSocketClient.IsWebSocketConnected;
+    private void WebSocketStatusChangedEventHandler(object? sender, EventArgs e)
+        => OnPropertyChanged(nameof(WebSocketConnected));
     [RelayCommand]
     private async Task WebSocketButton()
     {
@@ -99,7 +102,8 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     }
 
     [ObservableProperty]
-    private ObservableCollection<WebSocketConnectionTemplate> _webSocketConnections = [];
+    private ObservableCollection<IWebSocketConnectionTemplate> _webSocketConnections
+        = [];
 
     private async Task<int> GetAvaliableWebSocketConnections()
     {
@@ -108,40 +112,37 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         return contracts.Sum(c => c.IsValid ? c.ConnectionCounts : 0);
     }
 
-    private readonly WebSocketConnectionTemplate _emptyConnection
-        = new(-1, () => SettingPageResources.WebSocketEmptyConnectionName, new(), (x) => Task.CompletedTask, false);
-
     [RelayCommand]
     private async Task WebSocketRefresh()
     {
         IList<WebSocketDetails> wsList = [];
-        string currentCursorToken = string.Empty;
-
-        // Cursor Token
-        for (int i = 0; i < 5; ++i)
+        string? currentCursorToken = null;
+        do
         {
-            WebSocketList? webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
+            WebSocketList? webSocketList = await _apiCaller.GetWebSocketListAsync(
+                limit: 100,
+                connectionStatus: ConnectionStatus.Open,
+                cursorToken: currentCursorToken);
             wsList.AddRange(webSocketList?.ItemList ?? []);
 
-            if (webSocketList?.NextToken is null)
-            {
-                break;
-            }
-            else
-            {
-                currentCursorToken = webSocketList.NextToken;
-            }
-        }
+            currentCursorToken = webSocketList?.NextToken;
+        } while (currentCursorToken is not null);
 
-        ObservableCollection<WebSocketConnectionTemplate> currentConnections = [];
+        ObservableCollection<IWebSocketConnectionTemplate> currentConnections = [];
         currentConnections.AddRange(wsList.Select(x
-            => new WebSocketConnectionTemplate(x.WebSocketId, () => x.ApplicationName ?? string.Empty, x.StartTime, _apiCaller.DeleteWebSocketAsync)));
+            => new WebSocketConnectionTemplate()
+            {
+                ApplicationName = x.ApplicationName ?? string.Empty,
+                WebSocketId = x.WebSocketId,
+                StartTime = x.StartTime,
+                DisconnectTask = async ()
+                    => await _apiCaller.DeleteWebSocketAsync(x.WebSocketId)
+            }));
 
         int avaliableConnection = await GetAvaliableWebSocketConnections();
-        while (currentConnections.Count < avaliableConnection)
-        {
-            currentConnections.Add(_emptyConnection);
-        }
+        currentConnections.AddRange(Enumerable.Repeat(
+            EmptyWebSocketConnectionTemplate.Instance,
+            avaliableConnection - currentConnections.Count));
 
         WebSocketConnections = currentConnections;
     }

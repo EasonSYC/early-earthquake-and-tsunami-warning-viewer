@@ -42,7 +42,7 @@ internal partial class App : Application
     /// <summary>
     /// The service provider for the application.
     /// </summary>
-    public static IServiceProvider? Service { get; private set; } 
+    public static IServiceProvider? Service { get; private set; }
 
     private static CultureInfo GetLanguage(string languagePath)
     {
@@ -92,7 +92,6 @@ internal partial class App : Application
         string baseTelegram = baseUrls["Telegram"]!;
 
         IConfigurationSection configPaths = config.GetSection("ConfigPaths");
-        string kmoniOptionsPath = configPaths["KmoniSettingsHelper"]!;
         string authenticatorPath = configPaths["Authenticator"]!;
         string languagePath = configPaths["Language"]!;
 
@@ -108,17 +107,7 @@ internal partial class App : Application
                     .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information)
                     .AddDebug()
                     .SetMinimumLevel(LogLevel.Information))
-            .AddSingleton(sp
-                => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
 
-            .AddSingleton<Action<CultureInfo>>(sp
-                => s
-                =>
-                {
-                    LanguageChange(s);
-                    File.WriteAllText(languagePath, s.Name);
-                })
-            .AddSingleton<ITimeProvider, DefaultTimeProvider>()
             .AddSingleton(sp
                 => new JsonSerializerOptions()
                 {
@@ -130,6 +119,8 @@ internal partial class App : Application
             .AddApiCaller(baseApi)
             .AddTelegramRetriever(baseTelegram)
             .AddWebSocket()
+
+            .AddSingleton<ITimeProvider, DefaultTimeProvider>()
 
             .AddKmoniOptionsHelper()
             .AddOptions<KmoniSettingsHelperOptions>()
@@ -158,9 +149,20 @@ internal partial class App : Application
             .AddSingleton<PastPageViewModel>()
             .AddSingleton<SettingPageViewModel>();
 
+        _ = collection
+            .AddSingleton(sp
+                => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"));
+
         Service = collection
             .BuildServiceProvider()
             .AttachMapsuiLogging();
+
+        Service.GetRequiredService<SettingPageViewModel>().LanguageChanged += (o, e)
+            => 
+            {
+                LanguageChange(e.Language);
+                File.WriteAllText(languagePath, e.Language.Name);
+            };
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasonEetwViewer.Lang;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.MainWindow;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Microsoft.Extensions.Logging;
 
