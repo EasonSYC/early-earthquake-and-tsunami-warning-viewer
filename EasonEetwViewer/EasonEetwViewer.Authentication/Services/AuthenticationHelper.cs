@@ -56,6 +56,7 @@ internal sealed class AuthenticationHelper : IAuthenticationHelper
     /// <summary>
     /// Creates a new instance of <see cref="AuthenticationHelper"/> from a string.
     /// </summary>
+    /// <param name="filePath">The file path to write to when the authentication status is updated.</param>
     /// <param name="str">The string to be used to create the instance from.</param>
     /// <param name="logger">The logger to be used for the instance</param>
     /// <param name="helperLogger">The logger to be used for the <see cref="OAuth2Helper"/>.</param>
@@ -63,6 +64,7 @@ internal sealed class AuthenticationHelper : IAuthenticationHelper
     /// <param name="oAuth2Options">The options for OAuth 2.</param>
     /// <returns>The new instance of <see cref="AuthenticationHelper"/>.</returns>
     internal static AuthenticationHelper FromString(
+        string filePath,
         string? str,
         ILogger<AuthenticationHelper> logger,
         ILogger<OAuth2Helper> helperLogger,
@@ -100,12 +102,26 @@ internal sealed class AuthenticationHelper : IAuthenticationHelper
             authenticator = NullAuthenticator.Instance;
         }
 
-        return new AuthenticationHelper(
+        AuthenticationHelper authenticationHelper = new(
             authenticator,
             logger,
             helperLogger,
             oAuthLogger,
             oAuth2Options);
+        authenticationHelper.AuthenticationStatusChanged += (sender, e) =>
+        {
+            string? content = authenticationHelper.ToString();
+            try
+            {
+                File.WriteAllText(filePath, content);
+                logger.SucceededToWriteToFile(filePath, content);
+            }
+            catch (Exception)
+            {
+                logger.FailedToWriteToFile(filePath, content);
+            }
+        };
+        return authenticationHelper;
     }
     /// <inheritdoc/>
     public AuthenticationStatus AuthenticationStatus

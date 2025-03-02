@@ -104,4 +104,32 @@ internal static partial class AuthenticationWrapperLogs
         Message = "Invalid authentication message: `{Message}`.")]
     public static partial void InvalidAuthentication(
         this ILogger<AuthenticationHelper> logger, string message);
+
+    /// <summary>
+    /// Log when failed to write to file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path to be written to.</param>
+    /// <param name="content">The content that was written.</param>
+    [LoggerMessage(
+        EventId = 8,
+        EventName = nameof(FailedToWriteToFile),
+        Level = LogLevel.Error,
+        Message = "Failed to write to file: `{FilePath}` `{Content}`.")]
+    public static partial void FailedToWriteToFile(
+        this ILogger<AuthenticationHelper> logger, string filePath, string? content);
+
+    /// <summary>
+    /// Log when successfullt to write to file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path to be written to.</param>
+    /// <param name="content">The content that was written.</param>
+    [LoggerMessage(
+        EventId = 9,
+        EventName = nameof(SucceededToWriteToFile),
+        Level = LogLevel.Information,
+        Message = "Succeeded to write to file: `{FilePath}` `{Content}`.")]
+    public static partial void SucceededToWriteToFile(
+        this ILogger<AuthenticationHelper> logger, string filePath, string? content);
 }

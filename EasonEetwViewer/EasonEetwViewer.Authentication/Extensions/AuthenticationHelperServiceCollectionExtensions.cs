@@ -18,7 +18,7 @@ public static class AuthenticationHelperServiceCollectionExtensions
     /// <returns>The <see cref="IServiceCollection"/> where the service is injected, for chained calls.</returns>
     public static IServiceCollection AddAuthenticator(this IServiceCollection services, string filePath)
         => services.AddSingleton<IAuthenticationHelper>(sp
-            =>
+        =>
         {
             string fileContent;
             try
@@ -30,11 +30,13 @@ public static class AuthenticationHelperServiceCollectionExtensions
                 fileContent = string.Empty;
             }
 
-            return AuthenticationHelper.FromString(
+            AuthenticationHelper authenticator = AuthenticationHelper.FromString(
+                filePath,
                 fileContent,
                 sp.GetRequiredService<ILogger<AuthenticationHelper>>(),
                 sp.GetRequiredService<ILogger<OAuth2Helper>>(),
                 sp.GetRequiredService<ILogger<OAuth2Authenticator>>(),
                 sp.GetRequiredService<IOptions<OAuth2Options>>().Value);
+            return authenticator;
         });
 }
