@@ -57,7 +57,7 @@ internal static partial class ApiCallerLogs
         Level = LogLevel.Information,
         Message = "Http Request Created: `{Method}` `{RelativePath}` `{Content}`.")]
     public static partial void RequestWithContentCreated(
-        this ILogger<ApiCaller> logger, HttpMethod method, string relativePath, HttpContent content);
+        this ILogger<ApiCaller> logger, HttpMethod method, string relativePath, string? content);
     /// <summary>
     /// Log when failed to parse a result string.
     /// </summary>

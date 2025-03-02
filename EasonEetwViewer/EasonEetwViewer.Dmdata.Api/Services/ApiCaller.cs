@@ -108,10 +108,7 @@ internal sealed class ApiCaller : IApiCaller
         using HttpRequestMessage request = CreateHttpRequest(
             HttpMethod.Post,
             relativePath,
-            new StringContent(
-                JsonSerializer.Serialize(content),
-                Encoding.UTF8,
-                "application/json"));
+            content);
         return await ParseResultAsync<TResult>(request);
     }
     /// <summary>
@@ -256,13 +253,21 @@ internal sealed class ApiCaller : IApiCaller
     /// <summary>
     /// Creates a new <see cref="HttpRequestMessage"/> with the specified HTTP Method, relative path and content.
     /// </summary>
+    /// <typeparam name="TContent">The type of the content to be included.</typeparam>
     /// <param name="method">The <see cref="HttpMethod"/> specified.</param>
     /// <param name="relativePath">The relative path.</param>
-    /// <param name="content">The <see cref="HttpContent"/> to be included.</param>
+    /// <param name="content">The content to be included.</param>
     /// <returns>The <see cref="HttpRequestMessage"/> created.</returns>
-    private HttpRequestMessage CreateHttpRequest(HttpMethod method, string relativePath, HttpContent content)
+    private HttpRequestMessage CreateHttpRequest<TContent>(HttpMethod method, string relativePath, TContent content)
     {
-        _logger.RequestWithContentCreated(method, relativePath, content);
-        return new(method, relativePath) { Content = content };
+        string serialisedContent = JsonSerializer.Serialize(content);
+        _logger.RequestWithContentCreated(method, relativePath, serialisedContent);
+        return new(method, relativePath)
+        {
+            Content = new StringContent(
+                serialisedContent,
+                Encoding.UTF8,
+                "application/json")
+        };
     }
 }
