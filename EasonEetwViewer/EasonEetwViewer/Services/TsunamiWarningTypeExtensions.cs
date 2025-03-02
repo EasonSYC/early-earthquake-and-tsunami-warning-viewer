@@ -1,5 +1,5 @@
 ﻿using EasonEetwViewer.Lang;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Services;
 internal static class TsunamiWarningTypeExtensions

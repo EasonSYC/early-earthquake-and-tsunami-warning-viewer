@@ -157,7 +157,7 @@
                           Margin="0 5">
                 <ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailDisplay}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type m:DetailIntensityTemplate}">
+                        <DataTemplate>
                             <StackPanel>
 
                                 <!--Intensity Text-->
@@ -176,8 +176,7 @@
 
                                 <TreeView ItemsSource="{Binding PositionNodes}">
                                     <TreeView.ItemTemplate>
-                                        <TreeDataTemplate DataType="{x:Type m:PositionNode}"
-                                                          ItemsSource="{Binding SubNodes}">
+                                        <TreeDataTemplate ItemsSource="{Binding SubNodes}">
                                             <TextBlock Text="{Binding Title}"/>
                                         </TreeDataTemplate>
                                     </TreeView.ItemTemplate>

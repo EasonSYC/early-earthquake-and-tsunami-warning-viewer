@@ -1,5 +1,6 @@
 ﻿using EasonEetwViewer.Dtos.Enum;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.PastPage;
+using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Services;
 internal record IntensityDetailTree

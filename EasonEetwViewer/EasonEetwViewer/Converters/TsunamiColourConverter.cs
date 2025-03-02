@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.Converters;

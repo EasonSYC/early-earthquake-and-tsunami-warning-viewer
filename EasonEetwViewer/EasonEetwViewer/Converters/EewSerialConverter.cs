@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Lang;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Converters;
 internal class EewSerialConverter : IValueConverter

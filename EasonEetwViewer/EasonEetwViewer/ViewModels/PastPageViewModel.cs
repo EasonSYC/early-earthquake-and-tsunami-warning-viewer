@@ -11,7 +11,9 @@ using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.EarthquakeInformation;
 using EasonEetwViewer.Telegram.Dtos.EarthquakeInformation.Enum;
@@ -27,21 +29,19 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
 internal partial class PastPageViewModel(
-    StaticResources resources,
+    MapResourcesProvider resources,
     IAuthenticationHelper authenticatorWrapper,
-    IApiCaller apiCaller, ITelegramRetriever
-    telegramRetriever,
+    IApiCaller apiCaller,
+    ITelegramRetriever telegramRetriever,
     ITimeProvider timeProvider,
-    ILogger<PastPageViewModel> logger,
-    EventHandler<AuthenticationStatusChangedEventArgs> authEventHandler)
+    ILogger<PastPageViewModel> logger)
     : MapViewModelBase(
         resources,
         authenticatorWrapper,
         apiCaller,
         telegramRetriever,
         timeProvider,
-        logger,
-        authEventHandler)
+        logger)
 {
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
@@ -65,7 +65,7 @@ internal partial class PastPageViewModel(
         _ = Map.Layers.Remove(x => x.Name == _obsPointLayerName);
         _ = Map.Layers.Remove(x => x.Name == _hypocentreLayerName);
 
-        Map.Navigator.ZoomToBox(GetMainLimitsOfJapan());
+        Map.Navigator.ZoomToBox(_mainLimitsOfJapan);
 
         // async code needs cancellation token to prevent different ones add layers
         _cts.Cancel();
@@ -143,7 +143,7 @@ internal partial class PastPageViewModel(
                     Map.Layers.Add(new RasterizingLayer(layer));
                 }
 
-                IEnumerable<MRect?> regions = (await _resources.Region.GetFeaturesAsync(new(new MSection(GetLimitsOfJapan(), 1))))
+                IEnumerable<MRect?> regions = (await _resources.Region.GetFeaturesAsync(new(new MSection(_limitsOfJapan, 1))))
                     .Join(telegramInfo.Body.Intensity.Regions,
                     f => f["code"]?.ToString()?.ToLower(),
                     r => r.Code,
@@ -195,7 +195,7 @@ internal partial class PastPageViewModel(
 
         if (!token.IsCancellationRequested)
         {
-            MRect limits = regionLimits is null ? GetMainLimitsOfJapan() : regionLimits;
+            MRect limits = regionLimits is null ? _mainLimitsOfJapan : regionLimits;
             limits = hypocentreLimits is null ? limits : limits.Join(hypocentreLimits);
 
             if (regionLimits is not null || hypocentreLimits is not null)

@@ -15,6 +15,7 @@ using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
@@ -33,20 +34,18 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         IAuthenticationHelper authenticatorDto,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
-        ITimeProvider timeProvider,
-        EventHandler<AuthenticationStatusChangedEventArgs> eventHandler)
+        ITimeProvider timeProvider)
         : base(authenticatorDto,
             apiCaller,
             telegramRetriever,
             timeProvider,
-            logger,
-            eventHandler)
+            logger)
     {
         LanguageChanged = onLangChange;
         KmoniOptions = kmoniOptions;
         _webSocketClient = webSocketClient;
         _startPost = startPost;
-        AuthenticationStatusChanged += SettingPageViewModel_AuthenticationStatusChanged;
+        _authenticator.AuthenticationStatusChanged += SettingPageViewModel_AuthenticationStatusChanged;
         _webSocketClient.StatusChanged += WebSocketClient_DataReceived;
     }
 
@@ -172,7 +171,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         }
     }
 
-    private void SettingPageViewModel_AuthenticationStatusChanged(object? sender, AuthenticationStatusChangedEventArgs e)
+    private void SettingPageViewModel_AuthenticationStatusChanged(object? sender, EventArgs e)
     {
         OnPropertyChanged(nameof(OAuthConnected));
         OnPropertyChanged(nameof(ApiKeyConfirmed));
@@ -189,10 +188,10 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         }
     }
     private async Task SetAuthenticatorToApiKeyAsync(string apiKey)
-        => await _authenticatorWrapper.SetApiKeyAsync(apiKey);
+        => await _authenticator.SetApiKeyAsync(apiKey);
     private async Task SetAuthenticatorToOAuthAsync()
-        => await _authenticatorWrapper.SetOAuthAsync();
+        => await _authenticator.SetOAuthAsync();
     private async Task UnsetAuthenticatorAsync()
-        => await _authenticatorWrapper.UnsetAuthenticatorAsync();
+        => await _authenticator.UnsetAuthenticatorAsync();
     #endregion
 }

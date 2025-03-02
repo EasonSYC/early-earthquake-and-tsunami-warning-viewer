@@ -9,9 +9,10 @@ using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
-using EasonEetwViewer.Models;
+using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Telegram.Abstractions;
 using EasonEetwViewer.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Telegram.Dtos.Schema;
@@ -44,20 +45,18 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         ITimeTable timeTableProvider,
         KmoniOptions kmoniOptions,
         IWebSocketClient webSocketClient,
-        StaticResources resources,
+        MapResourcesProvider resources,
         IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider,
-        ILogger<RealtimePageViewModel> logger,
-        EventHandler<AuthenticationStatusChangedEventArgs> authEventHandler)
+        ILogger<RealtimePageViewModel> logger)
     : base(resources,
         authenticatorWrapper,
         apiCaller,
         telegramRetriever,
         timeProvider,
-        logger,
-        authEventHandler)
+        logger)
     {
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;
@@ -159,7 +158,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         }
 
         DateTimeOffset lifeTime = eew.PressDateTime + _eewLifeTime;
-        if (lifeTime < _timeProvider.DateTimeOffsetNow())
+        if (lifeTime < _timeProvider.Now())
         {
             return;
         }
@@ -294,7 +293,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         while (!eew.Token.IsCancellationRequested)
         {
-            double time = ((TimeSpan)(_timeProvider.DateTimeOffsetNow() - eew.Earthquake.OriginTime)).TotalSeconds;
+            double time = ((TimeSpan)(_timeProvider.Now() - eew.Earthquake.OriginTime)).TotalSeconds;
 
             if (time < 0)
             {
@@ -379,7 +378,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             for (int i = LiveEewList.Count - 1; i >= 0; --i)
             {
-                if (LiveEewList[i].ExpiryTime < _timeProvider.DateTimeOffsetNow())
+                if (LiveEewList[i].ExpiryTime < _timeProvider.Now())
                 {
                     RemoveEewAt(i);
                 }
@@ -436,7 +435,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private void OnTsunamiReceived(TsunamiInformationSchema schema)
     {
         DateTimeOffset validDateTime = schema.ValidDateTime ?? schema.PressDateTime + _tsunamiLifeTime;
-        if (validDateTime < _timeProvider.DateTimeOffsetNow())
+        if (validDateTime < _timeProvider.Now())
         {
             return;
         }
@@ -475,7 +474,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         while (!_token.IsCancellationRequested)
         {
-            if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.DateTimeOffsetNow())
+            if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.Now())
             {
                 CurrentTsunami = null;
                 _ = Map.Layers.Remove(l => l.Name == _tsunamiWarningLayerName);
@@ -507,9 +506,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     #region kmoni
     internal KmoniOptions KmoniOptions { get; init; }
-
-    private readonly TimeSpan _jstOffset = TimeSpan.FromHours(9);
-    internal DateTimeOffset TimeDisplay => _timeProvider.DateTimeOffsetNow().ToOffset(_jstOffset);
+    internal DateTimeOffset TimeDisplay
+        => _timeProvider.Now();
     private readonly System.Timers.Timer _timer;
 
     private const string _realTimeLayerName = "KmoniLayer";
@@ -553,9 +551,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             byte[]? imageBytes = await _imageFetch.GetByteArrayAsync(
                 KmoniOptions.DataChoice,
                 KmoniOptions.SensorChoice,
-                _timeProvider.DateTimeOffsetNow()
+                _timeProvider.ConvertToJst(_timeProvider.Now())
                 .AddSeconds(-_kmoniDelaySeconds)
-                .ToOffset(_jstOffset)
                 .DateTime);
 
             return imageBytes is null
