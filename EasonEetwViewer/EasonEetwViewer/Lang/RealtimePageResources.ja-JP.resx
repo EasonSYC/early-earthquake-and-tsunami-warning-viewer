@@ -243,19 +243,19 @@
   <data name="TsunamiColourNone" xml:space="preserve">
     <value>#F2F2FF</value>
   </data>
-  <data name="TsunamiTextNone" xml:space="preserve">
+  <data name="TsunamiWarningTypeTextNone" xml:space="preserve">
     <value>津波情報は解除しました</value>
   </data>
-  <data name="TsunamiTextInformation" xml:space="preserve">
+  <data name="TsunamiWarningTypeTextInformation" xml:space="preserve">
     <value>津波情報発表中</value>
   </data>
-  <data name="TsunamiTextCaution" xml:space="preserve">
+  <data name="TsunamiWarningTypeTextCaution" xml:space="preserve">
     <value>津波注意報発表中</value>
   </data>
-  <data name="TsunamiTextSpecialWarning" xml:space="preserve">
+  <data name="TsunamiWarningTypeTextSpecialWarning" xml:space="preserve">
     <value>大津波警報発表中</value>
   </data>
-  <data name="TsunamiTextWarning" xml:space="preserve">
+  <data name="TsunamiWarningTypeTextWarning" xml:space="preserve">
     <value>津波警報発表中</value>
   </data>
 </root>

@@ -12,7 +12,7 @@
     "publishingOffice": [
         "気象庁"
     ],
-    "pressDateTime": "2025-03-02T13:18:00Z",
+    "pressDateTime": "2025-03-02T20:52:00Z",
     "reportDateTime": "2018-09-06T03:10:16+09:00",
     "targetDateTime": "2018-09-06T03:10:16+09:00",
     "eventId": "20180906030805",
@@ -25,7 +25,7 @@
         "isCanceled": false,
         "isWarning": true,
         "earthquake": {
-            "originTime": "2025-03-02T13:18:00Z",
+            "originTime": "2025-03-02T20:52:00Z",
             "arrivalTime": "2018-09-06T03:08:05+09:00",
             "hypocenter": {
                 "code": "146",

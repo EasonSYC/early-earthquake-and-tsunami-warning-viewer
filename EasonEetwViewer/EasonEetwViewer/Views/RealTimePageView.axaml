@@ -18,6 +18,8 @@
     </Design.DataContext>
 
     <UserControl.Resources>
+        <conv:EnumDisplayColourConverter x:Key="EnumDisplayColourConverter"/>
+        <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
         <conv:EewTypeConverter x:Key="EewTypeConverter"/>
         <conv:EewColourConverter x:Key="EewColourConverter"/>
         <conv:EewSerialConverter x:Key="EewSerialConverter"/>
@@ -31,8 +33,6 @@
         <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
         <conv:EewAccuracyConverter x:Key="EewAccuracyConverter"/>
         <conv:EewOnePointConverter x:Key="EewOnePointConverter"/>
-        <conv:TsunamiColourConverter x:Key="TsunamiColourConverter"/>
-        <conv:TsunamiTextConverter x:Key="TsunamiTextConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -297,12 +297,12 @@
 
                     <!--Tsunami Colour Display-->
 
-                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiColourConverter}}"
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayColourConverter}}"
                             Height="10"
                             CornerRadius="10 0 0 0">
                     </Border>
 
-                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiColourConverter}}"
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayColourConverter}}"
                             Margin="0 5"
                             Height="5">
                     </Border>
@@ -312,7 +312,7 @@
                     <TextBlock FontWeight="SemiBold"
                                Margin="5 5"
                                FontSize="24"
-                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource TsunamiTextConverter}}"/>
+                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayStringConverter}}"/>
 
                     <!--Update Time Display-->
 

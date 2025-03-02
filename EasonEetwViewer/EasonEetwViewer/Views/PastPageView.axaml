@@ -18,8 +18,8 @@
     </Design.DataContext>
 
     <UserControl.Resources>
-        <conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
-        <conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
+        <conv:EnumDisplayColourConverter x:Key="EnumDisplayColourConverter"/>
+        <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
         <conv:DepthValueConverter x:Key="DepthValueConverter"/>
         <conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
         <conv:HypocentreConverter x:Key="HypocentreConverter"/>
@@ -67,8 +67,8 @@
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="52"
                            FontWeight="ExtraBold"
-                           Text="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityTextConverter}}"
-                           Foreground="{Binding EarthquakeDetails.Intensity, Converter={StaticResource IntensityColourConverter}}"
+                           Text="{Binding EarthquakeDetails.Intensity, Converter={StaticResource EnumDisplayStringConverter}}"
+                           Foreground="{Binding EarthquakeDetails.Intensity, Converter={StaticResource EnumDisplayColourConverter}}"
                            Margin="5 0"/>
 
                 <!--Origin Time Display-->
@@ -165,10 +165,10 @@
                                        TextAlignment="Left"
                                        FontSize="14"
                                        FontWeight="SemiBold"
-                                       Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
+                                       Foreground="{Binding Intensity, Converter={StaticResource EnumDisplayColourConverter}}"
                                        Margin="5">
                                     <Run Text="{x:Static, lang:Resources.DetailsIntensityText}"/>
-                                    <Run Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}, Mode=OneWay}}"/>
+                                    <Run Text="{Binding Intensity, Converter={StaticResource EnumDisplayStringConverter}}"/>
                                 </TextBlock>
 
                                 <!--Observation Point Tree-->
@@ -235,12 +235,12 @@
                                 <RowDefinition Height="3*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="{Binding Intensity, Converter={StaticResource IntensityTextConverter}}"
+                            <TextBlock Text="{Binding Intensity, Converter={StaticResource EnumDisplayStringConverter}}"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        FontSize="28"
                                        FontWeight="ExtraBold"
-                                       Foreground="{Binding Intensity, Converter={StaticResource IntensityColourConverter}}"
+                                       Foreground="{Binding Intensity, Converter={StaticResource EnumDisplayColourConverter}}"
                                        Grid.Column="0"
                                        Grid.Row="0"
                                        Grid.RowSpan="2"/>

@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
+using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Extensions;
 
@@ -64,4 +66,45 @@ internal static class EnumDisplayTextExtensions
                 => throw new UnreachableException(),
         };
 
+    public static string ToDisplayString(this TsunamiWarningType tsunamiWarningType)
+        => tsunamiWarningType switch
+        {
+            TsunamiWarningType.None
+                => RealtimePageResources.TsunamiWarningTypeTextNone,
+            TsunamiWarningType.Information
+                => RealtimePageResources.TsunamiWarningTypeTextInformation,
+            TsunamiWarningType.Caution
+                => RealtimePageResources.TsunamiWarningTypeTextCaution,
+            TsunamiWarningType.Warning
+                => RealtimePageResources.TsunamiWarningTypeTextWarning,
+            TsunamiWarningType.SpecialWarning
+                => RealtimePageResources.TsunamiWarningTypeTextSpecialWarning,
+            _
+                => throw new UnreachableException()
+        };
+
+    public static string ToDisplayString(this Intensity intensity)
+        => intensity switch
+        {
+            Intensity.One
+                => Resources.EarthquakeIntensityOneText,
+            Intensity.Two
+                => Resources.EarthquakeIntensityTwoText,
+            Intensity.Three
+                => Resources.EarthquakeIntensityThreeText,
+            Intensity.Four
+                => Resources.EarthquakeIntensityFourText,
+            Intensity.FiveWeak
+                => Resources.EarthquakeIntensityFiveWeakText,
+            Intensity.FiveStrong
+                => Resources.EarthquakeIntensityFiveStrongText,
+            Intensity.SixWeak
+                => Resources.EarthquakeIntensitySixWeakText,
+            Intensity.SixStrong
+                => Resources.EarthquakeIntensitySixStrongText,
+            Intensity.Seven
+                => Resources.EarthquakeIntensitySevenText,
+            _
+                => throw new UnreachableException()
+        };
 }
