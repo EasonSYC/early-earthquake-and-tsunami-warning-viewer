@@ -2,9 +2,9 @@
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dtos.Telegram;
-using EasonEetwViewer.WebSocket.Dtos.Data;
+using EasonEetwViewer.Dmdata.WebSocket.Dtos.Data;
 
-namespace EasonEetwViewer.WebSocket.Dtos.Response;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Response;
 /// <summary>
 /// Represents a data response.
 /// </summary>

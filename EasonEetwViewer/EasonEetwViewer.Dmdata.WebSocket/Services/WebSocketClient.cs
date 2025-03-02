@@ -8,16 +8,17 @@ using EasonEetwViewer.Dmdata.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.Dmdata.Telegram.Exceptions;
-using EasonEetwViewer.WebSocket.Abstractions;
-using EasonEetwViewer.WebSocket.Dtos;
-using EasonEetwViewer.WebSocket.Dtos.Data;
-using EasonEetwViewer.WebSocket.Dtos.Request;
-using EasonEetwViewer.WebSocket.Dtos.Response;
-using EasonEetwViewer.WebSocket.Events;
-using EasonEetwViewer.WebSocket.Exceptions;
+using EasonEetwViewer.Dmdata.WebSocket.Abstractions;
+using EasonEetwViewer.Dmdata.WebSocket.Dtos;
+using EasonEetwViewer.Dmdata.WebSocket.Dtos.Data;
+using EasonEetwViewer.Dmdata.WebSocket.Dtos.Request;
+using EasonEetwViewer.Dmdata.WebSocket.Dtos.Response;
+using EasonEetwViewer.Dmdata.WebSocket.Events;
+using EasonEetwViewer.Dmdata.WebSocket.Exceptions;
+using EasonEetwViewer.WebSocket.Services;
 using Microsoft.Extensions.Logging;
 
-namespace EasonEetwViewer.WebSocket.Services;
+namespace EasonEetwViewer.Dmdata.WebSocket.Services;
 
 /// <summary>
 /// The default implementation of <see cref="IWebSocketClient"/>.

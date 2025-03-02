@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Extensions;

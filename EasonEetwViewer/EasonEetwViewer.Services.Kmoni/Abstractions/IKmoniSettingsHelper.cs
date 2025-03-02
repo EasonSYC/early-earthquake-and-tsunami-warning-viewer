@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasonEetwViewer.KyoshinMonitor.Abstractions;
+﻿using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Services.Kmoni.Events;
 
-namespace EasonEetwViewer.Services.Kmoni.Abstraction;
+namespace EasonEetwViewer.Services.Kmoni.Abstractions;
 /// <summary>
 /// Represents a helper for managing kmoni settings.
 /// </summary>

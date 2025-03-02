@@ -1,6 +1,5 @@
 ﻿using EasonEetwViewer.KyoshinMonitor.Abstractions;
-using EasonEetwViewer.KyoshinMonitor.Services;
-using EasonEetwViewer.Services.Kmoni;
+using EasonEetwViewer.Services.Kmoni.Services;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.KyoshinMonitor;

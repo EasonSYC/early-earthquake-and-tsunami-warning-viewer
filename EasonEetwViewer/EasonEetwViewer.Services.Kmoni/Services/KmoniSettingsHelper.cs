@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasonEetwViewer.KyoshinMonitor;
+﻿using EasonEetwViewer.KyoshinMonitor;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
-using EasonEetwViewer.Services.Kmoni.Abstraction;
+using EasonEetwViewer.Services.Kmoni.Abstractions;
 using EasonEetwViewer.Services.Kmoni.Dtos;
 using EasonEetwViewer.Services.Kmoni.Events;
 using Microsoft.Extensions.Logging;
 
-namespace EasonEetwViewer.Services.Kmoni;
+namespace EasonEetwViewer.Services.Kmoni.Services;
 
 /// <summary>
 /// The default implementation of <see cref="IKmoniSettingsHelper"/>.

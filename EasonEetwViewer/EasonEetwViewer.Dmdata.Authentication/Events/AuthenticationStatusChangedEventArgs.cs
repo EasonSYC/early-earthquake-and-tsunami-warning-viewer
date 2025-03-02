@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+﻿using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 
-namespace EasonEetwViewer.Dmdata.Authentication.Events
+namespace EasonEetwViewer.Dmdata.Authentication.Events;
+
+/// <summary>
+/// The event arguments for when the authentication status changes.
+/// </summary>
+public class AuthenticationStatusChangedEventArgs : EventArgs
 {
     /// <summary>
-    /// The event arguments for when the authentication status changes.
+    /// The new authentication status.
     /// </summary>
-    public class AuthenticationStatusChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// The new authentication status.
-        /// </summary>
-        public required AuthenticationStatus AuthenticationStatus { get; init; }
-        /// <summary>
-        /// The new authentication.
-        /// </summary>
-        public required string? Authentication { get; init; }
-    }
+    public required AuthenticationStatus AuthenticationStatus { get; init; }
+    /// <summary>
+    /// The new authentication.
+    /// </summary>
+    public required string? Authentication { get; init; }
 }

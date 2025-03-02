@@ -2,6 +2,7 @@
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Events;
 using EasonEetwViewer.Dmdata.Authentication.Exceptions;
+using EasonEetwViewer.Dmdata.Authentication.Options;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Dmdata.Authentication.Services;

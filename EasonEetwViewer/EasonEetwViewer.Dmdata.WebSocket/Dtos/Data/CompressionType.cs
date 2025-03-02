@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.WebSocket.Dtos.Data;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Data;
 
 /// <summary>
 /// Represents the type of compression used in the WebSocket.

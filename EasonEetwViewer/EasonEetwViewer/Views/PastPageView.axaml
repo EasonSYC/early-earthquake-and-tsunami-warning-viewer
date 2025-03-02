@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:EasonEetwViewer.ViewModels"
-             xmlns:m="using:EasonEetwViewer.Models"
+             xmlns:m="using:EasonEetwViewer.Models.PastPage"
              xmlns:conv="using:EasonEetwViewer.Converters"
              xmlns:lang="using:EasonEetwViewer.Lang"
              xmlns:mapsui="using:Mapsui.UI.Avalonia"

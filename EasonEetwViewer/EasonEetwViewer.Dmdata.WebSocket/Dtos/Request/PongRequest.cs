@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
-namespace EasonEetwViewer.WebSocket.Dtos.Request;
+
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Request;
 
 /// <summary>
 /// Represents a pong request from the client.

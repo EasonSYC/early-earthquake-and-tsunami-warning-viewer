@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.WebSocket.Dtos;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos;
 
 /// <summary>
 /// Represents the type of response received by the WebSocket.

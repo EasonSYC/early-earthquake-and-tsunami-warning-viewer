@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.WebSocket.Dtos.Data;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Data;
 
 /// <summary>
 /// Represents the type of encoding used in the response.

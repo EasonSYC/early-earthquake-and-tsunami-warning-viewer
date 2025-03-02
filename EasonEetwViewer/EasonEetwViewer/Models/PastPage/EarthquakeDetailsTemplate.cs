@@ -1,8 +1,7 @@
 ﻿using EasonEetwViewer.Dmdata.Dtos.DmdataComponent;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
-using EasonEetwViewer.Models.PastPage;
 
-namespace EasonEetwViewer.Models;
+namespace EasonEetwViewer.Models.PastPage;
 internal record EarthquakeDetailsTemplate
 {
     internal EarthquakeDetailsTemplate(string eventId, Intensity? intensity, DateTimeOffset? originTime, Hypocentre? hypocentre, Magnitude? magnitude, string? informationalText, DateTimeOffset? lastUpdated, IEnumerable<DetailIntensityTemplate> detailDisplay)

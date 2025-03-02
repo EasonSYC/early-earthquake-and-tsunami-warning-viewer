@@ -1,8 +1,7 @@
 ﻿using EasonEetwViewer.Dmdata.Api.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Authentication.Events;
-using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
+using EasonEetwViewer.Services.TimeProvider;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;

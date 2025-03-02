@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using EasonEetwViewer.Dmdata.WebSocket.Services;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.WebSocket.Services;
 /// <summary>

@@ -1,5 +1,4 @@
 using System.Globalization;
-using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia;
@@ -9,28 +8,28 @@ using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Dmdata.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Api.Dtos.Request;
 using EasonEetwViewer.Dmdata.Api.Extensions;
-using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Extensions;
+using EasonEetwViewer.Dmdata.Authentication.Options;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
+using EasonEetwViewer.Dmdata.Telegram.Extensions;
+using EasonEetwViewer.Dmdata.WebSocket.Extensions;
 using EasonEetwViewer.Extensions;
 using EasonEetwViewer.JmaTravelTime.Extensions;
 using EasonEetwViewer.JmaTravelTime.Options;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Services;
+using EasonEetwViewer.Services.Kmoni.Extensions;
+using EasonEetwViewer.Services.Kmoni.Options;
 using EasonEetwViewer.Services.Logging;
 using EasonEetwViewer.Services.TimeProvider;
-using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
-using EasonEetwViewer.Dmdata.Telegram.Extensions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
-using EasonEetwViewer.WebSocket.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using EasonEetwViewer.Services.Kmoni.Extension;
-using EasonEetwViewer.Services.Kmoni.Options;
 
 namespace EasonEetwViewer;
 /// <inheritdoc/>
@@ -158,7 +157,7 @@ internal partial class App : Application
             .AttachMapsuiLogging();
 
         Service.GetRequiredService<SettingPageViewModel>().LanguageChanged += (o, e)
-            => 
+            =>
             {
                 LanguageChange(e.Language);
                 File.WriteAllText(languagePath, e.Language.Name);

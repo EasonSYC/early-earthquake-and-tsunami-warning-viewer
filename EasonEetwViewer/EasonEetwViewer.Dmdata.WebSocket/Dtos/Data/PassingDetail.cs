@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.WebSocket.Dtos.Data;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Data;
 /// <summary>
 /// Represents a passing detail of the specified data response.
 /// </summary>

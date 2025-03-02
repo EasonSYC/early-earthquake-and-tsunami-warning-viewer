@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace EasonEetwViewer.WebSocket.Dtos;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos;
 /// <summary>
 /// The head information of the telegram.
 /// </summary>

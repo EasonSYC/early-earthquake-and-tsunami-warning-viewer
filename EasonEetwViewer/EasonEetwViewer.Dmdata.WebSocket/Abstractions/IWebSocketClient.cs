@@ -1,6 +1,6 @@
-﻿using EasonEetwViewer.WebSocket.Events;
+﻿using EasonEetwViewer.Dmdata.WebSocket.Events;
 
-namespace EasonEetwViewer.WebSocket.Abstractions;
+namespace EasonEetwViewer.Dmdata.WebSocket.Abstractions;
 
 /// <summary>
 /// Represents a WebSocket connection to <see href="dmdata.jp"/>.

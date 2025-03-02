@@ -2,7 +2,7 @@
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Dtos.Enum.WebSocket;
 
-namespace EasonEetwViewer.WebSocket.Dtos.Response;
+namespace EasonEetwViewer.Dmdata.WebSocket.Dtos.Response;
 /// <summary>
 /// Represents a start response.
 /// </summary>

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using EasonEetwViewer.KyoshinMonitor;
-using EasonEetwViewer.Services.Kmoni.Abstraction;
+using EasonEetwViewer.Services.Kmoni.Abstractions;
 using EasonEetwViewer.Services.Kmoni.Dtos;
 using EasonEetwViewer.Services.Kmoni.Options;
+using EasonEetwViewer.Services.Kmoni.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace EasonEetwViewer.Services.Kmoni.Extension;
+namespace EasonEetwViewer.Services.Kmoni.Extensions;
 
 /// <summary>
 /// Provides extension methods for <see cref="IServiceCollection"/> to add <see cref="KmoniSettingsHelper"/>.

@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Models.RealTimePage;
+﻿namespace EasonEetwViewer.Models.PastPage;
 internal record PositionNode
 {
     internal ICollection<PositionNode>? SubNodes { get; private set; }

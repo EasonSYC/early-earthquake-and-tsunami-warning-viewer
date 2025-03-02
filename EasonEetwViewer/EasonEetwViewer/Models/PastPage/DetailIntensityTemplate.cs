@@ -1,5 +1,4 @@
 ﻿using EasonEetwViewer.Dmdata.Dtos.Enum;
-using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Models.PastPage;
 internal record DetailIntensityTemplate

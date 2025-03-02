@@ -1,10 +1,10 @@
 ﻿using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Services;
-using EasonEetwViewer.WebSocket.Abstractions;
-using EasonEetwViewer.WebSocket.Services;
+using EasonEetwViewer.Dmdata.WebSocket.Abstractions;
+using EasonEetwViewer.Dmdata.WebSocket.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EasonEetwViewer.WebSocket.Extensions;
+namespace EasonEetwViewer.Dmdata.WebSocket.Extensions;
 /// <summary>
 /// Provides extension methods for <see cref="IServiceCollection"/> to add WebSocket.
 /// </summary>

@@ -1,6 +1,4 @@
-﻿using EasonEetwViewer.WebSocket.Services;
-
-namespace EasonEetwViewer.WebSocket.Exceptions;
+﻿namespace EasonEetwViewer.Dmdata.WebSocket.Exceptions;
 /// <summary>
 /// Represents incorrected formatted data that occurs in <see cref="WebSocketClient"/>.
 /// </summary>

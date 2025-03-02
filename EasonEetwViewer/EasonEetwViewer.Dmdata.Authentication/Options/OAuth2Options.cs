@@ -1,4 +1,4 @@
-﻿namespace EasonEetwViewer.Dmdata.Authentication.Abstractions;
+﻿namespace EasonEetwViewer.Dmdata.Authentication.Options;
 /// <summary>
 /// Represents options for OAuth2.
 /// </summary>
