@@ -68,7 +68,7 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
         Map.Navigator.RotationLock = true;
         Map.Navigator.Limiter = new ViewportLimiterKeepWithinExtent();
         Map.Navigator.OverridePanBounds = _mapBounds;
-        Map.Navigator.ZoomToBox(_limitsOfJapan);
+        Map.Navigator.ZoomToBox(_mainLimitsOfJapan);
         _logger.MapInitialised();
     }
 
