@@ -13,6 +13,12 @@ namespace EasonEetwViewer.Extensions;
 /// </summary>
 internal static class EnumDisplayTextExtensions
 {
+    /// <summary>
+    /// Converts <see cref="MeasurementType"/> to display string.
+    /// </summary>
+    /// <param name="measurementType">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this MeasurementType measurementType)
         => measurementType switch
         {
@@ -39,7 +45,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException(),
         };
-
+    /// <summary>
+    /// Converts <see cref="SensorType"/> to display string.
+    /// </summary>
+    /// <param name="sensorType">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this SensorType sensorType)
         => sensorType switch
         {
@@ -50,7 +61,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException(),
         };
-
+    /// <summary>
+    /// Converts <see cref="AuthenticationStatus"/> to display string.
+    /// </summary>
+    /// <param name="authenticationStatus">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this AuthenticationStatus authenticationStatus)
         => authenticationStatus switch
         {
@@ -63,7 +79,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException(),
         };
-
+    /// <summary>
+    /// Converts <see cref="TsunamiWarningType"/> to display string.
+    /// </summary>
+    /// <param name="tsunamiWarningType">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this TsunamiWarningType tsunamiWarningType)
         => tsunamiWarningType switch
         {
@@ -80,7 +101,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException()
         };
-
+    /// <summary>
+    /// Converts <see cref="Intensity"/> to display string.
+    /// </summary>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this Intensity intensity)
         => intensity switch
         {
@@ -105,7 +131,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException()
         };
-
+    /// <summary>
+    /// Converts <see cref="EpicentreDepth"/> to display string.
+    /// </summary>
+    /// <param name="epicentreDepth">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this EpicentreDepth epicentreDepth)
 #pragma warning disable IDE0072 // Add missing cases
         => epicentreDepth switch
@@ -126,7 +157,12 @@ internal static class EnumDisplayTextExtensions
                 => throw new UnreachableException(),
         };
 #pragma warning restore IDE0072 // Add missing cases
-
+    /// <summary>
+    /// Converts <see cref="Magnitude"/> to display string.
+    /// </summary>
+    /// <param name="magnitude">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this Magnitude magnitude)
         => magnitude switch
         {
@@ -147,7 +183,12 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException(),
         };
-
+    /// <summary>
+    /// Converts <see cref="MagnitudePoint"/> to display string.
+    /// </summary>
+    /// <param name="magnitudePoint">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToDisplayString(this MagnitudePoint magnitudePoint)
         => magnitudePoint switch
         {
