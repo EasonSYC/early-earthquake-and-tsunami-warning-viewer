@@ -82,10 +82,6 @@ internal partial class App : Application
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
-        IConfigurationSection metaData = config.GetSection("AppMetaInfo");
-        string appName = metaData["Name"]!;
-        string appVersion = metaData["Version"]!;
-
         IConfigurationSection baseUrls = config.GetSection("BaseUrls");
         string baseApi = baseUrls["Api"]!;
         string baseTelegram = baseUrls["Telegram"]!;
@@ -93,10 +89,6 @@ internal partial class App : Application
         IConfigurationSection configPaths = config.GetSection("ConfigPaths");
         string authenticatorPath = configPaths["Authenticator"]!;
         string languagePath = configPaths["Language"]!;
-
-        IConfigurationSection webSocketConfig = config.GetSection("WebSocketParams");
-
-        string timeTablePath = config["TimeTablePath"]!;
 
         LanguageChange(GetLanguage(languagePath));
 
@@ -146,11 +138,10 @@ internal partial class App : Application
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<RealtimePageViewModel>()
             .AddSingleton<PastPageViewModel>()
-            .AddSingleton<SettingPageViewModel>();
-
-        _ = collection
-            .AddSingleton(sp
-                => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"));
+            .AddSingleton<SettingPageViewModel>()
+            .AddOptions<WebSocketStartPost>()
+                .Bind(config.GetSection("WebSocketParams"))
+                .Services;
 
         Service = collection
             .BuildServiceProvider()

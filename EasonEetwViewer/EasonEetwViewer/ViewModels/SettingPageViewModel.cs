@@ -21,13 +21,14 @@ using EasonEetwViewer.Services.Kmoni.Abstractions;
 using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace EasonEetwViewer.ViewModels;
 
 internal sealed partial class SettingPageViewModel : PageViewModelBase
 {
     public SettingPageViewModel(
-        WebSocketStartPost startPost,
+        IOptions<WebSocketStartPost> startPost,
         IKmoniSettingsHelper kmoniOptions,
         IWebSocketClient webSocketClient,
         ILogger<SettingPageViewModel> logger,
@@ -42,7 +43,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
             logger)
     {
         _webSocketClient = webSocketClient;
-        _startPost = startPost;
+        _startPost = startPost.Value;
         _logger = logger;
         KmoniSettingsHelper = kmoniOptions;
         _authenticator.StatusChanged += AuthenticationStatusChangedEventHandler;
