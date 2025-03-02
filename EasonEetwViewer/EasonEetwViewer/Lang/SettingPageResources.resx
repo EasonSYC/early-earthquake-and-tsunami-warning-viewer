@@ -126,13 +126,13 @@
   <data name="ApiText" xml:space="preserve">
     <value>API Key:</value>
   </data>
-  <data name="AuthStatusApiKeyText" xml:space="preserve">
+  <data name="AuthenticationStatusTextApiKey" xml:space="preserve">
     <value>API Key In Use</value>
   </data>
-  <data name="AuthStatusNoneText" xml:space="preserve">
+  <data name="AuthenticationStatusTextNull" xml:space="preserve">
     <value>Please Configure Authentication Method</value>
   </data>
-  <data name="AuthStatusOAuthText" xml:space="preserve">
+  <data name="AuthenticationStatusTextOAuth" xml:space="preserve">
     <value>OAuth 2.0 In Use</value>
   </data>
   <data name="DmdssText" xml:space="preserve">

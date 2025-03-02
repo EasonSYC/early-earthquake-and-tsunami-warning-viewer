@@ -126,13 +126,13 @@
   <data name="ApiText" xml:space="preserve">
     <value>API キー：</value>
   </data>
-  <data name="AuthStatusApiKeyText" xml:space="preserve">
+  <data name="AuthenticationStatusTextApiKey" xml:space="preserve">
     <value>API キー使用中</value>
   </data>
-  <data name="AuthStatusNoneText" xml:space="preserve">
+  <data name="AuthenticationStatusTextNull" xml:space="preserve">
     <value>認証を設定してください</value>
   </data>
-  <data name="AuthStatusOAuthText" xml:space="preserve">
+  <data name="AuthenticationStatusTextOAuth" xml:space="preserve">
     <value>OAuth 使用中</value>
   </data>
   <data name="DmdssText" xml:space="preserve">

@@ -126,13 +126,13 @@
   <data name="ApiText" xml:space="preserve">
     <value>API 密钥：</value>
   </data>
-  <data name="AuthStatusApiKeyText" xml:space="preserve">
+  <data name="AuthenticationStatusTextApiKey" xml:space="preserve">
     <value>API 密钥使用中</value>
   </data>
-  <data name="AuthStatusNoneText" xml:space="preserve">
+  <data name="AuthenticationStatusTextNull" xml:space="preserve">
     <value>请设定认证方法</value>
   </data>
-  <data name="AuthStatusOAuthText" xml:space="preserve">
+  <data name="AuthenticationStatusTextOAuth" xml:space="preserve">
     <value>OAuth 使用中</value>
   </data>
   <data name="DmdssText" xml:space="preserve">

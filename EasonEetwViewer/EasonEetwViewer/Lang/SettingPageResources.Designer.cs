@@ -90,27 +90,27 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to API Key In Use.
         /// </summary>
-        public static string AuthStatusApiKeyText {
+        public static string AuthenticationStatusTextApiKey {
             get {
-                return ResourceManager.GetString("AuthStatusApiKeyText", resourceCulture);
+                return ResourceManager.GetString("AuthenticationStatusTextApiKey", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Please Configure Authentication Method.
         /// </summary>
-        public static string AuthStatusNoneText {
+        public static string AuthenticationStatusTextNull {
             get {
-                return ResourceManager.GetString("AuthStatusNoneText", resourceCulture);
+                return ResourceManager.GetString("AuthenticationStatusTextNull", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to OAuth 2.0 In Use.
         /// </summary>
-        public static string AuthStatusOAuthText {
+        public static string AuthenticationStatusTextOAuth {
             get {
-                return ResourceManager.GetString("AuthStatusOAuthText", resourceCulture);
+                return ResourceManager.GetString("AuthenticationStatusTextOAuth", resourceCulture);
             }
         }
         
