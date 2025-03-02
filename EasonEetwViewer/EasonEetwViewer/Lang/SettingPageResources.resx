@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApiConfirmedText" xml:space="preserve">
+  <data name="ApiTextConfirmed" xml:space="preserve">
     <value>Confirmed!</value>
   </data>
-  <data name="ApiConfirmText" xml:space="preserve">
+  <data name="ApiTextConfirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
   <data name="ApiText" xml:space="preserve">
@@ -153,40 +153,40 @@
   <data name="LangText" xml:space="preserve">
     <value>Language / 言語 / 语言</value>
   </data>
-  <data name="OAuthConnectedButtonText" xml:space="preserve">
+  <data name="OAuthButtonTextConnected" xml:space="preserve">
     <value>Disconnect from OAuth 2.0</value>
   </data>
   <data name="OAuthConnectedText" xml:space="preserve">
     <value>Connected!</value>
   </data>
-  <data name="OAuthDisconnectedButtonText" xml:space="preserve">
+  <data name="OAuthButtonTextDisconnected" xml:space="preserve">
     <value>Connect to OAuth 2.0</value>
   </data>
-  <data name="AuthStatusText" xml:space="preserve">
+  <data name="AuthenticationStatusText" xml:space="preserve">
     <value>Status: </value>
   </data>
-  <data name="WebSocketApplicationNameText" xml:space="preserve">
+  <data name="WebSocketListTextApplicationName" xml:space="preserve">
     <value>Application Name</value>
   </data>
-  <data name="WebSocketConnectedButtonText" xml:space="preserve">
+  <data name="WebSocketButtonTextConnected" xml:space="preserve">
     <value>Disconnect from WebSocket</value>
   </data>
-  <data name="WebSocketWebSocketIdText" xml:space="preserve">
+  <data name="WebSocketListTextWebSocketId" xml:space="preserve">
     <value>Connection ID</value>
   </data>
-  <data name="WebSocketConnectionTimeText" xml:space="preserve">
+  <data name="WebSocketListTextConnectionTime" xml:space="preserve">
     <value>Connection Time</value>
   </data>
-  <data name="WebSocketDisconnectedButtonText" xml:space="preserve">
+  <data name="WebSocketButtonTextDisconnected" xml:space="preserve">
     <value>Connect to WebSocket</value>
   </data>
-  <data name="WebSocketDisconnectText" xml:space="preserve">
+  <data name="WebSocketListTextDisconnect" xml:space="preserve">
     <value>Disconnect</value>
   </data>
-  <data name="WebSocketEmptyConnectionName" xml:space="preserve">
+  <data name="WebSocketListTextEmptyConnection" xml:space="preserve">
     <value>(Empty Connection)</value>
   </data>
-  <data name="WebSocketListRefreshText" xml:space="preserve">
+  <data name="WebSocketTextRefreshList" xml:space="preserve">
     <value>Load/Refresh WebSocket List</value>
   </data>
   <data name="WebSocketText" xml:space="preserve">

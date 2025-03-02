@@ -12,7 +12,7 @@ internal partial class EmptyWebSocketConnectionTemplate : IWebSocketConnectionTe
         => -1;
     /// <inheritdoc/>
     public string ApplicationName
-        => SettingPageResources.WebSocketEmptyConnectionName;
+        => SettingPageResources.WebSocketListTextEmptyConnection;
     /// <inheritdoc/>
     public DateTimeOffset StartTime
         => new();

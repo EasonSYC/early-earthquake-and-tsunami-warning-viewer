@@ -61,29 +61,38 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirmed!.
+        ///   Looks up a localized string similar to API Key:.
         /// </summary>
-        public static string ApiConfirmedText {
+        public static string ApiText {
             get {
-                return ResourceManager.GetString("ApiConfirmedText", resourceCulture);
+                return ResourceManager.GetString("ApiText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
-        public static string ApiConfirmText {
+        public static string ApiTextConfirm {
             get {
-                return ResourceManager.GetString("ApiConfirmText", resourceCulture);
+                return ResourceManager.GetString("ApiTextConfirm", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to API Key:.
+        ///   Looks up a localized string similar to Confirmed!.
         /// </summary>
-        public static string ApiText {
+        public static string ApiTextConfirmed {
             get {
-                return ResourceManager.GetString("ApiText", resourceCulture);
+                return ResourceManager.GetString("ApiTextConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status: .
+        /// </summary>
+        public static string AuthenticationStatusText {
+            get {
+                return ResourceManager.GetString("AuthenticationStatusText", resourceCulture);
             }
         }
         
@@ -111,15 +120,6 @@ namespace EasonEetwViewer.Lang {
         public static string AuthenticationStatusTextOAuth {
             get {
                 return ResourceManager.GetString("AuthenticationStatusTextOAuth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Status: .
-        /// </summary>
-        public static string AuthStatusText {
-            get {
-                return ResourceManager.GetString("AuthStatusText", resourceCulture);
             }
         }
         
@@ -360,9 +360,18 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Disconnect from OAuth 2.0.
         /// </summary>
-        public static string OAuthConnectedButtonText {
+        public static string OAuthButtonTextConnected {
             get {
-                return ResourceManager.GetString("OAuthConnectedButtonText", resourceCulture);
+                return ResourceManager.GetString("OAuthButtonTextConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connect to OAuth 2.0.
+        /// </summary>
+        public static string OAuthButtonTextDisconnected {
+            get {
+                return ResourceManager.GetString("OAuthButtonTextDisconnected", resourceCulture);
             }
         }
         
@@ -376,74 +385,65 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connect to OAuth 2.0.
-        /// </summary>
-        public static string OAuthDisconnectedButtonText {
-            get {
-                return ResourceManager.GetString("OAuthDisconnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Application Name.
-        /// </summary>
-        public static string WebSocketApplicationNameText {
-            get {
-                return ResourceManager.GetString("WebSocketApplicationNameText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Disconnect from WebSocket.
         /// </summary>
-        public static string WebSocketConnectedButtonText {
+        public static string WebSocketButtonTextConnected {
             get {
-                return ResourceManager.GetString("WebSocketConnectedButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Connection Time.
-        /// </summary>
-        public static string WebSocketConnectionTimeText {
-            get {
-                return ResourceManager.GetString("WebSocketConnectionTimeText", resourceCulture);
+                return ResourceManager.GetString("WebSocketButtonTextConnected", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Connect to WebSocket.
         /// </summary>
-        public static string WebSocketDisconnectedButtonText {
+        public static string WebSocketButtonTextDisconnected {
             get {
-                return ResourceManager.GetString("WebSocketDisconnectedButtonText", resourceCulture);
+                return ResourceManager.GetString("WebSocketButtonTextDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Name.
+        /// </summary>
+        public static string WebSocketListTextApplicationName {
+            get {
+                return ResourceManager.GetString("WebSocketListTextApplicationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection Time.
+        /// </summary>
+        public static string WebSocketListTextConnectionTime {
+            get {
+                return ResourceManager.GetString("WebSocketListTextConnectionTime", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Disconnect.
         /// </summary>
-        public static string WebSocketDisconnectText {
+        public static string WebSocketListTextDisconnect {
             get {
-                return ResourceManager.GetString("WebSocketDisconnectText", resourceCulture);
+                return ResourceManager.GetString("WebSocketListTextDisconnect", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to (Empty Connection).
         /// </summary>
-        public static string WebSocketEmptyConnectionName {
+        public static string WebSocketListTextEmptyConnection {
             get {
-                return ResourceManager.GetString("WebSocketEmptyConnectionName", resourceCulture);
+                return ResourceManager.GetString("WebSocketListTextEmptyConnection", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load/Refresh WebSocket List.
+        ///   Looks up a localized string similar to Connection ID.
         /// </summary>
-        public static string WebSocketListRefreshText {
+        public static string WebSocketListTextWebSocketId {
             get {
-                return ResourceManager.GetString("WebSocketListRefreshText", resourceCulture);
+                return ResourceManager.GetString("WebSocketListTextWebSocketId", resourceCulture);
             }
         }
         
@@ -457,11 +457,11 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connection ID.
+        ///   Looks up a localized string similar to Load/Refresh WebSocket List.
         /// </summary>
-        public static string WebSocketWebSocketIdText {
+        public static string WebSocketTextRefreshList {
             get {
-                return ResourceManager.GetString("WebSocketWebSocketIdText", resourceCulture);
+                return ResourceManager.GetString("WebSocketTextRefreshList", resourceCulture);
             }
         }
     }

@@ -78,14 +78,16 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     #region webSocketSettings
     private readonly IWebSocketClient _webSocketClient;
     private readonly WebSocketStartPost _startPost;
-    public bool WebSocketConnected
-        => _webSocketClient.IsWebSocketConnected;
+    public string WebSocketButtonText
+        => _webSocketClient.IsWebSocketConnected
+            ? SettingPageResources.WebSocketButtonTextConnected
+            : SettingPageResources.WebSocketButtonTextDisconnected;
     private void WebSocketStatusChangedEventHandler(object? sender, EventArgs e)
-        => OnPropertyChanged(nameof(WebSocketConnected));
+        => OnPropertyChanged(nameof(WebSocketButtonText));
     [RelayCommand]
     private async Task WebSocketButton()
     {
-        if (!WebSocketConnected)
+        if (!_webSocketClient.IsWebSocketConnected)
         {
             WebSocketStart? webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
             if (webSocket is not null)
@@ -151,6 +153,13 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
 
     #region authSettings
     /// <summary>
+    /// The OAuth Button text.
+    /// </summary>
+    public string OAuthButtonText
+        => OAuthConnected
+            ? SettingPageResources.OAuthButtonTextConnected
+            : SettingPageResources.OAuthButtonTextDisconnected;
+    /// <summary>
     /// Whether OAuth is connected.
     /// </summary>
     public bool OAuthConnected
@@ -196,6 +205,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     {
         OnPropertyChanged(nameof(AuthenticationStatus));
         OnPropertyChanged(nameof(OAuthConnected));
+        OnPropertyChanged(nameof(OAuthButtonText));
         OnPropertyChanged(nameof(ApiKeyConfirmed));
         OnPropertyChanged(nameof(ApiKeyButtonEnabled));
     }

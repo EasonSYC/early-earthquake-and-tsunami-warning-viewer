@@ -18,8 +18,6 @@
 
     <UserControl.Resources>
         <conv:EnumDisplayTextConverter x:Key="EnumDisplayTextConverter"/>
-        <conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
-        <conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
         <conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
     </UserControl.Resources>
 
@@ -73,7 +71,7 @@
                 <TextBlock Margin="10 0"
                            FontSize="15"
                            VerticalAlignment="Center">
-                    <Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
+                    <Run Text="{x:Static lang:SettingPageResources.AuthenticationStatusText}"/>
                     <Run Text="{Binding AuthenticationStatus, Converter={StaticResource EnumDisplayTextConverter}}"/>
                 </TextBlock>
             </StackPanel>
@@ -96,11 +94,11 @@
                         Margin="10 0"
                         FontSize="15"
                         Command="{Binding ApiKeyButtonCommand}"
-                        Content="{x:Static lang:SettingPageResources.ApiConfirmText}"/>
+                        Content="{x:Static lang:SettingPageResources.ApiTextConfirm}"/>
                 <TextBlock Margin="10 0"
                            FontSize="15"
                            VerticalAlignment="Center"
-                           Text="{x:Static lang:SettingPageResources.ApiConfirmedText}"
+                           Text="{x:Static lang:SettingPageResources.ApiTextConfirmed}"
                            IsVisible="{Binding ApiKeyConfirmed}"/>
             </StackPanel>
 
@@ -110,7 +108,7 @@
                         Orientation="Horizontal">
                 <Button Margin="0 0"
                         FontSize="15"
-                        Content="{Binding OAuthConnected, Converter={StaticResource OAuthConverter}}"
+                        Content="{Binding OAuthButtonText}"
                         Command="{Binding OAuthButtonCommand}"/>
                 <TextBlock Margin="10 0"
                            FontSize="15"
@@ -129,11 +127,11 @@
                        Text="{x:Static lang:SettingPageResources.WebSocketText}"/>
                 <Button Margin="10 0"
                         FontSize="15"
-                        Content="{Binding WebSocketConnected, Converter={StaticResource WebSocketButtonConverter}}"
+                        Content="{Binding WebSocketButtonText}"
                         Command="{Binding WebSocketButtonCommand}"/>
                 <Button Margin="10 0"
                         FontSize="15"
-                        Content="{x:Static lang:SettingPageResources.WebSocketListRefreshText}"
+                        Content="{x:Static lang:SettingPageResources.WebSocketTextRefreshList}"
                         Command="{Binding WebSocketRefreshCommand}"/>
             </StackPanel>
 
@@ -146,17 +144,17 @@
                       BorderBrush="Gray"
                       ItemsSource="{Binding WebSocketConnections}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketWebSocketIdText}"
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextWebSocketId}"
                                         Binding="{Binding WebSocketId}"/>
-                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketApplicationNameText}"
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextApplicationName}"
                                         Binding="{Binding ApplicationName}"/>
-                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
+                    <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextConnectionTime}"
                                         Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
-                    <DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">
+                    <DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextDisconnect}">
                         <DataTemplate DataType="{x:Type m:IWebSocketConnectionTemplate}">
                             <Button HorizontalAlignment="Center"
                                     IsEnabled="{Binding IsEnabled}"
-                                    Content="{x:Static lang:SettingPageResources.WebSocketDisconnectText}"
+                                    Content="{x:Static lang:SettingPageResources.WebSocketListTextDisconnect}"
                                     Command="{Binding DisconnectCommand}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn>

@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ApiConfirmedText" xml:space="preserve">
+  <data name="ApiTextConfirmed" xml:space="preserve">
     <value>设定成功！</value>
   </data>
-  <data name="ApiConfirmText" xml:space="preserve">
+  <data name="ApiTextConfirm" xml:space="preserve">
     <value>确认</value>
   </data>
   <data name="ApiText" xml:space="preserve">
@@ -153,40 +153,40 @@
   <data name="LangText" xml:space="preserve">
     <value>语言 / Language / 言語</value>
   </data>
-  <data name="OAuthConnectedButtonText" xml:space="preserve">
+  <data name="OAuthButtonTextConnected" xml:space="preserve">
     <value>解除 OAuth 账号认证</value>
   </data>
   <data name="OAuthConnectedText" xml:space="preserve">
     <value>认证成功！</value>
   </data>
-  <data name="OAuthDisconnectedButtonText" xml:space="preserve">
+  <data name="OAuthButtonTextDisconnected" xml:space="preserve">
     <value>进行 OAuth 账号认证</value>
   </data>
-  <data name="AuthStatusText" xml:space="preserve">
+  <data name="AuthenticationStatusText" xml:space="preserve">
     <value>状况：</value>
   </data>
-  <data name="WebSocketApplicationNameText" xml:space="preserve">
+  <data name="WebSocketListTextApplicationName" xml:space="preserve">
     <value>应用名</value>
   </data>
-  <data name="WebSocketConnectedButtonText" xml:space="preserve">
+  <data name="WebSocketButtonTextConnected" xml:space="preserve">
     <value>切断 WebSocket 连接</value>
   </data>
-  <data name="WebSocketWebSocketIdText" xml:space="preserve">
+  <data name="WebSocketListTextWebSocketId" xml:space="preserve">
     <value>连接 ID</value>
   </data>
-  <data name="WebSocketConnectionTimeText" xml:space="preserve">
+  <data name="WebSocketListTextConnectionTime" xml:space="preserve">
     <value>连接时间</value>
   </data>
-  <data name="WebSocketDisconnectedButtonText" xml:space="preserve">
+  <data name="WebSocketButtonTextDisconnected" xml:space="preserve">
     <value>连接 WebSocket</value>
   </data>
-  <data name="WebSocketDisconnectText" xml:space="preserve">
+  <data name="WebSocketListTextDisconnect" xml:space="preserve">
     <value>切断连接</value>
   </data>
-  <data name="WebSocketEmptyConnectionName" xml:space="preserve">
+  <data name="WebSocketListTextEmptyConnection" xml:space="preserve">
     <value>空的 WebSocket 连接</value>
   </data>
-  <data name="WebSocketListRefreshText" xml:space="preserve">
+  <data name="WebSocketTextRefreshList" xml:space="preserve">
     <value>更新 WebSocket 连接列表</value>
   </data>
   <data name="WebSocketText" xml:space="preserve">
