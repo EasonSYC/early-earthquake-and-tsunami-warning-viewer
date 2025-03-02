@@ -1,31 +1,63 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Models;
+﻿using EasonEetwViewer.Models.RealTimePage;
 using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Styles;
 
 namespace EasonEetwViewer.Services;
 
-internal partial class StaticResources : ObservableObject
+/// <summary>
+/// Provides resources for the application.
+/// </summary>
+internal sealed class MapResourcesProvider
 {
+    /// <summary>
+    /// The base path to the shape files.
+    /// </summary>
     private const string _baseGisFile = "Content/GisFiles/";
-    internal IProvider Region { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaForecastLocalE_GIS/Regions.shp", true, true);
-    internal IProvider Tsunami { get; private init; } = ShapeFileToProvider(_baseGisFile + "Simp_20240520_AreaTsunami_GIS/Tsunamis.shp", true, true);
+    /// <summary>
+    /// The shape files for earthquake forecast regions.
+    /// </summary>
+    public IProvider Region { get; private init; }
+        = ShapeFileToProvider("Simp_20240520_AreaForecastLocalE_GIS/Regions.shp");
+    /// <summary>
+    /// The shape files for tsunami forecast regions.
+    /// </summary>
+    public IProvider Tsunami { get; private init; }
+        = ShapeFileToProvider("Simp_20240520_AreaTsunami_GIS/Tsunamis.shp");
 
     // Adapted from https://mapsui.com/samples/ - Projection - Shapefile with Projection
-    private static ProjectingProvider ShapeFileToProvider(string shapeFilePath, bool fileBasedIndex = false, bool readPrjFile = false)
-        => new(new ShapeFile(shapeFilePath, fileBasedIndex, readPrjFile) { CRS = "EPSG:4326" }) { CRS = "EPSG:3857" };
+    /// <summary>
+    /// Reades the shape file from the path and converts to a provider.
+    /// </summary>
+    /// <param name="shapeFilePath">The path to the shapefile.</param>
+    /// <returns>The <see cref="ProjectingProvider"/> that contains the <see cref="ShapeFile"/> read.</returns>
+    private static ProjectingProvider ShapeFileToProvider(string shapeFilePath)
+        => new(
+            new ShapeFile(
+            _baseGisFile + shapeFilePath,
+            true,
+            true)
+            { CRS = "EPSG:4326" })
+        { CRS = "EPSG:3857" };
 
-    internal IStyle HypocentreShapeStyle { get; private init; } = new SymbolStyle
-    {
-        ImageSource = "embedded://EasonEetwViewer.Resources.cross.svg"
-    };
-    internal IStyle PlumShapeStyle { get; private init; } = new SymbolStyle
-    {
-        ImageSource = "embedded://EasonEetwViewer.Resources.circle.svg"
-    };
+    /// <summary>
+    /// The style for the epicenter for normal hypocentres.
+    /// </summary>
+    public IStyle HypocentreShapeStyle { get; private init; }
+        = new SymbolStyle
+        {
+            ImageSource = "embedded://EasonEetwViewer.Resources.cross.svg"
+        };
+    /// <summary>
+    /// The style for the epicenter for assumed hypocentre methods.
+    /// </summary>
+    public IStyle PlumShapeStyle { get; private init; }
+        = new SymbolStyle
+        {
+            ImageSource = "embedded://EasonEetwViewer.Resources.circle.svg"
+        };
 
-    internal IEnumerable<PrefectureData> Prefectures { get; private init; } = [
+    public IEnumerable<PrefectureData> Prefectures { get; private init; } = [
         new PrefectureData() { Code = "01", Name = "北海道" },
         new PrefectureData() { Code = "02", Name = "青森県" },
         new PrefectureData() { Code = "03", Name = "岩手県" },
