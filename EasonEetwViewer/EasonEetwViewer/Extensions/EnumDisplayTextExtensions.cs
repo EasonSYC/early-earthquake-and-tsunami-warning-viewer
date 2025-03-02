@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 
@@ -46,6 +47,19 @@ internal static class EnumDisplayTextExtensions
                 => SettingPageResources.KmoniSensorTextSurface,
             SensorType.Borehole
                 => SettingPageResources.KmoniSensorTextBorehole,
+            _
+                => throw new UnreachableException(),
+        };
+
+    public static string ToDisplayString(this AuthenticationStatus authenticationStatus)
+        => authenticationStatus switch
+        {
+            AuthenticationStatus.ApiKey
+                => SettingPageResources.AuthenticationStatusTextApiKey,
+            AuthenticationStatus.OAuth
+                => SettingPageResources.AuthenticationStatusTextOAuth,
+            AuthenticationStatus.Null
+                => SettingPageResources.AuthenticationStatusTextNull,
             _
                 => throw new UnreachableException(),
         };
