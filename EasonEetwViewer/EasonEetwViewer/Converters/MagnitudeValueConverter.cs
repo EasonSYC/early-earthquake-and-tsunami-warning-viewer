@@ -13,13 +13,13 @@ internal class MagnitudeValueConverter : IValueConverter
             ? magnitude.Condition is MagnitudeCondition condition
                 ? condition switch
                 {
-                    MagnitudeCondition.Huge => Resources.EarthquakeMagnitudeHuge,
-                    MagnitudeCondition.Unclear => Resources.UnknownText,
+                    MagnitudeCondition.Huge => EarthquakeResources.EarthquakeMagnitudeHuge,
+                    MagnitudeCondition.Unclear => EarthquakeResources.UnknownText,
                     _ => throw new UnreachableException()
                 }
                 : magnitude.Value
             : value is null
-                ? Resources.UnknownText
+                ? EarthquakeResources.UnknownText
                 : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

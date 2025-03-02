@@ -111,23 +111,23 @@ internal static class EnumDisplayTextExtensions
         => intensity switch
         {
             Intensity.One
-                => Resources.EarthquakeIntensityOneText,
+                => EarthquakeResources.IntensityOneText,
             Intensity.Two
-                => Resources.EarthquakeIntensityTwoText,
+                => EarthquakeResources.IntensityTwoText,
             Intensity.Three
-                => Resources.EarthquakeIntensityThreeText,
+                => EarthquakeResources.IntensityThreeText,
             Intensity.Four
-                => Resources.EarthquakeIntensityFourText,
+                => EarthquakeResources.IntensityFourText,
             Intensity.FiveWeak
-                => Resources.EarthquakeIntensityFiveWeakText,
+                => EarthquakeResources.IntensityFiveWeakText,
             Intensity.FiveStrong
-                => Resources.EarthquakeIntensityFiveStrongText,
+                => EarthquakeResources.IntensityFiveStrongText,
             Intensity.SixWeak
-                => Resources.EarthquakeIntensitySixWeakText,
+                => EarthquakeResources.IntensitySixWeakText,
             Intensity.SixStrong
-                => Resources.EarthquakeIntensitySixStrongText,
+                => EarthquakeResources.IntensitySixStrongText,
             Intensity.Seven
-                => Resources.EarthquakeIntensitySevenText,
+                => EarthquakeResources.IntensitySevenText,
             _
                 => throw new UnreachableException()
         };
@@ -152,7 +152,7 @@ internal static class EnumDisplayTextExtensions
             EpicentreDepth.Final
                 => RealtimePageResources.EpicentreDepthAccuracy9,
             EpicentreDepth.Unknown
-                => Resources.UnknownText,
+                => EarthquakeResources.UnknownText,
             _
                 => throw new UnreachableException(),
         };
@@ -179,7 +179,7 @@ internal static class EnumDisplayTextExtensions
             Magnitude.LevelOrPlum
                 => RealtimePageResources.MagnitudeAccuracy8,
             Magnitude.Unknown
-                => Resources.UnknownText,
+                => EarthquakeResources.UnknownText,
             _
                 => throw new UnreachableException(),
         };
@@ -203,7 +203,7 @@ internal static class EnumDisplayTextExtensions
             MagnitudePoint.FiveOrAbove
                 => RealtimePageResources.Point5,
             MagnitudePoint.Unknown
-                => Resources.UnknownText,
+                => EarthquakeResources.UnknownText,
             _
                 => throw new UnreachableException(),
         };

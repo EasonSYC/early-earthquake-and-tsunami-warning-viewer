@@ -11,15 +11,15 @@ internal class MagnitudeUnitConverter : IValueConverter
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         => value is Magnitude magnitude
             ? magnitude.Condition is MagnitudeCondition
-                ? Resources.EarthquakeMagnitudeUnitDefault
+                ? EarthquakeResources.EarthquakeMagnitudeUnitDefault
                 : magnitude.Unit switch
                 {
-                    MagnitudeUnit.JmaMagnitude => Resources.EarthquakeMagnitudeUnitJma,
-                    MagnitudeUnit.NormalMagnitude => Resources.EarthquakeMagnitudeUnitMoment,
+                    MagnitudeUnit.JmaMagnitude => EarthquakeResources.EarthquakeMagnitudeUnitJma,
+                    MagnitudeUnit.NormalMagnitude => EarthquakeResources.EarthquakeMagnitudeUnitMoment,
                     _ => throw new UnreachableException()
                 }
             : value is null
-                ? Resources.EarthquakeMagnitudeUnitDefault
+                ? EarthquakeResources.EarthquakeMagnitudeUnitDefault
                 : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

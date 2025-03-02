@@ -3,11 +3,6 @@
 namespace EasonEetwViewer.Models.PastPage;
 internal record DetailIntensityTemplate
 {
-    internal Intensity Intensity { get; init; }
-    internal IEnumerable<PositionNode> PositionNodes { get; private init; }
-    internal DetailIntensityTemplate(Intensity intensity, IEnumerable<PositionNode> positionNodes)
-    {
-        Intensity = intensity;
-        PositionNodes = positionNodes;
-    }
+    public required Intensity Intensity { get; init; }
+    public required IEnumerable<PositionNode> PositionNodes { get; init; }
 }

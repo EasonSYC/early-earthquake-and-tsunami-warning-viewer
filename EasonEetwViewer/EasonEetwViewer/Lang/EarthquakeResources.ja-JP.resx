@@ -117,58 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EarthquakeIntensityOneText" xml:space="preserve">
+  <data name="IntensityOneText" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="EarthquakeIntensityOneColour" xml:space="preserve">
+  <data name="IntensityOneColour" xml:space="preserve">
     <value>#F2F2FF</value>
   </data>
-  <data name="EarthquakeIntensityTwoText" xml:space="preserve">
+  <data name="IntensityTwoText" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="EarthquakeIntensityTwoColour" xml:space="preserve">
+  <data name="IntensityTwoColour" xml:space="preserve">
     <value>#00AAFF</value>
   </data>
-  <data name="EarthquakeIntensityThreeText" xml:space="preserve">
+  <data name="IntensityThreeText" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="EarthquakeIntensityThreeColour" xml:space="preserve">
+  <data name="IntensityThreeColour" xml:space="preserve">
     <value>#0041FF</value>
   </data>
-  <data name="EarthquakeIntensityFourText" xml:space="preserve">
+  <data name="IntensityFourText" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="EarthquakeIntensityFourColour" xml:space="preserve">
+  <data name="IntensityFourColour" xml:space="preserve">
     <value>#FAE696</value>
   </data>
-  <data name="EarthquakeIntensityFiveWeakText" xml:space="preserve">
+  <data name="IntensityFiveWeakText" xml:space="preserve">
     <value>5-</value>
   </data>
-  <data name="EarthquakeIntensityFiveWeakColour" xml:space="preserve">
+  <data name="IntensityFiveWeakColour" xml:space="preserve">
     <value>#FFE600</value>
   </data>
-  <data name="EarthquakeIntensityFiveStrongText" xml:space="preserve">
+  <data name="IntensityFiveStrongText" xml:space="preserve">
     <value>5+</value>
   </data>
-  <data name="EarthquakeIntensityFiveStrongColour" xml:space="preserve">
+  <data name="IntensityFiveStrongColour" xml:space="preserve">
     <value>#FF9900</value>
   </data>
-  <data name="EarthquakeIntensitySixWeakText" xml:space="preserve">
+  <data name="IntensitySixWeakText" xml:space="preserve">
     <value>6-</value>
   </data>
-  <data name="EarthquakeIntensitySixWeakColour" xml:space="preserve">
+  <data name="IntensitySixWeakColour" xml:space="preserve">
     <value>#FF2800</value>
   </data>
-  <data name="EarthquakeIntensitySixStrongText" xml:space="preserve">
+  <data name="IntensitySixStrongText" xml:space="preserve">
     <value>6+</value>
   </data>
-  <data name="EarthquakeIntensitySixStrongColour" xml:space="preserve">
+  <data name="IntensitySixStrongColour" xml:space="preserve">
     <value>#A50021</value>
   </data>
-  <data name="EarthquakeIntensitySevenText" xml:space="preserve">
+  <data name="IntensitySevenText" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="EarthquakeIntensitySevenColour" xml:space="preserve">
+  <data name="IntensitySevenColour" xml:space="preserve">
     <value>#B40068</value>
   </data>
   <data name="EarthquakeIntensityUnknownText" xml:space="preserve">
@@ -187,7 +187,7 @@
     <value>800 km 以上</value>
   </data>
   <data name="EarthquakeDepthShallow" xml:space="preserve">
-    <value>非常浅</value>
+    <value>ごく浅い</value>
   </data>
   <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
     <value>Mw</value>
@@ -196,34 +196,25 @@
     <value>Mj</value>
   </data>
   <data name="DetailsIntensityText" xml:space="preserve">
-    <value>烈度</value>
+    <value>震度</value>
   </data>
   <data name="DetailsMaxIntensityText" xml:space="preserve">
-    <value>最大烈度</value>
+    <value>最大震度</value>
   </data>
   <data name="DetailsLastUpdatedText" xml:space="preserve">
-    <value>更新时刻</value>
+    <value>更新時刻</value>
   </data>
   <data name="DetailsMagnitudeText" xml:space="preserve">
-    <value>震级</value>
+    <value>マグニチュード</value>
   </data>
   <data name="DetailsDepthText" xml:space="preserve">
-    <value>震源深度</value>
+    <value>深さ</value>
   </data>
   <data name="DetailsTimeText" xml:space="preserve">
-    <value>时间</value>
+    <value>発生時刻</value>
   </data>
   <data name="DetailsHypocentreText" xml:space="preserve">
-    <value>震中</value>
-  </data>
-  <data name="PageNameRealtime" xml:space="preserve">
-    <value>实时监测</value>
-  </data>
-  <data name="PageNamePast" xml:space="preserve">
-    <value>地震历史</value>
-  </data>
-  <data name="PageNameSettings" xml:space="preserve">
-    <value>设置</value>
+    <value>震源</value>
   </data>
   <data name="EarthquakeIntensityZeroColour" xml:space="preserve">
     <value>#F0F0F0</value>

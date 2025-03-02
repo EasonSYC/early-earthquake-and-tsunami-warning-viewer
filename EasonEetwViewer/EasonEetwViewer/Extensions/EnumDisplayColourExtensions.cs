@@ -43,23 +43,23 @@ internal static class EnumDisplayColourExtensions
         => intensity switch
         {
             Intensity.One
-                => Resources.EarthquakeIntensityOneColour,
+                => EarthquakeResources.IntensityOneColour,
             Intensity.Two
-                => Resources.EarthquakeIntensityTwoColour,
+                => EarthquakeResources.IntensityTwoColour,
             Intensity.Three
-                => Resources.EarthquakeIntensityThreeColour,
+                => EarthquakeResources.IntensityThreeColour,
             Intensity.Four
-                => Resources.EarthquakeIntensityFourColour,
+                => EarthquakeResources.IntensityFourColour,
             Intensity.FiveWeak
-                => Resources.EarthquakeIntensityFiveWeakColour,
+                => EarthquakeResources.IntensityFiveWeakColour,
             Intensity.FiveStrong
-                => Resources.EarthquakeIntensityFiveStrongColour,
+                => EarthquakeResources.IntensityFiveStrongColour,
             Intensity.SixWeak
-                => Resources.EarthquakeIntensitySixWeakColour,
+                => EarthquakeResources.IntensitySixWeakColour,
             Intensity.SixStrong
-                => Resources.EarthquakeIntensitySixStrongColour,
+                => EarthquakeResources.IntensitySixStrongColour,
             Intensity.Seven
-                => Resources.EarthquakeIntensitySevenColour,
+                => EarthquakeResources.IntensitySevenColour,
             _
                 => throw new UnreachableException()
         };

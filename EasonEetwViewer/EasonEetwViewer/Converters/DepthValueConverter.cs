@@ -13,14 +13,14 @@ internal class DepthValueConverter : IValueConverter
             ? depth.Condition is DepthCondition condition
                 ? condition switch
                 {
-                    DepthCondition.Deep => Resources.EarthquakeDepthDeep,
-                    DepthCondition.Shallow => Resources.EarthquakeDepthShallow,
-                    DepthCondition.Unclear => Resources.UnknownText,
+                    DepthCondition.Deep => EarthquakeResources.EarthquakeDepthDeep,
+                    DepthCondition.Shallow => EarthquakeResources.EarthquakeDepthShallow,
+                    DepthCondition.Unclear => EarthquakeResources.UnknownText,
                     _ => throw new UnreachableException()
                 }
                 : depth.Value
             : value is null
-                ? Resources.UnknownText
+                ? EarthquakeResources.UnknownText
                 : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

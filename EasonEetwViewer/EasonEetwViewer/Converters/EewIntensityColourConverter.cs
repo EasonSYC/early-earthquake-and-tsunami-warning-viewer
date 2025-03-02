@@ -13,31 +13,31 @@ internal class EewIntensityColourConverter : IValueConverter
             ? lu.To is IntensityUpper.Unclear or IntensityUpper.Above
                 ? lu.From switch
                 {
-                    IntensityLower.Zero => Resources.EarthquakeIntensityZeroColour,
-                    IntensityLower.One => Resources.EarthquakeIntensityOneColour,
-                    IntensityLower.Two => Resources.EarthquakeIntensityTwoColour,
-                    IntensityLower.Three => Resources.EarthquakeIntensityThreeColour,
-                    IntensityLower.Four => Resources.EarthquakeIntensityFourColour,
-                    IntensityLower.FiveWeak => Resources.EarthquakeIntensityFiveWeakColour,
-                    IntensityLower.FiveStrong => Resources.EarthquakeIntensityFiveStrongColour,
-                    IntensityLower.SixWeak => Resources.EarthquakeIntensitySixWeakColour,
-                    IntensityLower.SixStrong => Resources.EarthquakeIntensitySixStrongColour,
-                    IntensityLower.Seven => Resources.EarthquakeIntensitySevenColour,
-                    IntensityLower.Unclear => Resources.EarthquakeIntensityUnknownColour,
+                    IntensityLower.Zero => EarthquakeResources.EarthquakeIntensityZeroColour,
+                    IntensityLower.One => EarthquakeResources.IntensityOneColour,
+                    IntensityLower.Two => EarthquakeResources.IntensityTwoColour,
+                    IntensityLower.Three => EarthquakeResources.IntensityThreeColour,
+                    IntensityLower.Four => EarthquakeResources.IntensityFourColour,
+                    IntensityLower.FiveWeak => EarthquakeResources.IntensityFiveWeakColour,
+                    IntensityLower.FiveStrong => EarthquakeResources.IntensityFiveStrongColour,
+                    IntensityLower.SixWeak => EarthquakeResources.IntensitySixWeakColour,
+                    IntensityLower.SixStrong => EarthquakeResources.IntensitySixStrongColour,
+                    IntensityLower.Seven => EarthquakeResources.IntensitySevenColour,
+                    IntensityLower.Unclear => EarthquakeResources.EarthquakeIntensityUnknownColour,
                     _ => throw new UnreachableException()
                 }
                 : lu.To switch
                 {
-                    IntensityUpper.Zero => Resources.EarthquakeIntensityZeroColour,
-                    IntensityUpper.One => Resources.EarthquakeIntensityOneColour,
-                    IntensityUpper.Two => Resources.EarthquakeIntensityTwoColour,
-                    IntensityUpper.Three => Resources.EarthquakeIntensityThreeColour,
-                    IntensityUpper.Four => Resources.EarthquakeIntensityFourColour,
-                    IntensityUpper.FiveWeak => Resources.EarthquakeIntensityFiveWeakColour,
-                    IntensityUpper.FiveStrong => Resources.EarthquakeIntensityFiveStrongColour,
-                    IntensityUpper.SixWeak => Resources.EarthquakeIntensitySixWeakColour,
-                    IntensityUpper.SixStrong => Resources.EarthquakeIntensitySixStrongColour,
-                    IntensityUpper.Seven => Resources.EarthquakeIntensitySevenColour,
+                    IntensityUpper.Zero => EarthquakeResources.EarthquakeIntensityZeroColour,
+                    IntensityUpper.One => EarthquakeResources.IntensityOneColour,
+                    IntensityUpper.Two => EarthquakeResources.IntensityTwoColour,
+                    IntensityUpper.Three => EarthquakeResources.IntensityThreeColour,
+                    IntensityUpper.Four => EarthquakeResources.IntensityFourColour,
+                    IntensityUpper.FiveWeak => EarthquakeResources.IntensityFiveWeakColour,
+                    IntensityUpper.FiveStrong => EarthquakeResources.IntensityFiveStrongColour,
+                    IntensityUpper.SixWeak => EarthquakeResources.IntensitySixWeakColour,
+                    IntensityUpper.SixStrong => EarthquakeResources.IntensitySixStrongColour,
+                    IntensityUpper.Seven => EarthquakeResources.IntensitySevenColour,
                     IntensityUpper.Unclear or IntensityUpper.Above or _ => throw new UnreachableException()
                 }
             : null;

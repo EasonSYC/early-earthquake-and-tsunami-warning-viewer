@@ -10,7 +10,7 @@ internal class HypocentreConverter : IValueConverter
         => value is Hypocentre hypocentre
             ? hypocentre.Name
             : value is null
-                ? Resources.UnknownText
+                ? EarthquakeResources.UnknownText
                 : null;
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
 }

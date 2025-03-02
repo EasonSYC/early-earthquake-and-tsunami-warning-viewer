@@ -77,7 +77,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// The current language.
     /// </summary>
     [ObservableProperty]
-    private CultureInfo _languageChoice = Resources.Culture;
+    private CultureInfo _languageChoice = EarthquakeResources.Culture;
     /// <summary>
     /// Executes then the language choice is changed.
     /// </summary>

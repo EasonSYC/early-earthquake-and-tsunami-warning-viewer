@@ -70,6 +70,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Update="Lang\MainWindowResources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>MainWindowResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
         <EmbeddedResource Update="Lang\PastPageResources.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>PastPageResources.Designer.cs</LastGenOutput>
@@ -78,9 +82,9 @@
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>RealtimePageResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
-        <EmbeddedResource Update="Lang\Resources.resx">
+        <EmbeddedResource Update="Lang\EarthquakeResources.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+            <LastGenOutput>EarthquakeResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Lang\SettingPageResources.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
@@ -89,6 +93,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="Lang\MainWindowResources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>MainWindowResources.resx</DependentUpon>
+        </Compile>
         <Compile Update="Lang\PastPageResources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -99,10 +108,10 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>RealtimePageResources.resx</DependentUpon>
         </Compile>
-        <Compile Update="Lang\Resources.Designer.cs">
+        <Compile Update="Lang\EarthquakeResources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
+            <DependentUpon>EarthquakeResources.resx</DependentUpon>
         </Compile>
         <Compile Update="Lang\SettingPageResources.Designer.cs">
             <DesignTime>True</DesignTime>

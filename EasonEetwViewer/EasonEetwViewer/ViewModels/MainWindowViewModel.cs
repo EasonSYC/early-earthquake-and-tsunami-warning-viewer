@@ -68,15 +68,15 @@ internal sealed partial class MainWindowViewModel : ViewModelBase
             new SidebarItemTemplate(
                 realtimePageViewModel,
                 "LiveRegular",
-                Resources.PageNameRealtime),
+                MainWindowResources.PageNameRealtime),
             new SidebarItemTemplate(
                 pastPageViewModel,
                 "HistoryRegular",
-                Resources.PageNamePast),
+                MainWindowResources.PageNamePast),
             new SidebarItemTemplate(
                 settingPageViewModel,
                 "SettingsRegular",
-                Resources.PageNameSettings),
+                MainWindowResources.PageNameSettings),
         ];
         SelectedSidebarItem = SidebarItems.ElementAt(0);
         realtimePageViewModel.WebSocketDataReceived += RealtimePageViewModel_WebSocketDataReceived;

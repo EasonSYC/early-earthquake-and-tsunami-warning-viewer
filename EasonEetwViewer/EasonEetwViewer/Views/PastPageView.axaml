@@ -62,7 +62,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="16"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsMaxIntensityText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsMaxIntensityText}"
                            Margin="5 5"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="52"
@@ -76,7 +76,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsTimeText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsTimeText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="24"
@@ -89,7 +89,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsHypocentreText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsHypocentreText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="24"
@@ -102,7 +102,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsDepthText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsDepthText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontWeight="SemiBold"
@@ -118,7 +118,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsMagnitudeText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsMagnitudeText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontWeight="SemiBold"
@@ -134,7 +134,7 @@
                 <TextBlock HorizontalAlignment="Left"
                            FontSize="14"
                            FontWeight="SemiBold"
-                           Text="{x:Static lang:Resources.DetailsLastUpdatedText}"
+                           Text="{x:Static lang:EarthquakeResources.DetailsLastUpdatedText}"
                            Margin="5 0"/>
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="18"
@@ -167,7 +167,7 @@
                                        FontWeight="SemiBold"
                                        Foreground="{Binding Intensity, Converter={StaticResource EnumDisplayColourConverter}}"
                                        Margin="5">
-                                    <Run Text="{x:Static, lang:Resources.DetailsIntensityText}"/>
+                                    <Run Text="{x:Static, lang:EarthquakeResources.DetailsIntensityText}"/>
                                     <Run Text="{Binding Intensity, Converter={StaticResource EnumDisplayTextConverter}}"/>
                                 </TextBlock>
 

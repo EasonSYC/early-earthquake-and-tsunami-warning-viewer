@@ -60,7 +60,8 @@ internal partial class App : Application
     }
     private static void LanguageChange(CultureInfo language)
     {
-        Lang.Resources.Culture = language;
+        Lang.MainWindowResources.Culture = language;
+        Lang.EarthquakeResources.Culture = language;
         Lang.PastPageResources.Culture = language;
         Lang.SettingPageResources.Culture = language;
         Lang.RealtimePageResources.Culture = language;

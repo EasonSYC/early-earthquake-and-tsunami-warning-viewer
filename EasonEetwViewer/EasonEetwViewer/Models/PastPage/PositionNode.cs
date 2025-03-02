@@ -1,21 +1,22 @@
 ﻿namespace EasonEetwViewer.Models.PastPage;
 internal record PositionNode
 {
-    internal ICollection<PositionNode>? SubNodes { get; private set; }
-    internal string Title { get; init; }
-    internal string Code { get; init; }
-    internal PositionNode(string title, string code)
+    public ICollection<PositionNode>? SubNodes { get; private set; }
+    public string Title { get; init; }
+    public string Code { get; init; }
+    public PositionNode(string title, string code)
     {
         Title = title;
         Code = code;
+        SubNodes = null; ;
     }
-    internal PositionNode(string title, string code, PositionNode node)
+    public PositionNode(string title, string code, PositionNode node)
     {
         Title = title;
         Code = code;
         SubNodes = [node];
     }
-    internal void AddPositionNode(PositionNode newNode)
+    public void AddPositionNode(PositionNode newNode)
     {
         if (SubNodes is null)
         {

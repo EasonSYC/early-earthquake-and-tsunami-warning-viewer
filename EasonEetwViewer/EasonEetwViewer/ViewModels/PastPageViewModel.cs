@@ -159,15 +159,17 @@ internal partial class PastPageViewModel(
 
             if (!token.IsCancellationRequested)
             {
-                EarthquakeDetails = new(
-                    value.EventId,
-                    value.Intensity,
-                    value.OriginTime,
-                    value.Hypocentre,
-                    value.Magnitude,
-                    informationalText,
-                    telegramInfo?.ReportDateTime,
-                    tree.ToItemControlDisplay());
+                EarthquakeDetails = new()
+                {
+                    EventId = value.EventId,
+                    Intensity = value.Intensity,
+                    OriginTime = value.OriginTime,
+                    Hypocentre = value.Hypocentre,
+                    Magnitude = value.Magnitude,
+                    InformationalText = informationalText,
+                    LastUpdated = telegramInfo?.ReportDateTime,
+                    DetailDisplay = tree.ToItemControlDisplay()
+                };
             }
         }
 
@@ -298,7 +300,15 @@ internal partial class PastPageViewModel(
 
         ObservableCollection<EarthquakeItemTemplate> currentEarthquake = [];
 
-        currentEarthquake.AddRange(eqList.Select(x => new EarthquakeItemTemplate(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
+        currentEarthquake.AddRange(eqList.Select(x
+            => new EarthquakeItemTemplate
+            {
+                EventId = x.EventId,
+                Intensity = x.MaxIntensity,
+                OriginTime = x.OriginTime,
+                Hypocentre = x.Hypocentre,
+                Magnitude = x.Magnitude
+            }));
 
         SelectedEarthquake = null;
         EarthquakeList = currentEarthquake;
@@ -314,7 +324,15 @@ internal partial class PastPageViewModel(
             IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
             CursorToken = rsp?.NextToken;
 
-            EarthquakeList.AddRange(eqList.Select(x => new EarthquakeItemTemplate(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
+            EarthquakeList.AddRange(eqList.Select(x
+                => new EarthquakeItemTemplate()
+                {
+                    EventId = x.EventId,
+                    Intensity = x.MaxIntensity,
+                    OriginTime = x.OriginTime,
+                    Hypocentre = x.Hypocentre,
+                    Magnitude = x.Magnitude
+                }));
         }
     }
     #endregion
