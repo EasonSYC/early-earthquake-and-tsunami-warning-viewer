@@ -10,6 +10,7 @@ using EasonEetwViewer.Api.Dtos.Record.GdEarthquake;
 using EasonEetwViewer.Api.Dtos.Response;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Extensions;
 using EasonEetwViewer.Models;
 using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;

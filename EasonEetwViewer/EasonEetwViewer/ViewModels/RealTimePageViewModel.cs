@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Api.Abstractions;
 using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Extensions;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;

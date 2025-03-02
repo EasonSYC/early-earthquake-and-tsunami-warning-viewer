@@ -13,6 +13,7 @@ using EasonEetwViewer.Authentication.Abstractions;
 using EasonEetwViewer.Authentication.Extensions;
 using EasonEetwViewer.Dtos.Enum;
 using EasonEetwViewer.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Extensions;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.JmaTravelTime.Extensions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;

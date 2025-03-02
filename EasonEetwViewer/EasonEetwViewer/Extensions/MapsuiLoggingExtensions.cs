@@ -4,15 +4,24 @@ using Mapsui.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace EasonEetwViewer.Services;
+namespace EasonEetwViewer.Extensions;
+/// <summary>
+/// Provides extensions to attach MapsUI logging to the <see cref="ILogger"/>.
+/// </summary>
 internal static class MapsuiLoggingExtensions
 {
     // https://mapsui.com/documentation/logging.html
+    /// <summary>
+    /// Attaches MapsUI logging to the <see cref="ILogger"/>.
+    /// </summary>
+    /// <param name="serviceProvider">The <see cref="ServiceProvider"/> of the application.</param>
+    /// <returns>The <see cref="ServiceProvider"/> so that calls can be chained.</returns>
+    /// <exception cref="UnreachableException">When the application reaches an unreachable state.</exception>
     public static IServiceProvider AttachMapsuiLogging(this IServiceProvider serviceProvider)
     {
         ILogger<Map> logger = serviceProvider.GetRequiredService<ILogger<Map>>();
 
-        Logger.LogDelegate += (Mapsui.Logging.LogLevel level, string message, Exception? ex) =>
+        Logger.LogDelegate += (level, message, ex) =>
         {
             switch (level)
             {
