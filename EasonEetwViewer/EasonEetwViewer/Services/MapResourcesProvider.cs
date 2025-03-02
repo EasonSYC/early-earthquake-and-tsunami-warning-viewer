@@ -1,5 +1,4 @@
 ﻿using EasonEetwViewer.Models.PastPage;
-using EasonEetwViewer.Models.RealTimePage;
 using Mapsui.Nts.Providers.Shapefile;
 using Mapsui.Providers;
 using Mapsui.Styles;

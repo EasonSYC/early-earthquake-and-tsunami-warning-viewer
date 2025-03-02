@@ -1,4 +1,5 @@
-﻿namespace EasonEetwViewer.Dmdata.WebSocket.Exceptions;
+﻿using EasonEetwViewer.Dmdata.WebSocket.Services;
+namespace EasonEetwViewer.Dmdata.WebSocket.Exceptions;
 /// <summary>
 /// Represents unsupported operations that occurs in <see cref="WebSocketClient"/>.
 /// </summary>
