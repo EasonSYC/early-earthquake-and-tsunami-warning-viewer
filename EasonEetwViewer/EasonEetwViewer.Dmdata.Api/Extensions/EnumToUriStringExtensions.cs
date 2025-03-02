@@ -1,12 +1,31 @@
 ﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Api.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 
 namespace EasonEetwViewer.Dmdata.Api.Extensions;
 /// <summary>
-/// Provides extensions for <see cref="Intensity"/> to convert to URI string to be used in API calls.
+/// Provides extensions for enums to convert to URI string to be used in API calls.
 /// </summary>
-internal static class IntensityExtensions
+internal static class EnumToUriStringExtensions
 {
+    /// <summary>
+    /// Converts the <see cref="ConnectionStatus"/> to a URI string.
+    /// </summary>
+    /// <param name="connectionStatus">The connection status to be converted.</param>
+    /// <returns>The URI string for the connection status</returns>
+    /// <exception cref="UnreachableException">When the code reaches an unreachable state.</exception>
+    public static string ToUriString(this ConnectionStatus connectionStatus)
+        => connectionStatus switch
+        {
+            ConnectionStatus.Waiting
+                => "waiting",
+            ConnectionStatus.Open
+                => "open",
+            ConnectionStatus.Closed
+                => "closed",
+            _
+                => throw new UnreachableException()
+        };
     /// <summary>
     /// Converts the <see cref="Intensity"/> to a URI string.
     /// </summary>

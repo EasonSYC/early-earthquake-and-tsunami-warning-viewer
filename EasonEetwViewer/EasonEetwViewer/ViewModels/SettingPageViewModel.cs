@@ -73,7 +73,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     public IKmoniSettingsHelper KmoniSettingsHelper { get; init; }
     public IEnumerable<SensorType> SensorTypeChoices { get; init; }
         = Enum.GetValues<SensorType>();
-    public IEnumerable<MeasurementType> DataTypeChoices { get; init; }
+    public IEnumerable<MeasurementType> MeasurementTypeChoices { get; init; }
         = Enum.GetValues<MeasurementType>();
     #endregion
 
@@ -109,7 +109,10 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     {
         ContractList? contractList = await _apiCaller.GetContractListAsync();
         IEnumerable<Contract> contracts = contractList?.ItemList ?? [];
-        return contracts.Sum(c => c.IsValid ? c.ConnectionCounts : 0);
+        return contracts.Sum(contract
+            => contract.IsValid
+                ? contract.ConnectionCounts
+                : 0);
     }
 
     [RelayCommand]

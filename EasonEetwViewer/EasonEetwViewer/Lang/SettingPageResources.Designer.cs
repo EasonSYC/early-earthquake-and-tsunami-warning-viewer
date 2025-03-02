@@ -214,128 +214,128 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data:.
+        /// </summary>
+        public static string KmoniMeasurementText {
+            get {
+                return ResourceManager.GetString("KmoniMeasurementText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Measured Intensity.
         /// </summary>
-        public static string KmoniDataIntensity {
+        public static string KmoniMeasurementTextMeasuredIntensity {
             get {
-                return ResourceManager.GetString("KmoniDataIntensity", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextMeasuredIntensity", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Peak Ground Acceleration (PGA).
         /// </summary>
-        public static string KmoniDataPga {
+        public static string KmoniMeasurementTextPeakGroundAcceleration {
             get {
-                return ResourceManager.GetString("KmoniDataPga", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextPeakGroundAcceleration", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Peak Ground Displacement (PGD).
         /// </summary>
-        public static string KmoniDataPgd {
+        public static string KmoniMeasurementTextPeakGroundDisplacement {
             get {
-                return ResourceManager.GetString("KmoniDataPgd", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextPeakGroundDisplacement", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Peak Ground Velocity (PGV).
         /// </summary>
-        public static string KmoniDataPgv {
+        public static string KmoniMeasurementTextPeakGroundVelocity {
             get {
-                return ResourceManager.GetString("KmoniDataPgv", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextPeakGroundVelocity", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 0.125 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp0125 {
+        public static string KmoniMeasurementTextResponse0125 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp0125", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse0125", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 0.250 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp0250 {
+        public static string KmoniMeasurementTextResponse0250 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp0250", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse0250", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 0.500 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp0500 {
+        public static string KmoniMeasurementTextResponse0500 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp0500", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse0500", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 1.000 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp1000 {
+        public static string KmoniMeasurementTextResponse1000 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp1000", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse1000", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 2.000 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp2000 {
+        public static string KmoniMeasurementTextResponse2000 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp2000", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse2000", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 4.000 Hz PGV Response Spectrum.
         /// </summary>
-        public static string KmoniDataRsp4000 {
+        public static string KmoniMeasurementTextResponse4000 {
             get {
-                return ResourceManager.GetString("KmoniDataRsp4000", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Data:.
-        /// </summary>
-        public static string KmoniDataText {
-            get {
-                return ResourceManager.GetString("KmoniDataText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Borehole.
-        /// </summary>
-        public static string KmoniSensorsBoreholeText {
-            get {
-                return ResourceManager.GetString("KmoniSensorsBoreholeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Surface.
-        /// </summary>
-        public static string KmoniSensorsSurfaceText {
-            get {
-                return ResourceManager.GetString("KmoniSensorsSurfaceText", resourceCulture);
+                return ResourceManager.GetString("KmoniMeasurementTextResponse4000", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Observation Points:.
         /// </summary>
-        public static string KmoniStationText {
+        public static string KmoniSensorText {
             get {
-                return ResourceManager.GetString("KmoniStationText", resourceCulture);
+                return ResourceManager.GetString("KmoniSensorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Borehole.
+        /// </summary>
+        public static string KmoniSensorTextBorehole {
+            get {
+                return ResourceManager.GetString("KmoniSensorTextBorehole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Surface.
+        /// </summary>
+        public static string KmoniSensorTextSurface {
+            get {
+                return ResourceManager.GetString("KmoniSensorTextSurface", resourceCulture);
             }
         }
         

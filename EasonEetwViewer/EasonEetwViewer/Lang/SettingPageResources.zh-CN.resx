@@ -141,10 +141,10 @@
   <data name="HeaderText" xml:space="preserve">
     <value>设置</value>
   </data>
-  <data name="KmoniDataText" xml:space="preserve">
+  <data name="KmoniMeasurementText" xml:space="preserve">
     <value>数据：</value>
   </data>
-  <data name="KmoniStationText" xml:space="preserve">
+  <data name="KmoniSensorText" xml:space="preserve">
     <value>观测点：</value>
   </data>
   <data name="KmoniText" xml:space="preserve">
@@ -192,40 +192,40 @@
   <data name="WebSocketText" xml:space="preserve">
     <value>WebSocket 连接情况</value>
   </data>
-  <data name="KmoniSensorsBoreholeText" xml:space="preserve">
+  <data name="KmoniSensorTextBorehole" xml:space="preserve">
     <value>地下</value>
   </data>
-  <data name="KmoniSensorsSurfaceText" xml:space="preserve">
+  <data name="KmoniSensorTextSurface" xml:space="preserve">
     <value>地面</value>
   </data>
-  <data name="KmoniDataRsp4000" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse4000" xml:space="preserve">
     <value>4.000 赫兹速度应答</value>
   </data>
-  <data name="KmoniDataIntensity" xml:space="preserve">
+  <data name="KmoniMeasurementTextMeasuredIntensity" xml:space="preserve">
     <value>实时烈度</value>
   </data>
-  <data name="KmoniDataPga" xml:space="preserve">
+  <data name="KmoniMeasurementTextPeakGroundAcceleration" xml:space="preserve">
     <value>最大加速度</value>
   </data>
-  <data name="KmoniDataPgd" xml:space="preserve">
+  <data name="KmoniMeasurementTextPeakGroundDisplacement" xml:space="preserve">
     <value>最大位移</value>
   </data>
-  <data name="KmoniDataPgv" xml:space="preserve">
+  <data name="KmoniMeasurementTextPeakGroundVelocity" xml:space="preserve">
     <value>最大速度</value>
   </data>
-  <data name="KmoniDataRsp0125" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse0125" xml:space="preserve">
     <value>0.125 赫兹速度应答</value>
   </data>
-  <data name="KmoniDataRsp0250" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse0250" xml:space="preserve">
     <value>0.250 赫兹速度应答</value>
   </data>
-  <data name="KmoniDataRsp0500" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse0500" xml:space="preserve">
     <value>0.500 赫兹速度应答</value>
   </data>
-  <data name="KmoniDataRsp1000" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse1000" xml:space="preserve">
     <value>1.000 赫兹速度应答</value>
   </data>
-  <data name="KmoniDataRsp2000" xml:space="preserve">
+  <data name="KmoniMeasurementTextResponse2000" xml:space="preserve">
     <value>2.000 赫兹速度应答</value>
   </data>
   <data name="GeneralText2" xml:space="preserve">

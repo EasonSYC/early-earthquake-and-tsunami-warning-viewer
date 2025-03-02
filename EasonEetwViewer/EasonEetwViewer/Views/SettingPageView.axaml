@@ -17,8 +17,7 @@
     </Design.DataContext>
 
     <UserControl.Resources>
-        <conv:MeasurementChoiceConverter x:Key="MeasurementChoiceConverter"/>
-        <conv:SensorChoiceConverter x:Key="SensorChoiceConverter"/>
+        <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
         <conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
         <conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
         <conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
@@ -177,12 +176,12 @@
                 <TextBlock Margin="10 0"
                            FontSize="15"
                            VerticalAlignment="Center"
-                           Text="{x:Static lang:SettingPageResources.KmoniStationText}"/>
+                           Text="{x:Static lang:SettingPageResources.KmoniSensorText}"/>
                 <ComboBox ItemsSource="{Binding SensorTypeChoices}"
                           SelectedItem="{Binding KmoniSettingsHelper.SensorChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource SensorChoiceConverter}}"/>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayStringConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
@@ -193,12 +192,12 @@
                 <TextBlock Margin="10 0"
                            FontSize="15"
                            VerticalAlignment="Center"
-                           Text="{x:Static lang:SettingPageResources.KmoniDataText}"/>
-                <ComboBox ItemsSource="{Binding DataTypeChoices}"
+                           Text="{x:Static lang:SettingPageResources.KmoniMeasurementText}"/>
+                <ComboBox ItemsSource="{Binding MeasurementTypeChoices}"
                           SelectedItem="{Binding KmoniSettingsHelper.MeasurementChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource MeasurementChoiceConverter}}"/>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayStringConverter}}"/>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

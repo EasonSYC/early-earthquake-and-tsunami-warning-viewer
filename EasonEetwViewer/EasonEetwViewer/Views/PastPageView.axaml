@@ -20,7 +20,6 @@
     <UserControl.Resources>
         <conv:EarthquakeIntensityTextConverter x:Key="IntensityTextConverter"/>
         <conv:EarthquakeIntensityColourConverter x:Key="IntensityColourConverter"/>
-        <conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
         <conv:DepthValueConverter x:Key="DepthValueConverter"/>
         <conv:DepthUnitConverter x:Key="DepthUnitConverter"/>
         <conv:HypocentreConverter x:Key="HypocentreConverter"/>
@@ -82,7 +81,7 @@
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="24"
                            FontWeight="SemiBold"
-                           Text="{Binding EarthquakeDetails.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Text="{Binding EarthquakeDetails.OriginTime, StringFormat='yyyy/MM/dd HH:mm'}"
                            Margin="5 0"/>
 
                 <!--Hypocentre Position Display-->
@@ -140,7 +139,7 @@
                 <TextBlock HorizontalAlignment="Right"
                            FontSize="18"
                            FontWeight="SemiBold"
-                           Text="{Binding EarthquakeDetails.LastUpdated, Converter={StaticResource DateTimeConverter}, ConverterParameter=long}"
+                           Text="{Binding EarthquakeDetails.LastUpdated, StringFormat='yyyy/MM/dd HH:mm'}"
                            Margin="5 0"/>
 
                 <TextBlock HorizontalAlignment="Left"
@@ -246,7 +245,7 @@
                                        Grid.Row="0"
                                        Grid.RowSpan="2"/>
 
-                            <TextBlock Text="{Binding OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=short}"
+                            <TextBlock Text="{Binding OriginTime, StringFormat='MM/dd HH:mm'}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Bottom"
                                        Grid.Column="1"

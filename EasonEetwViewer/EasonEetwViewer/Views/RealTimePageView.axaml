@@ -18,7 +18,6 @@
     </Design.DataContext>
 
     <UserControl.Resources>
-        <conv:DateTimeOffsetConverter x:Key="DateTimeConverter"/>
         <conv:EewTypeConverter x:Key="EewTypeConverter"/>
         <conv:EewColourConverter x:Key="EewColourConverter"/>
         <conv:EewSerialConverter x:Key="EewSerialConverter"/>
@@ -48,7 +47,7 @@
                     CornerRadius="0 5 0 0">
                 <TextBlock FontSize="20"
                            FontWeight="Bold"
-                           Text="{Binding TimeDisplay, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"/>
+                           Text="{Binding TimeDisplay, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
             </Border>
 
             <!--Eew Info Display-->
@@ -108,7 +107,7 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentDisplayEew.Earthquake.OriginTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
+                               Text="{Binding CurrentDisplayEew.Earthquake.OriginTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
                                Margin="5 0"/>
 
                     <!--Hypocentre Position Display-->
@@ -271,7 +270,7 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentDisplayEew.UpdateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
+                               Text="{Binding CurrentDisplayEew.UpdateTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
                                Margin="5 0"/>
 
                     <!--Informational Text-->
@@ -325,7 +324,7 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentTsunami.UpdateTime, Converter={StaticResource DateTimeConverter}, ConverterParameter=verylong}"
+                               Text="{Binding CurrentTsunami.UpdateTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
                                Margin="5 0"/>
 
                     <!--Informational Text-->
