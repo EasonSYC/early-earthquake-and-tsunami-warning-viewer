@@ -155,7 +155,7 @@
                     <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketConnectionTimeText}"
                                         Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
                     <DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketDisconnectText}">
-                        <DataTemplate DataType="{x:Type m:WebSocketConnectionTemplate}">
+                        <DataTemplate DataType="{x:Type m:IWebSocketConnectionTemplate}">
                             <Button HorizontalAlignment="Center"
                                     IsEnabled="{Binding IsEnabled}"
                                     Content="{x:Static lang:SettingPageResources.WebSocketDisconnectText}"
