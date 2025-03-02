@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection.Metadata;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia;
@@ -16,9 +17,10 @@ using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.JmaTravelTime.Extensions;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
-using EasonEetwViewer.Logging;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.KmoniOptions;
+using EasonEetwViewer.Services.Logging;
+using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.Telegram.Dtos.Schema;
 using EasonEetwViewer.Telegram.Extensions;
 using EasonEetwViewer.ViewModels;
@@ -30,7 +32,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer;
 /// <inheritdoc/>
-public partial class App : Application
+internal partial class App : Application
 {
     /// <inheritdoc/> 
     public override void Initialize()
@@ -154,9 +156,6 @@ public partial class App : Application
             .AddOptions<OAuth2Options>()
                 .Bind(config.GetSection("OAuth2Options"))
                 .Services
-            .AddSingleton<EventHandler<AuthenticationStatusChangedEventArgs>>(sp
-                => (o, e)
-                => File.WriteAllText(authenticatorPath, e.NewAuthenticatorString))
 
             .AddKmoniHelpers()
             .AddOptions<KmoniHelperOptions>()
@@ -168,7 +167,7 @@ public partial class App : Application
                 .Bind(config.GetSection("TimeTableOptions"))
                 .Services
 
-            .AddSingleton<StaticResources>()
+            .AddSingleton<MapResourcesProvider>()
 
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<RealtimePageViewModel>()
@@ -195,6 +194,10 @@ public partial class App : Application
             File.ReadAllText("TestEew.json"),
             Service.GetRequiredService<JsonSerializerOptions>())!;
         Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData });
+        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew2.json"),
+            Service.GetRequiredService<JsonSerializerOptions>())!;
+        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData2 });
 
         await Task.Delay(5000);
         TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(

@@ -144,6 +144,9 @@
         <None Update="TestEew.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Update="TestEew2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
         <None Update="TestTsunami.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>

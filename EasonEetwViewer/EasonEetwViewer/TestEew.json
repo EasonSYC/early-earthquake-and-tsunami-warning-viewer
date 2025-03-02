@@ -12,7 +12,7 @@
     "publishingOffice": [
         "気象庁"
     ],
-    "pressDateTime": "2025-02-08T13:09:00Z",
+    "pressDateTime": "2025-03-02T13:17:30Z",
     "reportDateTime": "2011-03-11T14:48:10+09:00",
     "targetDateTime": "2011-03-11T14:48:10+09:00",
     "eventId": "20110311144640",
@@ -1087,7 +1087,7 @@
             }
         ],
         "earthquake": {
-            "originTime": "2025-02-08T13:09:00Z",
+            "originTime": "2025-03-02T13:17:30Z",
             "arrivalTime": "2011-03-11T14:46:40+09:00",
             "hypocenter": {
                 "code": "288",
