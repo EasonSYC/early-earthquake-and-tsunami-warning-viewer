@@ -18,7 +18,6 @@
 
     <UserControl.Resources>
         <conv:EnumDisplayStringConverter x:Key="EnumDisplayStringConverter"/>
-        <conv:AuthenticationStatusConverter x:Key="AuthConverter"/>
         <conv:WebSocketConnectedConverter x:Key="WebSocketButtonConverter"/>
         <conv:OAuthConnectedConverter x:Key="OAuthConverter"/>
         <conv:CultureInfoConverter x:Key="LanguageChoiceConverter"/>
@@ -75,7 +74,7 @@
                            FontSize="15"
                            VerticalAlignment="Center">
                     <Run Text="{x:Static lang:SettingPageResources.AuthStatusText}"/>
-                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource AuthConverter}, Mode=OneWay}"/>
+                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource EnumDisplayStringConverter}}"/>
                 </TextBlock>
             </StackPanel>
 
