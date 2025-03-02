@@ -44,18 +44,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\EasonEetwViewer.Api\EasonEetwViewer.Api.csproj" />
-        <ProjectReference Include="..\EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj" />
-	<ProjectReference Include="..\EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dmdata.Api\EasonEetwViewer.Dmdata.Api.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dmdata.Authentication\EasonEetwViewer.Dmdata.Authentication.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dmdata.Dtos\EasonEetwViewer.Dmdata.Dtos.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dmdata.Telegram\EasonEetwViewer.Dmdata.Telegram.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Dmdata.WebSocket\EasonEetwViewer.Dmdata.WebSocket.csproj" />
+        <ProjectReference Include="..\EasonEetwViewer.Services.Kmoni\EasonEetwViewer.Services.Kmoni.csproj" />
         <ProjectReference Include="..\EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj" />
         <ProjectReference Include="..\EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj" />
-        <ProjectReference Include="..\EasonEetwViewer.Telegram\EasonEetwViewer.Telegram.csproj" />
-        <ProjectReference Include="..\EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <EmbeddedResource Include="Resources\cross.svg">
-          <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
         </EmbeddedResource>
         <EmbeddedResource Include="Resources\circle.svg">
             <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -130,22 +131,22 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.dbf">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.prj">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shp">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shx">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="TestEew.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="TestEew2.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="TestTsunami.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

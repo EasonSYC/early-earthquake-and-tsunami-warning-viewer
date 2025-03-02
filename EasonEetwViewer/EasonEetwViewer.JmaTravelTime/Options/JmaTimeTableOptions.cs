@@ -1,6 +1,6 @@
 ﻿using EasonEetwViewer.JmaTravelTime.Services;
 
-namespace EasonEetwViewer.JmaTravelTime.Abstractions;
+namespace EasonEetwViewer.JmaTravelTime.Options;
 /// <summary>
 /// The options to create an instance of <see cref="JmaTimeTable"/>.
 /// </summary>

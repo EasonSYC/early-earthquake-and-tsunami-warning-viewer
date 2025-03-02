@@ -3,74 +3,74 @@ using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
-using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
-using EasonEetwViewer.Api.Dtos.Record.Contract;
-using EasonEetwViewer.Api.Dtos.Record.WebSocket;
-using EasonEetwViewer.Api.Dtos.Request;
-using EasonEetwViewer.Api.Dtos.Response;
-using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Api.Abstractions;
+using EasonEetwViewer.Dmdata.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Api.Dtos.Record.Contract;
+using EasonEetwViewer.Dmdata.Api.Dtos.Record.WebSocket;
+using EasonEetwViewer.Dmdata.Api.Dtos.Request;
+using EasonEetwViewer.Dmdata.Api.Dtos.Response;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Events;
+using EasonEetwViewer.Events;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models;
-using EasonEetwViewer.Services;
-using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.Services.TimeProvider;
-using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
 using Microsoft.Extensions.Logging;
+using EasonEetwViewer.Services.Kmoni.Abstraction;
 
 namespace EasonEetwViewer.ViewModels;
 
 internal sealed partial class SettingPageViewModel : PageViewModelBase
 {
     public SettingPageViewModel(
-        KmoniOptions kmoniOptions,
         WebSocketStartPost startPost,
+        IKmoniSettingsHelper kmoniOptions,
         IWebSocketClient webSocketClient,
         ILogger<SettingPageViewModel> logger,
-        OnLanguageChanged onLangChange,
-        IAuthenticationHelper authenticatorDto,
+        IAuthenticationHelper authenticator,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
         ITimeProvider timeProvider)
-        : base(authenticatorDto,
+        : base(authenticator,
             apiCaller,
             telegramRetriever,
             timeProvider,
             logger)
     {
-        LanguageChanged = onLangChange;
-        KmoniOptions = kmoniOptions;
         _webSocketClient = webSocketClient;
         _startPost = startPost;
-        _authenticator.AuthenticationStatusChanged += SettingPageViewModel_AuthenticationStatusChanged;
-        _webSocketClient.StatusChanged += WebSocketClient_DataReceived;
+        _logger = logger;
+        KmoniSettingsHelper = kmoniOptions;
+        _authenticator.StatusChanged += AuthenticationStatusChangedEventHandler;
+        _webSocketClient.StatusChanged += WebSocketStatusChangedEventHandler;
     }
-
-    private void WebSocketClient_DataReceived(object? sender, EventArgs e)
+    private readonly ILogger<SettingPageViewModel> _logger;
+    private void WebSocketStatusChangedEventHandler(object? sender, EventArgs e)
         => OnPropertyChanged(nameof(WebSocketConnected));
 
     #region languageSettings
-    private readonly OnLanguageChanged LanguageChanged;
+    public event EventHandler<LanguagedChangedEventArgs>? LanguageChanged;
 
     [ObservableProperty]
     private CultureInfo _languageChoice = Resources.Culture;
 
     partial void OnLanguageChoiceChanged(CultureInfo value)
     {
-        LanguageChanged(value);
+        LanguageChanged?.Invoke(this, new() { Language = value });
     }
 
-    internal IEnumerable<CultureInfo> LanguageChoices { get; init; } = [
+    public IEnumerable<CultureInfo> LanguageChoices { get; init; } = [
         CultureInfo.InvariantCulture,
         new CultureInfo("ja-JP"),
         new CultureInfo("zh-CN")];
     #endregion
 
     #region kmoniSettings
-    internal KmoniOptions KmoniOptions { get; init; }
+    internal IKmoniSettingsHelper KmoniSettingsHelper { get; init; }
     internal IEnumerable<SensorType> SensorTypeChoices { get; init; } = Enum.GetValues<SensorType>();
     internal IEnumerable<MeasurementType> DataTypeChoices { get; init; } = Enum.GetValues<MeasurementType>();
     #endregion
@@ -148,50 +148,77 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     #endregion
 
     #region authSettings
+    /// <summary>
+    /// Whether OAuth is connected.
+    /// </summary>
     public bool OAuthConnected
         => AuthenticationStatus is AuthenticationStatus.OAuth;
+    /// <summary>
+    /// Whether the API key is confirmed.
+    /// </summary>
     public bool ApiKeyConfirmed
         => AuthenticationStatus is AuthenticationStatus.ApiKey;
+    /// <summary>
+    /// Whether the API key button is enabled.
+    /// </summary>
     public bool ApiKeyButtonEnabled
         => AuthenticationStatus is AuthenticationStatus.Null && ApiKeyText.StartsWith("AKe.");
+    /// <summary>
+    /// The API Key Text input.
+    /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ApiKeyButtonEnabled))]
     private string _apiKeyText = string.Empty;
-
+    /// <summary>
+    /// The OAuth Button click option.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
     [RelayCommand]
     private async Task OAuthButton()
     {
         if (AuthenticationStatus is AuthenticationStatus.OAuth)
         {
-            await UnsetAuthenticatorAsync();
+            await _authenticator.UnsetAuthenticatorAsync();
         }
         else
         {
-            await SetAuthenticatorToOAuthAsync();
+            await _authenticator.SetOAuthAsync();
         }
     }
-
-    private void SettingPageViewModel_AuthenticationStatusChanged(object? sender, EventArgs e)
+    /// <summary>
+    /// Handles the authentication status changed event by notifying the relavant properties.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The arguments of the event.</param>
+    private void AuthenticationStatusChangedEventHandler(object? sender, AuthenticationStatusChangedEventArgs e)
     {
+        OnPropertyChanged(nameof(AuthenticationStatus));
         OnPropertyChanged(nameof(OAuthConnected));
         OnPropertyChanged(nameof(ApiKeyConfirmed));
         OnPropertyChanged(nameof(ApiKeyButtonEnabled));
     }
+    /// <summary>
+    /// The API Key Button click option.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
     [RelayCommand]
     private async Task ApiKeyButton()
-        => await SetAuthenticatorToApiKeyAsync(ApiKeyText);
+        => await _authenticator.SetApiKeyAsync(ApiKeyText);
+    /// <summary>
+    /// Executes when the API Key text is changed, to unset the authenticator if it was originally set to API Key.
+    /// </summary>
+    /// <param name="value">The new value.</param>
     async partial void OnApiKeyTextChanged(string value)
     {
         if (AuthenticationStatus is AuthenticationStatus.ApiKey)
         {
-            await UnsetAuthenticatorAsync();
+            await _authenticator.UnsetAuthenticatorAsync();
         }
     }
-    private async Task SetAuthenticatorToApiKeyAsync(string apiKey)
-        => await _authenticator.SetApiKeyAsync(apiKey);
-    private async Task SetAuthenticatorToOAuthAsync()
-        => await _authenticator.SetOAuthAsync();
-    private async Task UnsetAuthenticatorAsync()
-        => await _authenticator.UnsetAuthenticatorAsync();
+    /// <summary>
+    /// The current authentication status.
+    /// </summary>
+    public AuthenticationStatus AuthenticationStatus
+        => _authenticator.AuthenticationStatus;
     #endregion
 }

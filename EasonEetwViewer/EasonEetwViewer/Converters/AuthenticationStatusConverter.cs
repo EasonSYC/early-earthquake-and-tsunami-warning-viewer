@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 
 namespace EasonEetwViewer.Converters;
 

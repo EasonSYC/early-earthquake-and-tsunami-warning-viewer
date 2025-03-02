@@ -180,7 +180,7 @@
                            VerticalAlignment="Center"
                            Text="{x:Static lang:SettingPageResources.KmoniStationText}"/>
                 <ComboBox ItemsSource="{Binding SensorTypeChoices}"
-                          SelectedItem="{Binding KmoniOptions.SensorChoice}">
+                          SelectedItem="{Binding KmoniSettingsHelper.SensorChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource SensorChoiceConverter}}"/>
@@ -196,7 +196,7 @@
                            VerticalAlignment="Center"
                            Text="{x:Static lang:SettingPageResources.KmoniDataText}"/>
                 <ComboBox ItemsSource="{Binding DataTypeChoices}"
-                          SelectedItem="{Binding KmoniOptions.DataChoice}">
+                          SelectedItem="{Binding KmoniSettingsHelper.MeasurementChoice}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource MeasurementChoiceConverter}}"/>

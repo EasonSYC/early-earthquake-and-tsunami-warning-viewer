@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Authentication.Abstractions;
+﻿using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;

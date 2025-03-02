@@ -2,8 +2,8 @@
 using System.Globalization;
 using Avalonia.Data.Converters;
 using EasonEetwViewer.Lang;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
-using EasonEetwViewer.Telegram.Dtos.EewInformation.Enum.Range;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Range;
 
 namespace EasonEetwViewer.Converters;
 internal class EewIntensityColourConverter : IValueConverter

@@ -3,22 +3,21 @@ using System.Text;
 using System.Timers;
 using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dmdata.Api.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Extensions;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;
-using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.Services.TimeProvider;
-using EasonEetwViewer.Telegram.Abstractions;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
-using EasonEetwViewer.Telegram.Dtos.Schema;
-using EasonEetwViewer.Telegram.Dtos.TelegramBase;
-using EasonEetwViewer.Telegram.Dtos.TsunamiInformation;
+using EasonEetwViewer.Dmdata.Telegram.Abstractions;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.TelegramBase;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using EasonEetwViewer.WebSocket.Abstractions;
 using EasonEetwViewer.WebSocket.Events;
@@ -35,6 +34,7 @@ using NetTopologySuite.Geometries;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
+using EasonEetwViewer.Services.Kmoni.Abstraction;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -44,7 +44,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         IImageFetch imageFetch,
         IPointExtract pointExtract,
         ITimeTable timeTableProvider,
-        KmoniOptions kmoniOptions,
+        IKmoniSettingsHelper kmoniOptions,
         IWebSocketClient webSocketClient,
         MapResourcesProvider resources,
         IAuthenticationHelper authenticatorWrapper,
@@ -488,7 +488,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     #region websocket
     public event EventHandler? WebSocketDataReceived;
-    public async void WebSocketClient_DataReceived(object? sender, DataEventArgs e)
+    public async void WebSocketClient_DataReceived(object? sender, DataReceivedEventArgs e)
     {
         WebSocketDataReceived?.Invoke(this, new());
 
@@ -506,7 +506,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region kmoni
-    internal KmoniOptions KmoniOptions { get; init; }
+    internal IKmoniSettingsHelper KmoniOptions { get; init; }
     internal DateTimeOffset TimeDisplay
         => _timeProvider.Now();
     private readonly System.Timers.Timer _timer;
@@ -550,7 +550,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         try
         {
             byte[]? imageBytes = await _imageFetch.GetByteArrayAsync(
-                KmoniOptions.DataChoice,
+                KmoniOptions.MeasurementChoice,
                 KmoniOptions.SensorChoice,
                 _timeProvider.ConvertToJst(_timeProvider.Now())
                 .AddSeconds(-_kmoniDelaySeconds)

@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Extensions;

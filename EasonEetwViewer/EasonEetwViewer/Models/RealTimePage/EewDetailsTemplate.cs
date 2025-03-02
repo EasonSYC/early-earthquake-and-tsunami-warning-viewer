@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Telegram.Dtos.EewInformation;
+﻿using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 
 namespace EasonEetwViewer.Models.RealTimePage;
 internal record EewDetailsTemplate

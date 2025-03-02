@@ -5,9 +5,9 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.ConsoleApp", "EasonEetwViewer.ConsoleApp\EasonEetwViewer.ConsoleApp.csproj", "{C0C7A1B9-99DA-4E7C-8351-F1784D511431}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.Dtos", "EasonEetwViewer.Dtos\EasonEetwViewer.Dtos.csproj", "{B63D2F64-4130-47CB-BB29-91AB54B91BF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasonEetwViewer.Dmdata.Dtos", "EasonEetwViewer.Dmdata.Dtos\EasonEetwViewer.Dmdata.Dtos.csproj", "{B63D2F64-4130-47CB-BB29-91AB54B91BF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Authentication", "EasonEetwViewer.Authentication\EasonEetwViewer.Authentication.csproj", "{FE8DF445-A973-4871-97D8-828D95518FA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Dmdata.Authentication", "EasonEetwViewer.Dmdata.Authentication\EasonEetwViewer.Dmdata.Authentication.csproj", "{FE8DF445-A973-4871-97D8-828D95518FA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.KyoshinMonitor", "EasonEetwViewer.KyoshinMonitor\EasonEetwViewer.KyoshinMonitor.csproj", "{1A7FC754-4C56-47A1-9E78-DDD9396404C5}"
 EndProject
@@ -15,11 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer", "EasonEet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.JmaTravelTime", "EasonEetwViewer.JmaTravelTime\EasonEetwViewer.JmaTravelTime.csproj", "{DDAC7851-F537-4382-96A2-9AD6079F24AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.WebSocket", "EasonEetwViewer.WebSocket\EasonEetwViewer.WebSocket.csproj", "{6BE3A699-9A60-4CED-9618-09422714C9DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Dmdata.WebSocket", "EasonEetwViewer.Dmdata.WebSocket\EasonEetwViewer.Dmdata.WebSocket.csproj", "{6BE3A699-9A60-4CED-9618-09422714C9DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Telegram", "EasonEetwViewer.Telegram\EasonEetwViewer.Telegram.csproj", "{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Dmdata.Telegram", "EasonEetwViewer.Dmdata.Telegram\EasonEetwViewer.Dmdata.Telegram.csproj", "{91A00EEC-9776-49C2-B6D2-36BABDB14FB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Api", "EasonEetwViewer.Api\EasonEetwViewer.Api.csproj", "{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Dmdata.Api", "EasonEetwViewer.Dmdata.Api\EasonEetwViewer.Dmdata.Api.csproj", "{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasonEetwViewer.Services.Kmoni", "EasonEetwViewer.Services.Kmoni\EasonEetwViewer.Services.Kmoni.csproj", "{59C89E31-4FD9-4F7A-99E0-CCC8F87650C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE2247FB-E2C0-4D53-8318-C47B4A981DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59C89E31-4FD9-4F7A-99E0-CCC8F87650C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59C89E31-4FD9-4F7A-99E0-CCC8F87650C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59C89E31-4FD9-4F7A-99E0-CCC8F87650C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59C89E31-4FD9-4F7A-99E0-CCC8F87650C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

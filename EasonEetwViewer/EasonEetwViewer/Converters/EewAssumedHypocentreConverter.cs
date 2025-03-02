@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 
 namespace EasonEetwViewer.Converters;
 internal class EewAssumedHypocentreConverter : IValueConverter

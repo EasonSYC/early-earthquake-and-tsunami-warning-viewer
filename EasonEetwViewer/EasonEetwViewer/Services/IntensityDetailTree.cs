@@ -1,4 +1,4 @@
-﻿using EasonEetwViewer.Dtos.Enum;
+﻿using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Models.PastPage;
 using EasonEetwViewer.Models.RealTimePage;
 

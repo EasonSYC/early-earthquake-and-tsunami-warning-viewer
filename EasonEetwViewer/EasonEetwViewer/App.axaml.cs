@@ -6,30 +6,31 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using EasonEetwViewer.Api.Dtos.Enum.WebSocket;
-using EasonEetwViewer.Api.Dtos.Request;
-using EasonEetwViewer.Api.Extensions;
-using EasonEetwViewer.Authentication.Abstractions;
-using EasonEetwViewer.Authentication.Extensions;
-using EasonEetwViewer.Dtos.Enum;
-using EasonEetwViewer.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Api.Dtos.Enum.WebSocket;
+using EasonEetwViewer.Dmdata.Api.Dtos.Request;
+using EasonEetwViewer.Dmdata.Api.Extensions;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Extensions;
+using EasonEetwViewer.Dmdata.Dtos.Enum;
+using EasonEetwViewer.Dmdata.Dtos.Enum.WebSocket;
 using EasonEetwViewer.Extensions;
-using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.JmaTravelTime.Extensions;
+using EasonEetwViewer.JmaTravelTime.Options;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
 using EasonEetwViewer.Services;
-using EasonEetwViewer.Services.KmoniOptions;
 using EasonEetwViewer.Services.Logging;
 using EasonEetwViewer.Services.TimeProvider;
-using EasonEetwViewer.Telegram.Dtos.Schema;
-using EasonEetwViewer.Telegram.Extensions;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
+using EasonEetwViewer.Dmdata.Telegram.Extensions;
 using EasonEetwViewer.ViewModels;
 using EasonEetwViewer.Views;
 using EasonEetwViewer.WebSocket.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using EasonEetwViewer.Services.Kmoni.Extension;
+using EasonEetwViewer.Services.Kmoni.Options;
 
 namespace EasonEetwViewer;
 /// <inheritdoc/>
@@ -41,28 +42,7 @@ internal partial class App : Application
     /// <summary>
     /// The service provider for the application.
     /// </summary>
-    public static IServiceProvider? Service { get; private set; }
-
-    private static KmoniOptions GetKmoniOptions(string kmoniOptionsPath)
-    {
-        IKmoniDto kmoniDto;
-        try
-        {
-            IKmoniDto? serialisedDto = JsonSerializer.Deserialize<KmoniSerialisableOptions>(File.ReadAllText(kmoniOptionsPath));
-            kmoniDto = serialisedDto is not null ? serialisedDto : new KmoniDefaultOptions();
-        }
-        catch
-        {
-            kmoniDto = new KmoniDefaultOptions();
-        }
-
-        // https://stackoverflow.com/a/5822249
-        KmoniOptions kmoniOptions = new(kmoniDto);
-        kmoniOptions.PropertyChanged += (s, e)
-            => File.WriteAllText(kmoniOptionsPath, JsonSerializer.Serialize(kmoniOptions.ToKmoniSerialisableOptions()));
-
-        return kmoniOptions;
-    }
+    public static IServiceProvider? Service { get; private set; } 
 
     private static CultureInfo GetLanguage(string languagePath)
     {
@@ -112,7 +92,7 @@ internal partial class App : Application
         string baseTelegram = baseUrls["Telegram"]!;
 
         IConfigurationSection configPaths = config.GetSection("ConfigPaths");
-        string kmoniOptionsPath = configPaths["KmoniOptions"]!;
+        string kmoniOptionsPath = configPaths["KmoniSettingsHelper"]!;
         string authenticatorPath = configPaths["Authenticator"]!;
         string languagePath = configPaths["Language"]!;
 
@@ -130,10 +110,8 @@ internal partial class App : Application
                     .SetMinimumLevel(LogLevel.Information))
             .AddSingleton(sp
                 => WebSocketStartParam(webSocketConfig, $"{appName} {appVersion}"))
-            .AddSingleton(sp
-                => GetKmoniOptions(kmoniOptionsPath))
 
-            .AddSingleton<OnLanguageChanged>(sp
+            .AddSingleton<Action<CultureInfo>>(sp
                 => s
                 =>
                 {
@@ -152,6 +130,11 @@ internal partial class App : Application
             .AddApiCaller(baseApi)
             .AddTelegramRetriever(baseTelegram)
             .AddWebSocket()
+
+            .AddKmoniOptionsHelper()
+            .AddOptions<KmoniSettingsHelperOptions>()
+                .Bind(config.GetSection("KmoniSettingsHelperOptions"))
+                .Services
 
             .AddAuthenticator(authenticatorPath)
             .AddOptions<OAuth2Options>()

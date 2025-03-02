@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using EasonEetwViewer.Dtos.Enum;
+using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Converters;

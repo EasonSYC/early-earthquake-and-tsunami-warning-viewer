@@ -1,9 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using EasonEetwViewer.Api.Abstractions;
-using EasonEetwViewer.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Api.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.TimeProvider;
-using EasonEetwViewer.Telegram.Abstractions;
+using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using Mapsui;
 using Mapsui.Limiting;
 using Mapsui.Projections;
