@@ -82,8 +82,8 @@ internal partial class PastPageViewModel(
 
         MRect? regionLimits = null;
 
-        GdEarthquakeEvent rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
-        IEnumerable<TelegramItem> telegrams = rsp.EarthquakeEvent.Telegrams;
+        GdEarthquakeEvent? rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
+        IEnumerable<TelegramItem> telegrams = rsp?.EarthquakeEvent.Telegrams ?? [];
         telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53");
         if (telegrams.Count() != 0)
         {
@@ -155,11 +155,19 @@ internal partial class PastPageViewModel(
                 }
             }
 
-            string informationalText = ToInformationString(telegramInfo);
+            string informationalText = telegramInfo is null ? string.Empty : ToInformationString(telegramInfo);
 
             if (!token.IsCancellationRequested)
             {
-                EarthquakeDetails = new(value.EventId, value.Intensity, value.OriginTime, value.Hypocentre, value.Magnitude, informationalText, telegramInfo.ReportDateTime, tree.ToItemControlDisplay());
+                EarthquakeDetails = new(
+                    value.EventId,
+                    value.Intensity,
+                    value.OriginTime,
+                    value.Hypocentre,
+                    value.Magnitude,
+                    informationalText,
+                    telegramInfo?.ReportDateTime,
+                    tree.ToItemControlDisplay());
             }
         }
 
@@ -268,23 +276,25 @@ internal partial class PastPageViewModel(
     private bool IsStationsRetrieved => _earthquakeObservationStations is not null;
     private async Task UpdateEarthquakeObservationStations()
     {
-        EarthquakeParameter rsp = await _apiCaller.GetEarthquakeParameterAsync();
-        _earthquakeObservationStations = rsp.ItemList;
+        EarthquakeParameter? rsp = await _apiCaller.GetEarthquakeParameterAsync();
+        _earthquakeObservationStations = rsp?.ItemList ?? [];
     }
     #endregion
 
     #region loadEarthquakeAction
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
-    private string _cursorToken = string.Empty;
-    public bool IsLoadExtraEnabled => CursorToken != string.Empty;
+    private string? _cursorToken = null;
+    public bool IsLoadExtraEnabled
+        => CursorToken is not null;
 
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
-        GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
-        IEnumerable<EarthquakeInfo> eqList = rsp.ItemList;
-        CursorToken = rsp.NextToken ?? string.Empty;
+        GdEarthquakeList? rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
+
+        IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
+        CursorToken = rsp?.NextToken ?? null;
 
         ObservableCollection<EarthquakeItemTemplate> currentEarthquake = [];
 
@@ -297,11 +307,12 @@ internal partial class PastPageViewModel(
     [RelayCommand]
     private async Task LoadExtraEarthquakes()
     {
-        if (CursorToken != string.Empty)
+        if (!string.IsNullOrEmpty(CursorToken))
         {
-            GdEarthquakeList rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
-            IEnumerable<EarthquakeInfo> eqList = rsp.ItemList;
-            CursorToken = rsp.NextToken ?? string.Empty;
+            GdEarthquakeList? rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
+
+            IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
+            CursorToken = rsp?.NextToken;
 
             EarthquakeList.AddRange(eqList.Select(x => new EarthquakeItemTemplate(x.EventId, x.MaxIntensity, x.OriginTime, x.Hypocentre, x.Magnitude)));
         }

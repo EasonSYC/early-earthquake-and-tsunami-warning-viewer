@@ -64,7 +64,10 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         LanguageChanged(value);
     }
 
-    internal IEnumerable<CultureInfo> LanguageChoices { get; init; } = [CultureInfo.InvariantCulture, new CultureInfo("ja-JP"), new CultureInfo("zh-CN")];
+    internal IEnumerable<CultureInfo> LanguageChoices { get; init; } = [
+        CultureInfo.InvariantCulture,
+        new CultureInfo("ja-JP"),
+        new CultureInfo("zh-CN")];
     #endregion
 
     #region kmoniSettings
@@ -84,8 +87,11 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     {
         if (!WebSocketConnected)
         {
-            WebSocketStart webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
-            await _webSocketClient.ConnectAsync(webSocket.WebSockerUrl.Url);
+            WebSocketStart? webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
+            if (webSocket is not null)
+            {
+                await _webSocketClient.ConnectAsync(webSocket.WebSockerUrl.Url);
+            }
         }
         else
         {
@@ -98,8 +104,8 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
 
     private async Task<int> GetAvaliableWebSocketConnections()
     {
-        ContractList contractList = await _apiCaller.GetContractListAsync();
-        IEnumerable<Contract> contracts = contractList.ItemList;
+        ContractList? contractList = await _apiCaller.GetContractListAsync();
+        IEnumerable<Contract> contracts = contractList?.ItemList ?? [];
         return contracts.Sum(c => c.IsValid ? c.ConnectionCounts : 0);
     }
 
@@ -115,10 +121,10 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         // Cursor Token
         for (int i = 0; i < 5; ++i)
         {
-            WebSocketList webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
-            wsList.AddRange(webSocketList.ItemList);
+            WebSocketList? webSocketList = await _apiCaller.GetWebSocketListAsync(limit: 100, connectionStatus: ConnectionStatus.Open, cursorToken: currentCursorToken);
+            wsList.AddRange(webSocketList?.ItemList ?? []);
 
-            if (webSocketList.NextToken is null)
+            if (webSocketList?.NextToken is null)
             {
                 break;
             }
