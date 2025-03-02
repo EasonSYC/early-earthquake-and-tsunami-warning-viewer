@@ -83,4 +83,15 @@ internal static partial class ApiCallerLogs
         Message = "Error received from API call: `{ErrorCode}` `{ErrorMessage}`")]
     public static partial void ErrorReceived(
         this ILogger<ApiCaller> logger, int errorCode, string errorMessage);
+    /// <summary>
+    /// Log when not authenticated.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    [LoggerMessage(
+        EventId = 6,
+        EventName = nameof(NotAuthenticated),
+        Level = LogLevel.Warning,
+        Message = "Not authenticated.")]
+    public static partial void NotAuthenticated(
+        this ILogger<ApiCaller> logger);
 }

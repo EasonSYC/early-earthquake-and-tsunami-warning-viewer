@@ -52,6 +52,7 @@ internal sealed class TelegramRetriever : ITelegramRetriever
         AuthenticationHeaderValue? authenticationHeaderValue = await _authenticator.GetAuthenticationHeaderAsync();
         if (authenticationHeaderValue is null)
         {
+            _logger.NotAuthenticated();
             return null;
         }
 

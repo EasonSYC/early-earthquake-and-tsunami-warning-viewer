@@ -66,4 +66,15 @@ internal static partial class TelegramRetrieverLogs
         Message = "Requested telegram `{Id}`.")]
     public static partial void Requested(
         this ILogger<TelegramRetriever> logger, string id);
+    /// <summary>
+    /// Log when not authenticated.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    [LoggerMessage(
+        EventId = 5,
+        EventName = nameof(NotAuthenticated),
+        Level = LogLevel.Warning,
+        Message = "Not authenticated.")]
+    public static partial void NotAuthenticated(
+        this ILogger<TelegramRetriever> logger);
 }

@@ -227,6 +227,7 @@ internal sealed class ApiCaller : IApiCaller
         AuthenticationHeaderValue? header = await _authenticator.GetAuthenticationHeaderAsync();
         if (header is null)
         {
+            _logger.NotAuthenticated();
             return null;
         }
 
