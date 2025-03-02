@@ -10,13 +10,16 @@ using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Extensions;
 
+/// <summary>
+/// Provides extension methods for enums to have <c>ToColourString</c> method.
+/// </summary>
 internal static class EnumDisplayColourExtensions
 {
     /// <summary>
     /// Converts <see cref="TsunamiWarningType"/> to colour string.
     /// </summary>
-    /// <param name="tsunamiWarningType">The tsunami waarning type to be converted.</param>
-    /// <returns>The string representing the colour for the tsunami warning type.</returns>
+    /// <param name="tsunamiWarningType">The enum to be converted.</param>
+    /// <returns>The string representing the colour.</returns>
     /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToColourString(this TsunamiWarningType tsunamiWarningType)
         => tsunamiWarningType switch
@@ -38,8 +41,8 @@ internal static class EnumDisplayColourExtensions
     /// <summary>
     /// Converts <see cref="Intensity"/> to colour string.
     /// </summary>
-    /// <param name="intensity">The intensity to be converted.</param>
-    /// <returns>The string representing the colour for the intensity.</returns>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The string representing the colour.</returns>
     /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
     public static string ToColourString(this Intensity intensity)
         => intensity switch

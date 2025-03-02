@@ -12,7 +12,7 @@
     "publishingOffice": [
         "気象庁"
     ],
-    "pressDateTime": "2025-03-02T20:52:00Z",
+    "pressDateTime": "2025-12-31T22:00:00Z",
     "reportDateTime": "2018-09-06T03:10:16+09:00",
     "targetDateTime": "2018-09-06T03:10:16+09:00",
     "eventId": "20180906030805",
@@ -58,10 +58,10 @@
                 "landOrSea": "内陸",
                 "accuracy": {
                     "epicenters": [
-                        "6",
+                        "4",
                         "9"
                     ],
-                    "depth": "6",
+                    "depth": "4",
                     "magnitudeCalculation": "5",
                     "numberOfMagnitudeCalculation": "5"
                 }

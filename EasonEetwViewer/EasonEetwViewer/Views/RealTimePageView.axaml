@@ -31,7 +31,6 @@
         <conv:MagnitudeValueConverter x:Key="MagnitudeValueConverter"/>
         <conv:MagnitudeUnitConverter x:Key="MagnitudeUnitConverter"/>
         <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
-        <conv:EewAccuracyConverter x:Key="EewAccuracyConverter"/>
         <conv:EewOnePointConverter x:Key="EewOnePointConverter"/>
     </UserControl.Resources>
 
@@ -223,31 +222,31 @@
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[0], Converter={StaticResource EewAccuracyConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[0], Converter={StaticResource EnumDisplayTextConverter}}"/>
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[1], Converter={StaticResource EewAccuracyConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[1], Converter={StaticResource EnumDisplayTextConverter}}"/>
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Depth, Converter={StaticResource EewAccuracyConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Depth, Converter={StaticResource EnumDisplayTextConverter}}"/>
                         <TextBlock Grid.Row="3"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Magnitude, Converter={StaticResource EewAccuracyConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Magnitude, Converter={StaticResource EnumDisplayTextConverter}}"/>
                         <TextBlock Grid.Row="4"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.MagnitudePoint, Converter={StaticResource EewAccuracyConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.MagnitudePoint, Converter={StaticResource EnumDisplayTextConverter}}"/>
                     </Grid>
 
                     <!--One Point Warning Text-->

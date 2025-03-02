@@ -175,15 +175,15 @@ internal partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
 
-        //await Task.Delay(5000);
-        //EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
-        //    File.ReadAllText("TestEew.json"),
-        //    Service.GetRequiredService<JsonSerializerOptions>())!;
-        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData });
-        //EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
-        //    File.ReadAllText("TestEew2.json"),
-        //    Service.GetRequiredService<JsonSerializerOptions>())!;
-        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData2 });
+        await Task.Delay(5000);
+        EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew.json"),
+            Service.GetRequiredService<JsonSerializerOptions>())!;
+        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData });
+        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew2.json"),
+            Service.GetRequiredService<JsonSerializerOptions>())!;
+        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClient_DataReceived(this, new() { Telegram = eewData2 });
 
         await Task.Delay(5000);
         TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
