@@ -25,18 +25,33 @@ using Microsoft.Extensions.Options;
 
 namespace EasonEetwViewer.ViewModels;
 
+/// <summary>
+/// The view model for the settings page.
+/// </summary>
 internal sealed partial class SettingPageViewModel : PageViewModelBase
 {
+    /// <summary>
+    /// Instantiates a new <see cref="SettingPageViewModel"/>.
+    /// </summary>
+    /// <param name="startPost">The post data when the WebSocket starts.</param>
+    /// <param name="kmoniOptions">The options helper for kmoni.</param>
+    /// <param name="webSocketClient">The WebSocket client to be used.</param>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="authenticator">The authenticator to be used.</param>
+    /// <param name="apiCaller">The API caller to be used.</param>
+    /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+    /// <param name="timeProvider">The time provider to be used.</param>
     public SettingPageViewModel(
         IOptions<WebSocketStartPost> startPost,
         IKmoniSettingsHelper kmoniOptions,
         IWebSocketClient webSocketClient,
-        ILogger<SettingPageViewModel> logger,
         IAuthenticationHelper authenticator,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
-        ITimeProvider timeProvider)
-        : base(authenticator,
+        ITimeProvider timeProvider,
+        ILogger<SettingPageViewModel> logger)
+        : base(
+            authenticator,
             apiCaller,
             telegramRetriever,
             timeProvider,
@@ -49,19 +64,29 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         _authenticator.StatusChanged += AuthenticationStatusChangedEventHandler;
         _webSocketClient.StatusChanged += WebSocketStatusChangedEventHandler;
     }
+    /// <summary>
+    /// The logger to be used.
+    /// </summary>
     private readonly ILogger<SettingPageViewModel> _logger;
-
     #region languageSettings
+    /// <summary>
+    /// Invoked when the language choice is changed.
+    /// </summary>
     public event EventHandler<LanguagedChangedEventArgs>? LanguageChanged;
-
+    /// <summary>
+    /// The current language.
+    /// </summary>
     [ObservableProperty]
     private CultureInfo _languageChoice = Resources.Culture;
-
+    /// <summary>
+    /// Executes then the language choice is changed.
+    /// </summary>
+    /// <param name="value">The new language.</param>
     partial void OnLanguageChoiceChanged(CultureInfo value)
-    {
-        LanguageChanged?.Invoke(this, new() { Language = value });
-    }
-
+        => LanguageChanged?.Invoke(this, new() { Language = value });
+    /// <summary>
+    /// The list of languages available.
+    /// </summary>
     public IEnumerable<CultureInfo> LanguageChoices { get; init; } = [
         CultureInfo.InvariantCulture,
         new CultureInfo("ja-JP"),
@@ -69,56 +94,97 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     #endregion
 
     #region kmoniSettings
+    /// <summary>
+    /// The helper for kmoni options.
+    /// </summary>
     public IKmoniSettingsHelper KmoniSettingsHelper { get; init; }
+    /// <summary>
+    /// The choices for the sensor type.
+    /// </summary>
     public IEnumerable<SensorType> SensorTypeChoices { get; init; }
         = Enum.GetValues<SensorType>();
+    /// <summary>
+    /// The choices for the measurement type.
+    /// </summary>
     public IEnumerable<MeasurementType> MeasurementTypeChoices { get; init; }
         = Enum.GetValues<MeasurementType>();
     #endregion
 
     #region webSocketSettings
+    /// <summary>
+    /// The WebSocket client to be used.
+    /// </summary>
     private readonly IWebSocketClient _webSocketClient;
+    /// <summary>
+    /// The data to include in the POST request when starting the WebSocket.
+    /// </summary>
     private readonly WebSocketStartPost _startPost;
+    /// <summary>
+    /// The text on the WebSocket connect/disconnect button.
+    /// </summary>
     public string WebSocketButtonText
         => _webSocketClient.IsWebSocketConnected
             ? SettingPageResources.WebSocketButtonTextConnected
             : SettingPageResources.WebSocketButtonTextDisconnected;
+    /// <summary>
+    /// Handles the WebSocket status changed event by notifying the relavant properties.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The arguments of the event.</param>
     private void WebSocketStatusChangedEventHandler(object? sender, EventArgs e)
         => OnPropertyChanged(nameof(WebSocketButtonText));
+    /// <summary>
+    /// The command to execute when the connect/disconnect button for WebSocket is pressed.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
     [RelayCommand]
     private async Task WebSocketButton()
     {
         if (!_webSocketClient.IsWebSocketConnected)
         {
+            _logger.ConnectingWebSocket();
             WebSocketStart? webSocket = await _apiCaller.PostWebSocketStartAsync(_startPost);
             if (webSocket is not null)
             {
                 await _webSocketClient.ConnectAsync(webSocket.WebSockerUrl.Url);
+                _logger.ConnectedWebSocket();
             }
         }
         else
         {
+            _logger.DisconnectingWebSocket();
             await _webSocketClient.DisconnectAsync();
         }
     }
-
-    [ObservableProperty]
-    private ObservableCollection<IWebSocketConnectionTemplate> _webSocketConnections
+    /// <summary>
+    /// The list of WebSocket connections.
+    /// </summary>
+    public ObservableCollection<IWebSocketConnectionTemplate> WebSocketConnections { get; init; }
         = [];
-
-    private async Task<int> GetAvaliableWebSocketConnections()
+    /// <summary>
+    /// Gets the number of available websocket connections.
+    /// </summary>
+    /// <returns>The number of connections available.</returns>
+    private async Task<int> GetTotalWebSocketSlots()
     {
+        _logger.RequestingAvailableConnections();
         ContractList? contractList = await _apiCaller.GetContractListAsync();
         IEnumerable<Contract> contracts = contractList?.ItemList ?? [];
-        return contracts.Sum(contract
+        int slotNumber = contracts.Sum(contract
             => contract.IsValid
                 ? contract.ConnectionCounts
                 : 0);
+        _logger.RequestedAvailableConnections(slotNumber);  
+        return slotNumber;
     }
-
+    /// <summary>
+    /// The action to be executed when refreshing the WebSocket list.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
     [RelayCommand]
     private async Task WebSocketRefresh()
     {
+        _logger.RequestingAvailableConnections();
         IList<WebSocketDetails> wsList = [];
         string? currentCursorToken = null;
         do
@@ -132,8 +198,9 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
             currentCursorToken = webSocketList?.NextToken;
         } while (currentCursorToken is not null);
 
-        ObservableCollection<IWebSocketConnectionTemplate> currentConnections = [];
-        currentConnections.AddRange(wsList.Select(x
+        _logger.DisplayingActiveConnections();
+        WebSocketConnections.Clear();
+        WebSocketConnections.AddRange(wsList.Select(x
             => new WebSocketConnectionTemplate()
             {
                 ApplicationName = x.ApplicationName ?? string.Empty,
@@ -143,12 +210,11 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
                     => await _apiCaller.DeleteWebSocketAsync(x.WebSocketId)
             }));
 
-        int avaliableConnection = await GetAvaliableWebSocketConnections();
-        currentConnections.AddRange(Enumerable.Repeat(
+        int avaliableConnection = await GetTotalWebSocketSlots();
+        _logger.DisplayingAvailableConnections();
+        WebSocketConnections.AddRange(Enumerable.Repeat(
             EmptyWebSocketConnectionTemplate.Instance,
-            avaliableConnection - currentConnections.Count));
-
-        WebSocketConnections = currentConnections;
+            avaliableConnection - WebSocketConnections.Count));
     }
     #endregion
 
@@ -190,11 +256,14 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     {
         if (AuthenticationStatus is AuthenticationStatus.OAuth)
         {
+            _logger.UnsettingOAuth();
             await _authenticator.UnsetAuthenticatorAsync();
         }
         else
         {
+            _logger.SettingOAuth();
             await _authenticator.SetOAuthAsync();
+            _logger.OAuthSet();
         }
     }
     /// <summary>
@@ -216,15 +285,20 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
     [RelayCommand]
     private async Task ApiKeyButton()
-        => await _authenticator.SetApiKeyAsync(ApiKeyText);
+    {
+        _logger.SettingApiKey();
+        await _authenticator.SetApiKeyAsync(ApiKeyText);
+    }
     /// <summary>
     /// Executes when the API Key text is changed, to unset the authenticator if it was originally set to API Key.
     /// </summary>
     /// <param name="value">The new value.</param>
     async partial void OnApiKeyTextChanged(string value)
     {
+        _logger.TextChanged();
         if (AuthenticationStatus is AuthenticationStatus.ApiKey)
         {
+            _logger.UnsettingApiKey();
             await _authenticator.UnsetAuthenticatorAsync();
         }
     }

@@ -58,17 +58,6 @@ internal partial class App : Application
 
         return culture;
     }
-
-    private static WebSocketStartPost WebSocketStartParam(IConfigurationSection webSocketConfig, string appName)
-        => new()
-        {
-            AppName = appName,
-            Classifications = webSocketConfig.GetSection("Classifications").Get<IEnumerable<Classification>>()!,
-            Types = webSocketConfig.GetSection("Types").Get<IEnumerable<string>>(),
-            FormatMode = webSocketConfig.GetSection("FormatMode").Get<FormatMode>(),
-            TestStatus = webSocketConfig.GetSection("TestStatus").Get<TestStatus>()
-        };
-
     private static void LanguageChange(CultureInfo language)
     {
         Lang.Resources.Culture = language;
@@ -95,7 +84,7 @@ internal partial class App : Application
         IServiceCollection collection = new ServiceCollection()
             .AddLogging(loggingBuilder
                 => loggingBuilder
-                    .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Information)
+                    .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Warning)
                     .AddDebug()
                     .SetMinimumLevel(LogLevel.Information))
 
