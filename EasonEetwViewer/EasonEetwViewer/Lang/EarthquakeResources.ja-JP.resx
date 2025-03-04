@@ -117,82 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IntensityOneText" xml:space="preserve">
+  <data name="IntensityTextOne" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="IntensityOneColour" xml:space="preserve">
+  <data name="IntensityColourOne" xml:space="preserve">
     <value>#F2F2FF</value>
   </data>
-  <data name="IntensityTwoText" xml:space="preserve">
+  <data name="IntensityTextTwo" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="IntensityTwoColour" xml:space="preserve">
+  <data name="IntensityColourTwo" xml:space="preserve">
     <value>#00AAFF</value>
   </data>
-  <data name="IntensityThreeText" xml:space="preserve">
+  <data name="IntensityTextThree" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="IntensityThreeColour" xml:space="preserve">
+  <data name="IntensityColourThree" xml:space="preserve">
     <value>#0041FF</value>
   </data>
-  <data name="IntensityFourText" xml:space="preserve">
+  <data name="IntensityTextFour" xml:space="preserve">
     <value>4</value>
   </data>
-  <data name="IntensityFourColour" xml:space="preserve">
+  <data name="IntensityColourFour" xml:space="preserve">
     <value>#FAE696</value>
   </data>
-  <data name="IntensityFiveWeakText" xml:space="preserve">
+  <data name="IntensityTextFiveWeak" xml:space="preserve">
     <value>5-</value>
   </data>
-  <data name="IntensityFiveWeakColour" xml:space="preserve">
+  <data name="IntensityColourFiveWeak" xml:space="preserve">
     <value>#FFE600</value>
   </data>
-  <data name="IntensityFiveStrongText" xml:space="preserve">
+  <data name="IntensityTextFiveStrong" xml:space="preserve">
     <value>5+</value>
   </data>
-  <data name="IntensityFiveStrongColour" xml:space="preserve">
+  <data name="IntensityColourFiveStrong" xml:space="preserve">
     <value>#FF9900</value>
   </data>
-  <data name="IntensitySixWeakText" xml:space="preserve">
+  <data name="IntensityTextSixWeak" xml:space="preserve">
     <value>6-</value>
   </data>
-  <data name="IntensitySixWeakColour" xml:space="preserve">
+  <data name="IntensityColourSixWeak" xml:space="preserve">
     <value>#FF2800</value>
   </data>
-  <data name="IntensitySixStrongText" xml:space="preserve">
+  <data name="IntensityTextSixStrong" xml:space="preserve">
     <value>6+</value>
   </data>
-  <data name="IntensitySixStrongColour" xml:space="preserve">
+  <data name="IntensityColourSixStrong" xml:space="preserve">
     <value>#A50021</value>
   </data>
-  <data name="IntensitySevenText" xml:space="preserve">
+  <data name="IntensityTextSeven" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="IntensitySevenColour" xml:space="preserve">
+  <data name="IntensityColourSeven" xml:space="preserve">
     <value>#B40068</value>
   </data>
-  <data name="EarthquakeIntensityUnknownText" xml:space="preserve">
+  <data name="IntensityTextUnknown" xml:space="preserve">
     <value>-</value>
   </data>
-  <data name="EarthquakeIntensityUnknownColour" xml:space="preserve">
+  <data name="IntensityColourUnknown" xml:space="preserve">
     <value>#C8C8CB</value>
   </data>
   <data name="UnknownText" xml:space="preserve">
     <value>不明</value>
   </data>
-  <data name="EarthquakeMagnitudeHuge" xml:space="preserve">
+  <data name="MagnitudeHuge" xml:space="preserve">
     <value>8 以上</value>
   </data>
-  <data name="EarthquakeDepthDeep" xml:space="preserve">
+  <data name="DepthDeep" xml:space="preserve">
     <value>800 km 以上</value>
   </data>
-  <data name="EarthquakeDepthShallow" xml:space="preserve">
+  <data name="DepthShallow" xml:space="preserve">
     <value>ごく浅い</value>
   </data>
-  <data name="EarthquakeMagnitudeUnitMoment" xml:space="preserve">
+  <data name="MagnitudeUnitMoment" xml:space="preserve">
     <value>Mw</value>
   </data>
-  <data name="EarthquakeMagnitudeUnitJma" xml:space="preserve">
+  <data name="MagnitudeUnitJma" xml:space="preserve">
     <value>Mj</value>
   </data>
   <data name="DetailsIntensityText" xml:space="preserve">
@@ -216,13 +216,13 @@
   <data name="DetailsHypocentreText" xml:space="preserve">
     <value>震源</value>
   </data>
-  <data name="EarthquakeIntensityZeroColour" xml:space="preserve">
+  <data name="IntensityColourZero" xml:space="preserve">
     <value>#F0F0F0</value>
   </data>
-  <data name="EarthquakeIntensityZeroText" xml:space="preserve">
+  <data name="IntensityTextZero" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="EarthquakeMagnitudeUnitDefault" xml:space="preserve">
+  <data name="MagnitudeUnitDefault" xml:space="preserve">
     <value>M</value>
   </data>
 </root>

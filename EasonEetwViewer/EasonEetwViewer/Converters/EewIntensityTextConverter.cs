@@ -13,31 +13,31 @@ internal class EewIntensityTextConverter : IValueConverter
             ? lu.To is IntensityUpper.Unclear or IntensityUpper.Above
                 ? lu.From switch
                 {
-                    IntensityLower.Zero => EarthquakeResources.EarthquakeIntensityZeroText,
-                    IntensityLower.One => EarthquakeResources.IntensityOneText,
-                    IntensityLower.Two => EarthquakeResources.IntensityTwoText,
-                    IntensityLower.Three => EarthquakeResources.IntensityThreeText,
-                    IntensityLower.Four => EarthquakeResources.IntensityFourText,
-                    IntensityLower.FiveWeak => EarthquakeResources.IntensityFiveWeakText,
-                    IntensityLower.FiveStrong => EarthquakeResources.IntensityFiveStrongText,
-                    IntensityLower.SixWeak => EarthquakeResources.IntensitySixWeakText,
-                    IntensityLower.SixStrong => EarthquakeResources.IntensitySixStrongText,
-                    IntensityLower.Seven => EarthquakeResources.IntensitySevenText,
-                    IntensityLower.Unclear => EarthquakeResources.EarthquakeIntensityUnknownText,
+                    IntensityLower.Zero => EarthquakeResources.IntensityTextZero,
+                    IntensityLower.One => EarthquakeResources.IntensityTextOne,
+                    IntensityLower.Two => EarthquakeResources.IntensityTextTwo,
+                    IntensityLower.Three => EarthquakeResources.IntensityTextThree,
+                    IntensityLower.Four => EarthquakeResources.IntensityTextFour,
+                    IntensityLower.FiveWeak => EarthquakeResources.IntensityTextFiveWeak,
+                    IntensityLower.FiveStrong => EarthquakeResources.IntensityTextFiveStrong,
+                    IntensityLower.SixWeak => EarthquakeResources.IntensityTextSixWeak,
+                    IntensityLower.SixStrong => EarthquakeResources.IntensityTextSixStrong,
+                    IntensityLower.Seven => EarthquakeResources.IntensityTextSeven,
+                    IntensityLower.Unclear => EarthquakeResources.IntensityTextUnknown,
                     _ => throw new UnreachableException()
                 }
                 : lu.To switch
                 {
-                    IntensityUpper.Zero => EarthquakeResources.EarthquakeIntensityZeroText,
-                    IntensityUpper.One => EarthquakeResources.IntensityOneText,
-                    IntensityUpper.Two => EarthquakeResources.IntensityTwoText,
-                    IntensityUpper.Three => EarthquakeResources.IntensityThreeText,
-                    IntensityUpper.Four => EarthquakeResources.IntensityFourText,
-                    IntensityUpper.FiveWeak => EarthquakeResources.IntensityFiveWeakText,
-                    IntensityUpper.FiveStrong => EarthquakeResources.IntensityFiveStrongText,
-                    IntensityUpper.SixWeak => EarthquakeResources.IntensitySixWeakText,
-                    IntensityUpper.SixStrong => EarthquakeResources.IntensitySixStrongText,
-                    IntensityUpper.Seven => EarthquakeResources.IntensitySevenText,
+                    IntensityUpper.Zero => EarthquakeResources.IntensityTextZero,
+                    IntensityUpper.One => EarthquakeResources.IntensityTextOne,
+                    IntensityUpper.Two => EarthquakeResources.IntensityTextTwo,
+                    IntensityUpper.Three => EarthquakeResources.IntensityTextThree,
+                    IntensityUpper.Four => EarthquakeResources.IntensityTextFour,
+                    IntensityUpper.FiveWeak => EarthquakeResources.IntensityTextFiveWeak,
+                    IntensityUpper.FiveStrong => EarthquakeResources.IntensityTextFiveStrong,
+                    IntensityUpper.SixWeak => EarthquakeResources.IntensityTextSixWeak,
+                    IntensityUpper.SixStrong => EarthquakeResources.IntensityTextSixStrong,
+                    IntensityUpper.Seven => EarthquakeResources.IntensityTextSeven,
                     IntensityUpper.Unclear or IntensityUpper.Above or _ => throw new UnreachableException()
                 }
             : null;

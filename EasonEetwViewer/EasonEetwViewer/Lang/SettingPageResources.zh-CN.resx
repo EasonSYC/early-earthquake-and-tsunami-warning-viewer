@@ -198,6 +198,30 @@
   <data name="KmoniSensorTextSurface" xml:space="preserve">
     <value>地面</value>
   </data>
+  <data name="GeneralText2" xml:space="preserve">
+    <value>检测到地震后立即获得的信息对于震源和震级的推定和预测烈度可能准度较低。</value>
+  </data>
+  <data name="GeneralText1" xml:space="preserve">
+    <value>因为信息是在地震发生后几秒钟内产生的，因此可能会出现误报。</value>
+  </data>
+  <data name="GeneralText3" xml:space="preserve">
+    <value>即使在正常情况下，预测烈度也有可能有1级左右的误差。</value>
+  </data>
+  <data name="GeneralText4" xml:space="preserve">
+    <value>对于仅基于PLUM方法的情报或检测到100gal的场合，震源的规模、深度和震央位置并没有地震学意义。</value>
+  </data>
+  <data name="GeneralText5" xml:space="preserve">
+    <value>对于深度超过150千米的地震，不发表预测最大烈度（可能会基于PLUM方法发布）。</value>
+  </data>
+  <data name="GeneralText6" xml:space="preserve">
+    <value>根据使用的通信环境不同，从情报发表到到达可能会有1秒以上的误差。请准备网速大于5Mbps的稳定的通信环境。</value>
+  </data>
+  <data name="GeneralTextHeader" xml:space="preserve">
+    <value>关于紧急地震速报（请确保已知悉）</value>
+  </data>
+  <data name="GeneralTextBullet" xml:space="preserve">
+    <value> - </value>
+  </data>
   <data name="KmoniMeasurementTextResponse4000" xml:space="preserve">
     <value>4.000 赫兹速度应答</value>
   </data>
@@ -228,28 +252,7 @@
   <data name="KmoniMeasurementTextResponse2000" xml:space="preserve">
     <value>2.000 赫兹速度应答</value>
   </data>
-  <data name="GeneralText2" xml:space="preserve">
-    <value>检测到地震后立即获得的信息对于震源和震级的推定和预测烈度可能准度较低。</value>
-  </data>
-  <data name="GeneralText1" xml:space="preserve">
-    <value>因为信息是在地震发生后几秒钟内产生的，因此可能会出现误报。</value>
-  </data>
-  <data name="GeneralText3" xml:space="preserve">
-    <value>即使在正常情况下，预测烈度也有可能有1级左右的误差。</value>
-  </data>
-  <data name="GeneralText4" xml:space="preserve">
-    <value>对于仅基于PLUM方法的情报或检测到100gal的场合，震源的规模、深度和震央位置并没有地震学意义。</value>
-  </data>
-  <data name="GeneralText5" xml:space="preserve">
-    <value>对于深度超过150千米的地震，不发表预测最大烈度（可能会基于PLUM方法发布）。</value>
-  </data>
-  <data name="GeneralText6" xml:space="preserve">
-    <value>根据使用的通信环境不同，从情报发表到到达可能会有1秒以上的误差。请准备网速大于5Mbps的稳定的通信环境。</value>
-  </data>
-  <data name="GeneralTextHeader" xml:space="preserve">
-    <value>关于紧急地震速报（请确保已知悉）</value>
-  </data>
-  <data name="GeneralTextBullet" xml:space="preserve">
-    <value> - </value>
+  <data name="WebSocketListTextApplicationNameUnknown" xml:space="preserve">
+    <value>（ない）</value>
   </data>
 </root>

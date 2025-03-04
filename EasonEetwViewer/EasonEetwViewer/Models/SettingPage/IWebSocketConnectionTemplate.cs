@@ -13,7 +13,7 @@ internal interface IWebSocketConnectionTemplate
     /// <summary>
     /// The name of the application.
     /// </summary>
-    string ApplicationName { get; }
+    string? ApplicationName { get; }
     /// <summary>
     /// The start time of the connection.
     /// </summary>

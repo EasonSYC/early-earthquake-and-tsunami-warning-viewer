@@ -412,6 +412,15 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (None).
+        /// </summary>
+        public static string WebSocketListTextApplicationNameUnknown {
+            get {
+                return ResourceManager.GetString("WebSocketListTextApplicationNameUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection Time.
         /// </summary>
         public static string WebSocketListTextConnectionTime {

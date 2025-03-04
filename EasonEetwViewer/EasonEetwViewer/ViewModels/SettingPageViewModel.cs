@@ -174,7 +174,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
             => contract.IsValid
                 ? contract.ConnectionCounts
                 : 0);
-        _logger.RequestedAvailableConnections(slotNumber);  
+        _logger.RequestedAvailableConnections(slotNumber);
         return slotNumber;
     }
     /// <summary>
@@ -201,14 +201,8 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         _logger.DisplayingActiveConnections();
         WebSocketConnections.Clear();
         WebSocketConnections.AddRange(wsList.Select(x
-            => new WebSocketConnectionTemplate()
-            {
-                ApplicationName = x.ApplicationName ?? string.Empty,
-                WebSocketId = x.WebSocketId,
-                StartTime = x.StartTime,
-                DisconnectTask = async ()
-                    => await _apiCaller.DeleteWebSocketAsync(x.WebSocketId)
-            }));
+            => new WebSocketConnectionTemplate(x, async ()
+                    => await _apiCaller.DeleteWebSocketAsync(x.WebSocketId))));
 
         int avaliableConnection = await GetTotalWebSocketSlots();
         _logger.DisplayingAvailableConnections();

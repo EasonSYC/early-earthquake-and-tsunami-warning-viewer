@@ -4,7 +4,7 @@ using EasonEetwViewer.Dmdata.Dtos.Enum;
 namespace EasonEetwViewer.Models.PastPage;
 internal record EarthquakeDetailsTemplate
 {
-    public required string? EventId { get; init; }
+    public required string EventId { get; init; }
     public required Intensity? Intensity { get; init; }
     public required DateTimeOffset? OriginTime { get; init; }
     public required DateTimeOffset? LastUpdated { get; init; }

@@ -198,6 +198,30 @@
   <data name="KmoniSensorTextSurface" xml:space="preserve">
     <value>Surface</value>
   </data>
+  <data name="GeneralText2" xml:space="preserve">
+    <value>Information immediately after the detection of an earthquake may have low accuracy in predicting the epicentre, the magnitude and the expected intensity.</value>
+  </data>
+  <data name="GeneralText1" xml:space="preserve">
+    <value>Since information is created within seconds after an earthquake, false reports may occure.</value>
+  </data>
+  <data name="GeneralText3" xml:space="preserve">
+    <value>Even under normal conditions, there may be an error of one level for the estimated intensity.</value>
+  </data>
+  <data name="GeneralText4" xml:space="preserve">
+    <value>Information for the epicentre (magnitude, depth, position) do not have seismological meaning for information only using the PLUM method or from detecting 100gal.</value>
+  </data>
+  <data name="GeneralText5" xml:space="preserve">
+    <value>Maximum expected intensity will not be reported for earthquakes with depth greater than 150km (it may be reported via PLUM method).</value>
+  </data>
+  <data name="GeneralText6" xml:space="preserve">
+    <value>Depending on the communications environment, there might be a delay of one second or more for the receival of the information after the announcement. Please use a stable connection environment with a bandwidth of at least 5Mbps.</value>
+  </data>
+  <data name="GeneralTextHeader" xml:space="preserve">
+    <value>Information on EEW (Please Read)</value>
+  </data>
+  <data name="GeneralTextBullet" xml:space="preserve">
+    <value> - </value>
+  </data>
   <data name="KmoniMeasurementTextResponse4000" xml:space="preserve">
     <value>4.000 Hz PGV Response Spectrum</value>
   </data>
@@ -228,28 +252,7 @@
   <data name="KmoniMeasurementTextResponse2000" xml:space="preserve">
     <value>2.000 Hz PGV Response Spectrum</value>
   </data>
-  <data name="GeneralText2" xml:space="preserve">
-    <value>Information immediately after the detection of an earthquake may have low accuracy in predicting the epicentre, the magnitude and the expected intensity.</value>
-  </data>
-  <data name="GeneralText1" xml:space="preserve">
-    <value>Since information is created within seconds after an earthquake, false reports may occure.</value>
-  </data>
-  <data name="GeneralText3" xml:space="preserve">
-    <value>Even under normal conditions, there may be an error of one level for the estimated intensity.</value>
-  </data>
-  <data name="GeneralText4" xml:space="preserve">
-    <value>Information for the epicentre (magnitude, depth, position) do not have seismological meaning for information only using the PLUM method or from detecting 100gal.</value>
-  </data>
-  <data name="GeneralText5" xml:space="preserve">
-    <value>Maximum expected intensity will not be reported for earthquakes with depth greater than 150km (it may be reported via PLUM method).</value>
-  </data>
-  <data name="GeneralText6" xml:space="preserve">
-    <value>Depending on the communications environment, there might be a delay of one second or more for the receival of the information after the announcement. Please use a stable connection environment with a bandwidth of at least 5Mbps.</value>
-  </data>
-  <data name="GeneralTextHeader" xml:space="preserve">
-    <value>Information on EEW (Please Read)</value>
-  </data>
-  <data name="GeneralTextBullet" xml:space="preserve">
-    <value> - </value>
+  <data name="WebSocketListTextApplicationNameUnknown" xml:space="preserve">
+    <value>(None)</value>
   </data>
 </root>

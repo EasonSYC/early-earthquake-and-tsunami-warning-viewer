@@ -1,12 +1,21 @@
-﻿using EasonEetwViewer.Dmdata.Dtos.DmdataComponent;
+﻿using EasonEetwViewer.Dmdata.Api.Dtos.Record.GdEarthquake;
+using EasonEetwViewer.Dmdata.Dtos.DmdataComponent;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 
 namespace EasonEetwViewer.Models.PastPage;
 internal record EarthquakeItemTemplate
 {
-    public required string EventId { get; init; }
-    public required Intensity? Intensity { get; init; }
-    public required DateTimeOffset? OriginTime { get; init; }
-    public required Hypocentre? Hypocentre { get; init; }
-    public required Magnitude? Magnitude { get; init; }
+    public EarthquakeItemTemplate(EarthquakeInfo earthquakeInfo)
+    {
+        EventId = earthquakeInfo.EventId;
+        Intensity = earthquakeInfo.MaxIntensity;
+        OriginTime = earthquakeInfo.OriginTime;
+        Hypocentre = earthquakeInfo.Hypocentre;
+        Magnitude = earthquakeInfo.Magnitude;
+    }
+    public string EventId { get; private init; }
+    public Intensity? Intensity { get; private init; }
+    public DateTimeOffset? OriginTime { get; private init; }
+    public Hypocentre? Hypocentre { get; private init; }
+    public Magnitude? Magnitude { get; private init; }
 }

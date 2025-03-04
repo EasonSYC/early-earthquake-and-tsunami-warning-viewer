@@ -72,7 +72,8 @@
                            FontSize="15"
                            VerticalAlignment="Center">
                     <Run Text="{x:Static lang:SettingPageResources.AuthenticationStatusText}"/>
-                    <Run Text="{Binding AuthenticationStatus, Converter={StaticResource EnumDisplayTextConverter}}"/>
+                    <Run Text="{Binding AuthenticationStatus,
+                         Converter={StaticResource EnumDisplayTextConverter}}"/>
                 </TextBlock>
             </StackPanel>
 
@@ -147,9 +148,12 @@
                     <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextWebSocketId}"
                                         Binding="{Binding WebSocketId}"/>
                     <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextApplicationName}"
-                                        Binding="{Binding ApplicationName}"/>
+                                        Binding="{Binding ApplicationName,
+                                        FallbackValue={x:Static lang:SettingPageResources.WebSocketListTextApplicationNameUnknown},
+                                        TargetNullValue={x:Static lang:SettingPageResources.WebSocketListTextApplicationNameUnknown}}"/>
                     <DataGridTextColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextConnectionTime}"
-                                        Binding="{Binding StartTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
+                                        Binding="{Binding StartTime,
+                                        StringFormat='yyyy/MM/dd HH:mm:ss'}"/>
                     <DataGridTemplateColumn Header="{x:Static lang:SettingPageResources.WebSocketListTextDisconnect}">
                         <DataTemplate DataType="{x:Type m:IWebSocketConnectionTemplate}">
                             <Button HorizontalAlignment="Center"

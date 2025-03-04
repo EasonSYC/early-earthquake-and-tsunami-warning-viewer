@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Dtos.DmdataComponent.Enum;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Accuracy;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
@@ -111,23 +112,23 @@ internal static class EnumDisplayTextExtensions
         => intensity switch
         {
             Intensity.One
-                => EarthquakeResources.IntensityOneText,
+                => EarthquakeResources.IntensityTextOne,
             Intensity.Two
-                => EarthquakeResources.IntensityTwoText,
+                => EarthquakeResources.IntensityTextTwo,
             Intensity.Three
-                => EarthquakeResources.IntensityThreeText,
+                => EarthquakeResources.IntensityTextThree,
             Intensity.Four
-                => EarthquakeResources.IntensityFourText,
+                => EarthquakeResources.IntensityTextFour,
             Intensity.FiveWeak
-                => EarthquakeResources.IntensityFiveWeakText,
+                => EarthquakeResources.IntensityTextFiveWeak,
             Intensity.FiveStrong
-                => EarthquakeResources.IntensityFiveStrongText,
+                => EarthquakeResources.IntensityTextFiveStrong,
             Intensity.SixWeak
-                => EarthquakeResources.IntensitySixWeakText,
+                => EarthquakeResources.IntensityTextSixWeak,
             Intensity.SixStrong
-                => EarthquakeResources.IntensitySixStrongText,
+                => EarthquakeResources.IntensityTextSixStrong,
             Intensity.Seven
-                => EarthquakeResources.IntensitySevenText,
+                => EarthquakeResources.IntensityTextSeven,
             _
                 => throw new UnreachableException()
         };
@@ -206,5 +207,55 @@ internal static class EnumDisplayTextExtensions
                 => EarthquakeResources.UnknownText,
             _
                 => throw new UnreachableException(),
+        };
+    /// <summary>
+    /// Converts <see cref="DepthCondition"/> to display string.
+    /// </summary>
+    /// <param name="depthCondition">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this DepthCondition depthCondition)
+        => depthCondition switch
+        {
+            DepthCondition.Deep
+                => EarthquakeResources.DepthDeep,
+            DepthCondition.Shallow
+                => EarthquakeResources.DepthShallow,
+            DepthCondition.Unclear
+                => EarthquakeResources.UnknownText,
+            _
+                => throw new UnreachableException()
+        };
+    /// <summary>
+    /// Converts <see cref="MagnitudeCondition"/> to display string.
+    /// </summary>
+    /// <param name="magnitudeCondition">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this MagnitudeCondition magnitudeCondition)
+        => magnitudeCondition switch
+        {
+            MagnitudeCondition.Huge
+                => EarthquakeResources.MagnitudeHuge,
+            MagnitudeCondition.Unclear
+                => EarthquakeResources.UnknownText,
+            _
+                => throw new UnreachableException()
+        };
+    /// <summary>
+    /// Converts <see cref="MagnitudeUnit"/> to display string.
+    /// </summary>
+    /// <param name="magnitudeUnit">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this MagnitudeUnit magnitudeUnit)
+        => magnitudeUnit switch
+        {
+            MagnitudeUnit.JmaMagnitude
+                => EarthquakeResources.MagnitudeUnitJma,
+            MagnitudeUnit.NormalMagnitude
+                => EarthquakeResources.MagnitudeUnitMoment,
+            _
+                => throw new UnreachableException()
         };
 }

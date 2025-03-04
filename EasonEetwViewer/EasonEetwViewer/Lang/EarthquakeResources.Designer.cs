@@ -61,6 +61,24 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 800+ km.
+        /// </summary>
+        public static string DepthDeep {
+            get {
+                return ResourceManager.GetString("DepthDeep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shallow.
+        /// </summary>
+        public static string DepthShallow {
+            get {
+                return ResourceManager.GetString("DepthShallow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hypocentre Depth.
         /// </summary>
         public static string DetailsDepthText {
@@ -124,254 +142,236 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 800+ km.
-        /// </summary>
-        public static string EarthquakeDepthDeep {
-            get {
-                return ResourceManager.GetString("EarthquakeDepthDeep", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Shallow.
-        /// </summary>
-        public static string EarthquakeDepthShallow {
-            get {
-                return ResourceManager.GetString("EarthquakeDepthShallow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #C8C8CB.
-        /// </summary>
-        public static string EarthquakeIntensityUnknownColour {
-            get {
-                return ResourceManager.GetString("EarthquakeIntensityUnknownColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to -.
-        /// </summary>
-        public static string EarthquakeIntensityUnknownText {
-            get {
-                return ResourceManager.GetString("EarthquakeIntensityUnknownText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to #F0F0F0.
-        /// </summary>
-        public static string EarthquakeIntensityZeroColour {
-            get {
-                return ResourceManager.GetString("EarthquakeIntensityZeroColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 0.
-        /// </summary>
-        public static string EarthquakeIntensityZeroText {
-            get {
-                return ResourceManager.GetString("EarthquakeIntensityZeroText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 8+.
-        /// </summary>
-        public static string EarthquakeMagnitudeHuge {
-            get {
-                return ResourceManager.GetString("EarthquakeMagnitudeHuge", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to M.
-        /// </summary>
-        public static string EarthquakeMagnitudeUnitDefault {
-            get {
-                return ResourceManager.GetString("EarthquakeMagnitudeUnitDefault", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mj.
-        /// </summary>
-        public static string EarthquakeMagnitudeUnitJma {
-            get {
-                return ResourceManager.GetString("EarthquakeMagnitudeUnitJma", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mw.
-        /// </summary>
-        public static string EarthquakeMagnitudeUnitMoment {
-            get {
-                return ResourceManager.GetString("EarthquakeMagnitudeUnitMoment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to #FF9900.
         /// </summary>
-        public static string IntensityFiveStrongColour {
+        public static string IntensityColourFiveStrong {
             get {
-                return ResourceManager.GetString("IntensityFiveStrongColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5+.
-        /// </summary>
-        public static string IntensityFiveStrongText {
-            get {
-                return ResourceManager.GetString("IntensityFiveStrongText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourFiveStrong", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #FFE600.
         /// </summary>
-        public static string IntensityFiveWeakColour {
+        public static string IntensityColourFiveWeak {
             get {
-                return ResourceManager.GetString("IntensityFiveWeakColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 5-.
-        /// </summary>
-        public static string IntensityFiveWeakText {
-            get {
-                return ResourceManager.GetString("IntensityFiveWeakText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourFiveWeak", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #FAE696.
         /// </summary>
-        public static string IntensityFourColour {
+        public static string IntensityColourFour {
             get {
-                return ResourceManager.GetString("IntensityFourColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 4.
-        /// </summary>
-        public static string IntensityFourText {
-            get {
-                return ResourceManager.GetString("IntensityFourText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourFour", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #F2F2FF.
         /// </summary>
-        public static string IntensityOneColour {
+        public static string IntensityColourOne {
             get {
-                return ResourceManager.GetString("IntensityOneColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1.
-        /// </summary>
-        public static string IntensityOneText {
-            get {
-                return ResourceManager.GetString("IntensityOneText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourOne", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #B40068.
         /// </summary>
-        public static string IntensitySevenColour {
+        public static string IntensityColourSeven {
             get {
-                return ResourceManager.GetString("IntensitySevenColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 7.
-        /// </summary>
-        public static string IntensitySevenText {
-            get {
-                return ResourceManager.GetString("IntensitySevenText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourSeven", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #A50021.
         /// </summary>
-        public static string IntensitySixStrongColour {
+        public static string IntensityColourSixStrong {
             get {
-                return ResourceManager.GetString("IntensitySixStrongColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 6+.
-        /// </summary>
-        public static string IntensitySixStrongText {
-            get {
-                return ResourceManager.GetString("IntensitySixStrongText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourSixStrong", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #FF2800.
         /// </summary>
-        public static string IntensitySixWeakColour {
+        public static string IntensityColourSixWeak {
             get {
-                return ResourceManager.GetString("IntensitySixWeakColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 6-.
-        /// </summary>
-        public static string IntensitySixWeakText {
-            get {
-                return ResourceManager.GetString("IntensitySixWeakText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourSixWeak", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #0041FF.
         /// </summary>
-        public static string IntensityThreeColour {
+        public static string IntensityColourThree {
             get {
-                return ResourceManager.GetString("IntensityThreeColour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 3.
-        /// </summary>
-        public static string IntensityThreeText {
-            get {
-                return ResourceManager.GetString("IntensityThreeText", resourceCulture);
+                return ResourceManager.GetString("IntensityColourThree", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to #00AAFF.
         /// </summary>
-        public static string IntensityTwoColour {
+        public static string IntensityColourTwo {
             get {
-                return ResourceManager.GetString("IntensityTwoColour", resourceCulture);
+                return ResourceManager.GetString("IntensityColourTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #C8C8CB.
+        /// </summary>
+        public static string IntensityColourUnknown {
+            get {
+                return ResourceManager.GetString("IntensityColourUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #F0F0F0.
+        /// </summary>
+        public static string IntensityColourZero {
+            get {
+                return ResourceManager.GetString("IntensityColourZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5+.
+        /// </summary>
+        public static string IntensityTextFiveStrong {
+            get {
+                return ResourceManager.GetString("IntensityTextFiveStrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5-.
+        /// </summary>
+        public static string IntensityTextFiveWeak {
+            get {
+                return ResourceManager.GetString("IntensityTextFiveWeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4.
+        /// </summary>
+        public static string IntensityTextFour {
+            get {
+                return ResourceManager.GetString("IntensityTextFour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        public static string IntensityTextOne {
+            get {
+                return ResourceManager.GetString("IntensityTextOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7.
+        /// </summary>
+        public static string IntensityTextSeven {
+            get {
+                return ResourceManager.GetString("IntensityTextSeven", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6+.
+        /// </summary>
+        public static string IntensityTextSixStrong {
+            get {
+                return ResourceManager.GetString("IntensityTextSixStrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6-.
+        /// </summary>
+        public static string IntensityTextSixWeak {
+            get {
+                return ResourceManager.GetString("IntensityTextSixWeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3.
+        /// </summary>
+        public static string IntensityTextThree {
+            get {
+                return ResourceManager.GetString("IntensityTextThree", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to 2.
         /// </summary>
-        public static string IntensityTwoText {
+        public static string IntensityTextTwo {
             get {
-                return ResourceManager.GetString("IntensityTwoText", resourceCulture);
+                return ResourceManager.GetString("IntensityTextTwo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -.
+        /// </summary>
+        public static string IntensityTextUnknown {
+            get {
+                return ResourceManager.GetString("IntensityTextUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.
+        /// </summary>
+        public static string IntensityTextZero {
+            get {
+                return ResourceManager.GetString("IntensityTextZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8+.
+        /// </summary>
+        public static string MagnitudeHuge {
+            get {
+                return ResourceManager.GetString("MagnitudeHuge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M.
+        /// </summary>
+        public static string MagnitudeUnitDefault {
+            get {
+                return ResourceManager.GetString("MagnitudeUnitDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mj.
+        /// </summary>
+        public static string MagnitudeUnitJma {
+            get {
+                return ResourceManager.GetString("MagnitudeUnitJma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mw.
+        /// </summary>
+        public static string MagnitudeUnitMoment {
+            get {
+                return ResourceManager.GetString("MagnitudeUnitMoment", resourceCulture);
             }
         }
         

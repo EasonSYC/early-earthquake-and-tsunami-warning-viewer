@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -9,6 +10,7 @@ using EasonEetwViewer.Dmdata.Api.Dtos.Record.EarthquakeParameter;
 using EasonEetwViewer.Dmdata.Api.Dtos.Record.GdEarthquake;
 using EasonEetwViewer.Dmdata.Api.Dtos.Response;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Authentication.Events;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
@@ -28,21 +30,31 @@ using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
-internal partial class PastPageViewModel(
-    MapResourcesProvider resources,
-    IAuthenticationHelper authenticatorWrapper,
-    IApiCaller apiCaller,
-    ITelegramRetriever telegramRetriever,
-    ITimeProvider timeProvider,
-    ILogger<PastPageViewModel> logger)
-    : MapViewModelBase(
-        resources,
-        authenticatorWrapper,
-        apiCaller,
-        telegramRetriever,
-        timeProvider,
-        logger)
+internal partial class PastPageViewModel : MapViewModelBase
 {
+    public PastPageViewModel(
+        MapResourcesProvider resources,
+        IAuthenticationHelper authenticatorWrapper,
+        IApiCaller apiCaller,
+        ITelegramRetriever telegramRetriever,
+        ITimeProvider timeProvider,
+        ILogger<PastPageViewModel> logger) : base(
+            resources,
+            authenticatorWrapper,
+            apiCaller,
+            telegramRetriever,
+            timeProvider,
+            logger)
+    {
+        if (authenticatorWrapper.AuthenticationStatus is not AuthenticationStatus.Null)
+        {
+            Task.Run(LoadEarthquakeObservationStations).Wait();
+        }
+
+        authenticatorWrapper.StatusChanged += AuthenticatorWrapperStatusChangedEventHandler;
+    }
+
+
     [ObservableProperty]
     private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
 
@@ -87,10 +99,7 @@ internal partial class PastPageViewModel(
         telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53");
         if (telegrams.Count() != 0)
         {
-            if (!IsStationsRetrieved)
-            {
-                await UpdateEarthquakeObservationStations();
-            }
+            await LoadEarthquakeObservationStations();
 
             TelegramItem telegram = telegrams.MaxBy(x => x.Serial)!;
             EarthquakeInformationSchema? telegramInfo = await _telegramRetriever.GetJsonTelegramAsync(telegram.Id) as EarthquakeInformationSchema;
@@ -275,18 +284,28 @@ internal partial class PastPageViewModel(
 
     #region earthquakeObservationStations
     private IEnumerable<Station>? _earthquakeObservationStations = null;
-    private bool IsStationsRetrieved => _earthquakeObservationStations is not null;
-    private async Task UpdateEarthquakeObservationStations()
+    private bool IsStationsRetrieved
+        => _earthquakeObservationStations is not null;
+    private async Task LoadEarthquakeObservationStations()
     {
+        if (IsStationsRetrieved)
+        {
+            return;
+        }
+
         EarthquakeParameter? rsp = await _apiCaller.GetEarthquakeParameterAsync();
-        _earthquakeObservationStations = rsp?.ItemList ?? [];
+        _earthquakeObservationStations = rsp?.ItemList;
     }
+    private async void AuthenticatorWrapperStatusChangedEventHandler(object? sender, AuthenticationStatusChangedEventArgs e)
+        => await LoadEarthquakeObservationStations();
     #endregion
 
     #region loadEarthquakeAction
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
     private string? _cursorToken = null;
+
+
     public bool IsLoadExtraEnabled
         => CursorToken is not null;
 
@@ -301,14 +320,7 @@ internal partial class PastPageViewModel(
         ObservableCollection<EarthquakeItemTemplate> currentEarthquake = [];
 
         currentEarthquake.AddRange(eqList.Select(x
-            => new EarthquakeItemTemplate
-            {
-                EventId = x.EventId,
-                Intensity = x.MaxIntensity,
-                OriginTime = x.OriginTime,
-                Hypocentre = x.Hypocentre,
-                Magnitude = x.Magnitude
-            }));
+            => new EarthquakeItemTemplate(x)));
 
         SelectedEarthquake = null;
         EarthquakeList = currentEarthquake;
@@ -325,14 +337,7 @@ internal partial class PastPageViewModel(
             CursorToken = rsp?.NextToken;
 
             EarthquakeList.AddRange(eqList.Select(x
-                => new EarthquakeItemTemplate()
-                {
-                    EventId = x.EventId,
-                    Intensity = x.MaxIntensity,
-                    OriginTime = x.OriginTime,
-                    Hypocentre = x.Hypocentre,
-                    Magnitude = x.Magnitude
-                }));
+                => new EarthquakeItemTemplate(x)));
         }
     }
     #endregion
