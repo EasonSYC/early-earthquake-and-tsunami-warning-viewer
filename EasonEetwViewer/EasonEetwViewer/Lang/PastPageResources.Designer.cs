@@ -61,6 +61,15 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JMA Earthquake Details.
+        /// </summary>
+        public static string JmaText {
+            get {
+                return ResourceManager.GetString("JmaText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load 10 More Earthquakes.
         /// </summary>
         public static string LoadMoreText {

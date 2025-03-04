@@ -10,6 +10,6 @@ public interface ITelegramRetriever
     /// Retrieves a JSON Telegram with the specified ID.
     /// </summary>
     /// <param name="id">The ID of the telegram.</param>
-    /// <returns>The telegram that was parsed, or <see langword="null"/> if unsuccessful.</returns>
+    /// <returns>The telegram that was parsed.</returns>
     Task<Head?> GetJsonTelegramAsync(string id);
 }

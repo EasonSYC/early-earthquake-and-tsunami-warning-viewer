@@ -30,8 +30,20 @@ using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels;
+/// <summary>
+/// The view model for the past page.
+/// </summary>
 internal partial class PastPageViewModel : MapViewModelBase
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PastPageViewModel"/> class.
+    /// </summary>
+    /// <param name="resources">The map resources to be used.</param>
+    /// <param name="authenticatorWrapper">The authenticator to be used.</param>
+    /// <param name="apiCaller">The API caller to be used.</param>
+    /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+    /// <param name="timeProvider">The time provider to be used.</param>
+    /// <param name="logger">The logger to be used.</param>
     public PastPageViewModel(
         MapResourcesProvider resources,
         IAuthenticationHelper authenticatorWrapper,
@@ -46,6 +58,8 @@ internal partial class PastPageViewModel : MapViewModelBase
             timeProvider,
             logger)
     {
+        _logger = logger;
+
         if (authenticatorWrapper.AuthenticationStatus is not AuthenticationStatus.Null)
         {
             Task.Run(LoadEarthquakeObservationStations).Wait();
@@ -54,13 +68,15 @@ internal partial class PastPageViewModel : MapViewModelBase
         authenticatorWrapper.StatusChanged += AuthenticatorWrapperStatusChangedEventHandler;
     }
 
+    /// <summary>
+    /// The logger to be used.
+    /// </summary>
+    private readonly ILogger<PastPageViewModel> _logger;
 
-    [ObservableProperty]
-    private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
-
-    [ObservableProperty]
-    private EarthquakeItemTemplate? _selectedEarthquake;
-
+    #region earthquakeDetails
+    /// <summary>
+    /// The earthquake details for the currently selected earthquake, displayed on the left.
+    /// </summary>
     [ObservableProperty]
     private EarthquakeDetailsTemplate? _earthquakeDetails;
 
@@ -96,7 +112,7 @@ internal partial class PastPageViewModel : MapViewModelBase
 
         GdEarthquakeEvent? rsp = await _apiCaller.GetPathEarthquakeEventAsync(value.EventId);
         IEnumerable<TelegramItem> telegrams = rsp?.EarthquakeEvent.Telegrams ?? [];
-        telegrams = telegrams.Where(x => x.TelegramHead.Type == "VXSE53");
+        telegrams = telegrams .Where(x => x.TelegramHead.Type is "VXSE53");
         if (telegrams.Count() != 0)
         {
             await LoadEarthquakeObservationStations();
@@ -274,18 +290,46 @@ internal partial class PastPageViewModel : MapViewModelBase
                     };
             });
 
+    /// <summary>
+    /// The address for the Yahoo webpage for earthquakes.
+    /// </summary>
+    private const string _yahooWebpageAddress = "https://typhoon.yahoo.co.jp/weather/jp/earthquake/{0}.html";
+
+    /// <summary>
+    /// Jumps to the Yahoo webpage for the currently selected earthquake.
+    /// </summary>
     [RelayCommand]
     private void JumpYahooWebpage()
-        => _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
+    {
+        if (EarthquakeDetails is null)
         {
-            FileName = $"https://typhoon.yahoo.co.jp/weather/jp/earthquake/{EarthquakeDetails!.EventId}.html",
+            return;
+        }
+
+        _ = Process.Start(new ProcessStartInfo // https://stackoverflow.com/a/61035650/
+        {
+            FileName = string.Format(
+                _yahooWebpageAddress,
+                EarthquakeDetails.EventId),
             UseShellExecute = true
         });
+    }
+#endregion
 
     #region earthquakeObservationStations
+    /// <summary>
+    /// The list of earthquake observation stations.
+    /// </summary>
     private IEnumerable<Station>? _earthquakeObservationStations = null;
+    /// <summary>
+    /// Whether the earthquake observation stations have been retrieved.
+    /// </summary>
     private bool IsStationsRetrieved
         => _earthquakeObservationStations is not null;
+    /// <summary>
+    /// Loads the earthquake observation stations.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
     private async Task LoadEarthquakeObservationStations()
     {
         if (IsStationsRetrieved)
@@ -296,49 +340,73 @@ internal partial class PastPageViewModel : MapViewModelBase
         EarthquakeParameter? rsp = await _apiCaller.GetEarthquakeParameterAsync();
         _earthquakeObservationStations = rsp?.ItemList;
     }
+    /// <summary>
+    /// Event handler for the authenticator status changed event.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The event arguments.</param>
     private async void AuthenticatorWrapperStatusChangedEventHandler(object? sender, AuthenticationStatusChangedEventArgs e)
         => await LoadEarthquakeObservationStations();
     #endregion
 
     #region loadEarthquakeAction
+    /// <summary>
+    /// The list of earthquakes on the sidebar.
+    /// </summary>
+    [ObservableProperty]
+    private ObservableCollection<EarthquakeItemTemplate> _earthquakeList = [];
+    /// <summary>
+    /// The current selected earthquake.
+    /// </summary>
+    [ObservableProperty]
+    private EarthquakeItemTemplate? _selectedEarthquake;
+    /// <summary>
+    /// The cursor token for the earthquake list.
+    /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLoadExtraEnabled))]
     private string? _cursorToken = null;
 
-
+    /// <summary>
+    /// Whether the load extra button is enabled.
+    /// </summary>
     public bool IsLoadExtraEnabled
         => CursorToken is not null;
 
+    /// <summary>
+    /// Refreshes the earthquake list, and clears existing earthquakes and the selected earthquake.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
     [RelayCommand]
     private async Task RefreshEarthquakeList()
     {
         GdEarthquakeList? rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 50);
-
         IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
+
         CursorToken = rsp?.NextToken ?? null;
-
-        ObservableCollection<EarthquakeItemTemplate> currentEarthquake = [];
-
-        currentEarthquake.AddRange(eqList.Select(x
-            => new EarthquakeItemTemplate(x)));
-
         SelectedEarthquake = null;
-        EarthquakeList = currentEarthquake;
+        EarthquakeList.Clear();
+        EarthquakeList.AddRange(eqList.Select(x
+            => new EarthquakeItemTemplate(x)));
     }
 
+    /// <summary>
+    /// Loads 10 extra earthquakes to the list using the cursor token.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> object representing the asynchronous operation.</returns>
     [RelayCommand]
     private async Task LoadExtraEarthquakes()
     {
-        if (!string.IsNullOrEmpty(CursorToken))
+        if (!IsLoadExtraEnabled)
         {
-            GdEarthquakeList? rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
-
-            IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
-            CursorToken = rsp?.NextToken;
-
-            EarthquakeList.AddRange(eqList.Select(x
-                => new EarthquakeItemTemplate(x)));
+            return;
         }
+
+        GdEarthquakeList? rsp = await _apiCaller.GetPastEarthquakeListAsync(limit: 10, cursorToken: CursorToken);
+        IEnumerable<EarthquakeInfo> eqList = rsp?.ItemList ?? [];
+        CursorToken = rsp?.NextToken;
+        EarthquakeList.AddRange(eqList.Select(x
+            => new EarthquakeItemTemplate(x)));
     }
     #endregion
 }

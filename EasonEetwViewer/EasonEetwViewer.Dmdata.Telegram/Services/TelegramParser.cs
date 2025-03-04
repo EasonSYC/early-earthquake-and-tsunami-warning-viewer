@@ -87,4 +87,7 @@ public sealed class TelegramParser : ITelegramParser
             throw new TelegramParserFormatException($"Cannot deserialised: {json}", ex);
         }
     }
+    /// <inheritdoc/>
+    public Type? ParseSchemaInformation(SchemaVersionInformation schema)
+        => _supportedSchemas.TryGetValue(schema, out Type? type) ? type : null;
 }
