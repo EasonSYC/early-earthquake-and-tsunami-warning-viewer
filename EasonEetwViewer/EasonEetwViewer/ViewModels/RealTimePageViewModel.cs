@@ -73,12 +73,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _timer.Elapsed += OnTimedEvent;
 
         _webSocketClient = webSocketClient;
-        _webSocketClient.DataReceived += WebSocketClient_DataReceived;
+        _webSocketClient.DataReceived += WebSocketClientDataReceivedEventHandler;
 
         _timeTableProvider = timeTableProvider;
 
         _cts = new();
         _token = _cts.Token;
+
+        Map.Layers.Add(_kmoniLayer);
 
         Task.Run(StartLongRunning).Wait();
     }
@@ -433,8 +435,16 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region websocket
+    /// <summary>
+    /// Raises when there is data received over the WebSocket connection.
+    /// </summary>
     public event EventHandler? WebSocketDataReceived;
-    public async void WebSocketClient_DataReceived(object? sender, DataReceivedEventArgs e)
+    /// <summary>
+    /// Handles when data is received by the WebSocket connection.
+    /// </summary>
+    /// <param name="sender">The sender of hte event.</param>
+    /// <param name="e">The event arguments.</param>
+    internal async void WebSocketClientDataReceivedEventHandler(object? sender, DataReceivedEventArgs e)
     {
         WebSocketDataReceived?.Invoke(this, new());
 
@@ -443,8 +453,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             await OnEewReceived(eew);
         }
-
-        if (telegram is TsunamiInformationSchema tsunami)
+        else if (telegram is TsunamiInformationSchema tsunami)
         {
             OnTsunamiReceived(tsunami);
         }
@@ -452,75 +461,86 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region kmoni
-    internal IKmoniSettingsHelper KmoniOptions { get; init; }
-    internal DateTimeOffset TimeDisplay
+    /// <summary>
+    /// The options for the kmoni layer.
+    /// </summary>
+    private IKmoniSettingsHelper KmoniOptions { get; init; }
+    /// <summary>
+    /// The time display.
+    /// </summary>
+    public DateTimeOffset TimeDisplay
         => _timeProvider.Now();
+    /// <summary>
+    /// The timer to trigger the event to refresh the layer and the time.
+    /// </summary>
     private readonly System.Timers.Timer _timer;
-
-    private const string _realTimeLayerName = "KmoniLayer";
-    private const int _kmoniDelaySeconds = 1;
+    /// <summary>
+    /// The image fetcher to be used.
+    /// </summary>
     private readonly IImageFetch _imageFetch;
+    /// <summary>
+    /// The point extractor to be used.
+    /// </summary>
     private readonly IPointExtract _pointExtract;
-    private MemoryLayer? _kmoniLayer;
+    /// <summary>
+    /// The delay for the kmoni layer when fetching data.
+    /// </summary>
+    private readonly TimeSpan _kmoniDelay = new(0, 0, 1);
+    /// <summary>
+    /// The name of the kmoni layer.
+    /// </summary>
+    private const string _kmoniLayerName = "KmoniLayer";
+    /// <summary>
+    /// The kmoni layer.
+    /// </summary>
+    private readonly MemoryLayer _kmoniLayer = new(_kmoniLayerName) { Style = null };
 
     // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
-    private void OnTimedEvent(object? source, ElapsedEventArgs e)
+    /// <summary>
+    /// Handles the timed event, by changing the displaying time, and refreshing the Kmoni layer.
+    /// </summary>
+    /// <param name="source">The source of the event.</param>
+    /// <param name="e">The event arguments.</param>
+    private async void OnTimedEvent(object? source, ElapsedEventArgs e)
     {
         OnPropertyChanged(nameof(TimeDisplay));
 
-        IEnumerable<IFeature>? kmoniObservationPoints = GetKmoniObservationPoints().Result;
+        IEnumerable<IFeature>? kmoniObservationPoints = await GetKmoniObservationPoints();
         if (kmoniObservationPoints is null)
         {
             return;
         }
 
-        if (_kmoniLayer is null)
-        {
-            _kmoniLayer = new()
-            {
-                Name = _realTimeLayerName,
-                Features = kmoniObservationPoints,
-                Style = null
-            };
-            Map.Layers.Add(_kmoniLayer);
-        }
-        else
-        {
-            _kmoniLayer.Features = kmoniObservationPoints;
-            _kmoniLayer.DataHasChanged();
-        }
+        _kmoniLayer.Features = kmoniObservationPoints;
+        _kmoniLayer.DataHasChanged();
     }
 
+    /// <summary>
+    /// Gets the observation points from Kmoni, and convert them to features.
+    /// </summary>
+    /// <returns>The list of features, or <see langword="null"/> if it was unsuccessful.</returns>
     private async Task<IEnumerable<IFeature>?> GetKmoniObservationPoints()
     {
         try
         {
-            byte[]? imageBytes = await _imageFetch.GetByteArrayAsync(
+            byte[]? imageBytes = await _imageFetch
+                .GetByteArrayAsync(
                 KmoniOptions.MeasurementChoice,
                 KmoniOptions.SensorChoice,
-                _timeProvider.ConvertToJst(_timeProvider.Now())
-                .AddSeconds(-_kmoniDelaySeconds)
-                .DateTime);
+                _timeProvider
+                    .ConvertToJst(_timeProvider.Now())
+                    .Subtract(_kmoniDelay)
+                    .DateTime);
 
             return imageBytes is null
                 ? null
                 : _pointExtract
-                .ExtractColours(imageBytes.ToBitmap(), KmoniOptions.SensorChoice is SensorType.Borehole)
-                .Select(pc => (pc.point, height: pc.colour.ColourToHeight()))
-                .Select(pc
-                    => new PointFeature(SphericalMercator.FromLonLat(pc.point.Location.Longitude, pc.point.Location.Latitude).ToMPoint())
-                    {
-                        Styles = [
-                            new SymbolStyle()
-                            {
-                                SymbolScale = 0.1,
-                                Fill = new Brush(pc.height.HeightToColour().ToMapsui())
-                            }]
-                    });
+                    .ExtractColours(imageBytes.ToBitmap(), KmoniOptions.SensorChoice is SensorType.Borehole)
+                    .Select(pc => pc.ToStationFeature());
         }
         catch (ArgumentException ae)
         {
-            Logger.TryGet(LogEventLevel.Warning, LogArea.Control)?.Log(this, $"ArgumentException: {ae.Message}, {ae.Source}");
+            _logger.LogWarning($"ArgumentException: {ae.Message}, {ae.Source}");
         }
 
         return null;

@@ -4,11 +4,15 @@ using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;
+using EasonEetwViewer.KyoshinMonitor.Dtos;
+using EasonEetwViewer.KyoshinMonitor.Extensions;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
+using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using SkiaSharp;
 using Station = EasonEetwViewer.Dmdata.Api.Dtos.Record.EarthquakeParameter.Station;
 
 namespace EasonEetwViewer.Extensions;
@@ -84,6 +88,34 @@ internal static class MapStyleExtensions
             SymbolScale = 0.25,
             Fill = new Brush(intensity.ToColourString().ToColour()),
             Outline = new Pen { Color = Color.Black }
+        };
+
+    /// <summary>
+    /// Creates a style for the <see cref="SKColor"/> of the station.
+    /// </summary>
+    /// <param name="colour">The colour extracted from the station.</param>
+    /// <returns>The style converted.</returns>
+    public static SymbolStyle ToStationStyle(this SKColor colour)
+        => new()
+        {
+            SymbolScale = 0.1,
+            Fill = new Brush(colour.ColourToHeight().HeightToColour().ToMapsui())
+        };
+
+    /// <summary>
+    /// Creates a feature for the station.
+    /// </summary>
+    /// <param name="pointColour">The tuple containing the station and the colour.</param>
+    /// <returns>The converted feature.</returns>
+    public static PointFeature ToStationFeature(this (ObservationPoint point, SKColor colour) pointColour)
+        => new(
+            SphericalMercator
+            .FromLonLat(
+                pointColour.point.Location.Longitude,
+                pointColour.point.Location.Latitude)
+            .ToMPoint())
+        {
+            Styles = [pointColour.colour.ToStationStyle()]
         };
 
     /// <summary>
