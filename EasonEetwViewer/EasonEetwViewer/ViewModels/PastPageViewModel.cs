@@ -1,7 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DynamicData;
@@ -14,7 +12,6 @@ using EasonEetwViewer.Dmdata.Authentication.Events;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
-using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Extensions;
 using EasonEetwViewer.Models.PastPage;
@@ -28,7 +25,6 @@ using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
-using NetTopologySuite.IO;
 
 namespace EasonEetwViewer.ViewModels;
 /// <summary>

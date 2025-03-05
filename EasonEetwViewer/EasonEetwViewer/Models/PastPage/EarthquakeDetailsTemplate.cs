@@ -2,7 +2,6 @@
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Extensions;
-using EasonEetwViewer.Services;
 
 namespace EasonEetwViewer.Models.PastPage;
 /// <summary>
