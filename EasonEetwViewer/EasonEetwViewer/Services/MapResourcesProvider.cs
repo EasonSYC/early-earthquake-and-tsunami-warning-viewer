@@ -55,7 +55,9 @@ internal sealed class MapResourcesProvider
         {
             ImageSource = "embedded://EasonEetwViewer.Resources.circle.svg"
         };
-
+    /// <summary>
+    /// The regions of Japan.
+    /// </summary>
     public IEnumerable<PrefectureData> Prefectures { get; private init; } = [
         new PrefectureData() { Code = "01", Name = "北海道" },
         new PrefectureData() { Code = "02", Name = "青森県" },

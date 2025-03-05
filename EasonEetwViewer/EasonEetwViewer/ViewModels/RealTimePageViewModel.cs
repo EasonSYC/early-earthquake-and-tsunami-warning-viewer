@@ -61,6 +61,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         timeProvider,
         logger)
     {
+        _logger = logger;
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;
         _pointExtract = pointExtract;
@@ -81,6 +82,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         Task.Run(StartLongRunning).Wait();
     }
+    /// <summary>
+    /// The logger to be used.
+    /// </summary>
+    private readonly ILogger<RealtimePageViewModel> _logger;
 
     private async Task StartLongRunning()
     {
@@ -111,34 +116,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     [NotifyPropertyChangedFor(nameof(CurrentDisplayEew))]
     private uint? _currentEewIndex = null;
 
-    private static string ToInformationString(EewInformationSchema eew)
-    {
-        StringBuilder sb = new();
-        if (eew.Headline is not null)
-        {
-            _ = sb.AppendLine(eew.Headline);
-        }
-
-        if (eew.Body.Text is not null)
-        {
-            _ = sb.AppendLine(eew.Body.Text);
-        }
-
-        if (eew.Body.Comments is not null)
-        {
-            if (eew.Body.Comments.FreeText is not null)
-            {
-                _ = sb.AppendLine(eew.Body.Comments.FreeText);
-            }
-
-            if (eew.Body.Comments.Warning is not null)
-            {
-                _ = sb.AppendLine(eew.Body.Comments.Warning.Text);
-            }
-        }
-
-        return sb.ToString();
-    }
     private async Task OnEewReceived(EewInformationSchema eew)
     {
         if (!int.TryParse(eew.SerialNo, out int serial))
@@ -166,7 +143,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return;
         }
 
-        string informationalText = ToInformationString(eew);
+        string informationalText = eew.ToInformationString();
 
         EewDetailsTemplate eewTemplate = new(lifeTime, eew.PressDateTime, serial, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning ?? false, eew.Body.Earthquake, eew.Body.Intensity, informationalText);
         LiveEewList.Add(eewTemplate);
@@ -221,7 +198,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 Region? region = regions
                     .Where(region => region.ForecastMaxInt.From.ToIntensity() is not null)
-                    .FirstOrDefault(r => r.Code == (string)f["code"]!);
+                    .SingleOrDefault(r => r.Code == (string)f["code"]!);
                 return region is null
                     ? null
                     : new VectorStyle()
@@ -246,7 +223,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         }
     }
 
-    private readonly IStyle pCircleStyle
+    private readonly IStyle _pCircleStyle
         = new VectorStyle
         {
             Outline = new Pen
@@ -256,7 +233,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             },
             Fill = null
         };
-    private readonly IStyle sCircleStyle
+    private readonly IStyle _sCircleStyle
         = new VectorStyle
         {
             Outline = new Pen
@@ -317,7 +294,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                     {
                         Name = pLayerName,
                         Features = [pCirclePolygon.ToFeature()],
-                        Style = pCircleStyle
+                        Style = _pCircleStyle
                     };
 
                     Map.Layers.Add(pLayer);
@@ -339,7 +316,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                     {
                         Name = sLayerName,
                         Features = [sCirclePolygon.ToFeature()],
-                        Style = sCircleStyle
+                        Style = _sCircleStyle
                     };
 
                     Map.Layers.Add(sLayer);
@@ -361,7 +338,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         (double x, double y) = SphericalMercator.FromLonLat(longitude, latitude);
         radius *= 1000;
-        radius *= 1.23;
+        radius *= 1.23; // a magic constant found by experimenting
 
         ICollection<Coordinate> outerRing = [];
         double increment = 360d / (quality < 3 ? 3 : (quality > 360 ? 360 : quality));
@@ -408,34 +385,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private const string _tsunamiWarningLayerName = "Tsunami";
     [ObservableProperty]
     private TsunamiDetailsTemplate? _currentTsunami = null;
-    private static string ToInformationString(TsunamiInformationSchema tsunami)
-    {
-        StringBuilder sb = new();
-        if (tsunami.Headline is not null)
-        {
-            _ = sb.AppendLine(tsunami.Headline);
-        }
-
-        if (tsunami.Body.Text is not null)
-        {
-            _ = sb.AppendLine(tsunami.Body.Text);
-        }
-
-        if (tsunami.Body.Comments is not null)
-        {
-            if (tsunami.Body.Comments.FreeText is not null)
-            {
-                _ = sb.AppendLine(tsunami.Body.Comments.FreeText);
-            }
-
-            if (tsunami.Body.Comments.Warning is not null)
-            {
-                _ = sb.AppendLine(tsunami.Body.Comments.Warning.Text);
-            }
-        }
-
-        return sb.ToString();
-    }
+    
     private readonly TimeSpan _tsunamiLifeTime = TimeSpan.FromDays(2);
     private void OnTsunamiReceived(TsunamiInformationSchema schema)
     {
@@ -461,7 +411,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             Map.Layers.Add(new RasterizingLayer(layer));
         }
 
-        CurrentTsunami = new(ToInformationString(schema), validDateTime, schema.PressDateTime, maxType);
+        CurrentTsunami = new(schema.ToInformationString(), validDateTime, schema.PressDateTime, maxType);
     }
     private static ThemeStyle CreateForecastThemeStyle(IEnumerable<Forecast> forecasts)
         => new(f =>
