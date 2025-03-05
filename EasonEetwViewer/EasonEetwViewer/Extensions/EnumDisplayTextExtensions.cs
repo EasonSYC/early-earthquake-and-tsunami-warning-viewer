@@ -90,15 +90,15 @@ internal static class EnumDisplayTextExtensions
         => tsunamiWarningType switch
         {
             TsunamiWarningType.None
-                => RealtimePageResources.TsunamiWarningTypeTextNone,
+                => RealtimePageResources.TsunamiTextNone,
             TsunamiWarningType.Information
-                => RealtimePageResources.TsunamiWarningTypeTextInformation,
+                => RealtimePageResources.TsunamiTextInformation,
             TsunamiWarningType.Caution
-                => RealtimePageResources.TsunamiWarningTypeTextCaution,
+                => RealtimePageResources.TsunamiTextCaution,
             TsunamiWarningType.Warning
-                => RealtimePageResources.TsunamiWarningTypeTextWarning,
+                => RealtimePageResources.TsunamiTextWarning,
             TsunamiWarningType.SpecialWarning
-                => RealtimePageResources.TsunamiWarningTypeTextSpecialWarning,
+                => RealtimePageResources.TsunamiTextSpecialWarning,
             _
                 => throw new UnreachableException()
         };

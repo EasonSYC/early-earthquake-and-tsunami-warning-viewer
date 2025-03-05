@@ -243,19 +243,19 @@
   <data name="TsunamiColourNone" xml:space="preserve">
     <value>#F2F2FF</value>
   </data>
-  <data name="TsunamiWarningTypeTextNone" xml:space="preserve">
+  <data name="TsunamiTextNone" xml:space="preserve">
     <value>Tsunami Information Lifted</value>
   </data>
-  <data name="TsunamiWarningTypeTextInformation" xml:space="preserve">
+  <data name="TsunamiTextInformation" xml:space="preserve">
     <value>Tsunami Information</value>
   </data>
-  <data name="TsunamiWarningTypeTextCaution" xml:space="preserve">
+  <data name="TsunamiTextCaution" xml:space="preserve">
     <value>Tsunami Caution</value>
   </data>
-  <data name="TsunamiWarningTypeTextSpecialWarning" xml:space="preserve">
+  <data name="TsunamiTextSpecialWarning" xml:space="preserve">
     <value>Tsunami Special Warning</value>
   </data>
-  <data name="TsunamiWarningTypeTextWarning" xml:space="preserve">
+  <data name="TsunamiTextWarning" xml:space="preserve">
     <value>Tsunami Warning</value>
   </data>
 </root>

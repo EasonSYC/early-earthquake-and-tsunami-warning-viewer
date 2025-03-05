@@ -286,7 +286,8 @@
 
             <Border Canvas.Bottom="0"
                     Canvas.Right="0"
-                    IsVisible="{Binding CurrentTsunami, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    IsVisible="{Binding CurrentTsunami,
+                    Converter={x:Static ObjectConverters.IsNotNull}}"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
                     Width="350"
                     CornerRadius="10 0 0 0">
@@ -294,12 +295,18 @@
 
                     <!--Tsunami Colour Display-->
 
-                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayColourConverter}}"
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType,
+                            Converter={StaticResource EnumDisplayColourConverter},
+                            TargetNullValue={x:Static lang:RealtimePageResources.TsunamiColourNone},
+                            FallbackValue={x:Static lang:RealtimePageResources.TsunamiColourNone}}"
                             Height="10"
                             CornerRadius="10 0 0 0">
                     </Border>
 
-                    <Border Background="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayColourConverter}}"
+                    <Border Background="{Binding CurrentTsunami.MaxWarningType,
+                            Converter={StaticResource EnumDisplayColourConverter},
+                            TargetNullValue={x:Static lang:RealtimePageResources.TsunamiColourNone},
+                            FallbackValue={x:Static lang:RealtimePageResources.TsunamiColourNone}}"
                             Margin="0 5"
                             Height="5">
                     </Border>
@@ -309,7 +316,10 @@
                     <TextBlock FontWeight="SemiBold"
                                Margin="5 5"
                                FontSize="24"
-                             Text="{Binding CurrentTsunami.MaxWarningType, Converter={StaticResource EnumDisplayTextConverter}}"/>
+                             Text="{Binding CurrentTsunami.MaxWarningType,
+                             Converter={StaticResource EnumDisplayTextConverter},
+                             TargetNullValue={x:Static lang:RealtimePageResources.TsunamiTextNone},
+                             FallbackValue={x:Static lang:RealtimePageResources.TsunamiTextNone}}"/>
 
                     <!--Update Time Display-->
 
@@ -321,7 +331,10 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentTsunami.UpdateTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                               Text="{Binding CurrentTsunami.UpdateTime,
+                               StringFormat='yyyy/MM/dd HH:mm:ss',
+                               TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                               FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"
                                Margin="5 0"/>
 
                     <!--Informational Text-->

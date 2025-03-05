@@ -441,45 +441,45 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Tsunami Caution.
         /// </summary>
-        public static string TsunamiWarningTypeTextCaution {
+        public static string TsunamiTextCaution {
             get {
-                return ResourceManager.GetString("TsunamiWarningTypeTextCaution", resourceCulture);
+                return ResourceManager.GetString("TsunamiTextCaution", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Tsunami Information.
         /// </summary>
-        public static string TsunamiWarningTypeTextInformation {
+        public static string TsunamiTextInformation {
             get {
-                return ResourceManager.GetString("TsunamiWarningTypeTextInformation", resourceCulture);
+                return ResourceManager.GetString("TsunamiTextInformation", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Tsunami Information Lifted.
         /// </summary>
-        public static string TsunamiWarningTypeTextNone {
+        public static string TsunamiTextNone {
             get {
-                return ResourceManager.GetString("TsunamiWarningTypeTextNone", resourceCulture);
+                return ResourceManager.GetString("TsunamiTextNone", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Tsunami Special Warning.
         /// </summary>
-        public static string TsunamiWarningTypeTextSpecialWarning {
+        public static string TsunamiTextSpecialWarning {
             get {
-                return ResourceManager.GetString("TsunamiWarningTypeTextSpecialWarning", resourceCulture);
+                return ResourceManager.GetString("TsunamiTextSpecialWarning", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Tsunami Warning.
         /// </summary>
-        public static string TsunamiWarningTypeTextWarning {
+        public static string TsunamiTextWarning {
             get {
-                return ResourceManager.GetString("TsunamiWarningTypeTextWarning", resourceCulture);
+                return ResourceManager.GetString("TsunamiTextWarning", resourceCulture);
             }
         }
     }

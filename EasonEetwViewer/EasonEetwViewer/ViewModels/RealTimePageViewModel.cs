@@ -182,7 +182,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             {
                 Name = _eewRegionLayerPrefix + eew.EventId,
                 DataSource = _resources.Region,
-                Style = CreateRegionThemeStyle(regions)
+                Style = regions.ToRegionStyle()
             };
 
             if (!eewTemplate.Token.IsCancellationRequested)
@@ -193,19 +193,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
-    private static ThemeStyle CreateRegionThemeStyle(IEnumerable<Region> regions)
-        => new(f =>
-            {
-                Region? region = regions
-                    .Where(region => region.ForecastMaxInt.From.ToIntensity() is not null)
-                    .SingleOrDefault(r => r.Code == (string)f["code"]!);
-                return region is null
-                    ? null
-                    : new VectorStyle()
-                    {
-                        Fill = new Brush(Color.Opacity(((Intensity)region.ForecastMaxInt.From.ToIntensity()!).ToColourString().ToColour(), 0.60f))
-                    };
-            });
 
     private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2.5);
     private async Task SwitchEew()
@@ -382,49 +369,54 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region tsunami
+    /// <summary>
+    /// The name of the tsunami warning layer.
+    /// </summary>
     private const string _tsunamiWarningLayerName = "Tsunami";
+    /// <summary>
+    /// The current tsunami.
+    /// </summary>
     [ObservableProperty]
     private TsunamiDetailsTemplate? _currentTsunami = null;
-    
+    /// <summary>
+    /// The default lifetime for a tsunami.
+    /// </summary>
     private readonly TimeSpan _tsunamiLifeTime = TimeSpan.FromDays(2);
-    private void OnTsunamiReceived(TsunamiInformationSchema schema)
+    /// <summary>
+    /// Handles when a new tsunami telegram is received.
+    /// </summary>
+    /// <param name="tsunami">The tsunami telegram.</param>
+    private void OnTsunamiReceived(TsunamiInformationSchema tsunami)
     {
-        DateTimeOffset validDateTime = schema.ValidDateTime ?? schema.PressDateTime + _tsunamiLifeTime;
+        DateTimeOffset validDateTime = tsunami.ValidDateTime ?? tsunami.PressDateTime + _tsunamiLifeTime;
         if (validDateTime < _timeProvider.Now())
         {
             return;
         }
 
-        TsunamiWarningType maxType = TsunamiWarningType.None;
-
-        if (schema.Body.Tsunami is not null && schema.Body.Tsunami.Forecasts is not null)
+        if (tsunami.Body.Tsunami?.Forecasts is not null)
         {
-            maxType = schema.Body.Tsunami.Forecasts.Max(f => f.Kind.Code.ToTsunamiWarningType());
-
-            _ = Map.Layers.Remove(l => l.Name == _tsunamiWarningLayerName);
+            _ = Map.Layers.Remove(layer => layer.Name == _tsunamiWarningLayerName);
             ILayer layer = new Layer()
             {
                 Name = _tsunamiWarningLayerName,
                 DataSource = _resources.Tsunami,
-                Style = CreateForecastThemeStyle(schema.Body.Tsunami.Forecasts)
+                Style = tsunami.Body.Tsunami.Forecasts.ToRegionStyle()
             };
-            Map.Layers.Add(new RasterizingLayer(layer));
+            Map.Layers.Add(layer.ToRasterizingLayer());
         }
 
-        CurrentTsunami = new(schema.ToInformationString(), validDateTime, schema.PressDateTime, maxType);
+        CurrentTsunami = new(tsunami, validDateTime);
     }
-    private static ThemeStyle CreateForecastThemeStyle(IEnumerable<Forecast> forecasts)
-        => new(f =>
-        {
-            Forecast? forecast = forecasts.FirstOrDefault(fr => fr.Code == f["code"]?.ToString()?.ToLower());
-            return forecast is null
-                ? null
-                : new VectorStyle()
-                {
-                    Line = new Pen(Color.Opacity(Color.FromString(forecast.Kind.Code.ToTsunamiWarningType().ToColourString()), 0.80f), 2.5)
-                };
-        });
+
+    /// <summary>
+    /// The time interval to check for expired tsunamis.
+    /// </summary>
     private readonly TimeSpan _removeExpiredTsunamiInterval = TimeSpan.FromMinutes(1);
+    /// <summary>
+    /// Clears the expired tsunami warnings.
+    /// </summary>
+    /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
     private async Task ClearExpiredTsunami()
     {
         while (!_token.IsCancellationRequested)

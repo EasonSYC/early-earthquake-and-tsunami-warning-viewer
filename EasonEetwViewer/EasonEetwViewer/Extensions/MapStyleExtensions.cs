@@ -1,11 +1,15 @@
 ﻿using EasonEetwViewer.Dmdata.Api.Dtos.Record.EarthquakeParameter;
+using EasonEetwViewer.Dmdata.Api.Dtos.Response;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using Station = EasonEetwViewer.Dmdata.Api.Dtos.Record.EarthquakeParameter.Station;
 
 namespace EasonEetwViewer.Extensions;
 
@@ -21,10 +25,10 @@ internal static class MapStyleExtensions
     /// <param name="regions">The regions to be converted.</param>
     /// <returns>The converted style.</returns>
     public static ThemeStyle ToRegionStyle(this IEnumerable<RegionIntensity> regions)
-        => new(f =>
+        => new(feature =>
         {
             RegionIntensity? region = regions
-                .SingleOrDefault(r => r.Code == (string)f["code"]!);
+                .SingleOrDefault(region => region.Code == (string)feature["code"]!);
 
             return region?.MaxInt is Intensity intensity
                 ? new VectorStyle()
@@ -32,6 +36,41 @@ internal static class MapStyleExtensions
                     Fill = new Brush(intensity.ToColourString().ToColour(0.60f))
                 }
                 : null;
+        });
+    /// <summary>
+    /// Creates a theme style for the regions.
+    /// </summary>
+    /// <param name="regions">The regions to be converted.</param>
+    /// <returns>The converted style.</returns>
+    public static ThemeStyle ToRegionStyle(this IEnumerable<Region> regions)
+        => new(feature =>
+        {
+            Region? region = regions
+                .SingleOrDefault(region => region.Code == (string)feature["code"]!);
+            return region?.ForecastMaxInt.From.ToIntensity() is Intensity intensity
+                    ? new VectorStyle()
+                    {
+                        Fill = new Brush(intensity.ToColourString().ToColour(0.60f))
+                    }
+                    : null;
+        });
+
+    /// <summary>
+    /// Creates a theme style for the regions.
+    /// </summary>
+    /// <param name="forecasts">The regions to be converted.</param>
+    /// <returns>The converted style.</returns>
+    public static ThemeStyle ToRegionStyle(this IEnumerable<Forecast> forecasts)
+        => new(feature =>
+        {
+            Forecast? forecast = forecasts
+                .SingleOrDefault(forecast => forecast.Code == (string)feature["code"]!);
+            return forecast is null
+                ? null
+                : new VectorStyle()
+                {
+                    Line = new Pen(forecast.Kind.Code.ToTsunamiWarningType().ToColourString().ToColour(0.80f), 2.5)
+                };
         });
 
     /// <summary>
