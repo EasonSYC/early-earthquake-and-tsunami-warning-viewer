@@ -50,12 +50,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
+        ITelegramParser telegramParser,
         ITimeProvider timeProvider,
         ILogger<RealtimePageViewModel> logger)
     : base(resources,
         authenticatorWrapper,
         apiCaller,
         telegramRetriever,
+        telegramParser,
         timeProvider,
         logger)
     {

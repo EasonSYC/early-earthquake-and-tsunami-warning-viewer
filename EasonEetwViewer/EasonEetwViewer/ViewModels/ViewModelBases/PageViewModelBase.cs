@@ -11,12 +11,14 @@ namespace EasonEetwViewer.ViewModels.ViewModelBases;
 /// <param name="authenticator">The authenticator to be used.</param>
 /// <param name="apiCaller">The API caller to be used.</param>
 /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+/// <param name="telegramParser">The telegram parser to be used.</param>
 /// <param name="timeProvider">The time provider to be used.</param>
 /// <param name="logger">The logger to be used.</param>
 internal abstract partial class PageViewModelBase(
     IAuthenticationHelper authenticator,
     IApiCaller apiCaller,
     ITelegramRetriever telegramRetriever,
+    ITelegramParser telegramParser,
     ITimeProvider timeProvider,
     ILogger<PageViewModelBase> logger) : ViewModelBase(logger)
 {
@@ -32,6 +34,10 @@ internal abstract partial class PageViewModelBase(
     /// The telegram retriever to be used.
     /// </summary>
     protected readonly ITelegramRetriever _telegramRetriever = telegramRetriever;
+    /// <summary>
+    /// The telegram parser to be used.
+    /// </summary>
+    protected readonly ITelegramParser _telegramParser = telegramParser;
     /// <summary>
     /// The time provider to be used.
     /// </summary>

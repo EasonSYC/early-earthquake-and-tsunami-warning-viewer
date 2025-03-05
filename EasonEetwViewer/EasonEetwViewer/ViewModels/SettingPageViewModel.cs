@@ -40,6 +40,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// <param name="authenticator">The authenticator to be used.</param>
     /// <param name="apiCaller">The API caller to be used.</param>
     /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+    /// <param name="telegramParser">The telegram parser to be used.</param>
     /// <param name="timeProvider">The time provider to be used.</param>
     public SettingPageViewModel(
         IOptions<WebSocketStartPost> startPost,
@@ -48,12 +49,14 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         IAuthenticationHelper authenticator,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
+        ITelegramParser telegramParser,
         ITimeProvider timeProvider,
         ILogger<SettingPageViewModel> logger)
         : base(
             authenticator,
             apiCaller,
             telegramRetriever,
+            telegramParser,
             timeProvider,
             logger)
     {

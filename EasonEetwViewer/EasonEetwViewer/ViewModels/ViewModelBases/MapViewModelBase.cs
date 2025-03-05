@@ -29,6 +29,7 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
     /// <param name="authenticatorWrapper">The authenticator to be used.</param>
     /// <param name="apiCaller">The API caller to be used.</param>
     /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+    /// <param name="telegramParser">The telegram parser to be used.</param>
     /// <param name="timeProvider">The time provider to be used.</param>
     /// <param name="logger">The logger to be used.</param>
     public MapViewModelBase(
@@ -36,12 +37,14 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
         IAuthenticationHelper authenticatorWrapper,
         IApiCaller apiCaller,
         ITelegramRetriever telegramRetriever,
+        ITelegramParser telegramParser,
         ITimeProvider timeProvider,
         ILogger<MapViewModelBase> logger)
         : base(
             authenticatorWrapper,
             apiCaller,
             telegramRetriever,
+            telegramParser,
             timeProvider,
             logger)
     {
