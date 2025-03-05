@@ -219,12 +219,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private static ThemeStyle CreateRegionThemeStyle(IEnumerable<Region> regions)
         => new(f =>
             {
-                Region? region = regions.FirstOrDefault(r => r.Code == f["code"]?.ToString()?.ToLower());
+                Region? region = regions
+                    .Where(region => region.ForecastMaxInt.From.ToIntensity() is not null)
+                    .FirstOrDefault(r => r.Code == (string)f["code"]!);
                 return region is null
                     ? null
                     : new VectorStyle()
                     {
-                        Fill = new Brush(Color.Opacity(Color.FromString(((Intensity)region.ForecastMaxInt.From).ToColourString()), 0.60f))
+                        Fill = new Brush(Color.Opacity(((Intensity)region.ForecastMaxInt.From.ToIntensity()!).ToColourString().ToColour(), 0.60f))
                     };
             });
 

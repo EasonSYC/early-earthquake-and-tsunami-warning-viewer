@@ -29,11 +29,26 @@ internal record EarthquakeDetailsTemplate
         InformationalText = telegram?.ToInformationalString();
         DetailDisplay = tree ?? [];
     }
+    /// <summary>
+    /// The Event ID of the earthquake.
+    /// </summary>
     public string EventId { get; private init; }
+    /// <summary>
+    /// The maximum intensity observed for the earthquake.
+    /// </summary>
     public Intensity? Intensity { get; private init; }
+    /// <summary>
+    /// The time at which the earthquake originated.
+    /// </summary>
     public DateTimeOffset? OriginTime { get; private init; }
     public DateTimeOffset? LastUpdated { get; private init; }
+    /// <summary>
+    /// The hypocentre of the earthquake.
+    /// </summary>
     public Hypocentre? Hypocentre { get; private init; }
+    /// <summary>
+    /// The magnitude of the earthquake.
+    /// </summary>
     public Magnitude? Magnitude { get; private init; }
     public string? InformationalText { get; private init; }
     public IEnumerable<DetailIntensityTemplate> DetailDisplay { get; private init; }

@@ -9,6 +9,7 @@ using EasonEetwViewer.Dmdata.Api.Dtos.Record.GdEarthquake;
 using EasonEetwViewer.Dmdata.Api.Dtos.Response;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Events;
+using EasonEetwViewer.Dmdata.Dtos.DmdataComponent;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
@@ -81,7 +82,7 @@ internal partial class PastPageViewModel : MapViewModelBase
     private EarthquakeDetailsTemplate? _earthquakeDetails;
     private const double _extendFactor = 1.2;
     private const string _regionLayerName = "Regions";
-    private const string _obsPointLayerName = "Point";
+    private const string _observationPointLayerName = "Point";
     private const string _hypocentreLayerName = "Hypocentre";
     private CancellationTokenSource _cts = new();
     async partial void OnSelectedEarthquakeChanged(EarthquakeItemTemplate? value)
@@ -122,8 +123,8 @@ internal partial class PastPageViewModel : MapViewModelBase
             (ILayer stationLayer, ILayer regionLayer, regionLimits, tree) = await DealWithTelegramIntensities(telegramInfo.Body.Intensity);
             if (!token.IsCancellationRequested)
             {
-                Map.Layers.Add(new RasterizingLayer(stationLayer));
                 Map.Layers.Add(new RasterizingLayer(regionLayer));
+                Map.Layers.Add(new RasterizingLayer(stationLayer));
             }
         }
 
@@ -134,20 +135,21 @@ internal partial class PastPageViewModel : MapViewModelBase
 
         // Mark Hypocentre
         MRect? hypocentreLimits = null;
-        if (value.Hypocentre?.Coordinates.Longitude is not null &&
-            value.Hypocentre?.Coordinates.Latitude is not null)
+        CoordinateComponent? coordinate = telegramInfo?.Body.Earthquake?.Hypocentre.Coordinates ?? value.Hypocentre?.Coordinates;
+        if (coordinate?.Longitude is not null &&
+            coordinate?.Latitude is not null)
         {
-            MPoint coords = SphericalMercator
+            MPoint convertedCoordinates = SphericalMercator
                 .FromLonLat(
-                value.Hypocentre.Coordinates.Longitude.DoubleValue,
-                value.Hypocentre.Coordinates.Latitude.DoubleValue)
+                coordinate.Longitude.DoubleValue,
+                coordinate.Latitude.DoubleValue)
                 .ToMPoint();
-            hypocentreLimits = coords.MRect;
+            hypocentreLimits = convertedCoordinates.MRect;
 
             ILayer layer = new MemoryLayer()
             {
                 Name = _hypocentreLayerName,
-                Features = [new PointFeature(coords)],
+                Features = [new PointFeature(convertedCoordinates)],
                 Style = _resources.HypocentreShapeStyle
             };
 
@@ -157,6 +159,7 @@ internal partial class PastPageViewModel : MapViewModelBase
             }
         }
 
+        // Zoom to Box
         MRect limits = regionLimits ?? _mainLimitsOfJapan;
         limits = limits.Join(hypocentreLimits);
 
@@ -218,7 +221,7 @@ internal partial class PastPageViewModel : MapViewModelBase
     private static MemoryLayer CreateStationLayer(IEnumerable<(Station station, Intensity intensity)> stationData)
         => new()
         {
-            Name = _obsPointLayerName,
+            Name = _observationPointLayerName,
             Features = stationData
                 .Select(x => CreateStationFeature(x.station, x.intensity)),
             Style = null
@@ -280,13 +283,14 @@ internal partial class PastPageViewModel : MapViewModelBase
                                     })
                             })
                     })
-            });
+            })
+            .OrderByDescending(x => x.Intensity);
     private CancellationToken ResetDetails()
     {
         _ = Map.Layers.Remove(x
             => x.Name is _regionLayerName);
         _ = Map.Layers.Remove(x
-            => x.Name is _obsPointLayerName);
+            => x.Name is _observationPointLayerName);
         _ = Map.Layers.Remove(x
             => x.Name is _hypocentreLayerName);
         Map.Navigator.ZoomToBox(_mainLimitsOfJapan);
