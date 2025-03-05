@@ -145,9 +145,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return;
         }
 
-        string informationalText = eew.ToInformationString();
-
-        EewDetailsTemplate eewTemplate = new(lifeTime, eew.PressDateTime, serial, eew.EventId, eew.Body.IsCancelled, eew.Body.IsLastInfo, eew.Body.IsWarning ?? false, eew.Body.Earthquake, eew.Body.Intensity, informationalText);
+        EewDetailsTemplate eewTemplate = new(eew, lifeTime, serial);
         LiveEewList.Add(eewTemplate);
 
         if (eew.Body.IsCancelled)
@@ -155,9 +153,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return;
         }
 
-        if (eew.Body.Earthquake is not null
-            && eew.Body.Earthquake.Hypocentre.Coordinate.Longitude is not null
-            && eew.Body.Earthquake.Hypocentre.Coordinate.Latitude is not null)
+        if (eew.Body.Earthquake?.Hypocentre.Coordinate.Longitude is not null &&
+            eew.Body.Earthquake?.Hypocentre.Coordinate.Latitude is not null)
         {
             MPoint point = SphericalMercator.FromLonLat(
                 eew.Body.Earthquake.Hypocentre.Coordinate.Longitude!.DoubleValue,

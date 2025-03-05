@@ -1,32 +1,34 @@
 ﻿using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
+using EasonEetwViewer.Extensions;
 
 namespace EasonEetwViewer.Models.RealTimePage;
 internal record EewDetailsTemplate
 {
-    internal DateTimeOffset ExpiryTime { get; private init; }
-    internal DateTimeOffset UpdateTime { get; private init; }
-    internal int Serial { get; private init; }
-    internal string? EventId { get; private init; }
-    internal bool IsCancelled { get; private init; }
-    internal bool IsLastInfo { get; private init; }
-    internal bool IsWarning { get; private init; }
-    internal Earthquake? Earthquake { get; private init; }
-    internal IntensityInfo? IntensityInfo { get; private init; }
-    internal string? InformationalText { get; private init; }
-    internal CancellationTokenSource TokenSource { get; private init; }
-    internal CancellationToken Token { get; private init; }
-    internal EewDetailsTemplate(DateTimeOffset expiryTime, DateTimeOffset updateTime, int serial, string? eventId, bool isCancelled, bool isLastInfo, bool isWarning, Earthquake? earthquake, IntensityInfo? intensityInfo, string? informationalText)
+    public DateTimeOffset ExpiryTime { get; private init; }
+    public DateTimeOffset UpdateTime { get; private init; }
+    public int Serial { get; private init; }
+    public string? EventId { get; private init; }
+    public bool IsCancelled { get; private init; }
+    public bool IsLastInfo { get; private init; }
+    public bool IsWarning { get; private init; }
+    public Earthquake? Earthquake { get; private init; }
+    public IntensityInfo? IntensityInfo { get; private init; }
+    public string? InformationalText { get; private init; }
+    public CancellationTokenSource TokenSource { get; private init; }
+    public CancellationToken Token { get; private init; }
+    public EewDetailsTemplate(EewInformationSchema eew, DateTimeOffset expiryTime,  int serial)
     {
         ExpiryTime = expiryTime;
-        UpdateTime = updateTime;
+        UpdateTime = eew.PressDateTime;
         Serial = serial;
-        EventId = eventId;
-        IsCancelled = isCancelled;
-        IsLastInfo = isLastInfo;
-        IsWarning = isWarning;
-        Earthquake = earthquake;
-        IntensityInfo = intensityInfo;
-        InformationalText = informationalText;
+        EventId = eew.EventId;
+        IsCancelled = eew.Body.IsCancelled;
+        IsLastInfo = eew.Body.IsLastInfo;
+        IsWarning = eew.Body.IsWarning ?? false;
+        Earthquake = eew.Body.Earthquake;
+        IntensityInfo = eew.Body.Intensity;
+        InformationalText = eew.ToInformationString());
         TokenSource = new();
         Token = TokenSource.Token;
     }
