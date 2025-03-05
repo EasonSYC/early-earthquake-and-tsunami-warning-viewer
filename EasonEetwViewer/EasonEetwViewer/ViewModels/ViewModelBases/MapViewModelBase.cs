@@ -50,9 +50,13 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
     {
         _resources = resources;
         _logger = logger;
+        _regionFeatures = _resources.Region.GetFeaturesAsync(new(new MSection(_limitsOfJapan, 1))).Result;
         InitMapView();
     }
-
+    /// <summary>
+    /// The features within the regions.
+    /// </summary>
+    protected readonly IEnumerable<IFeature> _regionFeatures;
     /// <summary>
     /// The logger to be used;
     /// </summary>
@@ -78,12 +82,12 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
     /// <summary>
     /// Gives a <see cref="MRect"/> of the limits of Japan.
     /// </summary>
-    private protected readonly MRect _limitsOfJapan
+    protected readonly MRect _limitsOfJapan
         = GetMRectFromLonLat(122, 20, 154, 46);
     /// <summary>
     /// Gives a <see cref="MRect"/> of the main limits of Japan.
     /// </summary>
-    private protected readonly MRect _mainLimitsOfJapan
+    protected readonly MRect _mainLimitsOfJapan
         = GetMRectFromLonLat(122, 27, 154, 46);
     /// <summary>
     /// Gives a <see cref="MRect"/> of the map bounds.

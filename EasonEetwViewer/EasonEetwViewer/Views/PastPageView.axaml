@@ -178,7 +178,7 @@
             <ScrollViewer Grid.Column="0"
                           Grid.Row="1"
                           Margin="0 5">
-                <ItemsControl ItemsSource="{Binding EarthquakeDetails.DetailDisplay}">
+                <ItemsControl ItemsSource="{Binding EarthquakeDetails.IntensityTree}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>

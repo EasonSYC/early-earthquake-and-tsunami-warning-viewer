@@ -27,7 +27,7 @@ internal record EarthquakeDetailsTemplate
         Magnitude = telegram?.Body.Earthquake?.Magnitude ?? earthquakeItem.Magnitude;
         LastUpdated = telegram?.ReportDateTime;
         InformationalText = telegram?.ToInformationalString();
-        DetailDisplay = tree ?? [];
+        IntensityTree = tree ?? [];
     }
     /// <summary>
     /// The Event ID of the earthquake.
@@ -41,6 +41,9 @@ internal record EarthquakeDetailsTemplate
     /// The time at which the earthquake originated.
     /// </summary>
     public DateTimeOffset? OriginTime { get; private init; }
+    /// <summary>
+    /// The time at which the information is last updated.
+    /// </summary>
     public DateTimeOffset? LastUpdated { get; private init; }
     /// <summary>
     /// The hypocentre of the earthquake.
@@ -50,6 +53,12 @@ internal record EarthquakeDetailsTemplate
     /// The magnitude of the earthquake.
     /// </summary>
     public Magnitude? Magnitude { get; private init; }
+    /// <summary>
+    /// The informational text from the telegram.
+    /// </summary>
     public string? InformationalText { get; private init; }
-    public IEnumerable<DetailIntensityTemplate> DetailDisplay { get; private init; }
+    /// <summary>
+    /// The detailed intensity tree.
+    /// </summary>
+    public IEnumerable<DetailIntensityTemplate> IntensityTree { get; private init; }
 }

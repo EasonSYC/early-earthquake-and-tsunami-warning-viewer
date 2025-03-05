@@ -120,7 +120,7 @@ internal partial class PastPageViewModel : MapViewModelBase
         if (telegramInfo?.Body.Intensity is not null)
         {
             await LoadEarthquakeObservationStations();
-            (ILayer stationLayer, ILayer regionLayer, regionLimits, tree) = await DealWithTelegramIntensities(telegramInfo.Body.Intensity);
+            (ILayer stationLayer, ILayer regionLayer, regionLimits, tree) = DealWithTelegramIntensities(telegramInfo.Body.Intensity);
             if (!token.IsCancellationRequested)
             {
                 Map.Layers.Add(new RasterizingLayer(regionLayer));
@@ -173,7 +173,7 @@ internal partial class PastPageViewModel : MapViewModelBase
             Map.Navigator.ZoomToBox(limits);
         }
     }
-    private async Task<(ILayer, ILayer, MRect, IEnumerable<DetailIntensityTemplate>)> DealWithTelegramIntensities(IntensityDetails intensityDetails)
+    private (ILayer, ILayer, MRect, IEnumerable<DetailIntensityTemplate>) DealWithTelegramIntensities(IntensityDetails intensityDetails)
     {
         // Join the station data with the stations retrieved from the API
         IEnumerable<(Station station, Intensity intensity)> stationData = intensityDetails
@@ -190,11 +190,11 @@ internal partial class PastPageViewModel : MapViewModelBase
         return (
             CreateStationLayer(stationData),
             CreateRegionLayer(intensityDetails.Regions),
-            await CreateRegionLimits(intensityDetails),
+            CreateRegionLimits(intensityDetails),
             CreateIntensityTree(stationData));
     }
-    private async Task<MRect> CreateRegionLimits(IntensityDetails intensityDetails)
-        => (await _resources.Region.GetFeaturesAsync(new(new MSection(_limitsOfJapan, 1))))
+    private MRect CreateRegionLimits(IntensityDetails intensityDetails)
+        => _regionFeatures
             .Join(intensityDetails.Regions,
             f => (string)f["code"]!,
             r => r.Code,
