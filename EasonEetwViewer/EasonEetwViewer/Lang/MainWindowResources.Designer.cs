@@ -22,7 +22,7 @@ namespace EasonEetwViewer.Lang {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MainWindowResources {
+    public class MainWindowResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EasonEetwViewer.Lang {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EasonEetwViewer.Lang.MainWindowResources", typeof(MainWindowResources).Assembly);
@@ -51,7 +51,7 @@ namespace EasonEetwViewer.Lang {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Past Earthquakes.
         /// </summary>
-        internal static string PageNamePast {
+        public static string PageNamePast {
             get {
                 return ResourceManager.GetString("PageNamePast", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Real-time Monitor.
         /// </summary>
-        internal static string PageNameRealtime {
+        public static string PageNameRealtime {
             get {
                 return ResourceManager.GetString("PageNameRealtime", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace EasonEetwViewer.Lang {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string PageNameSettings {
+        public static string PageNameSettings {
             get {
                 return ResourceManager.GetString("PageNameSettings", resourceCulture);
             }
