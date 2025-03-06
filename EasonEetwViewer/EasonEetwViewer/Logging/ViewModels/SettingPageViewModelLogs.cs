@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.ViewModels.ViewModelBases;
 /// <summary>
@@ -161,4 +162,54 @@ internal static partial class SettingPageViewModelLogs
         Message = "Displaying available connections.")]
     public static partial void DisplayingAvailableConnections(
         this ILogger<SettingPageViewModel> logger);
+    /// <summary>
+    /// Log when failed to read language from file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path of the language file.</param>
+    [LoggerMessage(
+        EventId = 14,
+        EventName = nameof(FailedToReadLanguage),
+        Level = LogLevel.Warning,
+        Message = "Failed to read language from file: `{FilePath}`.")]
+    public static partial void FailedToReadLanguage(
+        this ILogger<SettingPageViewModel> logger, string filePath);
+    /// <summary>
+    /// Log when succeeded in reading language from file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path of the language file.</param>
+    /// <param name="language">The language read.</param>
+    [LoggerMessage(
+        EventId = 15,
+        EventName = nameof(ReadLanguage),
+        Level = LogLevel.Information,
+        Message = "Read language `{Language}` from file: `{FilePath}`.")]
+    public static partial void ReadLanguage(
+        this ILogger<SettingPageViewModel> logger, string filePath, CultureInfo language);
+    /// <summary>
+    /// Log when failed to write language to file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path of the language file.</param>
+    [LoggerMessage(
+        EventId = 16,
+        EventName = nameof(FailedToWriteLanguage),
+        Level = LogLevel.Warning,
+        Message = "Failed to write language to file: `{FilePath}`.")]
+    public static partial void FailedToWriteLanguage(
+        this ILogger<SettingPageViewModel> logger, string filePath);
+    /// <summary>
+    /// Log when succeeded in writing language to file.
+    /// </summary>
+    /// <param name="logger">The logger to be used.</param>
+    /// <param name="filePath">The file path of the language file.</param>
+    /// <param name="language">The language read.</param>
+    [LoggerMessage(
+        EventId = 17,
+        EventName = nameof(WriteLanguage),
+        Level = LogLevel.Information,
+        Message = "Wrote language `{Language}` to file: `{FilePath}`.")]
+    public static partial void WriteLanguage(
+        this ILogger<SettingPageViewModel> logger, string filePath, CultureInfo language);
 }

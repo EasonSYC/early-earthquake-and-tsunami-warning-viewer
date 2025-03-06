@@ -73,7 +73,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         LanguageChanged += (o, e)
             => SetResourcesCultureInfo(LanguageChoice);
         LanguageChanged += LanguageChangedWriteToFileEventHandler;
-        LanguageChoice = GetCultureInfo(languagePath);
+        LanguageChoice = GetCultureInfo();
     }
     /// <summary>
     /// The logger to be used.
@@ -110,18 +110,19 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// <summary>
     /// Gets the language from the file.
     /// </summary>
-    /// <param name="filePath">The path to the file.</param>
     /// <returns>The language obtained, or invarient culture if unsuccessful.</returns>
-    private static CultureInfo GetCultureInfo(string filePath)
+    private CultureInfo GetCultureInfo()
     {
         CultureInfo culture;
         try
         {
-            culture = new CultureInfo(File.ReadAllText(filePath));
+            culture = new CultureInfo(File.ReadAllText(_languageFilePath));
+            _logger.ReadLanguage(_languageFilePath, culture);
         }
         catch
         {
             culture = CultureInfo.InvariantCulture;
+            _logger.FailedToReadLanguage(_languageFilePath);
         }
 
         return culture;
@@ -136,8 +137,12 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         try
         {
             File.WriteAllText(_languageFilePath, LanguageChoice.Name);
+            _logger.WriteLanguage(_languageFilePath, LanguageChoice);
         }
-        catch { }
+        catch
+        {
+            _logger.FailedToWriteLanguage(_languageFilePath);
+        }
     }
     /// <summary>
     /// The path to the file where the language is stored.
