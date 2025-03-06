@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -13,7 +14,6 @@ using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Events;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.WebSocket.Abstractions;
-using EasonEetwViewer.Events;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models.SettingPage;
@@ -42,6 +42,7 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// <param name="telegramRetriever">The telegram retriever to be used.</param>
     /// <param name="telegramParser">The telegram parser to be used.</param>
     /// <param name="timeProvider">The time provider to be used.</param>
+    /// <param name="languagePath">The path to the language file.</param>
     public SettingPageViewModel(
         IOptions<WebSocketStartPost> startPost,
         IKmoniSettingsHelper kmoniOptions,
@@ -51,7 +52,8 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         ITelegramRetriever telegramRetriever,
         ITelegramParser telegramParser,
         ITimeProvider timeProvider,
-        ILogger<SettingPageViewModel> logger)
+        ILogger<SettingPageViewModel> logger,
+        string languagePath)
         : base(
             authenticator,
             apiCaller,
@@ -66,6 +68,12 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
         KmoniSettingsHelper = kmoniOptions;
         _authenticator.StatusChanged += AuthenticationStatusChangedEventHandler;
         _webSocketClient.StatusChanged += WebSocketStatusChangedEventHandler;
+
+        _languageFilePath = languagePath;
+        LanguageChanged += (o, e)
+            => SetResourcesCultureInfo(LanguageChoice);
+        LanguageChanged += LanguageChangedWriteToFileEventHandler;
+        LanguageChoice = GetCultureInfo(languagePath);
     }
     /// <summary>
     /// The logger to be used.
@@ -75,18 +83,66 @@ internal sealed partial class SettingPageViewModel : PageViewModelBase
     /// <summary>
     /// Invoked when the language choice is changed.
     /// </summary>
-    public event EventHandler<LanguagedChangedEventArgs>? LanguageChanged;
+    public event EventHandler<EventArgs>? LanguageChanged;
     /// <summary>
     /// The current language.
     /// </summary>
     [ObservableProperty]
-    private CultureInfo _languageChoice = EarthquakeResources.Culture;
+    private CultureInfo _languageChoice = MainWindowResources.Culture;
     /// <summary>
-    /// Executes then the language choice is changed.
+    /// Executes when the language choice is changed.
     /// </summary>
     /// <param name="value">The new language.</param>
     partial void OnLanguageChoiceChanged(CultureInfo value)
-        => LanguageChanged?.Invoke(this, new() { Language = value });
+        => LanguageChanged?.Invoke(this, new());
+    /// <summary>
+    /// Sets the resources culture info to the language specified.
+    /// </summary>
+    /// <param name="cultureInfo">The new language.</param>
+    private static void SetResourcesCultureInfo(CultureInfo cultureInfo)
+    {
+        MainWindowResources.Culture = cultureInfo;
+        EarthquakeResources.Culture = cultureInfo;
+        PastPageResources.Culture = cultureInfo;
+        SettingPageResources.Culture = cultureInfo;
+        RealtimePageResources.Culture = cultureInfo;
+    }
+    /// <summary>
+    /// Gets the language from the file.
+    /// </summary>
+    /// <param name="filePath">The path to the file.</param>
+    /// <returns>The language obtained, or invarient culture if unsuccessful.</returns>
+    private static CultureInfo GetCultureInfo(string filePath)
+    {
+        CultureInfo culture;
+        try
+        {
+            culture = new CultureInfo(File.ReadAllText(filePath));
+        }
+        catch
+        {
+            culture = CultureInfo.InvariantCulture;
+        }
+
+        return culture;
+    }
+    /// <summary>
+    /// Event handler for language changed by writing the language to the file.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The event arguments.</param>
+    private void LanguageChangedWriteToFileEventHandler(object? sender, EventArgs e)
+    {
+        try
+        {
+            File.WriteAllText(_languageFilePath, LanguageChoice.Name);
+        }
+        catch { }
+    }
+    /// <summary>
+    /// The path to the file where the language is stored.
+    /// </summary>
+    private readonly string _languageFilePath;
     /// <summary>
     /// The list of languages available.
     /// </summary>

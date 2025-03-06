@@ -40,30 +40,6 @@ internal partial class App : Application
     /// </summary>
     public static IServiceProvider? Service { get; private set; }
 
-    private static CultureInfo GetLanguage(string languagePath)
-    {
-        CultureInfo culture;
-        try
-        {
-            string languageOption = File.ReadAllText(languagePath);
-            culture = new CultureInfo(languageOption);
-        }
-        catch
-        {
-            culture = CultureInfo.InvariantCulture;
-        }
-
-        return culture;
-    }
-    private static void LanguageChange(CultureInfo language)
-    {
-        Lang.MainWindowResources.Culture = language;
-        Lang.EarthquakeResources.Culture = language;
-        Lang.PastPageResources.Culture = language;
-        Lang.SettingPageResources.Culture = language;
-        Lang.RealtimePageResources.Culture = language;
-    }
-
     /// <inheritdoc/>
     public override async void OnFrameworkInitializationCompleted()
     {
@@ -76,8 +52,6 @@ internal partial class App : Application
         IConfigurationSection configPaths = config.GetSection("ConfigPaths");
         string authenticatorPath = configPaths["Authenticator"]!;
         string languagePath = configPaths["Language"]!;
-
-        LanguageChange(GetLanguage(languagePath));
 
         IServiceCollection collection = new ServiceCollection()
             .AddLogging(loggingBuilder
@@ -122,6 +96,7 @@ internal partial class App : Application
 
             .AddSingleton<MapResourcesProvider>()
 
+            .AddSingleton(languagePath)
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<RealtimePageViewModel>()
             .AddSingleton<PastPageViewModel>()
@@ -133,13 +108,6 @@ internal partial class App : Application
         Service = collection
             .BuildServiceProvider()
             .AttachMapsuiLogging();
-
-        Service.GetRequiredService<SettingPageViewModel>().LanguageChanged += (o, e)
-            =>
-            {
-                LanguageChange(e.Language);
-                File.WriteAllText(languagePath, e.Language.Name);
-            };
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
