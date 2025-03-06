@@ -48,7 +48,7 @@
                     IsVisible="{Binding CurrentDisplayEew,
                     Converter={x:Static ObjectConverters.IsNotNull}}"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
-                    Width="350"
+                    Width="400"
                     CornerRadius="0 0 10 0">
                 <StackPanel>
 
@@ -76,10 +76,14 @@
                         <Run FontSize="24"
                              Text="{x:Static lang:RealtimePageResources.EewText}"/>
                         <Run FontSize="24"
+                             Text="{x:Static lang:RealtimePageResources.RoundBracketsStart}"/>
+                        <Run FontSize="24"
                              Text="{Binding CurrentDisplayEew.EewWarningType,
                              Converter={StaticResource EnumDisplayTextConverter},
                              TargetNullValue={x:Static lang:RealtimePageResources.EewTextCancelled},
                              FallbackValue={x:Static lang:RealtimePageResources.EewTextCancelled}}"/>
+                        <Run FontSize="24"
+                             Text="{x:Static lang:RealtimePageResources.RoundBracketsEnd}"/>
                         <Run FontSize="18"
                              Text="{x:Static lang:RealtimePageResources.EewNumberTextBefore}"/>
                         <Run FontSize="18"
