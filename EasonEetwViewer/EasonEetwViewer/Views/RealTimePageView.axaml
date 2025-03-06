@@ -24,8 +24,6 @@
         <conv:UnitValueDisplayValueConverter x:Key="UnitValueDisplayValueConverter"/>
         <conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
         <conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
-        <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
-        <conv:EewOnePointConverter x:Key="EewOnePointConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -142,7 +140,7 @@
                                FontWeight="SemiBold"
                                Text="{x:Static lang:RealtimePageResources.EewAssumedSpecificText}"
                                TextWrapping="Wrap"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=P}"
+                               IsVisible="{Binding CurrentDisplayEew.IsAssumedHypocentre}"
                                Margin="5 5"/>
 
                     <!--Depth Display-->
@@ -151,16 +149,22 @@
                                FontSize="14"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:EarthquakeResources.DetailsDepthText}"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+                               IsVisible="{Binding !CurrentDisplayEew.IsAssumedHypocentre}"
                                Margin="5 0"/>
                     <TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
                                Margin="5 0"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
+                               IsVisible="{Binding !CurrentDisplayEew.IsAssumedHypocentre}">
                         <Run FontSize="24"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth, Converter={StaticResource UnitValueDisplayValueConverter}}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth,
+                             Converter={StaticResource UnitValueDisplayValueConverter},
+                             FallbackValue={x:Static lang:EarthquakeResources.UnknownText},
+                             TargetNullValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                         <Run FontSize="18"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth, Converter={StaticResource UnitValueDisplayUnitConverter}}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Depth,
+                             Converter={StaticResource UnitValueDisplayUnitConverter},
+                             FallbackValue={},
+                             TargetNullValue={}}"/>
                     </TextBlock>
 
                     <!--Magnitude Display-->
@@ -169,16 +173,22 @@
                                FontSize="14"
                                FontWeight="SemiBold"
                                Text="{x:Static lang:EarthquakeResources.DetailsMagnitudeText}"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}"
+                               IsVisible="{Binding !CurrentDisplayEew.IsAssumedHypocentre}"
                                Margin="5 0"/>
                     <TextBlock HorizontalAlignment="Right"
                                FontWeight="SemiBold"
                                Margin="5 0"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake, Converter={StaticResource EewAssumedHypocentreConverter}, ConverterParameter=N}">
+                               IsVisible="{Binding !CurrentDisplayEew.IsAssumedHypocentre}">
                         <Run FontSize="18"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource UnitValueDisplayUnitConverter}}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Magnitude,
+                             Converter={StaticResource UnitValueDisplayUnitConverter},
+                             FallbackValue={x:Static lang:EarthquakeResources.MagnitudeUnitDefault},
+                             TargetNullValue={x:Static lang:EarthquakeResources.MagnitudeUnitDefault}}"/>
                         <Run FontSize="24"
-                             Text="{Binding CurrentDisplayEew.Earthquake.Magnitude, Converter={StaticResource UnitValueDisplayValueConverter}}"/>
+                             Text="{Binding CurrentDisplayEew.Earthquake.Magnitude,
+                             Converter={StaticResource UnitValueDisplayValueConverter},
+                             FallbackValue={x:Static lang:EarthquakeResources.UnknownText},
+                             TargetNullValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                     </TextBlock>
 
                     <!--Precision Display-->
@@ -235,31 +245,46 @@
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[0], Converter={StaticResource EnumDisplayTextConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[0],
+                                   Converter={StaticResource EnumDisplayTextConverter},
+                                   TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                                   FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                         <TextBlock Grid.Row="1"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[1], Converter={StaticResource EnumDisplayTextConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Epicentres[1],
+                                   Converter={StaticResource EnumDisplayTextConverter},
+                                   TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                                   FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                         <TextBlock Grid.Row="2"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Depth, Converter={StaticResource EnumDisplayTextConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Depth,
+                                   Converter={StaticResource EnumDisplayTextConverter},
+                                   TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                                   FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                         <TextBlock Grid.Row="3"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Magnitude, Converter={StaticResource EnumDisplayTextConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.Magnitude,
+                                   Converter={StaticResource EnumDisplayTextConverter},
+                                   TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                                   FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                         <TextBlock Grid.Row="4"
                                    Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    FontWeight="SemiBold"
                                    FontSize="16"
-                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.MagnitudePoint, Converter={StaticResource EnumDisplayTextConverter}}"/>
+                                   Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy.MagnitudePoint,
+                                   Converter={StaticResource EnumDisplayTextConverter},
+                                   TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                                   FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"/>
                     </Grid>
 
                     <!--One Point Warning Text-->
@@ -269,8 +294,7 @@
                                FontWeight="SemiBold"
                                Text="{x:Static lang:RealtimePageResources.EewOnePointWarningText}"
                                TextWrapping="Wrap"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy,
-                               Converter={StaticResource EewOnePointConverter}}"
+                               IsVisible="{Binding CurrentDisplayEew.IsOnePointInfo}"
                                Margin="5 5"/>
 
                     <!--Update Time Display-->

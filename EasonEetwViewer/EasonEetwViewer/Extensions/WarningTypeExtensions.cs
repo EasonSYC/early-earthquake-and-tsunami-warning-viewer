@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Accuracy;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Models.RealTimePage;
 
@@ -44,4 +46,14 @@ internal static class WarningTypeExtensions
                 : eew.Body.IsWarning ?? false
                     ? EewWarningType.Warning
                     : EewWarningType.Forecast;
+
+    public static bool IsOnePointInfo(this Accuracy accuracy)
+        => accuracy.Epicentres[0] == EpicentreDepth.LevelIpf1Plum
+            && accuracy.Epicentres[1] == EpicentreDepth.LevelIpf1Plum
+            && accuracy.Depth == EpicentreDepth.LevelIpf1Plum
+            && accuracy.Magnitude == Magnitude.LevelOrPlum
+            && accuracy.MagnitudePoint == MagnitudePoint.OneOrLevelOrPlum;
+
+    public static bool IsAssumedHypocentre(this Earthquake earthquake)
+        => earthquake.Condition is "仮定震源要素";
 }

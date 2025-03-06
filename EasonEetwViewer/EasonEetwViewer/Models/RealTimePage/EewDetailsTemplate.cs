@@ -40,6 +40,8 @@ internal record EewDetailsTemplate
     /// The informational text of the EEW.
     /// </summary>
     public string InformationalText { get; private init; }
+    public bool IsAssumedHypocentre { get; private init; }
+    public bool IsOnePointInfo { get; private init; }
     /// <summary>
     /// The cancellation token source related with this EEW issue.
     /// </summary>
@@ -64,6 +66,12 @@ internal record EewDetailsTemplate
         Earthquake = eew.Body.Earthquake;
         IntensityInfo = eew.Body.Intensity;
         InformationalText = eew.ToInformationString();
+        IsAssumedHypocentre =
+            eew.Body.Earthquake is not null &&
+            eew.Body.Earthquake.IsAssumedHypocentre();
+        IsOnePointInfo =
+            eew.Body.Earthquake is not null &&
+            eew.Body.Earthquake.Hypocentre.Accuracy.IsOnePointInfo();
         TokenSource = new();
         Token = TokenSource.Token;
     }
