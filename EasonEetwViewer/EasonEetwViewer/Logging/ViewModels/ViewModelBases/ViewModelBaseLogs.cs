@@ -14,7 +14,7 @@ internal static partial class MainWindowViewModelLogs
         EventId = 0,
         EventName = nameof(Instantiated),
         Level = LogLevel.Information,
-        Message = "ViewModelSwitched.")]
+        Message = "Instantiated..")]
     public static partial void Instantiated(
         this ILogger<ViewModelBase> logger);
 }
