@@ -83,7 +83,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             Enabled = true,
         };
         _timer.Elapsed += RefreshKmoniData;
-        _timer.Elapsed += (o, e) => OnPropertyChanged(nameof(TimeDisplay));
+        _timer.Elapsed += (o, e)
+            => OnPropertyChanged(nameof(TimeDisplay));
 
         _webSocketClient = webSocketClient;
         _webSocketClient.DataReceived += WebSocketClientDataReceivedEventHandler;
