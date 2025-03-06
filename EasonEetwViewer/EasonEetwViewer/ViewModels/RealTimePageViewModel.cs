@@ -103,9 +103,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _timeTableProvider = timeTable;
 
-        _cts = new();
-        _token = _cts.Token;
-
         _tsunamiLayer = new()
         {
             DataSource = _resources.Tsunami,
@@ -141,8 +138,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private const int _intensityGroup = 0;
 
     private readonly IWebSocketClient _webSocketClient;
-    private readonly CancellationTokenSource _cts;
-    private readonly CancellationToken _token;
 
     #region eew
     private const string _eewHypocentreLayerPrefix = "Hypocentre";
