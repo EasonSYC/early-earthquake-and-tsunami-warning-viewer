@@ -77,6 +77,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         KmoniOptions = kmoniOptions;
         _imageFetch = imageFetch;
         _pointExtract = pointExtract;
+
         _timer = new System.Timers.Timer(1000)
         {
             AutoReset = true,
@@ -86,6 +87,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _timer.Elapsed += (o, e)
             => OnPropertyChanged(nameof(TimeDisplay));
 
+
         _webSocketClient = webSocketClient;
         _webSocketClient.DataReceived += WebSocketClientDataReceivedEventHandler;
 
@@ -94,7 +96,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _cts = new();
         _token = _cts.Token;
 
-        Map.Layers.Add(_kmoniLayer);
+        _tsunamiLayer = new()
+        {
+            DataSource = _resources.Tsunami,
+            Style = null
+        };
+
+        Map.Layers.Add(_kmoniLayer, _kmoniGroup);
+        Map.Layers.Add(_tsunamiLayer, _tsunamiGroup);
 
         Task.Run(StartLongRunning).Wait();
     }
@@ -102,6 +111,12 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// The logger to be used.
     /// </summary>
     private readonly ILogger<RealtimePageViewModel> _logger;
+
+    private const int _hypocentreGroup = 4;
+    private const int _wavefrontGroup = 3;
+    private const int _tsunamiGroup = 2;
+    private const int _kmoniGroup = 1;
+    private const int _intensityGroup = 0;
 
     private async Task StartLongRunning()
     {
@@ -122,6 +137,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
 
     [ObservableProperty]
+    //private Dictionary<string, EewDetailsTemplate> _liveEewList = [];
     private ObservableCollection<EewDetailsTemplate> _liveEewList = [];
     public EewDetailsTemplate? CurrentDisplayEew
         => CurrentEewIndex is null || CurrentEewIndex >= LiveEewList.Count
@@ -183,7 +199,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             if (!eewTemplate.Token.IsCancellationRequested)
             {
-                Map.Layers.Add(layer);
+                Map.Layers.Add(layer, _hypocentreGroup);
             }
         }
 
@@ -200,7 +216,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
             if (!eewTemplate.Token.IsCancellationRequested)
             {
-                Map.Layers.Add(new RasterizingLayer(layer));
+                Map.Layers.Add(new RasterizingLayer(layer), _intensityGroup);
             }
         }
 
@@ -297,7 +313,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                         Style = _pCircleStyle
                     };
 
-                    Map.Layers.Add(pLayer);
+                    Map.Layers.Add(pLayer, _wavefrontGroup);
                 }
                 else
                 {
@@ -319,7 +335,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                         Style = _sCircleStyle
                     };
 
-                    Map.Layers.Add(sLayer);
+                    Map.Layers.Add(sLayer, _wavefrontGroup);
                 }
                 else
                 {
@@ -383,10 +399,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
     #region tsunami
     /// <summary>
-    /// The name of the tsunami warning layer.
-    /// </summary>
-    private const string _tsunamiWarningLayerName = "Tsunami";
-    /// <summary>
     /// The current tsunami.
     /// </summary>
     [ObservableProperty]
@@ -395,6 +407,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// The default lifetime for a tsunami.
     /// </summary>
     private readonly TimeSpan _tsunamiLifeTime = TimeSpan.FromDays(2);
+    /// <summary>
+    /// The map layer for tsunami warnings.
+    /// </summary>
+    private readonly Layer _tsunamiLayer;
     /// <summary>
     /// Handles when a new tsunami telegram is received.
     /// </summary>
@@ -409,14 +425,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         if (tsunami.Body.Tsunami?.Forecasts is not null)
         {
-            _ = Map.Layers.Remove(layer => layer.Name == _tsunamiWarningLayerName);
-            ILayer layer = new Layer()
-            {
-                Name = _tsunamiWarningLayerName,
-                DataSource = _resources.Tsunami,
-                Style = tsunami.Body.Tsunami.Forecasts.ToRegionStyle()
-            };
-            Map.Layers.Add(layer.ToRasterizingLayer());
+            _tsunamiLayer.Style = tsunami.Body.Tsunami.Forecasts.ToRegionStyle();
+            _tsunamiLayer.DataHasChanged();
         }
 
         CurrentTsunami = new(tsunami, validDateTime);
@@ -437,7 +447,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.Now())
             {
                 CurrentTsunami = null;
-                _ = Map.Layers.Remove(l => l.Name == _tsunamiWarningLayerName);
+                _tsunamiLayer.Style = null;
+                _tsunamiLayer.DataHasChanged();
             }
 
             await Task.Delay(_removeExpiredTsunamiInterval);
@@ -498,13 +509,9 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// </summary>
     private readonly TimeSpan _kmoniDelay = new(0, 0, 1);
     /// <summary>
-    /// The name of the kmoni layer.
-    /// </summary>
-    private const string _kmoniLayerName = "KmoniLayer";
-    /// <summary>
     /// The kmoni layer.
     /// </summary>
-    private readonly MemoryLayer _kmoniLayer = new(_kmoniLayerName) { Style = null };
+    private readonly MemoryLayer _kmoniLayer = new() { Style = null };
 
     // Adapted from https://mapsui.com/samples/ - Info - Custom Callout
     /// <summary>
