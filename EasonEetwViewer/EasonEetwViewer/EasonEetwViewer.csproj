@@ -71,7 +71,7 @@
 
     <ItemGroup>
         <EmbeddedResource Update="Lang\MainWindowResources.resx">
-          <Generator>ResXFileCodeGenerator</Generator>
+          <Generator>PublicResXFileCodeGenerator</Generator>
           <LastGenOutput>MainWindowResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
         <EmbeddedResource Update="Lang\PastPageResources.resx">
@@ -103,15 +103,15 @@
             <AutoGen>True</AutoGen>
             <DependentUpon>PastPageResources.resx</DependentUpon>
         </Compile>
-        <Compile Update="Lang\RealtimePageResources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>RealtimePageResources.resx</DependentUpon>
-        </Compile>
         <Compile Update="Lang\EarthquakeResources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>EarthquakeResources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Lang\RealtimePageResources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>RealtimePageResources.resx</DependentUpon>
         </Compile>
         <Compile Update="Lang\SettingPageResources.Designer.cs">
             <DesignTime>True</DesignTime>

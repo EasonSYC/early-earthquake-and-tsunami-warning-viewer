@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Range;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models.RealTimePage;
 
@@ -81,6 +82,76 @@ internal static class EnumDisplayColourExtensions
                 => RealtimePageResources.EewColourWarning,
             EewWarningType.Forecast
                 => RealtimePageResources.EewColourForecast,
+            _
+                => throw new UnreachableException()
+        };
+
+    /// <summary>
+    /// Converts <see cref="IntensityLower"/> to colour string.
+    /// </summary>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The string representing the colour.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToColourString(this IntensityLower intensity)
+        => intensity switch
+        {
+            IntensityLower.Zero
+                => EarthquakeResources.IntensityColourZero,
+            IntensityLower.One
+                => EarthquakeResources.IntensityColourOne,
+            IntensityLower.Two
+                => EarthquakeResources.IntensityColourTwo,
+            IntensityLower.Three
+                => EarthquakeResources.IntensityColourThree,
+            IntensityLower.Four
+                => EarthquakeResources.IntensityColourFour,
+            IntensityLower.FiveWeak
+                => EarthquakeResources.IntensityColourFiveWeak,
+            IntensityLower.FiveStrong
+                => EarthquakeResources.IntensityColourFiveStrong,
+            IntensityLower.SixWeak
+                => EarthquakeResources.IntensityColourSixWeak,
+            IntensityLower.SixStrong
+                => EarthquakeResources.IntensityColourSixStrong,
+            IntensityLower.Seven
+                => EarthquakeResources.IntensityColourSeven,
+            IntensityLower.Unclear
+                => EarthquakeResources.IntensityColourUnknown,
+            _
+                => throw new UnreachableException()
+        };
+
+    /// <summary>
+    /// Converts <see cref="IntensityUpper"/> to colour string.
+    /// </summary>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The string representing the colour.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToColourString(this IntensityUpper intensity)
+        => intensity switch
+        {
+            IntensityUpper.Zero
+                => EarthquakeResources.IntensityColourZero,
+            IntensityUpper.One
+                => EarthquakeResources.IntensityColourOne,
+            IntensityUpper.Two
+                => EarthquakeResources.IntensityColourTwo,
+            IntensityUpper.Three
+                => EarthquakeResources.IntensityColourThree,
+            IntensityUpper.Four
+                => EarthquakeResources.IntensityColourFour,
+            IntensityUpper.FiveWeak
+                => EarthquakeResources.IntensityColourFiveWeak,
+            IntensityUpper.FiveStrong
+                => EarthquakeResources.IntensityColourFiveStrong,
+            IntensityUpper.SixWeak
+                => EarthquakeResources.IntensityColourSixWeak,
+            IntensityUpper.SixStrong
+                => EarthquakeResources.IntensityColourSixStrong,
+            IntensityUpper.Seven
+                => EarthquakeResources.IntensityColourSeven,
+            IntensityUpper.Unclear or IntensityUpper.Above
+                => EarthquakeResources.IntensityColourUnknown,
             _
                 => throw new UnreachableException()
         };

@@ -1,6 +1,8 @@
 ﻿using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Range;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Extensions;
+using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.Models.RealTimePage;
 /// <summary>
@@ -49,6 +51,31 @@ internal record EewDetailsTemplate
     /// </summary>
     public bool IsOnePointInfo { get; private init; }
     /// <summary>
+    /// Whether the maximum intensity is exact, or is a lower bound.
+    /// </summary>
+    public bool IsAbove { get; private init; }
+    /// <summary>
+    /// The text before the intensity text.
+    /// </summary>
+    public string BeforeIntensityText
+        => IsAbove
+            ? RealtimePageResources.IntensityOverTextBefore
+            : string.Empty;
+    /// <summary>
+    /// The text after the intensity text.
+    /// </summary>
+    public string AfterIntensityText
+        => IsAbove
+            ? RealtimePageResources.IntensityOverTextAfter
+            : string.Empty;
+    /// <summary>
+    /// The maximum intensity of the EEW, to be displayed.
+    /// </summary>
+    public Enum? MaxIntensityEnum
+        => IsAbove
+            ? IntensityInfo?.ForecastMaxInt.From
+            : IntensityInfo?.ForecastMaxInt.To;
+    /// <summary>
     /// The cancellation token source related with this EEW issue.
     /// </summary>
     public CancellationTokenSource TokenSource { get; private init; }
@@ -78,6 +105,9 @@ internal record EewDetailsTemplate
         IsOnePointInfo =
             eew.Body.Earthquake is not null &&
             eew.Body.Earthquake.Hypocentre.Accuracy.IsOnePointInfo();
+        IsAbove =
+            eew.Body.Intensity is not null &&
+            eew.Body.Intensity.ForecastMaxInt.To is IntensityUpper.Above;
         TokenSource = new();
         Token = TokenSource.Token;
     }

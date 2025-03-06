@@ -22,8 +22,6 @@
         <conv:EnumDisplayTextConverter x:Key="EnumDisplayTextConverter"/>
         <conv:UnitValueDisplayUnitConverter x:Key="UnitValueDisplayUnitConverter"/>
         <conv:UnitValueDisplayValueConverter x:Key="UnitValueDisplayValueConverter"/>
-        <conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
-        <conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -99,13 +97,25 @@
                                FontWeight="SemiBold"
                                Text="{x:Static lang:EarthquakeResources.DetailsMaxIntensityText}"
                                Margin="5 5"/>
+                    
                     <TextBlock HorizontalAlignment="Right"
-                               FontSize="52"
-                               FontWeight="ExtraBold"
-                               Text="{Binding CurrentDisplayEew.IntensityInfo.ForecastMaxInt, Converter={StaticResource EewIntensityTextConverter}}"
-                               Foreground="{Binding CurrentDisplayEew.IntensityInfo.ForecastMaxInt, Converter={StaticResource EewIntensityColourConverter}}"
-                               Margin="5 0"/>
-
+                               Margin="5 0"
+                               FontWeight="ExtraBold">
+                        <Run FontSize="20"
+                             Text="{Binding CurrentDisplayEew.BeforeIntensityText}"/>
+                        <Run FontSize="52"
+                             Text="{Binding CurrentDisplayEew.MaxIntensityEnum,
+                             Converter={StaticResource EnumDisplayTextConverter},
+                             TargetNullValue={x:Static lang:EarthquakeResources.IntensityTextUnknown},
+                             FallbackValue={x:Static lang:EarthquakeResources.IntensityTextUnknown}}"
+                             Foreground="{Binding CurrentDisplayEew.MaxIntensityEnum,
+                             Converter={StaticResource EnumDisplayColourConverter},
+                             TargetNullValue={x:Static lang:EarthquakeResources.IntensityColourUnknown},
+                             FallbackValue={x:Static lang:EarthquakeResources.IntensityColourUnknown}}"/>
+                        <Run FontSize="20"
+                             Text="{Binding CurrentDisplayEew.AfterIntensityText}"/>
+                    </TextBlock>
+                    
                     <!--Origin time Display-->
 
                     <TextBlock HorizontalAlignment="Left"

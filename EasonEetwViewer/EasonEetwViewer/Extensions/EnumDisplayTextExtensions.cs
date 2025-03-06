@@ -3,6 +3,7 @@ using EasonEetwViewer.Dmdata.Authentication.Abstractions;
 using EasonEetwViewer.Dmdata.Dtos.DmdataComponent.Enum;
 using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Accuracy;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation.Enum.Range;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models.RealTimePage;
@@ -276,6 +277,76 @@ internal static class EnumDisplayTextExtensions
                 => RealtimePageResources.EewTextWarning,
             EewWarningType.Forecast
                 => RealtimePageResources.EewTextForecast,
+            _
+                => throw new UnreachableException()
+        };
+
+    /// <summary>
+    /// Converts <see cref="IntensityLower"/> to display string.
+    /// </summary>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this IntensityLower intensity)
+        => intensity switch
+        {
+            IntensityLower.Zero
+                => EarthquakeResources.IntensityTextZero,
+            IntensityLower.One
+                => EarthquakeResources.IntensityTextOne,
+            IntensityLower.Two
+                => EarthquakeResources.IntensityTextTwo,
+            IntensityLower.Three
+                => EarthquakeResources.IntensityTextThree,
+            IntensityLower.Four
+                => EarthquakeResources.IntensityTextFour,
+            IntensityLower.FiveWeak
+                => EarthquakeResources.IntensityTextFiveWeak,
+            IntensityLower.FiveStrong
+                => EarthquakeResources.IntensityTextFiveStrong,
+            IntensityLower.SixWeak
+                => EarthquakeResources.IntensityTextSixWeak,
+            IntensityLower.SixStrong
+                => EarthquakeResources.IntensityTextSixStrong,
+            IntensityLower.Seven
+                => EarthquakeResources.IntensityTextSeven,
+            IntensityLower.Unclear
+                => EarthquakeResources.IntensityTextUnknown,
+            _
+                => throw new UnreachableException()
+        };
+
+    /// <summary>
+    /// Converts <see cref="IntensityUpper"/> to display string.
+    /// </summary>
+    /// <param name="intensity">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this IntensityUpper intensity)
+        => intensity switch
+        {
+            IntensityUpper.Zero
+                => EarthquakeResources.IntensityTextZero,
+            IntensityUpper.One
+                => EarthquakeResources.IntensityTextOne,
+            IntensityUpper.Two
+                => EarthquakeResources.IntensityTextTwo,
+            IntensityUpper.Three
+                => EarthquakeResources.IntensityTextThree,
+            IntensityUpper.Four
+                => EarthquakeResources.IntensityTextFour,
+            IntensityUpper.FiveWeak
+                => EarthquakeResources.IntensityTextFiveWeak,
+            IntensityUpper.FiveStrong
+                => EarthquakeResources.IntensityTextFiveStrong,
+            IntensityUpper.SixWeak
+                => EarthquakeResources.IntensityTextSixWeak,
+            IntensityUpper.SixStrong
+                => EarthquakeResources.IntensityTextSixStrong,
+            IntensityUpper.Seven
+                => EarthquakeResources.IntensityTextSeven,
+            IntensityUpper.Unclear or IntensityUpper.Above
+                => EarthquakeResources.IntensityTextUnknown,
             _
                 => throw new UnreachableException()
         };
