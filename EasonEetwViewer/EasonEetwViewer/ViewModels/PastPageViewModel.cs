@@ -115,7 +115,6 @@ internal partial class PastPageViewModel : MapViewModelBase
     /// The layer for the hypocentre.
     /// </summary>
     private readonly MemoryLayer _hypocentreLayer;
-
     /// <summary>
     /// The layer for the observation station.
     /// </summary>
@@ -123,7 +122,6 @@ internal partial class PastPageViewModel : MapViewModelBase
     {
         Style = null,
     };
-
     /// <summary>
     /// The layer for the regions.
     /// </summary>
@@ -225,7 +223,7 @@ internal partial class PastPageViewModel : MapViewModelBase
                         .ToMPoint();
         MRect limits = convertedCoordinates.MRect;
 
-        if(!token.IsCancellationRequested)
+        if (!token.IsCancellationRequested)
         {
             _hypocentreLayer.Features = [new PointFeature(convertedCoordinates)];
             _hypocentreLayer.DataHasChanged();

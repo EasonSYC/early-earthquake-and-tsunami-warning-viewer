@@ -97,7 +97,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         };
         _timer2500.Elapsed += SwitchEew;
 
-
         _webSocketClient = webSocketClient;
         _webSocketClient.DataReceived += WebSocketClientDataReceivedEventHandler;
 
