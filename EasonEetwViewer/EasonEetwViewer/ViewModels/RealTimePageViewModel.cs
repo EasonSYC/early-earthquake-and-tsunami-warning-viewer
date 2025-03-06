@@ -130,13 +130,26 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     ///  </remarks>
     private readonly Timer _timer2500;
 
+    /// <summary>
+    /// The group for the hypocentre layer, on the top.
+    /// </summary>
     private const int _hypocentreGroup = 4;
+    /// <summary>
+    /// The group for the wavefront layer, below the hypocentre layer.
+    /// </summary>
     private const int _wavefrontGroup = 3;
+    /// <summary>
+    /// The group for the tsunami warning layer, below the wavefront layer.
+    /// </summary>
     private const int _tsunamiGroup = 2;
+    /// <summary>
+    /// The group for the kmoni layer, below the tsunami warning layer.
+    /// </summary>
     private const int _kmoniGroup = 1;
+    /// <summary>
+    /// The group for the intensity layer, at the bottom.
+    /// </summary>
     private const int _intensityGroup = 0;
-
-    private readonly IWebSocketClient _webSocketClient;
 
     #region eew
     private const string _eewHypocentreLayerPrefix = "Hypocentre";
@@ -423,6 +436,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region websocket
+    /// <summary>
+    /// The WebSocket client to be used.
+    /// </summary>
+    private readonly IWebSocketClient _webSocketClient;
     /// <summary>
     /// Raises when there is data received over the WebSocket connection.
     /// </summary>
