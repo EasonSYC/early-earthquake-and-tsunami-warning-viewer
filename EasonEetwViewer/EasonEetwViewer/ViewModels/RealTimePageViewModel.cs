@@ -263,18 +263,17 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly TimeSpan _refreshCircleInterval = TimeSpan.FromSeconds(1d / 60d);
     private async Task DrawEewCircles(EewDetailsTemplate eew)
     {
-        if (eew.Earthquake is null
-            || eew.Earthquake.Hypocentre.Depth.Value is null
-            || eew.Earthquake.Hypocentre.Coordinate.Latitude is null
-            || eew.Earthquake.Hypocentre.Coordinate.Longitude is null
-            || eew.Earthquake.OriginTime is null
-            || eew.Earthquake.Condition is "仮定震源要素")
+        if (eew.Earthquake is null ||
+            eew.Earthquake.Hypocentre.Depth.Value is null ||
+            eew.Earthquake.Hypocentre.Coordinate.Latitude is null ||
+            eew.Earthquake.Hypocentre.Coordinate.Longitude is null ||
+            eew.Earthquake.OriginTime is null ||
+            eew.Earthquake.Condition is "仮定震源要素")
         {
             return;
         }
 
         int depth = (int)eew.Earthquake.Hypocentre.Depth.Value;
-
         if (depth is < 0 or > 700)
         {
             return;
@@ -286,8 +285,21 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         double latitude = eew.Earthquake.Hypocentre.Coordinate.Latitude.DoubleValue;
         double longitude = eew.Earthquake.Hypocentre.Coordinate.Longitude.DoubleValue;
 
-        MemoryLayer? pLayer = null;
-        MemoryLayer? sLayer = null;
+        MemoryLayer pLayer = new()
+        {
+            Name = pLayerName,
+            Features = [],
+            Style = _pCircleStyle
+        };
+        MemoryLayer sLayer = new()
+        {
+            Name = sLayerName,
+            Features = [],
+            Style = _sCircleStyle
+        };
+
+        Map.Layers.Add(pLayer, _wavefrontGroup);
+        Map.Layers.Add(sLayer, _wavefrontGroup);
 
         while (!eew.Token.IsCancellationRequested)
         {
@@ -303,52 +315,22 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             if (pDistance != 0)
             {
                 Polygon pCirclePolygon = CreateCircleRing(latitude, longitude, pDistance);
-
-                if (pLayer is null)
-                {
-                    pLayer = new MemoryLayer
-                    {
-                        Name = pLayerName,
-                        Features = [pCirclePolygon.ToFeature()],
-                        Style = _pCircleStyle
-                    };
-
-                    Map.Layers.Add(pLayer, _wavefrontGroup);
-                }
-                else
-                {
-                    pLayer.Features = [pCirclePolygon.ToFeature()];
-                    pLayer.DataHasChanged();
-                }
+                pLayer.Features = [pCirclePolygon.ToFeature()];
+                pLayer.DataHasChanged();
             }
 
             if (sDistance != 0)
             {
                 Polygon sCirclePolygon = CreateCircleRing(latitude, longitude, sDistance);
-
-                if (sLayer is null)
-                {
-                    sLayer = new MemoryLayer
-                    {
-                        Name = sLayerName,
-                        Features = [sCirclePolygon.ToFeature()],
-                        Style = _sCircleStyle
-                    };
-
-                    Map.Layers.Add(sLayer, _wavefrontGroup);
-                }
-                else
-                {
-                    sLayer.Features = [sCirclePolygon.ToFeature()];
-                    sLayer.DataHasChanged();
-                }
+                sLayer.Features = [sCirclePolygon.ToFeature()];
+                sLayer.DataHasChanged();
             }
 
             await Task.Delay(_refreshCircleInterval);
         }
 
-        _ = Map.Layers.Remove(x => x.Name == pLayerName);
-        _ = Map.Layers.Remove(x => x.Name == sLayerName);
+        _ = Map.Layers.Remove(pLayer);
+        _ = Map.Layers.Remove(sLayer);
     }
     private static Polygon CreateCircleRing(double latitude, double longitude, double radius, double quality = 360)
     {
