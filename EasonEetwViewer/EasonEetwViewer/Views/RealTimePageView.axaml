@@ -22,9 +22,6 @@
         <conv:EnumDisplayTextConverter x:Key="EnumDisplayTextConverter"/>
         <conv:UnitValueDisplayUnitConverter x:Key="UnitValueDisplayUnitConverter"/>
         <conv:UnitValueDisplayValueConverter x:Key="UnitValueDisplayValueConverter"/>
-        <conv:EewTypeConverter x:Key="EewTypeConverter"/>
-        <conv:EewColourConverter x:Key="EewColourConverter"/>
-        <conv:EewSerialConverter x:Key="EewSerialConverter"/>
         <conv:EewIntensityTextConverter x:Key="EewIntensityTextConverter"/>
         <conv:EewIntensityColourConverter x:Key="EewIntensityColourConverter"/>
         <conv:EewAssumedHypocentreConverter x:Key="EewAssumedHypocentreConverter"/>
@@ -50,7 +47,8 @@
 
             <Border Canvas.Top="0"
                     Canvas.Left="0"
-                    IsVisible="{Binding CurrentDisplayEew, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    IsVisible="{Binding CurrentDisplayEew,
+                    Converter={x:Static ObjectConverters.IsNotNull}}"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
                     Width="350"
                     CornerRadius="0 0 10 0">
@@ -58,11 +56,17 @@
 
                     <!--Eew Colour Display-->
 
-                    <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
+                    <Border Background="{Binding CurrentDisplayEew.EewWarningType,
+                    Converter={StaticResource EnumDisplayColourConverter},
+                    TargetNullValue={x:Static lang:RealtimePageResources.EewColourCancelled},
+                    FallbackValue={x:Static lang:RealtimePageResources.EewColourCancelled}}"
                             Height="10">
                     </Border>
 
-                    <Border Background="{Binding CurrentDisplayEew, Converter={StaticResource EewColourConverter}}"
+                    <Border Background="{Binding CurrentDisplayEew.EewWarningType,
+                    Converter={StaticResource EnumDisplayColourConverter},
+                    TargetNullValue={x:Static lang:RealtimePageResources.EewColourCancelled},
+                    FallbackValue={x:Static lang:RealtimePageResources.EewColourCancelled}}"
                             Margin="0 5"
                             Height="5">
                     </Border>
@@ -74,9 +78,16 @@
                         <Run FontSize="24"
                              Text="{x:Static lang:RealtimePageResources.EewText}"/>
                         <Run FontSize="24"
-                             Text="{Binding CurrentDisplayEew, Converter={StaticResource EewTypeConverter}, Mode=OneWay}"/>
+                             Text="{Binding CurrentDisplayEew.EewWarningType,
+                             Converter={StaticResource EnumDisplayTextConverter},
+                             TargetNullValue={x:Static lang:RealtimePageResources.EewTextCancelled},
+                             FallbackValue={x:Static lang:RealtimePageResources.EewTextCancelled}}"/>
                         <Run FontSize="18"
-                             Text="{Binding CurrentDisplayEew, Converter={StaticResource EewSerialConverter}, Mode=OneWay}"/>
+                             Text="{x:Static lang:RealtimePageResources.EewNumberTextBefore}"/>
+                        <Run FontSize="18"
+                             Text="{Binding CurrentDisplayEew.Serial}"/>
+                        <Run FontSize="18"
+                             Text="{x:Static lang:RealtimePageResources.EewNumberTextAfter}"/>
                     </TextBlock>
 
                     <!--Intensity Display-->
@@ -103,7 +114,10 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="24"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentDisplayEew.Earthquake.OriginTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                               Text="{Binding CurrentDisplayEew.Earthquake.OriginTime,
+                               StringFormat='yyyy/MM/dd HH:mm:ss',
+                               FallbackValue={x:Static lang:EarthquakeResources.UnknownText},
+                               TargetNullValue={x:Static lang:EarthquakeResources.UnknownText}}"
                                Margin="5 0"/>
 
                     <!--Hypocentre Position Display-->
@@ -117,7 +131,8 @@
                                FontSize="24"
                                FontWeight="SemiBold"
                                Text="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Name,
-                                      FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"
+                                      FallbackValue={x:Static lang:EarthquakeResources.UnknownText},
+                                      TargetNullValue={x:Static lang:EarthquakeResources.UnknownText}}"
                                Margin="5 0"/>
 
                     <!--Assumed Hypocentre Text-->
@@ -254,7 +269,8 @@
                                FontWeight="SemiBold"
                                Text="{x:Static lang:RealtimePageResources.EewOnePointWarningText}"
                                TextWrapping="Wrap"
-                               IsVisible="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy, Converter={StaticResource EewOnePointConverter}}"
+                               IsVisible="{Binding CurrentDisplayEew.Earthquake.Hypocentre.Accuracy,
+                               Converter={StaticResource EewOnePointConverter}}"
                                Margin="5 5"/>
 
                     <!--Update Time Display-->
@@ -267,7 +283,10 @@
                     <TextBlock HorizontalAlignment="Right"
                                FontSize="18"
                                FontWeight="SemiBold"
-                               Text="{Binding CurrentDisplayEew.UpdateTime, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                               Text="{Binding CurrentDisplayEew.UpdateTime,
+                               StringFormat='yyyy/MM/dd HH:mm:ss',
+                               TargetNullValue={x:Static lang:EarthquakeResources.UnknownText},
+                               FallbackValue={x:Static lang:EarthquakeResources.UnknownText}}"
                                Margin="5 0"/>
 
                     <!--Informational Text-->

@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Models.RealTimePage;
 
 namespace EasonEetwViewer.Extensions;
 /// <summary>
-/// Provides extension methods for <see cref="TsunamiWarningType"/> to convert from code.
+/// Provides extension methods for warning type conversion.
 /// </summary>
-internal static class TsunamiWarningTypeExtensions
+internal static class WarningTypeExtensions
 {
     /// <summary>
     /// Converts the code string to a tsunami warning type.
@@ -29,4 +30,18 @@ internal static class TsunamiWarningTypeExtensions
             _
                 => throw new UnreachableException()
         };
+
+    /// <summary>
+    /// Converts the EEW Information Schema to an EEW Warning Type.
+    /// </summary>
+    /// <param name="eew">The EEW to be converted.</param>
+    /// <returns>The converted EEW Warning Type.</returns>
+    public static EewWarningType ToWarningType(this EewInformationSchema eew)
+        => eew.Body.IsCancelled
+            ? EewWarningType.Cancelled
+            : eew.Body.IsLastInfo
+                ? EewWarningType.Final
+                : eew.Body.IsWarning ?? false
+                    ? EewWarningType.Warning
+                    : EewWarningType.Forecast;
 }

@@ -258,4 +258,25 @@ internal static class EnumDisplayTextExtensions
             _
                 => throw new UnreachableException()
         };
+
+    /// <summary>
+    /// Converts <see cref="EewWarningType"/> to display string.
+    /// </summary>
+    /// <param name="eew">The enum to be converted.</param>
+    /// <returns>The converted display string.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToDisplayString(this EewWarningType eew)
+        => eew switch
+        {
+            EewWarningType.Cancelled
+                => RealtimePageResources.EewTextCancelled,
+            EewWarningType.Final
+                => RealtimePageResources.EewTextFinal,
+            EewWarningType.Warning
+                => RealtimePageResources.EewTextWarning,
+            EewWarningType.Forecast
+                => RealtimePageResources.EewTextForecast,
+            _
+                => throw new UnreachableException()
+        };
 }

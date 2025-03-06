@@ -63,4 +63,25 @@ internal static class EnumDisplayColourExtensions
             _
                 => throw new UnreachableException()
         };
+
+    /// <summary>
+    /// Converts <see cref="EewWarningType"/> to colour string.
+    /// </summary>
+    /// <param name="eew">The enum to be converted.</param>
+    /// <returns>The string representing the colour.</returns>
+    /// <exception cref="UnreachableException">When the program reaches an unreachable state.</exception>
+    public static string ToColourString(this EewWarningType eew)
+        => eew switch
+        {
+            EewWarningType.Cancelled
+                => RealtimePageResources.EewColourCancelled,
+            EewWarningType.Final
+                => RealtimePageResources.EewColourFinal,
+            EewWarningType.Warning
+                => RealtimePageResources.EewColourWarning,
+            EewWarningType.Forecast
+                => RealtimePageResources.EewColourForecast,
+            _
+                => throw new UnreachableException()
+        };
 }

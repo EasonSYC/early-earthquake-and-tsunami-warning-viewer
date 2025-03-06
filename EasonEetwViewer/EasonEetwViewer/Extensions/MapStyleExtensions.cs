@@ -1,6 +1,4 @@
-﻿using EasonEetwViewer.Dmdata.Api.Dtos.Record.EarthquakeParameter;
-using EasonEetwViewer.Dmdata.Api.Dtos.Response;
-using EasonEetwViewer.Dmdata.Dtos.Enum;
+﻿using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EarthquakeInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;

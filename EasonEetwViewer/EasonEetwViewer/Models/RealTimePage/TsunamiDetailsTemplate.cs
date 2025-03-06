@@ -10,7 +10,7 @@ internal record TsunamiDetailsTemplate
     /// <summary>
     /// The informational text of the tsunami.
     /// </summary>
-    public string? InformationalText { get; private init; }
+    public string InformationalText { get; private init; }
     /// <summary>
     /// The expiry time of the information.
     /// </summary>

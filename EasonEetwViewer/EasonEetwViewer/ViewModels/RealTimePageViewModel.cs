@@ -1,16 +1,12 @@
 ﻿using System.Collections.ObjectModel;
-using System.Text;
 using System.Timers;
-using Avalonia.Logging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Dmdata.Api.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
-using EasonEetwViewer.Dmdata.Dtos.Enum;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TelegramBase;
-using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;
 using EasonEetwViewer.Dmdata.WebSocket.Abstractions;
 using EasonEetwViewer.Dmdata.WebSocket.Events;
 using EasonEetwViewer.Extensions;
@@ -27,9 +23,7 @@ using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts.Extensions;
 using Mapsui.Projections;
-using Mapsui.Rendering.Skia.Extensions;
 using Mapsui.Styles;
-using Mapsui.Styles.Thematics;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
@@ -38,12 +32,30 @@ using Polygon = NetTopologySuite.Geometries.Polygon;
 
 namespace EasonEetwViewer.ViewModels;
 
+/// <summary>
+/// The view model for the real-time page.
+/// </summary>
 internal partial class RealtimePageViewModel : MapViewModelBase
 {
+    /// <summary>
+    /// Creates a new instance of the <see cref="RealtimePageViewModel"/> class.
+    /// </summary>
+    /// <param name="imageFetch">The image fetcher to be used.</param>
+    /// <param name="pointExtract">The point extractor to be used.</param>
+    /// <param name="timeTable">The time table to be used.</param>
+    /// <param name="kmoniOptions">The kmoni options to be used.</param>
+    /// <param name="webSocketClient">The WebSocket client to be used.</param>
+    /// <param name="resources">The map resources to be used.</param>
+    /// <param name="authenticatorWrapper">The authenticator to be used.</param>
+    /// <param name="apiCaller">The API caller to be used.</param>
+    /// <param name="telegramRetriever">The telegram retriever to be used.</param>
+    /// <param name="telegramParser">The telegram parser to be used.</param>
+    /// <param name="timeProvider">The time provider to be used.</param>
+    /// <param name="logger">The logger to be used.</param>
     public RealtimePageViewModel(
         IImageFetch imageFetch,
         IPointExtract pointExtract,
-        ITimeTable timeTableProvider,
+        ITimeTable timeTable,
         IKmoniSettingsHelper kmoniOptions,
         IWebSocketClient webSocketClient,
         MapResourcesProvider resources,
@@ -70,12 +82,13 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             AutoReset = true,
             Enabled = true,
         };
-        _timer.Elapsed += OnTimedEvent;
+        _timer.Elapsed += RefreshKmoniData;
+        _timer.Elapsed += (o, e) => OnPropertyChanged(nameof(TimeDisplay));
 
         _webSocketClient = webSocketClient;
         _webSocketClient.DataReceived += WebSocketClientDataReceivedEventHandler;
 
-        _timeTableProvider = timeTableProvider;
+        _timeTableProvider = timeTable;
 
         _cts = new();
         _token = _cts.Token;
@@ -122,7 +135,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         if (!int.TryParse(eew.SerialNo, out int serial))
         {
-            serial = 0;
+            return;
         }
 
         for (int i = 0; i < LiveEewList.Count; ++i)
@@ -498,10 +511,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// </summary>
     /// <param name="source">The source of the event.</param>
     /// <param name="e">The event arguments.</param>
-    private async void OnTimedEvent(object? source, ElapsedEventArgs e)
+    private async void RefreshKmoniData(object? source, ElapsedEventArgs e)
     {
-        OnPropertyChanged(nameof(TimeDisplay));
-
         IEnumerable<IFeature>? kmoniObservationPoints = await GetKmoniObservationPoints();
         if (kmoniObservationPoints is null)
         {
