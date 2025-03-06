@@ -38,7 +38,7 @@ internal sealed partial class MainWindowViewModel : ViewModelBase
     /// </summary>
     /// <param name="sender">The sender of the event.</param>
     /// <param name="e">The event arguments.</param>
-    private void RealtimePageViewModel_WebSocketDataReceived(object? sender, EventArgs e)
+    private void WebSocketDataReceivedEventHandler(object? sender, EventArgs e)
     {
         SelectedSidebarItem = SidebarItems.ElementAt(0);
         _logger.SwitchingToRealTime();
@@ -79,7 +79,7 @@ internal sealed partial class MainWindowViewModel : ViewModelBase
                 MainWindowResources.PageNameSettings),
         ];
         SelectedSidebarItem = SidebarItems.ElementAt(0);
-        realtimePageViewModel.WebSocketDataReceived += RealtimePageViewModel_WebSocketDataReceived;
+        realtimePageViewModel.WebSocketDataReceived += WebSocketDataReceivedEventHandler;
     }
 
     /// <summary>
