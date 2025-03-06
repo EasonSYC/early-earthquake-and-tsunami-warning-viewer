@@ -130,39 +130,4 @@ internal static class MapStyleExtensions
         {
             Styles = [stationIntensity.intensity.ToStationStyle()]
         };
-
-    /// <summary>
-    /// Creates a rasterizing layer for the layer.
-    /// </summary>
-    /// <param name="layer">The layer to be included.</param>
-    /// <returns>The rasterized layer.</returns>
-    public static RasterizingLayer ToRasterizingLayer(this ILayer layer)
-        => new(layer);
-
-    /// <summary>
-    /// Creates a rasterizing layer for the layer.
-    /// </summary>
-    /// <param name="layer">The layer to be included.</param>
-    /// <returns>The rasterized layer.</returns>
-    public static RasterizingLayer? ToNullableRasterizingLayer(this ILayer? layer)
-        => layer is null
-            ? null
-            : new(layer);
-
-    /// <summary>
-    /// Adds the layer to the given <see cref="LayerCollection"/> if the layer is not null.
-    /// </summary>
-    /// <param name="collection">The layer collection for the layer to be added.</param>
-    /// <param name="layer">The layer to be added.</param>
-    /// <param name="group">The group to which it is added.</param>
-    /// <returns>The current instance of the collection for calls to be chained.</returns>
-    public static LayerCollection AddIfNotNull(this LayerCollection collection, ILayer? layer, int group = 0)
-    {
-        if (layer is not null)
-        {
-            collection.Add(layer, group);
-        }
-
-        return collection;
-    }
 }

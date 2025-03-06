@@ -65,6 +65,20 @@ internal partial class PastPageViewModel : MapViewModelBase
         }
 
         authenticatorWrapper.StatusChanged += AuthenticatorWrapperStatusChangedEventHandler;
+
+        _hypocentreLayer = new()
+        {
+            Style = _resources.HypocentreShapeStyle
+        };
+        _regionLayer = new()
+        {
+            DataSource = _resources.Region,
+            Style = null
+        };
+
+        Map.Layers.Add(_hypocentreLayer, _hypocentreGroup);
+        Map.Layers.Add(_stationLayer, _stationGroup);
+        Map.Layers.Add(_regionLayer, _regionGroup);
     }
 
     /// <summary>
@@ -78,22 +92,42 @@ internal partial class PastPageViewModel : MapViewModelBase
     /// </summary>
     [ObservableProperty]
     private EarthquakeDetailsTemplate? _earthquakeDetails;
+
     /// <summary>
     /// The factor to extend the view by when zooming to the earthquake.
     /// </summary>
     private const double _extendFactor = 1.2;
+
     /// <summary>
-    /// The name for the layer of regions.
+    /// The layer group for the hypocentre, on the top.
     /// </summary>
-    private const string _regionLayerName = "Regions";
+    private const int _hypocentreGroup = 2;
     /// <summary>
-    /// The name for the layer of observation stations.
+    /// The layer group for the observation stations, in the middle.
     /// </summary>
-    private const string _observationStationsLayerName = "Stations";
+    private const int _stationGroup = 1;
     /// <summary>
-    /// The name for the layer of hypocentre.
+    /// The layer group for the regions, on the bottom.
     /// </summary>
-    private const string _hypocentreLayerName = "Hypocentre";
+    private const int _regionGroup = 0;
+
+    /// <summary>
+    /// The layer for the hypocentre.
+    /// </summary>
+    private readonly MemoryLayer _hypocentreLayer;
+
+    /// <summary>
+    /// The layer for the observation station.
+    /// </summary>
+    private readonly MemoryLayer _stationLayer = new()
+    {
+        Style = null,
+    };
+
+    /// <summary>
+    /// The layer for the regions.
+    /// </summary>
+    private readonly Layer _regionLayer;
 
     /// <summary>
     /// The cancellation token source for setting an earthquake detail.
@@ -143,21 +177,18 @@ internal partial class PastPageViewModel : MapViewModelBase
 
         IEnumerable<DetailIntensityTemplate>? tree = null;
         MRect? regionLimits = null;
-        ILayer? regionLayer = null;
-        ILayer? stationLayer = null;
         if (telegramInfo?.Body.Intensity is not null)
         {
             await LoadEarthquakeObservationStationsAsync();
-            (stationLayer, regionLayer, regionLimits, tree) = DealWithTelegramIntensities(telegramInfo.Body.Intensity);
+            (regionLimits, tree) = DealWithTelegramIntensities(telegramInfo.Body.Intensity, token);
         }
 
         // Mark Hypocentre
         MRect? hypocentreLimits = null;
-        ILayer? hypocentreLayer = null;
         CoordinateComponent? coordinate = telegramInfo?.Body.Earthquake?.Hypocentre.Coordinates ?? value.Hypocentre?.Coordinates;
         if (coordinate?.Longitude is not null && coordinate?.Latitude is not null)
         {
-            (hypocentreLimits, hypocentreLayer) = DealWithHypocentre(coordinate.Longitude, coordinate.Latitude);
+            hypocentreLimits = DealWithHypocentre(coordinate.Longitude, coordinate.Latitude, token);
         }
 
         // Zoom to Box
@@ -172,11 +203,6 @@ internal partial class PastPageViewModel : MapViewModelBase
         {
             EarthquakeDetails = new(value, telegramInfo, tree);
             Map.Navigator.ZoomToBox(limits);
-
-            _ = Map.Layers
-                .AddIfNotNull(regionLayer.ToNullableRasterizingLayer())
-                .AddIfNotNull(stationLayer.ToNullableRasterizingLayer())
-                .AddIfNotNull(hypocentreLayer);
         }
     }
 
@@ -185,8 +211,12 @@ internal partial class PastPageViewModel : MapViewModelBase
     /// </summary>
     /// <param name="longitude">The longitude of the hypocentre.</param>
     /// <param name="latitude">The latitude of the hypocentre.</param>
-    /// <returns>A pair of: the limits of the earthqukae in <see cref="MRect"/>, and the earthquake marking layer.</returns>
-    private (MRect limits, ILayer layer) DealWithHypocentre(Coordinate longitude, Coordinate latitude)
+    /// <param name="token">The token with whether to cancel the operation.</param>
+    /// <returns>The limits of the earthqukae in <see cref="MRect"/>.</returns>
+    private MRect DealWithHypocentre(
+        Coordinate longitude,
+        Coordinate latitude,
+        CancellationToken token)
     {
         MPoint convertedCoordinates = SphericalMercator
                         .FromLonLat(
@@ -195,26 +225,26 @@ internal partial class PastPageViewModel : MapViewModelBase
                         .ToMPoint();
         MRect limits = convertedCoordinates.MRect;
 
-        ILayer layer = new MemoryLayer()
+        if(!token.IsCancellationRequested)
         {
-            Name = _hypocentreLayerName,
-            Features = [new PointFeature(convertedCoordinates)],
-            Style = _resources.HypocentreShapeStyle
-        };
+            _hypocentreLayer.Features = [new PointFeature(convertedCoordinates)];
+            _hypocentreLayer.DataHasChanged();
+        }
 
-        return (limits, layer);
+        return limits;
     }
 
     /// <summary>
     /// Deals with the intensities of the earthquake in the telegram.
     /// </summary>
     /// <param name="intensityDetails">The details of the intensities in the telegram.</param>
-    /// <returns>A tuple of: the layer of observation stations, the layer of regions, the limits of the regions, and the intensity tree.</returns>
+    /// <param name="token">The token with whether to cancel the operation.</param>
+    /// <returns>A tuple of: the limits of the regions, and the intensity tree.</returns>
     private (
-        ILayer stationLayer,
-        ILayer regionLayer,
         MRect regionLimits,
-        IEnumerable<DetailIntensityTemplate> intensityTree) DealWithTelegramIntensities(IntensityDetails intensityDetails)
+        IEnumerable<DetailIntensityTemplate> intensityTree) DealWithTelegramIntensities(
+        IntensityDetails intensityDetails,
+        CancellationToken token)
     {
         // Join the station data with the stations retrieved from the API
         IEnumerable<(Station station, Intensity intensity)> stationData = intensityDetails
@@ -228,9 +258,15 @@ internal partial class PastPageViewModel : MapViewModelBase
             (si, s)
                 => (s, (Intensity)si.MaxInt?.ToIntensity()!));
 
+        if (!token.IsCancellationRequested)
+        {
+            _regionLayer.Style = intensityDetails.Regions.ToRegionStyle();
+            _regionLayer.DataHasChanged();
+            _stationLayer.Features = stationData.Select(x => x.ToStationFeature());
+            _stationLayer.DataHasChanged();
+        }
+
         return (
-            CreateStationLayer(stationData),
-            CreateRegionLayer(intensityDetails.Regions),
             CreateRegionLimits(intensityDetails),
             CreateIntensityTree(stationData));
     }
@@ -247,30 +283,7 @@ internal partial class PastPageViewModel : MapViewModelBase
             (f, r) => f.Extent)
             .NotNull()
             .Aggregate((region1, region2) => region1.Join(region2));
-    /// <summary>
-    /// Creates a layer for the observation points.
-    /// </summary>
-    /// <param name="stationData">The intensity of the stations.</param>
-    /// <returns>The layer for the stations.</returns>
-    private static MemoryLayer CreateStationLayer(IEnumerable<(Station station, Intensity intensity)> stationData)
-        => new()
-        {
-            Name = _observationStationsLayerName,
-            Features = stationData.Select(x => x.ToStationFeature()),
-            Style = null
-        };
-    /// <summary>
-    /// Creates a layer for the regions.
-    /// </summary>
-    /// <param name="regions">The intensity of the regions.</param>
-    /// <returns>The layer for the regions.</returns>
-    private Layer CreateRegionLayer(IEnumerable<RegionIntensity> regions)
-        => new()
-        {
-            Name = _regionLayerName,
-            DataSource = _resources.Region,
-            Style = regions.ToRegionStyle()
-        };
+
     /// <summary>
     /// Creates a tree of intensities from the station data.
     /// </summary>
@@ -320,14 +333,19 @@ internal partial class PastPageViewModel : MapViewModelBase
     /// <returns>A cancellation token for setting the next earthquake.</returns>
     private CancellationToken ResetDetails()
     {
-        _ = Map.Layers.Remove(x => x.Name is _regionLayerName);
-        _ = Map.Layers.Remove(x => x.Name is _observationStationsLayerName);
-        _ = Map.Layers.Remove(x => x.Name is _hypocentreLayerName);
+        _cts.Cancel();
+        _cts.Dispose();
+
+        _hypocentreLayer.Features = [];
+        _hypocentreLayer.DataHasChanged();
+        _stationLayer.Features = [];
+        _stationLayer.DataHasChanged();
+        _regionLayer.Style = null;
+        _regionLayer.DataHasChanged();
+
         Map.Navigator.ZoomToBox(_mainLimitsOfJapan);
         EarthquakeDetails = null;
 
-        _cts.Cancel();
-        _cts.Dispose();
         _cts = new CancellationTokenSource();
         CancellationToken token = _cts.Token;
         return token;
