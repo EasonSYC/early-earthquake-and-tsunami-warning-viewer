@@ -29,6 +29,7 @@ using NetTopologySuite.Geometries;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
+using Timer = System.Timers.Timer;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -78,14 +79,23 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _imageFetch = imageFetch;
         _pointExtract = pointExtract;
 
-        _timer = new System.Timers.Timer(1000)
+        _timer1000 = new Timer(1000)
         {
             AutoReset = true,
-            Enabled = true,
+            Enabled = true
         };
-        _timer.Elapsed += RefreshKmoniData;
-        _timer.Elapsed += (o, e)
+        _timer1000.Elapsed += RefreshKmoniDataEventHandler;
+        _timer1000.Elapsed += RemoveExpiredTsunamiEventHandler;
+        _timer1000.Elapsed += RemoveExpiredEewEventHandler;
+        _timer1000.Elapsed += (o, e)
             => OnPropertyChanged(nameof(TimeDisplay));
+
+        _timer2500 = new Timer(2500)
+        {
+            AutoReset = true,
+            Enabled = true
+        };
+        _timer2500.Elapsed += SwitchEew;
 
 
         _webSocketClient = webSocketClient;
@@ -104,26 +114,31 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         Map.Layers.Add(_kmoniLayer, _kmoniGroup);
         Map.Layers.Add(_tsunamiLayer, _tsunamiGroup);
-
-        Task.Run(StartLongRunning).Wait();
     }
     /// <summary>
     /// The logger to be used.
     /// </summary>
     private readonly ILogger<RealtimePageViewModel> _logger;
+    /// <summary>
+    /// The timer to trigger events every second.
+    /// </summary>
+    /// <remarks>
+    /// Event trigerred includes: Refreshing Time Display, Remove Expired Warnings, Refresh kmoni Layer.
+    /// </remarks>
+    private readonly Timer _timer1000;
+    /// <summary>
+    /// The timer to trigger events every 2.5 seconds.
+    /// </summary>
+    /// <remarks>
+    ///  Event trigerred includes: Switching EEW.
+    ///  </remarks>
+    private readonly Timer _timer2500;
 
     private const int _hypocentreGroup = 4;
     private const int _wavefrontGroup = 3;
     private const int _tsunamiGroup = 2;
     private const int _kmoniGroup = 1;
     private const int _intensityGroup = 0;
-
-    private async Task StartLongRunning()
-    {
-        _ = await Task.Factory.StartNew(SwitchEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        _ = await Task.Factory.StartNew(ClearExpiredEew, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-        _ = await Task.Factory.StartNew(ClearExpiredTsunami, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-    }
 
     private readonly IWebSocketClient _webSocketClient;
     private readonly CancellationTokenSource _cts;
@@ -222,22 +237,13 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         _ = await Task.Factory.StartNew(() => DrawEewCircles(eewTemplate), eewTemplate.Token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
     }
-
-    private readonly TimeSpan _switchEewInterval = TimeSpan.FromSeconds(2.5);
-    private async Task SwitchEew()
-    {
-        while (!_token.IsCancellationRequested)
-        {
-            CurrentEewIndex =
-                LiveEewList.Count == 0
-                    ? null
-                    : CurrentEewIndex is null
-                        ? 0
-                        : (uint)((CurrentEewIndex + 1) % LiveEewList.Count);
-
-            await Task.Delay(_switchEewInterval);
-        }
-    }
+    private void SwitchEew(object? sender, ElapsedEventArgs e)
+        => CurrentEewIndex =
+            LiveEewList.Count == 0
+                ? null
+                : CurrentEewIndex is null
+                    ? 0
+                    : (uint)((CurrentEewIndex + 1) % LiveEewList.Count);
 
     private readonly IStyle _pCircleStyle
         = new VectorStyle
@@ -368,21 +374,14 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         return new Polygon(new LinearRing([.. outerRing]));
     }
-
-    private readonly TimeSpan _removeExpiredEewInterval = TimeSpan.FromSeconds(2);
-    private async Task ClearExpiredEew()
+    private void RemoveExpiredEewEventHandler(object? sender, ElapsedEventArgs e)
     {
-        while (!_token.IsCancellationRequested)
+        for (int i = LiveEewList.Count - 1; i >= 0; --i)
         {
-            for (int i = LiveEewList.Count - 1; i >= 0; --i)
+            if (LiveEewList[i].ExpiryTime < _timeProvider.Now())
             {
-                if (LiveEewList[i].ExpiryTime < _timeProvider.Now())
-                {
-                    RemoveEewAt(i);
-                }
+                RemoveEewAt(i);
             }
-
-            await Task.Delay(_removeExpiredEewInterval);
         }
     }
 
@@ -431,27 +430,18 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         CurrentTsunami = new(tsunami, validDateTime);
     }
-
-    /// <summary>
-    /// The time interval to check for expired tsunamis.
-    /// </summary>
-    private readonly TimeSpan _removeExpiredTsunamiInterval = TimeSpan.FromMinutes(1);
     /// <summary>
     /// Clears the expired tsunami warnings.
     /// </summary>
-    /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-    private async Task ClearExpiredTsunami()
+    /// <param name="source">The source of the event.</param>
+    /// <param name="e">The event arguments.</param>
+    private void RemoveExpiredTsunamiEventHandler(object? source, ElapsedEventArgs e)
     {
-        while (!_token.IsCancellationRequested)
+        if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.Now())
         {
-            if (CurrentTsunami is not null && CurrentTsunami.ExpiryTime < _timeProvider.Now())
-            {
-                CurrentTsunami = null;
-                _tsunamiLayer.Style = null;
-                _tsunamiLayer.DataHasChanged();
-            }
-
-            await Task.Delay(_removeExpiredTsunamiInterval);
+            CurrentTsunami = null;
+            _tsunamiLayer.Style = null;
+            _tsunamiLayer.DataHasChanged();
         }
     }
     #endregion
@@ -493,10 +483,6 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     public DateTimeOffset TimeDisplay
         => _timeProvider.Now();
     /// <summary>
-    /// The timer to trigger the event to refresh the layer and the time.
-    /// </summary>
-    private readonly System.Timers.Timer _timer;
-    /// <summary>
     /// The image fetcher to be used.
     /// </summary>
     private readonly IImageFetch _imageFetch;
@@ -519,7 +505,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// </summary>
     /// <param name="source">The source of the event.</param>
     /// <param name="e">The event arguments.</param>
-    private async void RefreshKmoniData(object? source, ElapsedEventArgs e)
+    private async void RefreshKmoniDataEventHandler(object? source, ElapsedEventArgs e)
     {
         IEnumerable<IFeature>? kmoniObservationPoints = await GetKmoniObservationPoints();
         if (kmoniObservationPoints is null)
@@ -554,10 +540,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
                     .ExtractColours(imageBytes.ToBitmap(), KmoniOptions.SensorChoice is SensorType.Borehole)
                     .Select(pc => pc.ToStationFeature());
         }
-        catch (ArgumentException ae)
-        {
-            _logger.LogWarning($"ArgumentException: {ae.Message}, {ae.Source}");
-        }
+        catch (ArgumentException) { }
 
         return null;
     }

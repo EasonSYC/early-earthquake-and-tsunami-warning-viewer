@@ -40,7 +40,13 @@ internal record EewDetailsTemplate
     /// The informational text of the EEW.
     /// </summary>
     public string InformationalText { get; private init; }
+    /// <summary>
+    /// Whether the hypocentre is assumed.
+    /// </summary>
     public bool IsAssumedHypocentre { get; private init; }
+    /// <summary>
+    /// Whether the information is based on only one observation point.
+    /// </summary>
     public bool IsOnePointInfo { get; private init; }
     /// <summary>
     /// The cancellation token source related with this EEW issue.

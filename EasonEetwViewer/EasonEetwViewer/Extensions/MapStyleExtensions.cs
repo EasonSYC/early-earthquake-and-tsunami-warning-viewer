@@ -154,12 +154,13 @@ internal static class MapStyleExtensions
     /// </summary>
     /// <param name="collection">The layer collection for the layer to be added.</param>
     /// <param name="layer">The layer to be added.</param>
+    /// <param name="group">The group to which it is added.</param>
     /// <returns>The current instance of the collection for calls to be chained.</returns>
-    public static LayerCollection AddIfNotNull(this LayerCollection collection, ILayer? layer)
+    public static LayerCollection AddIfNotNull(this LayerCollection collection, ILayer? layer, int group = 0)
     {
         if (layer is not null)
         {
-            collection.Add(layer);
+            collection.Add(layer, group);
         }
 
         return collection;
