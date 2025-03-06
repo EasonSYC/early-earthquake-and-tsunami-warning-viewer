@@ -47,6 +47,11 @@ internal static class WarningTypeExtensions
                     ? EewWarningType.Warning
                     : EewWarningType.Forecast;
 
+    /// <summary>
+    /// Determines if the accuracy is a one-point information.
+    /// </summary>
+    /// <param name="accuracy">The accuracy to be determined.</param>
+    /// <returns>Whether it is a one-point information.</returns>
     public static bool IsOnePointInfo(this Accuracy accuracy)
         => accuracy.Epicentres[0] == EpicentreDepth.LevelIpf1Plum
             && accuracy.Epicentres[1] == EpicentreDepth.LevelIpf1Plum
@@ -54,6 +59,11 @@ internal static class WarningTypeExtensions
             && accuracy.Magnitude == Magnitude.LevelOrPlum
             && accuracy.MagnitudePoint == MagnitudePoint.OneOrLevelOrPlum;
 
+    /// <summary>
+    /// Determines if the earthquake has an assumed hypocentre.
+    /// </summary>
+    /// <param name="earthquake">The earthquake to be determined.</param>
+    /// <returns>Whether it has an assumed hypocentre.</returns>
     public static bool IsAssumedHypocentre(this Earthquake earthquake)
         => earthquake.Condition is "仮定震源要素";
 }
