@@ -158,37 +158,31 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     private readonly ITimeTable _timeTableProvider;
     private readonly TimeSpan _eewLifeTime = TimeSpan.FromMinutes(3);
 
-    [ObservableProperty]
-    //private Dictionary<string, EewDetailsTemplate> _liveEewList = [];
-    private ObservableCollection<EewDetailsTemplate> _liveEewList = [];
+    private readonly Dictionary<string, EewDetailsTemplate> _liveEewList = [];
     public EewDetailsTemplate? CurrentDisplayEew
-        => CurrentEewIndex is null || CurrentEewIndex >= LiveEewList.Count
+        => CurrentEewIndex is null || CurrentEewIndex >= _liveEewList.Count
             ? null
-            : LiveEewList[(int)CurrentEewIndex];
+            : _liveEewList.ToList()[(int)CurrentEewIndex].Value;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CurrentDisplayEew))]
-    private uint? _currentEewIndex = null;
+    private int? _currentEewIndex = null;
 
     private async Task OnEewReceived(EewInformationSchema eew)
     {
-        if (!int.TryParse(eew.SerialNo, out int serial))
+        if (!int.TryParse(eew.SerialNo, out int serial) || eew.EventId is null)
         {
             return;
         }
 
-        for (int i = 0; i < LiveEewList.Count; ++i)
+        if (_liveEewList.TryGetValue(eew.EventId, out EewDetailsTemplate? existingEew))
         {
-            if (LiveEewList[i].EventId == eew.EventId)
+            if (existingEew.Serial > serial)
             {
-                if (LiveEewList[i].Serial > serial)
-                {
-                    return;
-                }
-
-                RemoveEewAt(i);
-                break;
+                return;
             }
+
+            RemoveEew(existingEew);
         }
 
         DateTimeOffset lifeTime = eew.PressDateTime + _eewLifeTime;
@@ -198,7 +192,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         }
 
         EewDetailsTemplate eewTemplate = new(eew, lifeTime, serial);
-        LiveEewList.Add(eewTemplate);
+        _liveEewList[eew.EventId] = eewTemplate;
 
         if (eew.Body.IsCancelled)
         {
@@ -246,11 +240,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     }
     private void SwitchEew(object? sender, ElapsedEventArgs e)
         => CurrentEewIndex =
-            LiveEewList.Count == 0
+            _liveEewList.Count == 0
                 ? null
                 : CurrentEewIndex is null
                     ? 0
-                    : (uint)((CurrentEewIndex + 1) % LiveEewList.Count);
+                    : (CurrentEewIndex + 1) % _liveEewList.Count;
 
     private readonly IStyle _pCircleStyle
         = new VectorStyle
@@ -365,21 +359,25 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     }
     private void RemoveExpiredEewEventHandler(object? sender, ElapsedEventArgs e)
     {
-        for (int i = LiveEewList.Count - 1; i >= 0; --i)
+        foreach (string eventId in _liveEewList.Keys.ToList())
         {
-            if (LiveEewList[i].ExpiryTime < _timeProvider.Now())
+            if (!_liveEewList.TryGetValue(eventId, out EewDetailsTemplate? eew))
             {
-                RemoveEewAt(i);
+                continue;
+            }
+
+            if (eew.ExpiryTime < _timeProvider.Now())
+            {
+                RemoveEew(eew);
+                _ = _liveEewList.Remove(eventId);
             }
         }
     }
 
-    private void RemoveEewAt(int i)
+    private void RemoveEew(EewDetailsTemplate eew)
     {
-        EewDetailsTemplate eew = LiveEewList[i];
         eew.TokenSource.Cancel();
         eew.TokenSource.Dispose();
-        LiveEewList.RemoveAt(i);
         _ = Map.Layers.Remove(x => x.Name == (_eewHypocentreLayerPrefix + eew.EventId));
         _ = Map.Layers.Remove(x => x.Name == (_eewRegionLayerPrefix + eew.EventId));
     }
