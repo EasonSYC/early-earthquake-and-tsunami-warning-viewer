@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Timers;
+﻿using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Dmdata.Api.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
+using EasonEetwViewer.Dmdata.Dtos.DmdataComponent;
 using EasonEetwViewer.Dmdata.Telegram.Abstractions;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
@@ -199,18 +199,21 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return;
         }
 
-        if (eew.Body.Earthquake?.Hypocentre.Coordinate.Longitude is not null &&
-            eew.Body.Earthquake?.Hypocentre.Coordinate.Latitude is not null)
+        CoordinateComponent? coordinates = eew.Body.Earthquake?.Hypocentre.Coordinate;
+        if (coordinates?.Longitude is not null && coordinates?.Latitude is not null)
         {
-            MPoint point = SphericalMercator.FromLonLat(
-                eew.Body.Earthquake.Hypocentre.Coordinate.Longitude!.DoubleValue,
-                eew.Body.Earthquake.Hypocentre.Coordinate.Latitude!.DoubleValue).ToMPoint();
+            MPoint point = (
+                coordinates.Longitude.DoubleValue,
+                coordinates.Latitude.DoubleValue)
+                .LonLatToMPoint();
 
             MemoryLayer layer = new()
             {
                 Name = _eewHypocentreLayerPrefix + eew.EventId,
                 Features = [new PointFeature(point)],
-                Style = eew.Body.Earthquake.Condition is "仮定震源要素" ? _resources.PlumShapeStyle : _resources.HypocentreShapeStyle
+                Style = eewTemplate.IsAssumedHypocentre
+                    ? _resources.PlumShapeStyle
+                    : _resources.HypocentreShapeStyle
             };
 
             if (!eewTemplate.Token.IsCancellationRequested)
@@ -339,7 +342,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         _ = Map.Layers.Remove(pLayer);
         _ = Map.Layers.Remove(sLayer);
     }
-    private static Polygon CreateCircleRing(double latitude, double longitude, double radius, double quality = 360)
+    private static Polygon CreateCircleRing(
+        double latitude,
+        double longitude,
+        double radius,
+        double quality = 360)
     {
         (double x, double y) = SphericalMercator.FromLonLat(longitude, latitude);
         radius *= 1000;
@@ -357,6 +364,11 @@ internal partial class RealtimePageViewModel : MapViewModelBase
 
         return new Polygon(new LinearRing([.. outerRing]));
     }
+    /// <summary>
+    /// Removes the expired EEWs.
+    /// </summary>
+    /// <param name="sender">The sender of the event.</param>
+    /// <param name="e">The event arguments.</param>
     private void RemoveExpiredEewEventHandler(object? sender, ElapsedEventArgs e)
     {
         foreach (string eventId in _liveEewList.Keys.ToList())
@@ -373,7 +385,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             }
         }
     }
-
+    /// <summary>
+    /// Removes the EEW from the map.
+    /// </summary>
+    /// <param name="eew">The EEW that is to be removed.</param>
     private void RemoveEew(EewDetailsTemplate eew)
     {
         eew.TokenSource.Cancel();

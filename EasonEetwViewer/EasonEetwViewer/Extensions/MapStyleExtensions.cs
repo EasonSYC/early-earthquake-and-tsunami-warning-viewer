@@ -4,6 +4,7 @@ using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TsunamiInformation;
 using EasonEetwViewer.KyoshinMonitor.Dtos;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
+using Mapsui;
 using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Projections;
@@ -106,12 +107,7 @@ internal static class MapStyleExtensions
     /// <param name="pointColour">The tuple containing the station and the colour.</param>
     /// <returns>The converted feature.</returns>
     public static PointFeature ToStationFeature(this (ObservationPoint point, SKColor colour) pointColour)
-        => new(
-            SphericalMercator
-            .FromLonLat(
-                pointColour.point.Location.Longitude,
-                pointColour.point.Location.Latitude)
-            .ToMPoint())
+        => new((pointColour.point.Location.Longitude, pointColour.point.Location.Longitude).LonLatToMPoint())
         {
             Styles = [pointColour.colour.ToStationStyle()]
         };
@@ -122,12 +118,20 @@ internal static class MapStyleExtensions
     /// <param name="stationIntensity">The tuple containing the station and the intensity.</param>
     /// <returns>The converted feature.</returns>
     public static PointFeature ToStationFeature(this (Station station, Intensity intensity) stationIntensity)
-        => new(
-            SphericalMercator.FromLonLat(
-                stationIntensity.station.Longitude,
-                stationIntensity.station.Latitude)
-            .ToMPoint())
+        => new((stationIntensity.station.Longitude, stationIntensity.station.Latitude).LonLatToMPoint())
         {
             Styles = [stationIntensity.intensity.ToStationStyle()]
         };
+
+    /// <summary>
+    /// Converts a pair of longitude and latitude to a <see cref="MPoint"/>.
+    /// </summary>
+    /// <param name="coordinate">The pair of coordinates to convert.</param>
+    /// <returns>The converted <see cref="MPoint"/>.</returns>
+    public static MPoint LonLatToMPoint(this (double longitude, double latitude) coordinate)
+     => SphericalMercator
+        .FromLonLat(
+            coordinate.longitude,
+            coordinate.latitude)
+        .LonLatToMPoint();
 }
