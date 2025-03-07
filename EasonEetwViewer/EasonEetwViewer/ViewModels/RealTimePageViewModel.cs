@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System.Diagnostics;
+using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EasonEetwViewer.Dmdata.Api.Abstractions;
 using EasonEetwViewer.Dmdata.Authentication.Abstractions;
@@ -19,7 +20,6 @@ using EasonEetwViewer.Services.Kmoni.Abstractions;
 using EasonEetwViewer.Services.TimeProvider;
 using EasonEetwViewer.ViewModels.ViewModelBases;
 using Mapsui;
-using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Nts.Extensions;
 using Mapsui.Projections;
@@ -30,6 +30,9 @@ using Coordinate = NetTopologySuite.Geometries.Coordinate;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
 using Timer = System.Timers.Timer;
+using DataReceivedEventArgs = EasonEetwViewer.Dmdata.WebSocket.Events.DataReceivedEventArgs;
+using System.Collections.ObjectModel;
+using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 
@@ -75,7 +78,13 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         logger)
     {
         _logger = logger;
+
         KmoniOptions = kmoniOptions;
+        KmoniOptions.KmoniSettingsChanged += (o, e)
+            => OnPropertyChanged(nameof(DataLegendValues));
+        KmoniOptions.KmoniSettingsChanged += (o, e)
+            => OnPropertyChanged(nameof(DataLegendText));
+
         _imageFetch = imageFetch;
         _pointExtract = pointExtract;
 
@@ -479,6 +488,57 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     #endregion
 
     #region kmoni
+    /// <summary>
+    /// The values to display for the current kmoni data choice.
+    /// </summary>
+    public decimal[] DataLegendValues
+        => [.. Enumerable.Range(0, 11)
+            .Select(x => (double)x / 10)
+            .Select(x => KmoniOptions.MeasurementChoice switch
+            {
+                MeasurementType.MeasuredIntensity
+                    => x.HeightToIntensity(),
+                MeasurementType.PeakGroundAcceleration
+                    => x.HeightToPga(),
+                MeasurementType.PeakGroundVelocity or
+                MeasurementType.Response0125 or
+                MeasurementType.Response0250 or
+                MeasurementType.Response0500 or
+                MeasurementType.Response1000 or
+                MeasurementType.Response2000 or
+                MeasurementType.Response4000
+                    => x.HeightToPgv(),
+                MeasurementType.PeakGroundDisplacement
+                    => x.HeightToPgd(),
+                _
+                    => throw new UnreachableException(),
+            })
+            .Select(x => x.ToSignificantFigures(2))];
+
+    /// <summary>
+    /// The data string to display for the current kmoni data choice.
+    /// </summary>
+    public string DataLegendText
+        => KmoniOptions.MeasurementChoice switch
+        {
+            MeasurementType.MeasuredIntensity
+                => RealtimePageResources.KmoniLegendTextIntensity,
+            MeasurementType.PeakGroundAcceleration
+                => RealtimePageResources.KmoniLegendTextPga,
+            MeasurementType.PeakGroundVelocity or
+            MeasurementType.Response0125 or
+            MeasurementType.Response0250 or
+            MeasurementType.Response0500 or
+            MeasurementType.Response1000 or
+            MeasurementType.Response2000 or
+            MeasurementType.Response4000
+                => RealtimePageResources.KmoniLegendTextPgv,
+            MeasurementType.PeakGroundDisplacement
+                => RealtimePageResources.KmoniLegentTextPgd,
+            _
+                => throw new UnreachableException(),
+        };
+
     /// <summary>
     /// The options for the kmoni layer.
     /// </summary>

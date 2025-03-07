@@ -264,4 +264,16 @@
   <data name="IntensityOverTextAfter" xml:space="preserve">
     <value>以上</value>
   </data>
+  <data name="KmoniLegendTextIntensity" xml:space="preserve">
+    <value>Rt. Int. (JMA)</value>
+  </data>
+  <data name="KmoniLegendTextPga" xml:space="preserve">
+    <value>PGA (gal)</value>
+  </data>
+  <data name="KmoniLegendTextPgv" xml:space="preserve">
+    <value>PGV (m/s)</value>
+  </data>
+  <data name="KmoniLegentTextPgd" xml:space="preserve">
+    <value>PGD (cm)</value>
+  </data>
 </root>

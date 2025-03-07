@@ -29,9 +29,82 @@
             <mapsui:MapControl x:Name="MapControl"/>
         </DockPanel>
         <Canvas>
-            <!--Time Display-->
+            <!--Scale Display-->
             <Border Canvas.Bottom="0"
                     Canvas.Left="0"
+                    CornerRadius="0 5 0 0"
+                    Background="{StaticResource SystemChromeBlackMediumColor}">
+                <Canvas Margin="10"
+                        Height="320"
+                        Width="75">
+                    <Image Canvas.Bottom="0"
+                           Canvas.Left="0"
+                           Source="avares://EasonEetwViewer/Assets/colourScale.png"/>
+                    <TextBlock Canvas.Bottom="0"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[0]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="28"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[1]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="56"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[2]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="84"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[3]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="112"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[4]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="140"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[5]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="168"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[6]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="196"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[7]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="224"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[8]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="252"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[9]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="280"
+                               Canvas.Left="40"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendValues[10]}"
+                               FontSize="12"/>
+                    <TextBlock Canvas.Bottom="300"
+                               Canvas.Left="0"
+                               FontFamily="Bold"
+                               Text="{Binding DataLegendText}"/>
+                </Canvas>
+            </Border>
+
+            <!--Time Display-->
+            <Border Canvas.Bottom="0"
+                    Canvas.Left="95"
                     Background="{StaticResource SystemChromeBlackMediumColor}"
                     CornerRadius="0 5 0 0">
                 <TextBlock FontSize="20"

@@ -295,6 +295,42 @@ namespace EasonEetwViewer.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rt. Int. (JMA).
+        /// </summary>
+        public static string KmoniLegendTextIntensity {
+            get {
+                return ResourceManager.GetString("KmoniLegendTextIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PGA (gal).
+        /// </summary>
+        public static string KmoniLegendTextPga {
+            get {
+                return ResourceManager.GetString("KmoniLegendTextPga", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PGV (m/s).
+        /// </summary>
+        public static string KmoniLegendTextPgv {
+            get {
+                return ResourceManager.GetString("KmoniLegendTextPgv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PGD (cm).
+        /// </summary>
+        public static string KmoniLegentTextPgd {
+            get {
+                return ResourceManager.GetString("KmoniLegentTextPgd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Velocity-Magnitude.
         /// </summary>
         public static string MagnitudeAccuracy2 {

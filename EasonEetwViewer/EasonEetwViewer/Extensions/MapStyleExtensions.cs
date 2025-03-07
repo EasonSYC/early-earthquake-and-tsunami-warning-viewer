@@ -133,5 +133,25 @@ internal static class MapStyleExtensions
         .FromLonLat(
             coordinate.longitude,
             coordinate.latitude)
-        .LonLatToMPoint();
+        .ToMPoint();
+
+    /// <summary>
+    /// Round a double to the certain number of significant figures, in decimal.
+    /// </summary>
+    /// <param name="value">The value to be rounded.</param>
+    /// <param name="figures">The number of significant figures desired.</param>
+    /// <returns>The decimal with the desired number of significant figures.</returns>
+    public static decimal ToSignificantFigures(this double value, int figures)
+    {
+        if (value == 0)
+        {
+            return 0;
+        }
+
+        decimal d = (decimal)value;
+        int digits = (int)Math.Floor(Math.Log10(Math.Abs(value)) + 1);
+
+        decimal scaleFactor = (decimal)Math.Pow(10, digits);
+        return scaleFactor * Math.Round(d / scaleFactor, figures);
+    }
 }
