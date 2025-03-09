@@ -2,9 +2,9 @@
 using Avalonia.Data.Converters;
 
 namespace EasonEetwViewer.Converters;
-internal class CultureInfoConverter : IValueConverter
+internal class CultureInfoConverter : FuncValueConverter<CultureInfo, string>
 {
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    public CultureInfoConverter() : base(value
         => value is CultureInfo c
             ? c.Equals(CultureInfo.InvariantCulture)
                 ? "English"
@@ -12,8 +12,7 @@ internal class CultureInfoConverter : IValueConverter
                     ? "日本語"
                     : c.Equals(new CultureInfo("zh-CN"))
                         ? "简体中文"
-                        : null
-            : null;
-
-    public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotImplementedException();
+                        : string.Empty
+            : string.Empty)
+    { }
 }
