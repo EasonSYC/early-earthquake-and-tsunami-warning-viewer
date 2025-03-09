@@ -57,7 +57,9 @@ internal partial class App : Application
             .AddLogging(loggingBuilder
                 => loggingBuilder
                     .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Warning)
+#if DEBUG
                     .AddDebug()
+#endif
                     .SetMinimumLevel(LogLevel.Information))
 
             .AddSingleton(sp
