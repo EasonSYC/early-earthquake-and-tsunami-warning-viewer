@@ -43,17 +43,17 @@ internal sealed class MapResourcesProvider
     /// The style for the epicenter for normal hypocentres.
     /// </summary>
     public IStyle HypocentreShapeStyle { get; private init; }
-        = new SymbolStyle
+        = new ImageStyle
         {
-            ImageSource = "embedded://EasonEetwViewer.Resources.cross.svg"
+            Image = "embedded://EasonEetwViewer.Resources.cross.svg"
         };
     /// <summary>
     /// The style for the epicenter for assumed hypocentre methods.
     /// </summary>
     public IStyle PlumShapeStyle { get; private init; }
-        = new SymbolStyle
+        = new ImageStyle
         {
-            ImageSource = "embedded://EasonEetwViewer.Resources.circle.svg"
+            Image = "embedded://EasonEetwViewer.Resources.circle.svg"
         };
     /// <summary>
     /// The regions of Japan.
