@@ -8,6 +8,7 @@ using EasonEetwViewer.Dmdata.Api.Dtos.Request;
 using EasonEetwViewer.Dmdata.Api.Extensions;
 using EasonEetwViewer.Dmdata.Authentication.Extensions;
 using EasonEetwViewer.Dmdata.Authentication.Options;
+using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Dmdata.Telegram.Extensions;
 using EasonEetwViewer.Dmdata.WebSocket.Extensions;
 using EasonEetwViewer.Extensions;
@@ -39,7 +40,7 @@ internal partial class App : Application
     public static IServiceProvider? Service { get; private set; }
 
     /// <inheritdoc/>
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
@@ -120,22 +121,30 @@ internal partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
 
-        //await Task.Delay(5000);
-        //EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
-        //    File.ReadAllText("TestEew.json"),
-        //    Service.GetRequiredService<JsonSerializerOptions>())!;
-        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData });
-        //EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
-        //    File.ReadAllText("TestEew2.json"),
-        //    Service.GetRequiredService<JsonSerializerOptions>())!;
-        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData2 });
-
-        //await Task.Delay(5000);
-        //TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
-        //    File.ReadAllText("TestTsunami.json"),
-        //    Service.GetRequiredService<JsonSerializerOptions>())!;
-        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = tsunamiData });
+#if DEBUG
+        await TestTelegram();
+#endif
     }
+
+    private async Task TestTelegram()
+    {
+        await Task.Delay(5000);
+        EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew.json"),
+            Service!.GetRequiredService<JsonSerializerOptions>())!;
+        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData });
+        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew2.json"),
+            Service!.GetRequiredService<JsonSerializerOptions>())!;
+        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData2 });
+
+        await Task.Delay(5000);
+        TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
+            File.ReadAllText("TestTsunami.json"),
+            Service!.GetRequiredService<JsonSerializerOptions>())!;
+        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = tsunamiData });
+    }
+
     /// <summary>
     /// Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
     /// </summary>
