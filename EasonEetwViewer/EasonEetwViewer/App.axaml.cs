@@ -120,21 +120,21 @@ internal partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
 
-        await Task.Delay(5000);
-        EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
-            File.ReadAllText("TestEew.json"),
-            Service.GetRequiredService<JsonSerializerOptions>())!;
-        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData });
-        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
-            File.ReadAllText("TestEew2.json"),
-            Service.GetRequiredService<JsonSerializerOptions>())!;
-        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData2 });
+        //await Task.Delay(5000);
+        //EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
+        //    File.ReadAllText("TestEew.json"),
+        //    Service.GetRequiredService<JsonSerializerOptions>())!;
+        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData });
+        //EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
+        //    File.ReadAllText("TestEew2.json"),
+        //    Service.GetRequiredService<JsonSerializerOptions>())!;
+        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData2 });
 
-        await Task.Delay(5000);
-        TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
-            File.ReadAllText("TestTsunami.json"),
-            Service.GetRequiredService<JsonSerializerOptions>())!;
-        Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = tsunamiData });
+        //await Task.Delay(5000);
+        //TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
+        //    File.ReadAllText("TestTsunami.json"),
+        //    Service.GetRequiredService<JsonSerializerOptions>())!;
+        //Service.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = tsunamiData });
     }
     /// <summary>
     /// Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
