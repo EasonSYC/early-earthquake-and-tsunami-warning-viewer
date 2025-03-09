@@ -9,11 +9,11 @@ using EasonEetwViewer.Dmdata.Telegram.Dtos.EewInformation;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Dmdata.Telegram.Dtos.TelegramBase;
 using EasonEetwViewer.Dmdata.WebSocket.Abstractions;
-using EasonEetwViewer.Dmdata.WebSocket.Events;
 using EasonEetwViewer.Extensions;
 using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Abstractions;
 using EasonEetwViewer.KyoshinMonitor.Extensions;
+using EasonEetwViewer.Lang;
 using EasonEetwViewer.Models.RealTimePage;
 using EasonEetwViewer.Services;
 using EasonEetwViewer.Services.Kmoni.Abstractions;
@@ -27,12 +27,10 @@ using Mapsui.Styles;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Coordinate = NetTopologySuite.Geometries.Coordinate;
+using DataReceivedEventArgs = EasonEetwViewer.Dmdata.WebSocket.Events.DataReceivedEventArgs;
 using IFeature = Mapsui.IFeature;
 using Polygon = NetTopologySuite.Geometries.Polygon;
 using Timer = System.Timers.Timer;
-using DataReceivedEventArgs = EasonEetwViewer.Dmdata.WebSocket.Events.DataReceivedEventArgs;
-using System.Collections.ObjectModel;
-using EasonEetwViewer.Lang;
 
 namespace EasonEetwViewer.ViewModels;
 

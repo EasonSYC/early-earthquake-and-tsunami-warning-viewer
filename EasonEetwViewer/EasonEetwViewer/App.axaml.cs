@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Avalonia;
@@ -9,7 +8,6 @@ using EasonEetwViewer.Dmdata.Api.Dtos.Request;
 using EasonEetwViewer.Dmdata.Api.Extensions;
 using EasonEetwViewer.Dmdata.Authentication.Extensions;
 using EasonEetwViewer.Dmdata.Authentication.Options;
-using EasonEetwViewer.Dmdata.Telegram.Dtos.Schema;
 using EasonEetwViewer.Dmdata.Telegram.Extensions;
 using EasonEetwViewer.Dmdata.WebSocket.Extensions;
 using EasonEetwViewer.Extensions;
@@ -41,7 +39,7 @@ internal partial class App : Application
     public static IServiceProvider? Service { get; private set; }
 
     /// <inheritdoc/>
-    public override async void OnFrameworkInitializationCompleted()
+    public override void OnFrameworkInitializationCompleted()
     {
         IConfigurationRoot config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
