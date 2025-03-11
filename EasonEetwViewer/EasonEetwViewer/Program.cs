@@ -1,4 +1,7 @@
 ﻿using Avalonia;
+using Avalonia.Logging;
+using EasonEetwViewer.Services.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EasonEetwViewer;
 /// <summary>

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
+using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using EasonEetwViewer.Dmdata.Api.Dtos.Request;
 using EasonEetwViewer.Dmdata.Api.Extensions;
@@ -55,7 +56,9 @@ internal partial class App : Application
         IServiceCollection collection = new ServiceCollection()
             .AddLogging(loggingBuilder
                 => loggingBuilder
-                    .AddFileLogger(new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"), LogLevel.Warning)
+                    .AddFileLogger(
+                    new StreamWriter($"{DateTime.UtcNow:yyyyMMddHHmmss}.log"),
+                    LogLevel.Warning)
 #if DEBUG
                     .AddDebug()
 #endif
@@ -97,6 +100,8 @@ internal partial class App : Application
 
             .AddSingleton<MapResourcesProvider>()
 
+            .AddSingleton<ILogSink, AvaloniaToMicrosoftLoggingAdaptor>()
+
             .AddSingleton(languagePath)
             .AddSingleton<MainWindowViewModel>()
             .AddSingleton<RealtimePageViewModel>()
@@ -109,6 +114,8 @@ internal partial class App : Application
         Service = collection
             .BuildServiceProvider()
             .AttachMapsuiLogging();
+
+        Logger.Sink = Service.GetRequiredService<ILogSink>();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
