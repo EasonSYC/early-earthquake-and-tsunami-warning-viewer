@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics;
 using Avalonia.Logging;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace EasonEetwViewer.Extensions;
 
