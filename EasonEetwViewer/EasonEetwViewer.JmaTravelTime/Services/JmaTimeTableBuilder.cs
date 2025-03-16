@@ -34,6 +34,6 @@ internal static partial class JmaTimeTableBuilder
                     double.Parse(row[13..21])]
             }), logger);
     }
-    [GeneratedRegex(@"^P [\d\s]{4}.\d{3} S [\d\s]{4}.\d{3} [\d\s]{3}  [\d\s]{5}$")]
+    [GeneratedRegex(@"^P ((?=.{4}) *\d+)\.\d{3} S ((?=.{4}) *\d+)\.\d{3} ((?=.{3}) *\d+)  ((?=.{5}) *\d+)$")]
     private static partial Regex Pattern();
 }
