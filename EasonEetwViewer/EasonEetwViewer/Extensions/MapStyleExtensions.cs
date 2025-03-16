@@ -107,7 +107,7 @@ internal static class MapStyleExtensions
     /// <param name="pointColour">The tuple containing the station and the colour.</param>
     /// <returns>The converted feature.</returns>
     public static PointFeature ToStationFeature(this (ObservationPoint point, SKColor colour) pointColour)
-        => new((pointColour.point.Location.Longitude, pointColour.point.Location.Longitude).LonLatToMPoint())
+        => new((pointColour.point.Location.Longitude, pointColour.point.Location.Latitude).LonLatToMPoint())
         {
             Styles = [pointColour.colour.ToStationStyle()]
         };
