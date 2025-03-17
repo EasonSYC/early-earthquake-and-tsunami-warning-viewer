@@ -43,13 +43,14 @@ internal static class EnumToUriStringExtensions
     /// </summary>
     /// <param name="sensorType">The current instance of <c>SensorType</c></param>
     /// <returns>A string that is used in the URI of kmoni.</returns>
-    public static string ToUriString(this SensorType sensorType) => sensorType switch
-    {
-        SensorType.Surface
-            => "s",
-        SensorType.Borehole
-            => "b",
-        _
-            => throw new UnreachableException(),
-    };
+    public static string ToUriString(this SensorType sensorType)
+        => sensorType switch
+        {
+            SensorType.Surface
+                => "s",
+            SensorType.Borehole
+                => "b",
+            _
+                => throw new UnreachableException(),
+        };
 }

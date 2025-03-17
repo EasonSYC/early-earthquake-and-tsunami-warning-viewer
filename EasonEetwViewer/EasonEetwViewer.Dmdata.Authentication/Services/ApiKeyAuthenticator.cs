@@ -18,7 +18,8 @@ internal sealed class ApiKeyAuthenticator : IAuthenticator
     /// </summary>
     private readonly string _apiKey;
     /// <inheritdoc/>
-    public Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync() => Task.FromResult(_header);
+    public Task<AuthenticationHeaderValue> GetAuthenticationHeaderAsync()
+        => Task.FromResult(_header);
     /// <inheritdoc/>
     public override string ToString()
         => _apiKey;

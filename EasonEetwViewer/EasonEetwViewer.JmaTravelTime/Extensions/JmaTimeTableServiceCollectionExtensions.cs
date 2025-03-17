@@ -17,7 +17,7 @@ public static class JmaTimeTableServiceCollectionExtensions
     /// <param name="services">The <see cref="IServiceCollection"/> where the services is to be added.</param>
     /// <returns>The instance of <see cref="IServiceCollection"/> to be chained.</returns>
     public static IServiceCollection AddJmaTimeTable(this IServiceCollection services)
-        => services.AddSingleton<ITimeTable>(sp
+        => services.AddSingleton(sp
             => JmaTimeTableBuilder.FromFile(
                 sp.GetRequiredService<IOptions<JmaTimeTableOptions>>().Value.FilePath,
                 sp.GetRequiredService<ILogger<JmaTimeTable>>()));
