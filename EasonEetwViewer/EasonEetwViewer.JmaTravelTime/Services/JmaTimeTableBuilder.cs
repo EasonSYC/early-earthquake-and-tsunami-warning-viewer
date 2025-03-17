@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using EasonEetwViewer.JmaTravelTime.Abstractions;
 using EasonEetwViewer.JmaTravelTime.Dtos;
 using EasonEetwViewer.JmaTravelTime.Services;
 using Microsoft.Extensions.Logging;
@@ -18,7 +19,7 @@ internal static partial class JmaTimeTableBuilder
     /// <returns>The instance of <see cref="JmaTimeTable"/> created.</returns>
     /// <exception cref="FormatException">When a line does not have the correct format.</exception>
     /// <remarks>See <see href="https://www.data.jma.go.jp/eqev/data/bulletin/catalog/appendix/trtime/tttfmt_j.html">JMA Webpage</see> for format definition.</remarks>
-    public static JmaTimeTable FromFile(string fileName, ILogger<JmaTimeTable> logger)
+    public static ITimeTable FromFile(string fileName, ILogger<JmaTimeTable> logger)
     {
         string[] rows = File.ReadAllLines(fileName);
 
