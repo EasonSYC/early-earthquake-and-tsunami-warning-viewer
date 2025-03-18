@@ -68,7 +68,7 @@ internal sealed class WebSocketClient : IWebSocketClient
     /// <summary>
     /// The receive buffer size.
     /// </summary>
-    private const int _recieveBufferSize = 8192; // https://stackoverflow.com/a/41926694
+    private const int _receiveBufferSize = 8192; // https://stackoverflow.com/a/41926694
     /// <summary>
     /// The maximum allowed client-initiated pings to be unresponded.
     /// </summary>
@@ -151,7 +151,7 @@ internal sealed class WebSocketClient : IWebSocketClient
     {
         try
         {
-            byte[] receiveBuffer = new byte[_recieveBufferSize];
+            byte[] receiveBuffer = new byte[_receiveBufferSize];
 
             // Modified from https://stackoverflow.com/a/65761228, https://stackoverflow.com/a/63574016
             while (_client.State is WebSocketState.Open && !_token.IsCancellationRequested)
