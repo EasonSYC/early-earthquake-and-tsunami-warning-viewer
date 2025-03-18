@@ -10,7 +10,6 @@ internal record PongResponse : ResponseBase
     /// <summary>
     /// The property <c>type</c>, a constant <see cref="MessageType.Pong"/>.
     /// </summary>
-    [JsonInclude]
     [JsonPropertyName("type")]
     public override MessageType Type { get; init; } = MessageType.Pong;
     /// <summary>
@@ -19,7 +18,6 @@ internal record PongResponse : ResponseBase
     /// <remarks>
     /// <see langword="null"/> when not specified by the user-initiated ping.
     /// </remarks>
-    [JsonInclude]
     [JsonPropertyName("pingId")]
     public string? PingId { get; init; }
 }

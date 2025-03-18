@@ -11,7 +11,6 @@ internal record PingRequest : ResponseBase
     /// <summary>
     /// The property <c>type</c>, a constant <see cref="MessageType.Ping"/>.
     /// </summary>
-    [JsonInclude]
     [JsonPropertyName("type")]
     public override MessageType Type { get; init; } = MessageType.Ping;
     /// <summary>
@@ -20,7 +19,6 @@ internal record PingRequest : ResponseBase
     /// <remarks>
     /// <see langword="null"/> when not specified by the user-initiated ping.
     /// </remarks>
-    [JsonInclude]
     [JsonPropertyName("pingId")]
     public string? PingId { get; init; }
 }

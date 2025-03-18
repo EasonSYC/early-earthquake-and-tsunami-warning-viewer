@@ -10,7 +10,6 @@ internal record ResponseBase
     /// <summary>
     /// The property <c>type</c>, representing the type of the response the WebSocket receives.
     /// </summary>
-    [JsonInclude]
     [JsonPropertyName("type")]
     public virtual MessageType Type { get; init; }
 }
