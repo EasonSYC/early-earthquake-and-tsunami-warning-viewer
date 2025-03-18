@@ -95,7 +95,7 @@ internal sealed class OAuth2Authenticator : IAuthenticator
     /// Checks if the access token if valid, and refresh its validity where necessary.
     /// </summary>
     /// <returns>A <see cref="Task"/> object that represents the asynchronous operation.</returns>
-    public async Task<string> CheckAccessTokenAsync()
+    private async Task<string> CheckAccessTokenAsync()
         => _accessTokenExpiry > DateTimeOffset.Now
             ? _accessToken
             : await RenewAccessTokenAsync();
