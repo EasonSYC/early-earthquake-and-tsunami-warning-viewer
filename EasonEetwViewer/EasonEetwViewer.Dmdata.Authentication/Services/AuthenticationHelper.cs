@@ -65,7 +65,7 @@ internal sealed class AuthenticationHelper : IAuthenticationHelper
     /// <param name="oAuthLogger">The logger to be used for the <see cref="OAuth2Authenticator"/>.</param>
     /// <param name="oAuth2Options">The options for OAuth 2.</param>
     /// <returns>The new instance of <see cref="AuthenticationHelper"/>.</returns>
-    internal static AuthenticationHelper FromString(
+    internal static IAuthenticationHelper FromString(
         string filePath,
         string? str,
         ILogger<AuthenticationHelper> logger,
