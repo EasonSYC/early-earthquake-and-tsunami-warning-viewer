@@ -64,7 +64,7 @@ internal abstract partial class MapViewModelBase : PageViewModelBase
     /// <summary>
     /// The map resources to be used.
     /// </summary>
-    private protected MapResourcesProvider _resources;
+    protected readonly MapResourcesProvider _resources;
 
     /// <summary>
     /// Initialises the view of the map.
