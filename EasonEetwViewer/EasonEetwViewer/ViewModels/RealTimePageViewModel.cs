@@ -77,10 +77,10 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     {
         _logger = logger;
 
-        KmoniOptions = kmoniOptions;
-        KmoniOptions.KmoniSettingsChanged += (o, e)
+        _kmoniOptions = kmoniOptions;
+        _kmoniOptions.KmoniSettingsChanged += (o, e)
             => OnPropertyChanged(nameof(DataLegendValues));
-        KmoniOptions.KmoniSettingsChanged += (o, e)
+        _kmoniOptions.KmoniSettingsChanged += (o, e)
             => OnPropertyChanged(nameof(DataLegendText));
 
         _imageFetch = imageFetch;
@@ -492,7 +492,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     public decimal[] DataLegendValues
         => [.. Enumerable.Range(0, 11)
             .Select(x => (double)x / 10)
-            .Select(x => KmoniOptions.MeasurementChoice switch
+            .Select(x => _kmoniOptions.MeasurementChoice switch
             {
                 MeasurementType.MeasuredIntensity
                     => x.HeightToIntensity(),
@@ -517,7 +517,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// The data string to display for the current kmoni data choice.
     /// </summary>
     public string DataLegendText
-        => KmoniOptions.MeasurementChoice switch
+        => _kmoniOptions.MeasurementChoice switch
         {
             MeasurementType.MeasuredIntensity
                 => RealtimePageResources.KmoniLegendTextIntensity,
@@ -540,7 +540,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
     /// <summary>
     /// The options for the kmoni layer.
     /// </summary>
-    private IKmoniSettingsHelper KmoniOptions { get; init; }
+    private readonly IKmoniSettingsHelper _kmoniOptions;
     /// <summary>
     /// The time display.
     /// </summary>
@@ -591,8 +591,8 @@ internal partial class RealtimePageViewModel : MapViewModelBase
         {
             byte[]? imageBytes = await _imageFetch
                 .GetByteArrayAsync(
-                KmoniOptions.MeasurementChoice,
-                KmoniOptions.SensorChoice,
+                _kmoniOptions.MeasurementChoice,
+                _kmoniOptions.SensorChoice,
                 _timeProvider
                     .ConvertToJst(_timeProvider.Now())
                     .Subtract(_kmoniDelay)
@@ -601,7 +601,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             return imageBytes is null
                 ? null
                 : _pointExtract
-                    .ExtractColours(imageBytes.ToBitmap(), KmoniOptions.SensorChoice is SensorType.Borehole)
+                    .ExtractColours(imageBytes.ToBitmap(), _kmoniOptions.SensorChoice is SensorType.Borehole)
                     .Select(pc => pc.ToStationFeature());
         }
         catch (ArgumentException) { }
