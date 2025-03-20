@@ -21,6 +21,8 @@ internal static class MapsuiLoggingExtensions
     {
         ILogger<Map> logger = serviceProvider.GetRequiredService<ILogger<Map>>();
 
+        Logger.Settings.LogMapEvents = true;
+        Logger.Settings.LogWidgetEvents = true;
         Logger.LogDelegate += (level, message, ex)
             => logger.Log(level.ToMicrosoftLogLevel(), ex, "{Message}", message);
 
