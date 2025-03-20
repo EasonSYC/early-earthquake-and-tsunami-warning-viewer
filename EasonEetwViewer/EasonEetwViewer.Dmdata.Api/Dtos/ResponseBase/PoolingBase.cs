@@ -7,16 +7,8 @@ namespace EasonEetwViewer.Dmdata.Api.Dtos.ResponseBase;
 /// Abstract and cannot be instantiated.
 /// </summary>
 /// <typeparam name="T">The type of item in the list.</typeparam>
-public abstract record PoolingBase<T> : ListBase<T>
+public abstract record PoolingBase<T> : TokenBase<T>
 {
-    /// <summary>
-    /// The <c>nextToken</c> property. The token that should be specified in the next API call.
-    /// </summary>
-    /// <remarks>
-    /// <see langword="null"/> if it is a subsequent call using pooling, or if the current call is the final call.
-    /// </remarks>
-    [JsonPropertyName("nextToken")]
-    public string? NextToken { get; init; }
     /// <summary>
     /// The <c>nextPooling</c> property. The pooling token that should be specified in the next API call.
     /// </summary>
