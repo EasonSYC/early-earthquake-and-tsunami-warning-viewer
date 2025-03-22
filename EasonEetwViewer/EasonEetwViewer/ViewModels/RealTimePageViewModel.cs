@@ -285,7 +285,7 @@ internal partial class RealtimePageViewModel : MapViewModelBase
             eew.Earthquake.Hypocentre.Coordinate.Latitude is null ||
             eew.Earthquake.Hypocentre.Coordinate.Longitude is null ||
             eew.Earthquake.OriginTime is null ||
-            eew.Earthquake.Condition is "仮定震源要素")
+            eew.Earthquake.IsAssumedHypocentre())
         {
             return;
         }
