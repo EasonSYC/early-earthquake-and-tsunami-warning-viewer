@@ -132,7 +132,7 @@ internal partial class App : Application
         RealtimePageViewModel viewModel = Service.GetRequiredService<RealtimePageViewModel>();
         JsonSerializerOptions options = Service.GetRequiredService<JsonSerializerOptions>();
         await TestEew(viewModel, options);
-        //await TestTsunami(viewModel, options);
+        await TestTsunami(viewModel, options);
 #endif
     }
 
