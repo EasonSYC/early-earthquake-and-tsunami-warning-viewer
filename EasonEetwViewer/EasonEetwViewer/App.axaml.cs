@@ -129,27 +129,47 @@ internal partial class App : Application
         base.OnFrameworkInitializationCompleted();
 
 #if DEBUG
-        await TestTelegram();
+        RealtimePageViewModel viewModel = Service.GetRequiredService<RealtimePageViewModel>();
+        JsonSerializerOptions options = Service.GetRequiredService<JsonSerializerOptions>();
+        await TestEew(viewModel, options);
+        //await TestTsunami(viewModel, options);
 #endif
     }
 
-    private async Task TestTelegram()
+    private static async Task TestEew(RealtimePageViewModel viewModel, JsonSerializerOptions options)
     {
-        await Task.Delay(5000);
+        await Task.Delay(10000);
         EewInformationSchema eewData = JsonSerializer.Deserialize<EewInformationSchema>(
-            File.ReadAllText("TestEew.json"),
-            Service!.GetRequiredService<JsonSerializerOptions>())!;
-        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData });
-        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
-            File.ReadAllText("TestEew2.json"),
-            Service!.GetRequiredService<JsonSerializerOptions>())!;
-        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = eewData2 });
+            File.ReadAllText("TestEew - 2011 - 1.json"),
+            options)!;
+        viewModel.WebSocketClientDataReceivedEventHandler(null, new() { Telegram = eewData });
 
-        await Task.Delay(5000);
+        await Task.Delay(10000);
+        EewInformationSchema eewData2 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew - 2018.json"),
+            options)!;
+        viewModel.WebSocketClientDataReceivedEventHandler(null, new() { Telegram = eewData2 });
+
+        await Task.Delay(10000);
+        EewInformationSchema eewData3 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew - 2011 - 2.json"),
+            options)!;
+        viewModel.WebSocketClientDataReceivedEventHandler(null, new() { Telegram = eewData3 });
+
+        await Task.Delay(10000);
+        EewInformationSchema eewData4 = JsonSerializer.Deserialize<EewInformationSchema>(
+            File.ReadAllText("TestEew - 2011 - 3.json"),
+            options)!;
+        viewModel.WebSocketClientDataReceivedEventHandler(null, new() { Telegram = eewData4 });
+    }
+
+    private static async Task TestTsunami(RealtimePageViewModel viewModel, JsonSerializerOptions options)
+    {
+        await Task.Delay(10000);
         TsunamiInformationSchema tsunamiData = JsonSerializer.Deserialize<TsunamiInformationSchema>(
             File.ReadAllText("TestTsunami.json"),
-            Service!.GetRequiredService<JsonSerializerOptions>())!;
-        Service!.GetRequiredService<RealtimePageViewModel>().WebSocketClientDataReceivedEventHandler(this, new() { Telegram = tsunamiData });
+            options)!;
+        viewModel.WebSocketClientDataReceivedEventHandler(null, new() { Telegram = tsunamiData });
     }
 
     /// <summary>

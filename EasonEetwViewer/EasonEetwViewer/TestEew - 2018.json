@@ -12,7 +12,7 @@
     "publishingOffice": [
         "気象庁"
     ],
-    "pressDateTime": "2018-09-05T18:10:16Z",
+    "pressDateTime": "2025-03-24T20:28:30Z",
     "reportDateTime": "2018-09-06T03:10:16+09:00",
     "targetDateTime": "2018-09-06T03:10:16+09:00",
     "eventId": "20180906030805",
@@ -25,7 +25,8 @@
         "isCanceled": false,
         "isWarning": true,
         "earthquake": {
-            "originTime": "2018-09-06T03:07:59+09:00",
+            "condition": "仮定震源要素",
+            "originTime": "2025-03-24T20:28:30",
             "arrivalTime": "2018-09-06T03:08:05+09:00",
             "hypocenter": {
                 "code": "146",
@@ -58,10 +59,10 @@
                 "landOrSea": "内陸",
                 "accuracy": {
                     "epicenters": [
-                        "6",
+                        "4",
                         "9"
                     ],
-                    "depth": "6",
+                    "depth": "4",
                     "magnitudeCalculation": "5",
                     "numberOfMagnitudeCalculation": "5"
                 }

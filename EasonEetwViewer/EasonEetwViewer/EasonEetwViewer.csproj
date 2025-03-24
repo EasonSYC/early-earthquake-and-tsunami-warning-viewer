@@ -151,10 +151,16 @@
         <None Update="Content\GisFiles\Simp_20240520_AreaTsunami_GIS\Tsunamis.shx">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="TestEew.json">
+        <None Update="TestEew - 2011 - 3.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestEew - 2011 - 2.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="TestEew - 2011 - 1.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="TestEew2.json">
+        <None Update="TestEew - 2018.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Update="TestTsunami.json">

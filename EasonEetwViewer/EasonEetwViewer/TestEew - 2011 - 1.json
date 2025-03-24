@@ -12,7 +12,7 @@
     "publishingOffice": [
         "気象庁"
     ],
-    "pressDateTime": "2011-03-11T05:48:10Z",
+    "pressDateTime": "2025-03-24T20:28:00Z",
     "reportDateTime": "2011-03-11T14:48:10+09:00",
     "targetDateTime": "2011-03-11T14:48:10+09:00",
     "eventId": "20110311144640",
@@ -23,7 +23,7 @@
     "body": {
         "isLastInfo": false,
         "isCanceled": false,
-        "isWarning": true,
+        "isWarning": false,
         "zones": [
             {
                 "code": "9920",
@@ -1087,7 +1087,7 @@
             }
         ],
         "earthquake": {
-            "originTime": "2011-03-11T14:46:16+09:00",
+            "originTime": "2025-03-24T20:28:00Z",
             "arrivalTime": "2011-03-11T14:46:40+09:00",
             "hypocenter": {
                 "code": "288",
